@@ -1,9 +1,38 @@
-
-import qs from 'qs'
 export const getPage = (title: string) => {
-    const { find } = useStrapi4()
-    return find<Strapi4Response>('pages', {
-      populate: '*',
-      filters: {"Title": {$eq: title}}
-    })
+  const { find } = useStrapi4()
+  return find<IPages>('pages', {
+    populate: '*',
+    filters: { slug: { $eq: title } },
+  })
+}
+export const getPageWithGraphQL = (slug: string) => {
+  const graphql = useStrapiGraphQL()
+  return graphql<IPages>(`
+  query {
+  pages(filters: { Slug: { eq: "${slug}" } }) {
+    data {
+      id
+      attributes {
+        Title
+        Description
+        pageZone {
+          __typename
+          ... on ComponentPagesSection {
+            title
+            description
+          }
+        }
+      }
+    }
+    meta {
+      pagination {
+        page
+        pageSize
+        total
+        pageCount
+      }
+    }
+  }
+}
+  `)
 }

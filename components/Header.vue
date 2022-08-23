@@ -2,14 +2,12 @@
   <header class="header">
     <div class="container">
       <div class="left">
-        <nuxt-link to="/" class="home-link">
-          <b>Company X </b>
-        </nuxt-link>
+        <nuxt-link to="/" class="home-link"> <b>Pfadi</b> Nünenen </nuxt-link>
       </div>
       <nav class="nav right">
         <nuxt-link class="nav__link" to="/">Home</nuxt-link>
         <nuxt-link class="nav__link" to="/abteilung">Abteilung</nuxt-link>
-        <nuxt-link class="nav__link" to="/mitmachen">About</nuxt-link>
+        <nuxt-link class="nav__link" to="/mitmachen">Mitmachen</nuxt-link>
         <nuxt-link class="nav__link" to="/shop">Shop</nuxt-link>
       </nav>
     </div>
@@ -24,16 +22,11 @@ export default {
 
 <style scoped>
 .header {
-  position: relative;
+  position: fixed;
+  width: 100%;
+  top: 0;
   height: 6rem;
   z-index: 10;
-}
-
-.header.sticky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
 }
 
 .header > .container {
@@ -47,24 +40,12 @@ export default {
   text-decoration: none;
 }
 
-.logo {
-  height: 4.5rem !important;
-}
-
-.site-name {
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
 .nav > * {
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
   margin-top: 4px;
-  margin-right: 3rem;
+  margin-right: 2rem;
   padding-bottom: 4px;
   border-bottom: 1px solid;
   border-color: transparent;

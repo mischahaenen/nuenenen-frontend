@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['@/assets/css/main.scss'],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -24,12 +24,16 @@ export default defineNuxtConfig({
   buildModules: ['@nuxtjs/strapi'],
   modules: ['@nuxtjs/strapi'],
   strapi: {
-    entities: ['pages'],
+    entities: ['pages', 'blogs', 'steps'],
     url: process.env.STRAPI_URL || 'http://localhost:1337',
     prefix: '/api',
     version: 'v4',
     cookie: {},
+    cookieName: 'strapi_jwt',
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  typescript: {
+    strict: true,
+  },
 })

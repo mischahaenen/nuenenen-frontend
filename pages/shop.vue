@@ -1,16 +1,12 @@
 <template>
   <div>
-    <div>{{ title }}</div>
+    <div>{{ page }}</div>
   </div>
 </template>
 
-<script lang="ts">
-export default {
-  name: 'ShopPage',
-  data() {
-    return {
-      title: 'Shop',
-    }
-  },
-}
+<script lang="ts" setup>
+const response = await getPage('shop')
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const page = response.data[0].attributes
 </script>

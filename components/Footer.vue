@@ -1,14 +1,7 @@
 <template>
   <footer class="footer">
     <div class="container">
-      <span>
-        Thanks to <a href="https://unsplash.com/@wocintechchat">Christina</a>,<a
-          href="https://unsplash.com/@galina88"
-        >
-          Galina </a
-        >and <a href="https://unsplash.com/@bkotynski">Bethany</a> for the
-        images.</span
-      >
+      <span> Nice Footer </span>
     </div>
   </footer>
 </template>
