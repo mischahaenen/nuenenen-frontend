@@ -1,6 +1,6 @@
 <template>
-  <footer class="footer">
-    <div class="container">
+  <footer class="container footer">
+    <div>
       <span> Nice Footer </span>
     </div>
   </footer>
@@ -15,6 +15,6 @@ export default {
 <style scoped>
 .footer {
   font-size: 0.8rem;
-  padding: 6rem 0;
+  padding: 6rem auto;
 }
 </style>

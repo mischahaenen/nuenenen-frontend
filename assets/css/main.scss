@@ -23,17 +23,14 @@ body.dark {
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0 4rem;
 }
 
-@media (min-width: 860px) {
+@media screen and (max-width: 768px) {
   .container {
-    padding: 0 6rem;
+    padding: 0 2rem;
   }
 }
-
 a {
   color: inherit;
 }
