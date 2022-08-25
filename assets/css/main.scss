@@ -9,6 +9,9 @@ body {
   --color-grey: #efefef;
   --color-black: hsl(0deg 0% 0%);
   --color-contrast-1: hsl(0deg 0% 17%);
+  --gap-small: 1rem;
+  --gap-medium: 2rem;
+  --gap-large: 4rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
@@ -23,12 +26,12 @@ body.dark {
 }
 
 .container {
-  padding: 0 4rem;
+  padding: 0 var(--gap-large);
 }
 
 @media screen and (max-width: 768px) {
   .container {
-    padding: 0 2rem;
+    padding: 0 var(--gap-medium);
   }
 }
 a {
