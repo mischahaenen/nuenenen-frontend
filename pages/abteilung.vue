@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>{{ page }}</div>
+    <BaseBanner />
   </div>
 </template>
 

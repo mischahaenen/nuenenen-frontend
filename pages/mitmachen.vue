@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ page }}
+    <BaseBanner />
   </div>
 </template>
 <script lang="ts" setup>
