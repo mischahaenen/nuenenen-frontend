@@ -8,7 +8,7 @@ body {
   --color-white: #fff;
   --color-grey: #efefef;
   --color-black: hsl(0deg 0% 0%);
-  --color-contrast-1: hsl(0deg 0% 17%);
+  --color-contrast-1: #4b4b4b;
   --gap-small: 1rem;
   --gap-medium: 2rem;
   --gap-large: 4rem;
@@ -60,6 +60,11 @@ h2 {
   color: var(--color-primary);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.5rem;
+}
+
+h3 {
+  color: var(--color-primary);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 p {

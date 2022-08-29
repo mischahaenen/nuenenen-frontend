@@ -70,6 +70,10 @@ footer {
   height: 100%;
 }
 
+h2 {
+  color: var(--color-white);
+}
+
 a,
 ul,
 li {

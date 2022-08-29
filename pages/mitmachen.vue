@@ -1,9 +1,10 @@
 <template>
   <div>
-    <BaseBanner />
+    <BaseBanner :title="page.title" :description="page.description" />
   </div>
 </template>
 <script lang="ts" setup>
+const response = await getPage('mitmachen')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const page = await getPage('mitmachen')
+const page = response.data[0].attributes
 </script>

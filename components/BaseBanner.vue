@@ -1,8 +1,8 @@
 <template>
   <div class="home-banner">
     <div class="container home-text">
-      <h1>{{ page.title }}</h1>
-      <p>{{ page.description }}</p>
+      <h1>{{ props.title }}</h1>
+      <p>{{ props.description }}</p>
     </div>
     <img
       class="home-image-background"
@@ -12,9 +12,17 @@
   </div>
 </template>
 <script lang="ts" setup>
-const response = await getPage('home')
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const page = response.data[0].attributes
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+})
 </script>
 <style scoped>
 .home-banner {

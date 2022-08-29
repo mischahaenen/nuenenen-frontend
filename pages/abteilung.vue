@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseBanner />
+    <BaseBanner :title="page.title" :description="page.description" />
   </div>
 </template>
 

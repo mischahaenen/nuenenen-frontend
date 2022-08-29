@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "@nuxtjs/strapi": "^1.5.0",
+    "editorjs-html": "^3.4.2",
+    "moment": "^2.29.4",
     "nuxt": "3.0.0-rc.7",
     "qs": "^6.10.3",
     "vue": "^3.2.33"

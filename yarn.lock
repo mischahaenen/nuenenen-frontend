@@ -3154,6 +3154,11 @@
   "resolved" "https://artifacts.flowable.com:443/artifactory/api/npm/npm-all/eastasianwidth/-/eastasianwidth-0.2.0.tgz"
   "version" "0.2.0"
 
+"editorjs-html@^3.4.2":
+  "integrity" "sha512-Gy8FV4oHMvnPDXLsdpZYW0Dgjaagff9bPd28/WW9aFdy87FvktJxQz8H+NKpxiGcGoNY27MmjFffurK2yhXjEg=="
+  "resolved" "https://registry.npmjs.org/editorjs-html/-/editorjs-html-3.4.2.tgz"
+  "version" "3.4.2"
+
 "ee-first@1.1.1":
   "integrity" "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow=="
   "resolved" "https://artifacts.flowable.com:443/artifactory/api/npm/npm-all/ee-first/-/ee-first-1.1.1.tgz"
@@ -5845,6 +5850,11 @@
     "pathe" "^0.3.4"
     "pkg-types" "^0.3.3"
     "ufo" "^0.8.5"
+
+"moment@^2.29.4":
+  "integrity" "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w=="
+  "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
+  "version" "2.29.4"
 
 "mri@^1.2.0":
   "integrity" "sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA=="

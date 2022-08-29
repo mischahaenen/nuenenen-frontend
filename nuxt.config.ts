@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   strapi: {
     entities: ['pages', 'blogs', 'steps'],
     url: process.env.STRAPI_URL || 'http://localhost:1337',
-    prefix: '/api',
+    prefix: '',
     version: 'v4',
     cookie: {},
     cookieName: 'strapi_jwt',

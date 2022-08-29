@@ -1,6 +1,6 @@
 export const getPage = (title: string) => {
   const { find } = useStrapi4()
-  return find<IPages>('pages', {
+  return find<IPages>('api/pages', {
     populate: '*',
     filters: { slug: { $eq: title } },
   })
@@ -35,4 +35,11 @@ export const getPageWithGraphQL = (slug: string) => {
   }
 }
   `)
+}
+export const getBlogPosts = () => {
+  const { find } = useStrapi4()
+  return find<IPosts>('api/blogs', {
+    populate: '*',
+    filters: {},
+  })
 }
