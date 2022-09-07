@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   plugins: [],
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-  buildModules: ['@nuxtjs/strapi'],
+  buildModules: ['@nuxtjs/strapi', '@pinia/nuxt'],
   modules: ['@nuxtjs/strapi'],
   strapi: {
     entities: ['pages', 'blogs', 'steps'],

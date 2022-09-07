@@ -1,10 +1,9 @@
 <template>
-  <!-- Create Card -->
-  <div class="card">
+  <div v-if="isGridView" class="card-grid">
     <div>
       <img
         v-if="props.post.attributes.images.data"
-        class="card-image"
+        class="card-image-grid"
         :src="
           url +
           props.post.attributes.images.data[0].attributes.formats.small.url
@@ -25,7 +24,36 @@
         <div v-html="content"></div>
       </div>
     </div>
-    <div class="cad-footer">#{{ props.post.attributes.step }}</div>
+    <div class="card-footer-grid">#{{ props.post.attributes.step }}</div>
+  </div>
+  <div v-else>
+    <div class="card-list">
+      <div>
+        <img
+          v-if="props.post.attributes.images.data"
+          class="card-image-list"
+          :src="
+            url +
+            props.post.attributes.images.data[0].attributes.formats.small.url
+          "
+          :alt="props.post.attributes.images.data[0].attributes.name"
+        />
+      </div>
+      <div class="card-content">
+        <h3 class="card-title">{{ props.post.attributes.title }}</h3>
+        <div class="card-subtitle">
+          <span>{{ props.post.attributes.author }}</span>
+          <span>{{
+            moment(props.post.attributes.createdAt)
+              .locale('de-ch')
+              .startOf('day')
+              .fromNow()
+          }}</span>
+        </div>
+        <div v-html="content"></div>
+        <div class="card-footer-list">#{{ props.post.attributes.step }}</div>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -36,6 +64,8 @@ import moment from 'moment'
 const url = useStrapiUrl()
 const props = defineProps<{ post: IPost }>()
 const content = ref('')
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const isGridView = useState('isGridView')
 onMounted(() => {
   const edjsParser = editorjsHTML()
   const cleanData = JSON.parse(props.post.attributes.description)
@@ -43,26 +73,39 @@ onMounted(() => {
   content.value = htmlArray.find((item) => item.includes('<p>')) || ''
 })
 </script>
-<style scoped>
-.card {
+<style scoped lang="scss">
+.card-grid {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
+  background-color: var(--color-grey);
+}
+.card-list {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-small);
+  border-radius: var(--border-radius);
   background-color: var(--color-grey);
 }
 
-.card-image {
+.card-image-grid {
   width: 100%;
   height: auto;
   object-fit: cover;
-  border-radius: 10px 10px 0 0;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+.card-image-list {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
 .card-content {
   display: flex;
   flex-direction: column;
-  padding: var(--gap-medium);
+  padding: var(--space-medium);
 }
 
 .card-title {
@@ -73,17 +116,35 @@ onMounted(() => {
 .card-subtitle {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-contrast-1);
+  color: var(--color-grey-dark);
 }
 
 h3 {
   margin: 0 0 0.5rem;
 }
 
-.cad-footer {
+.card-footer-grid {
   font-size: 0.8rem;
   color: var(--color-accent);
-  margin-top: var(--gap-medium);
-  padding: var(--gap-medium);
+  padding: var(--space-medium);
+}
+
+.card-footer-list {
+  font-size: 0.8rem;
+  color: var(--color-accent-dark);
+}
+// TODO: Use scss variables when issue is fixed: https://github.com/nuxt/framework/issues/4269
+@media screen and (max-width: 1024px) {
+  .card-image-list {
+    display: none;
+  }
+
+  .card-content {
+    padding: var(--space-small);
+  }
+
+  .card-footer-grid {
+    padding: var(--space-small);
+  }
 }
 </style>

@@ -62,7 +62,7 @@ footer {
   display: flex;
   justify-content: space-between;
   color: var(--color-white);
-  padding: var(--gap-large);
+  padding: var(--space-large);
 }
 
 #footer-logo {

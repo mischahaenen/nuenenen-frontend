@@ -43,3 +43,12 @@ export const getBlogPosts = () => {
     filters: {},
   })
 }
+export const getBlogPostsByStep = (step: string) => {
+  const { find } = useStrapi4()
+  return find<IPosts>('api/blogs', {
+    populate: '*',
+    filters: {
+      step: { $eq: step },
+    },
+  })
+}
