@@ -6,15 +6,18 @@
           d="M20.5 35.5v-2.25h7v2.25Zm-8-10.75V22.5h23v2.25ZM6.5 14v-2.25h35V14Z"
         />
       </svg>
-      <select id="steps" v-model="step" name="steps" @change="sortBlogPosts">
-        <option value="All">Alle</option>
-        <option value="Biberstufe">Biberstufe</option>
-        <option value="Wolfsstufe">Wolfsstufe</option>
-        <option value="Pfadistufe">Pfadistufe</option>
-        <option value="Piostufe">Piostufe</option>
-        <option value="Roverstufe">Roverstufe</option>
-        <option value="Abteilung">Abteilung</option>
-      </select>
+      <div>
+        <label for="steps">Filtere nach Stufe:</label>
+        <select id="steps" v-model="step" name="steps" @change="sortBlogPosts">
+          <option value="All">Alle</option>
+          <option value="Biberstufe">Biberstufe</option>
+          <option value="Wolfsstufe">Wolfsstufe</option>
+          <option value="Pfadistufe">Pfadistufe</option>
+          <option value="Piostufe">Piostufe</option>
+          <option value="Roverstufe">Roverstufe</option>
+          <option value="Abteilung">Abteilung</option>
+        </select>
+      </div>
     </div>
     <div class="sort">
       <svg
@@ -62,7 +65,7 @@ const sortBlogPosts = async () => {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-medium);
-  margin-bottom: var(--space-medium);
+  margin-bottom: var(--space-small);
 }
 
 .filter,
@@ -75,18 +78,21 @@ const sortBlogPosts = async () => {
 .active {
   padding: 5px;
   fill: var(--color-white) !important;
-  background-color: var(--color-accent);
+  background-color: var(--color-accent-200);
   border-radius: 50%;
 }
 
 .sort svg {
+  padding: 5px;
   fill: var(--color-black);
   transition: fill 0.2s ease-in-out;
   cursor: pointer;
 }
 
 .sort svg:hover {
-  fill: var(--color-accent);
+  fill: var(--color-black);
+  background-color: var(--color-accent-50);
+  border-radius: 50%;
 }
 
 svg {
@@ -101,12 +107,13 @@ select {
   border-radius: var(--border-radius);
   padding: 10px var(--space-medium);
   color: var(--color-black);
-  background-color: var(--color-white);
+  background-color: var(--color-accent-200);
   transition: background-color 0.2s ease-in-out;
 }
 
 select:hover {
-  background-color: var(--color-accent);
+  background-color: var(--color-accent-500);
   color: var(--color-white);
+  cursor: pointer;
 }
 </style>

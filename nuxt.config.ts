@@ -1,5 +1,3 @@
-import { defineNuxtConfig } from 'nuxt'
-
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -11,7 +9,6 @@ export default defineNuxtConfig({
   buildModules: ['@nuxtjs/strapi', '@pinia/nuxt'],
   modules: ['@nuxtjs/strapi'],
   strapi: {
-    entities: ['pages', 'blogs', 'steps'],
     url: process.env.STRAPI_URL || 'http://localhost:1337',
     prefix: '',
     version: 'v4',

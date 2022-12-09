@@ -13,7 +13,7 @@
         <h2>Weitere Seiten</h2>
         <ul>
           <li>
-            <nuxt-link to="/">Home</nuxt-link>
+            <nuxt-link to="/home">Home</nuxt-link>
           </li>
           <li>
             <nuxt-link to="/abteilung">Abteilung</nuxt-link>
@@ -30,7 +30,7 @@
         <h2>Social Media</h2>
         <ul>
           <li>
-            <nuxt-link to="/">Home</nuxt-link>
+            <nuxt-link to="/home">Home</nuxt-link>
           </li>
           <li>
             <nuxt-link to="/abteilung">Abteilung</nuxt-link>
@@ -58,7 +58,7 @@ footer {
 }
 
 .footer-content {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-500);
   display: flex;
   justify-content: space-between;
   color: var(--color-white);

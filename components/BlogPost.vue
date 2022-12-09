@@ -1,60 +1,62 @@
 <template>
-  <div v-if="isGridView" class="card-grid">
-    <div>
-      <img
-        v-if="props.post.attributes.images.data"
-        class="card-image-grid"
-        :src="
-          url +
-          props.post.attributes.images.data[0].attributes.formats.small.url
-        "
-        :alt="props.post.attributes.images.data[0].attributes.name"
-      />
-      <div class="card-content">
-        <h3 class="card-title">{{ props.post.attributes.title }}</h3>
-        <div class="card-subtitle">
-          <span>{{ props.post.attributes.author }}</span>
-          <span>{{
-            moment(props.post.attributes.createdAt)
-              .locale('de-ch')
-              .startOf('day')
-              .fromNow()
-          }}</span>
-        </div>
-        <div v-html="content"></div>
-      </div>
-    </div>
-    <div class="card-footer-grid">#{{ props.post.attributes.step }}</div>
-  </div>
-  <div v-else>
-    <div class="card-list">
+  <nuxt-link :to="'home/' + props.post.attributes.slug">
+    <div v-if="isGridView" class="card-grid">
       <div>
         <img
           v-if="props.post.attributes.images.data"
-          class="card-image-list"
+          class="card-image-grid"
           :src="
             url +
             props.post.attributes.images.data[0].attributes.formats.small.url
           "
           :alt="props.post.attributes.images.data[0].attributes.name"
         />
-      </div>
-      <div class="card-content">
-        <h3 class="card-title">{{ props.post.attributes.title }}</h3>
-        <div class="card-subtitle">
-          <span>{{ props.post.attributes.author }}</span>
-          <span>{{
-            moment(props.post.attributes.createdAt)
-              .locale('de-ch')
-              .startOf('day')
-              .fromNow()
-          }}</span>
+        <div class="card-content">
+          <h3 class="card-title">{{ props.post.attributes.title }}</h3>
+          <div class="card-subtitle">
+            <span>{{ props.post.attributes.author }}</span>
+            <span>{{
+              moment(props.post.attributes.createdAt)
+                .locale('de-ch')
+                .startOf('day')
+                .fromNow()
+            }}</span>
+          </div>
+          <div v-html="content"></div>
         </div>
-        <div v-html="content"></div>
-        <div class="card-footer-list">#{{ props.post.attributes.step }}</div>
+      </div>
+      <div class="card-footer-grid">#{{ props.post.attributes.step }}</div>
+    </div>
+    <div v-else>
+      <div class="card-list">
+        <div>
+          <img
+            v-if="props.post.attributes.images.data"
+            class="card-image-list"
+            :src="
+              url +
+              props.post.attributes.images.data[0].attributes.formats.small.url
+            "
+            :alt="props.post.attributes.images.data[0].attributes.name"
+          />
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">{{ props.post.attributes.title }}</h3>
+          <div class="card-subtitle">
+            <span>{{ props.post.attributes.author }}</span>
+            <span>{{
+              moment(props.post.attributes.createdAt)
+                .locale('de-ch')
+                .startOf('day')
+                .fromNow()
+            }}</span>
+          </div>
+          <div v-html="content"></div>
+          <div class="card-footer-list">#{{ props.post.attributes.step }}</div>
+        </div>
       </div>
     </div>
-  </div>
+  </nuxt-link>
 </template>
 <script lang="ts" setup>
 import editorjsHTML from 'editorjs-html'
@@ -63,17 +65,23 @@ import moment from 'moment'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const url = useStrapiUrl()
 const props = defineProps<{ post: IPost }>()
-const content = ref('')
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const isGridView = useState('isGridView')
-onMounted(() => {
+const content = computed(() => {
   const edjsParser = editorjsHTML()
   const cleanData = JSON.parse(props.post.attributes.description)
   const htmlArray: string[] = edjsParser.parseStrict(cleanData)
-  content.value = htmlArray.find((item) => item.includes('<p>')) || ''
+  return (
+    htmlArray.find((item) => item.includes('<p>'))?.slice(0, 200) + '...' || ''
+  )
 })
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const isGridView = useState('isGridView')
 </script>
 <style scoped lang="scss">
+a {
+  text-decoration: none;
+}
 .card-grid {
   display: flex;
   flex-direction: column;
@@ -105,7 +113,7 @@ onMounted(() => {
 .card-content {
   display: flex;
   flex-direction: column;
-  padding: var(--space-medium);
+  padding: var(--space-small);
 }
 
 .card-title {
@@ -125,13 +133,13 @@ h3 {
 
 .card-footer-grid {
   font-size: 0.8rem;
-  color: var(--color-accent);
-  padding: var(--space-medium);
+  color: var(--color-accent-900);
+  padding: var(--space-small);
 }
 
 .card-footer-list {
   font-size: 0.8rem;
-  color: var(--color-accent-dark);
+  color: var(--color-accent-900);
 }
 // TODO: Use scss variables when issue is fixed: https://github.com/nuxt/framework/issues/4269
 @media screen and (max-width: 1024px) {

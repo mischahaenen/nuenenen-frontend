@@ -16,10 +16,6 @@ export const usePostStore = defineStore({
       const posts = await getBlogPostsByStep(step)
       this.posts = posts
     },
-    async fetchPost() {
-      /* const post = await getBlogPost(id)
-      this.posts = [post] */
-    },
   },
   getters: {
     postList: (state) => state.posts,

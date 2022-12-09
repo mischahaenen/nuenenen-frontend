@@ -6,6 +6,7 @@ declare interface IPost {
     step: string
     createdAt: Date
     author: string
+    slug: string
     images: {
       data: Iimage[]
     }

@@ -1,18 +1,15 @@
 <template>
-  <header
-    class="header container"
-    :class="{ 'header-scrolled': useScrollY > 50 }"
-  >
+  <header class="header container" :class="{ 'header-scrolled': scroll > 50 }">
     <div>
       <nuxt-link
         to="/"
-        :class="useScrollY > 50 ? 'home-link-scrolled' : 'home-link'"
+        :class="scroll > 50 ? 'home-link-scrolled' : 'home-link'"
       >
         <b>PFADI</b> NÜNENEN
       </nuxt-link>
     </div>
     <nav class="nav">
-      <nuxt-link to="/">Home</nuxt-link>
+      <nuxt-link to="/home">Home</nuxt-link>
       <nuxt-link to="/abteilung">Abteilung</nuxt-link>
       <nuxt-link to="/mitmachen">Mitmachen</nuxt-link>
       <nuxt-link to="/shop">Shop</nuxt-link>
@@ -22,10 +19,8 @@
 
 <script lang="ts" setup>
 // add class on scroll
-const useScrollY = useState<number>('scrollPosition', () => window.scrollY)
-window.addEventListener('scroll', () => {
-  useScrollY.value = window.scrollY
-})
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const scroll = useScrollY()
 </script>
 
 <style scoped>
@@ -41,9 +36,9 @@ window.addEventListener('scroll', () => {
 }
 
 .header-scrolled {
-  background-color: var(--color-primary);
+  background-color: var(--color-white);
   height: 4rem;
-  color: var(--color-white);
+  color: var(--color-black);
   transition: background-color 0.3s ease;
   transition: height 0.3s ease;
   box-shadow: 0 2px 4px #0000001a;
@@ -57,22 +52,22 @@ window.addEventListener('scroll', () => {
 }
 
 .home-link b {
-  color: var(--color-primary);
+  color: var(--color-primary-500);
 }
 
 .home-link-scrolled {
   text-decoration: none;
-  color: var(--color-white);
+  color: var(--color-black);
   word-spacing: 0.2rem;
   letter-spacing: 0.05rem;
 }
 
 .home-link-scrolled b {
-  color: var(--color-white);
+  color: var(--color-primary-500);
 }
 
 .nav > * {
-  color: var(--color-white);
+  color: var(--color-black);
   text-decoration: none;
   margin-top: 4px;
   margin-right: 4rem;

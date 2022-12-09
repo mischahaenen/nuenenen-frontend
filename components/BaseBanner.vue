@@ -1,12 +1,12 @@
 <template>
-  <div class="home-banner">
-    <div class="container home-text">
+  <div class="container home-banner">
+    <div class="home-text">
       <h1>{{ props.title }}</h1>
       <p>{{ props.description }}</p>
     </div>
     <img
       class="home-image-background"
-      src="../assets/img/space_background.png"
+      src="../assets/img/cloud.png"
       alt="Space Background with stars"
     />
   </div>
@@ -24,32 +24,21 @@ const props = defineProps({
   },
 })
 </script>
-<style scoped>
+<style scoped lang="scss">
 .home-banner {
   height: 100vh;
   display: flex;
-  position: relative;
+  align-items: center;
+  gap: var(--space-large);
 }
 
 .home-text {
   display: flex;
   flex-direction: column;
-  justify-content: center;
 }
 
 .home-image-background {
-  width: 60%;
-  height: auto;
-  object-fit: cover;
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: -1;
-}
-
-@media (max-width: 1600px) {
-  .home-image-background {
-    width: 50%;
-  }
+  width: auto;
+  max-width: 700px;
 }
 </style>
