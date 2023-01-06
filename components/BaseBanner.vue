@@ -39,6 +39,6 @@ const props = defineProps({
 
 .home-image-background {
   width: auto;
-  max-width: 700px;
+  max-width: 50%;
 }
 </style>

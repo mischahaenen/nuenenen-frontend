@@ -1,5 +1,5 @@
 <template>
-  <header class="header container" :class="{ 'header-scrolled': scroll > 50 }">
+  <header class="header" :class="{ 'header-scrolled': scroll > 50 }">
     <div>
       <nuxt-link
         to="/"
@@ -25,6 +25,7 @@ const scroll = useScrollY()
 
 <style scoped>
 .header {
+  padding: 0 var(--space-large);
   position: fixed;
   width: 100%;
   top: 0;

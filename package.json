@@ -20,9 +20,8 @@
   },
   "dependencies": {
     "@nuxtjs/strapi": "^1.6.3",
-    "@pinia/nuxt": "^0.4.5",
+    "@pinia/nuxt": "^0.4.6",
     "editorjs-html": "^3.4.2",
-    "moment": "^2.29.4",
     "nuxt": "3.0.0",
     "pinia": "^2.0.22",
     "vue": "^3.2.33"
@@ -37,8 +36,8 @@
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
     "@vue/test-utils": "^2.0.0-rc.21",
-    "babel-core": "^6.26.3",
-    "babel-jest": "^28.1.0",
+    "@babel/core": "^7.20.12",
+    "babel-jest": "^29.3.1",
     "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-nuxt": "^3.2.0",

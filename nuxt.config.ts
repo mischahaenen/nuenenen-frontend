@@ -6,8 +6,7 @@ export default defineNuxtConfig({
   plugins: [],
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-  buildModules: ['@nuxtjs/strapi', '@pinia/nuxt'],
-  modules: ['@nuxtjs/strapi'],
+  modules: ['@nuxtjs/strapi', '@pinia/nuxt'],
   strapi: {
     url: process.env.STRAPI_URL || 'http://localhost:1337',
     prefix: '',

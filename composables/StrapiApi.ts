@@ -40,22 +40,35 @@ export const getBlogPosts = () => {
   const { find } = useStrapi4()
   return find<IPosts>('api/blogs', {
     populate: '*',
-    filters: {},
   })
 }
 export const getBlogPostsByStep = (step: string) => {
   const { find } = useStrapi4()
   return find<IPosts>('api/blogs', {
     populate: '*',
-    filters: {
-      step: { $eq: step },
-    },
+    filters: { step: { Name: { $eq: step } } },
   })
 }
+
 export const getBlogPost = (slug: string) => {
   const { find } = useStrapi4()
   return find<IPosts>('api/blogs', {
     populate: '*',
     filters: { slug: { $eq: slug } },
+  })
+}
+
+export const getStepNames = () => {
+  const { find } = useStrapi4()
+  return find<ISteps>('api/steps', {
+    fields: ['Name'],
+  })
+}
+
+export const getEvents = () => {
+  const { find } = useStrapi4()
+  return find<IEvents>('api/events', {
+    populate: '*',
+    filters: {},
   })
 }

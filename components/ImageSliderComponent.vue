@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import { useImageStore } from '~~/store/image'
 const props = defineProps<{
-  images: Image[]
+  images: Image
 }>()
 const imageStore = useImageStore()
 onMounted(() => {

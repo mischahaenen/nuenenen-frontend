@@ -5,7 +5,7 @@ declare interface IPage {
     description: string
     slug: string
     url: string
-    pageZone: any
+    pageZone: IPageZone[]
     created_at: string
     updated_at: string
     published_at: string

@@ -1,102 +1,140 @@
 <template>
   <div>
     <BaseBanner :title="page.title" :description="page.description" />
-    <div class="event-section container">
-      <h2>Nächste Events</h2>
-      <EventList />
-    </div>
-    <div class="blog-section container">
-      <h2>Aktuelles</h2>
-      <BlogFilter />
-      <div
-        v-if="posts.data.length"
-        :class="isGridView ? 'post-grid' : 'post-list'"
-      >
-        <BlogPost v-for="post in posts.data" :key="post.id" :post="post" />
-      </div>
-      <div v-else class="not-found-section">
-        <img src="../../assets/svg/not_found.svg" alt="Not found image" />
-        <div>
-          <h3>Tut uns leid</h3>
-          <p>
-            Habe noch ein bisschen Geduld! Auch hier werden bald spannende
-            Beiträge auftauchen...
-          </p>
+    <div
+      v-for="(zone, index) in page.pageZone"
+      :key="index"
+      :class="index % 2 === 0 ? 'colored-section' : 'section'"
+    >
+      <div class="container">
+        <h2 v-if="index % 2 !== 0">{{ zone.Title }}</h2>
+        <ColoredTitleComponent v-else :title="zone.Title" />
+        <RichTextComponent
+          v-if="zone.Description"
+          :content="zone.Description"
+        />
+        <div v-if="zone.__component === 'pages.blog'">
+          <div class="blog-filter">
+            <button
+              :class="{ active: activeButton === 'all' }"
+              @click="getPosts()"
+            >
+              Alle
+            </button>
+            <button
+              v-for="(step, jndex) of steps"
+              :key="jndex"
+              :class="{ active: activeButton === step.attributes.Name }"
+              @click="getPostsByStep(step.attributes.Name)"
+            >
+              {{ step.attributes.Name }}
+            </button>
+          </div>
+          <div v-if="posts.length" class="post-grid">
+            <PostComponent
+              v-for="(post, index) in posts"
+              :key="post.id"
+              :post="post"
+              :is-first="index === 0"
+              class="post-grid-item"
+            />
+          </div>
+          <div v-else class="fallback">
+            <img
+              src="../../assets/svg/not_found.svg"
+              alt="Space Aliens nothing found image"
+            />
+            <p>Hier wurde noch nichts veröffentlicht.</p>
+          </div>
+        </div>
+        <div v-if="zone.__component === 'pages.event'">
+          <EventComponent
+            v-for="event in events"
+            :key="event.id"
+            :event="event"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { usePostStore } from '~~/store/post'
-useHead({ title: 'Pfadi Nünenen - Home' })
-const response = await getPage('home')
+const res = await getPage('home')
+const page = res.data[0].attributes
+const posts = useState<IPost[]>(() => [])
+const events = useState<IEvent[]>(() => [])
+const steps = useState<IStep[]>(() => [])
+const activeButton = useState<string>(() => 'all')
+useHead({ title: `Pfadi Nünenen - ${page.slug}` })
+
+const getPosts = async () => {
+  const res = await getBlogPosts()
+  posts.value = res.data
+  activeButton.value = 'all'
+}
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const page = response.data[0].attributes
-const postStore = await usePostStore()
-await postStore.fetchAllPosts()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const posts = computed(() => postStore.posts)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const isGridView = useState('isGridView')
+const getPostsByStep = async (step) => {
+  const res = await getBlogPostsByStep(step)
+  posts.value = res.data
+  activeButton.value = step
+}
+if (page.pageZone.some((zone) => zone.__component === 'pages.blog')) {
+  await getPosts()
+  const stepRes = await getStepNames()
+  steps.value = stepRes.data
+}
+if (page.pageZone.some((zone) => zone.__component === 'pages.event')) {
+  const res = await getEvents()
+  events.value = res.data
+}
 </script>
 <style scoped lang="scss">
-.event-section {
-  background-color: var(--color-grey);
-  padding: var(--space-large);
-  margin-top: var(--space-large);
-}
-
-.blog-section {
-  padding: var(--space-large);
-  margin-bottom: var(--space-large);
-}
-
 .post-grid {
   display: grid;
   grid-template: auto / repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: var(--space-small);
+  grid-gap: var(--space-medium);
 }
-.post-list {
+
+.post-grid-item:nth-child(1) {
+  grid-column: 1 / -1;
+}
+
+.blog-filter {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-small);
+  flex-wrap: wrap;
+  gap: var(--space-medium);
+  margin: var(--space-medium) 0;
+  justify-content: center;
+
+  button {
+    background: var(--color-white);
+    color: var(--color-accent-900);
+    border: none;
+    padding: var(--space-small);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    outline-color: var(--color-accent-900);
+
+    &:hover {
+      background-color: var(--color-accent-50);
+      color: var(--color-accent-900);
+    }
+  }
+
+  .active {
+    background-color: var(--color-accent-900);
+    color: var(--color-white);
+  }
 }
-.not-found-section {
+.fallback {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-medium);
-
+  margin: var(--space-large) 0;
   img {
-    width: 30%;
-  }
-
-  div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-// TODO: Use scss variables when issue is fixed: https://github.com/nuxt/framework/issues/4269
-@media screen and (max-width: 1024px) {
-  .event-section {
-    padding: var(--space-small);
-    margin-top: var(--space-small);
-  }
-
-  .blog-section {
-    padding: var(--space-small);
-    margin-bottom: var(--space-small);
-  }
-
-  .post-grid {
-    grid-gap: var(--space-small);
-    grid-template: auto / repeat(auto-fill, minmax(300px, 1fr));
-  }
-  .post-list {
-    gap: var(--space-small);
+    width: 500px;
   }
 }
 </style>
