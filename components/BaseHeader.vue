@@ -2,7 +2,7 @@
   <header class="header" :class="{ 'header-scrolled': scroll > 50 }">
     <div>
       <nuxt-link
-        to="/"
+        to="/home"
         :class="scroll > 50 ? 'home-link-scrolled' : 'home-link'"
       >
         <b>PFADI</b> NÜNENEN

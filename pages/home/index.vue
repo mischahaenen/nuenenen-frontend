@@ -32,19 +32,19 @@
           </div>
           <div v-if="posts.length" class="post-grid">
             <PostComponent
-              v-for="(post, index) in posts"
+              v-for="(post, i) in posts"
               :key="post.id"
               :post="post"
-              :is-first="index === 0"
+              :is-first="i === 0"
               class="post-grid-item"
             />
           </div>
           <div v-else class="fallback">
+            <p>Hier wurde noch nichts veröffentlicht.</p>
             <img
               src="../../assets/svg/not_found.svg"
               alt="Space Aliens nothing found image"
             />
-            <p>Hier wurde noch nichts veröffentlicht.</p>
           </div>
         </div>
         <div v-if="zone.__component === 'pages.event'">
@@ -59,8 +59,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-const res = await getPage('home')
-const page = res.data[0].attributes
+const response = await getPage('home')
+const page = response.data[0].attributes
 const posts = useState<IPost[]>(() => [])
 const events = useState<IEvent[]>(() => [])
 const steps = useState<IStep[]>(() => [])
@@ -72,7 +72,6 @@ const getPosts = async () => {
   posts.value = res.data
   activeButton.value = 'all'
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getPostsByStep = async (step) => {
   const res = await getBlogPostsByStep(step)
   posts.value = res.data
@@ -134,7 +133,7 @@ if (page.pageZone.some((zone) => zone.__component === 'pages.event')) {
   gap: var(--space-medium);
   margin: var(--space-large) 0;
   img {
-    width: 500px;
+    width: 400px;
   }
 }
 </style>

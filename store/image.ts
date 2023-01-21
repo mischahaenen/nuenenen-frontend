@@ -5,22 +5,23 @@ export const useImageStore = defineStore({
   state: () => {
     return {
       currentSlide: 0,
-      images: [] as Iimage[],
+      images: ([] as Iimage[]) || null,
     }
   },
   actions: {
     setImages(images: Iimage[]) {
       this.images = [...images]
     },
-    nextSlide(index) {
+    setCurrentSlide(index: number) {
       this.currentSlide = index
     },
-    slide(index) {
+    slide(index: number) {
       this.currentSlide += index
     },
   },
   getters: {
     getImages: (state) => state.images,
-    getCurrentSlide: (state) => state.currentSlide,
+    getCurrentIndex: (state) => state.currentSlide,
+    getCurrentSlide: (state) => state.images[state.currentSlide],
   },
 })

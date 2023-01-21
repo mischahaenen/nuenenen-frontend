@@ -13,5 +13,5 @@ declare interface IStep {
 }
 
 declare interface ISteps {
-  data: ISteps[]
+  data: IStep[]
 }

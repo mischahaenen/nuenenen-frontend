@@ -11,18 +11,6 @@
         <div v-if="zone.Description">
           <RichTextComponent :content="zone.Description" />
         </div>
-        <div v-if="zone.__component === 'pages.blog'">
-          <div class="post-grid">
-            <PostComponent v-for="post in posts" :key="post.id" :post="post" />
-          </div>
-        </div>
-        <div v-if="zone.__component === 'pages.event'">
-          <EventComponent
-            v-for="event in events"
-            :key="event.id"
-            :event="event"
-          />
-        </div>
       </div>
     </div>
   </div>
@@ -30,6 +18,5 @@
 
 <script lang="ts" setup>
 const response = await getPage('shop')
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const page = response.data[0].attributes
 </script>
