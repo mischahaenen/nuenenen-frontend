@@ -143,7 +143,6 @@ h3 {
   padding: var(--space-small);
 }
 
-// TODO: Use scss variables when issue is fixed: https://github.com/nuxt/framework/issues/4269
 @media screen and (max-width: 1024px) {
   .card-image-list {
     display: none;

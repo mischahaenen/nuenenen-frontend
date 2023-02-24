@@ -72,7 +72,7 @@ const getPosts = async () => {
   posts.value = res.data
   activeButton.value = 'all'
 }
-const getPostsByStep = async (step) => {
+const getPostsByStep = async (step: string) => {
   const res = await getBlogPostsByStep(step)
   posts.value = res.data
   activeButton.value = step

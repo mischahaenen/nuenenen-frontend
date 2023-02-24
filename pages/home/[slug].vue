@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-if="post.data" class="container">
     <ImageSliderComponent
       :images="post.data[0].attributes.images.data"
     ></ImageSliderComponent>

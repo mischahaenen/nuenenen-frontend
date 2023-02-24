@@ -2,13 +2,15 @@ declare interface IStep {
   id: number
   attributes: {
     Name: string
+    Slug: string
     Description: string
     createdAt: Date
     updatedAt: Date
     publishedAt: Date
-    Quartalsprogramm: any
-    Team: any
-    Images: any
+    logo: {
+      data: Iimage
+    }
+    pageZone: IPageZone[]
   }
 }
 

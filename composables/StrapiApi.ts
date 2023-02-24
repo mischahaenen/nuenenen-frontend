@@ -65,6 +65,21 @@ export const getStepNames = () => {
   })
 }
 
+export const getSteps = () => {
+  const { find } = useStrapi4()
+  return find<ISteps>('api/steps', {
+    populate: '*',
+  })
+}
+
+export const getStep = (slug: string) => {
+  const { find } = useStrapi4()
+  return find<ISteps>('api/steps', {
+    populate: '*',
+    filters: { slug: { $eq: slug } },
+  })
+}
+
 export const getEvents = () => {
   const { find } = useStrapi4()
   return find<IEvents>('api/events', {

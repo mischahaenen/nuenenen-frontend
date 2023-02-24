@@ -30,7 +30,7 @@ const words = props.title?.split(' ') || []
   color: #ffffff;
 
   &.highlight {
-    color: var(--color-accent-50);
+    color: var(--color-accent-400);
   }
 }
 .word {

@@ -2,7 +2,11 @@
   <div class="container home-banner">
     <div class="home-text">
       <h1>{{ props.title }}</h1>
-      <p>{{ props.description }}</p>
+      <p v-if="!props.isRichText">{{ props.description }}</p>
+      <RichTextComponent
+        v-if="props.isRichText"
+        :content="props.description"
+      ></RichTextComponent>
     </div>
     <img
       class="home-image-background"
@@ -21,6 +25,11 @@ const props = defineProps({
   description: {
     type: String,
     required: true,
+  },
+  isRichText: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
 })
 </script>
