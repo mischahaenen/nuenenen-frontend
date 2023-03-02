@@ -10,6 +10,9 @@ declare interface IStep {
     logo: {
       data: Iimage
     }
+    event: {
+      data: IEvent
+    }
     pageZone: IPageZone[]
   }
 }

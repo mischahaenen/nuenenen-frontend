@@ -87,3 +87,10 @@ export const getEvents = () => {
     filters: {},
   })
 }
+
+export const getFooter = () => {
+  const { find } = useStrapi4()
+  return find<IFooter>('api/footer', {
+    populate: '*',
+  })
+}

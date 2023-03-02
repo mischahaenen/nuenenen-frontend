@@ -22,6 +22,7 @@
     "@nuxtjs/strapi": "^1.6.3",
     "@pinia/nuxt": "^0.4.6",
     "editorjs-html": "^3.4.2",
+    "moment": "^2.29.4",
     "nuxt": "3.0.0",
     "pinia": "^2.0.22",
     "vue": "^3.2.33"

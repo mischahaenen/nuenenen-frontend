@@ -19,4 +19,8 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
   },
+  vite: {
+    // @ts-ignore ssr:
+    noExternal: ['moment'],
+  },
 })

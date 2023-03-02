@@ -45,9 +45,9 @@
         <div class="card-content">
           <h3 class="card-title">{{ props.post.attributes.title }}</h3>
           <div class="card-subtitle">
-            <!--  <span>{{
-              $moment(props.post.attributes.createdAt).format('DD. MMMM YYYY')
-            }}</span> -->
+            <span>{{
+              moment(props.post.attributes.createdAt).format('DD. MMMM YYYY')
+            }}</span>
             |
             <span>{{ time }} {{ unit }} zum Lesen</span>
           </div>
@@ -65,6 +65,7 @@
 </template>
 <script lang="ts" setup>
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+import moment from 'moment'
 const url = useStrapiUrl()
 const props = defineProps<{ post: IPost; isFirst: boolean }>()
 

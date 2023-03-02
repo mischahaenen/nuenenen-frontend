@@ -12,7 +12,6 @@
       <nuxt-link to="/home">Home</nuxt-link>
       <nuxt-link to="/abteilung">Abteilung</nuxt-link>
       <nuxt-link to="/mitmachen">Mitmachen</nuxt-link>
-      <nuxt-link to="/shop">Shop</nuxt-link>
     </nav>
   </header>
 </template>
