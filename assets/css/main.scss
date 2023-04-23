@@ -9,16 +9,6 @@ $breakpoint-extra-large: 1280px;
 }
 
 body {
-  /*   --color-primary-50: #ebc4e2;
-  --color-primary-100: #e0a1d1;
-  --color-primary-200: #d47dbf;
-  --color-primary-300: #c85aae;
-  --color-primary-400: #bd369c;
-  --color-primary-500: #b1138b;
-  --color-primary-600: #961076;
-  --color-primary-700: #7c0d61;
-  --color-primary-800: #610a4c;
-  --color-primary-900: #470838; */
   --color-primary-50: #c7cdd6;
   --color-primary-100: #a6afbd;
   --color-primary-200: #8492a5;
@@ -29,16 +19,6 @@ body {
   --color-primary-700: #162740;
   --color-primary-800: #121f32;
   --color-primary-900: #0d1624;
-  /* --color-accent-50: #e4ebc4;
-  --color-accent-100: #d4e0a1;
-  --color-accent-200: #c4d47d;
-  --color-accent-300: #b3c85a;
-  --color-accent-400: #a3bd36;
-  --color-accent-500: #93b113;
-  --color-accent-600: #7d9610;
-  --color-accent-700: #677c0d;
-  --color-accent-800: #51610a;
-  --color-accent-900: #3b4708; */
   --color-accent-50: #ebc4e2;
   --color-accent-100: #e0a1d1;
   --color-accent-200: #d47dbf;
@@ -119,6 +99,7 @@ body.dark {
     margin-bottom: var(--space-small);
   }
 }
+
 a {
   color: inherit;
   outline-color: var(--color-accent-900);
@@ -161,6 +142,7 @@ p {
   overflow: hidden;
   max-width: 75ch;
   line-height: 1.5;
+
   b {
     color: var(--color-black);
   }
