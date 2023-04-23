@@ -84,10 +84,12 @@ onBeforeUnmount(() => {
   flex-direction: column;
   align-items: center;
 }
+
 .slide {
   height: fit-content;
   position: relative;
 }
+
 .slide > *:not(img) {
   position: absolute;
 }
@@ -114,12 +116,15 @@ onBeforeUnmount(() => {
     }
   }
 }
+
 .prev {
   left: 0.5rem;
 }
+
 .next {
   right: 0.5rem;
 }
+
 .prev:hover,
 .next:hover {
   background-color: var(--color-white);
@@ -135,6 +140,7 @@ onBeforeUnmount(() => {
   justify-content: center;
   margin: var(--space-medium) 0 0 0;
 }
+
 .dot {
   cursor: pointer;
   height: 15px;
