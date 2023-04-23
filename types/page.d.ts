@@ -11,6 +11,7 @@ declare interface IPage {
     published_at: string
   }
 }
+
 declare interface IPages {
   data: IPage[]
 }
