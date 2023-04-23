@@ -15,6 +15,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 import edjsHTML from 'editorjs-html'
 const props = defineProps<{
@@ -25,7 +26,8 @@ const props = defineProps<{
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const htmlContent = edjsHTML().parseStrict(JSON.parse(props.content))
 </script>
-<style lang="scss" scoped>
+
+<style scoped lang="scss">
 .preview :deep(p) {
   overflow: hidden;
   display: -webkit-box;
