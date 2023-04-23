@@ -34,6 +34,7 @@ const strapiUrl = useStrapiUrl()
 const footerRes = await getFooter()
 const footer = footerRes.data.attributes || null
 </script>
+
 <style scoped lang="scss">
 .footer-content {
   background-color: var(--color-primary-900);
