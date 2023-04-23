@@ -17,11 +17,13 @@
     </h2>
   </div>
 </template>
-<script setup lang="ts">
+
+<script lang="ts" setup>
 const props = defineProps<{ title: string | undefined }>()
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const words = props.title?.split(' ') || []
 </script>
+
 <style scoped lang="scss">
 .letter {
   color: var(--color-white);
@@ -33,6 +35,7 @@ const words = props.title?.split(' ') || []
     color: var(--color-accent-400);
   }
 }
+
 .word {
   white-space: nowrap;
 }
