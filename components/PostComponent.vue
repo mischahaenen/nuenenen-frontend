@@ -94,6 +94,7 @@ a {
     object-fit: cover;
     border-radius: var(--border-radius) 0 0 var(--border-radius);
   }
+
   .card-content {
     padding: var(--space-medium);
   }
@@ -102,6 +103,7 @@ a {
     padding: 0;
   }
 }
+
 .card-preview {
   display: flex;
   flex-direction: column;
