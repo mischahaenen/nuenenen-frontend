@@ -1,3 +1,3 @@
 <script lang="ts" setup>
-await navigateTo('/home')
+  await navigateTo('/home')
 </script>
