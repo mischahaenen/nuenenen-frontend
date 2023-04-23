@@ -58,6 +58,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 const response = await getPage('home')
 const page = response.data[0].attributes
@@ -72,21 +73,25 @@ const getPosts = async () => {
   posts.value = res.data
   activeButton.value = 'all'
 }
+
 const getPostsByStep = async (step: string) => {
   const res = await getBlogPostsByStep(step)
   posts.value = res.data
   activeButton.value = step
 }
+
 if (page.pageZone.some((zone) => zone.__component === 'pages.blog')) {
   await getPosts()
   const stepRes = await getStepNames()
   steps.value = stepRes.data
 }
+
 if (page.pageZone.some((zone) => zone.__component === 'pages.event')) {
   const res = await getEvents()
   events.value = res.data
 }
 </script>
+
 <style scoped lang="scss">
 .post-grid {
   display: grid;
@@ -126,6 +131,7 @@ if (page.pageZone.some((zone) => zone.__component === 'pages.event')) {
     color: var(--color-white);
   }
 }
+
 .fallback {
   display: flex;
   flex-direction: column;
