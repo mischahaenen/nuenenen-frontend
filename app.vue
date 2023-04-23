@@ -7,6 +7,7 @@
     <BaseFooter />
   </div>
 </template>
+
 <script lang="ts" setup>
 // TODO: Add favicon
 useHead({
