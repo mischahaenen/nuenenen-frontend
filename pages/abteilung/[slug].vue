@@ -91,6 +91,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 import moment from 'moment'
 const route = useRoute()
@@ -102,6 +103,7 @@ useHead({
   title: `Pfadi Nünenen - ${step.Name}`,
 })
 </script>
+
 <style scoped lang="scss">
 .container {
   margin: 6rem auto var(--space-large) auto;
@@ -111,17 +113,20 @@ useHead({
     font-weight: 300;
     color: var(--color-accent-50);
   }
+
   svg {
     fill: var(--color-white);
     height: 24;
     width: 24;
     margin-right: var(--space-small);
   }
+
   .flex {
     display: flex;
     align-items: center;
     gap: var(--space-small);
   }
+
   .title {
     display: flex;
     align-items: center;
@@ -130,10 +135,12 @@ useHead({
     h3 {
       margin: 0;
     }
+
     p {
       font-weight: 700;
     }
   }
+
   .space-medium {
     margin: var(--space-medium) 0;
   }
