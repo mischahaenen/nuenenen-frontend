@@ -36,12 +36,14 @@ export const getPageWithGraphQL = (slug: string) => {
 }
   `)
 }
+
 export const getBlogPosts = () => {
   const { find } = useStrapi4()
   return find<IPosts>('api/blogs', {
     populate: '*',
   })
 }
+
 export const getBlogPostsByStep = (step: string) => {
   const { find } = useStrapi4()
   return find<IPosts>('api/blogs', {
