@@ -16,6 +16,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 const response = await getPage('mitmachen')
 const page = response.data[0].attributes

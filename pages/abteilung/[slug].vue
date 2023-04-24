@@ -73,6 +73,7 @@ useHead({
   title: `Pfadi Nünenen - ${step.value.data[0].attributes.Name || ''}`,
 })
 </script>
+
 <style scoped lang="scss">
 .container {
   margin: 6rem auto var(--space-large) auto;

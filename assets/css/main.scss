@@ -188,12 +188,9 @@ p {
     color: var(--color-accent-50);
   }
 
-  h2 {
-    color: var(--color-white);
-  }
-
+  h2,
   h3 {
-    color: var(--color-accent-50);
+    color: var(--color-white);
   }
 
   p {
@@ -205,8 +202,5 @@ p {
   a {
     color: var(--color-accent-50);
     outline-color: var(--color-accent-900);
-  }
-  svg {
-    fill: var(--color-accent-50);
   }
 }

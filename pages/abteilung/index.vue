@@ -50,7 +50,7 @@ if (page.pageZone.some((zone) => zone.__component === 'pages.steps')) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .flexRow {
   display: flex;
   gap: var(--space-large);
@@ -58,6 +58,7 @@ if (page.pageZone.some((zone) => zone.__component === 'pages.steps')) {
   justify-content: center;
   align-items: flex-end;
 }
+
 .image {
   display: block;
   width: 100%;
@@ -69,9 +70,11 @@ h3 {
   text-align: center;
   margin-top: var(--space-small);
 }
+
 a {
   text-decoration: none;
 }
+
 a:hover h3 {
   text-decoration: underline;
 }

@@ -10,6 +10,7 @@ declare interface IFooter {
     }
   }
 }
+
 declare interface ILink {
   Name: string
   Link: string

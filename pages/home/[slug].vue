@@ -17,6 +17,7 @@
     <RichTextComponent :content="post.data[0].attributes.description" />
   </div>
 </template>
+
 <script lang="ts" setup>
 import moment from 'moment'
 const route = useRoute()
@@ -27,6 +28,7 @@ useHead({
   title: `Pfadi Nünenen - ${post.data[0].attributes.title}`,
 })
 </script>
+
 <style scoped lang="scss">
 .container {
   margin: 6rem auto var(--space-large) auto;

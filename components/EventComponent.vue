@@ -6,6 +6,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts" setup>
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<{ event: IEvent }>()

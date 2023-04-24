@@ -92,4 +92,7 @@ svg {
 .space-medium {
   margin: var(--space-medium) 0;
 }
+svg {
+  fill: var(--color-white);
+}
 </style>

@@ -15,6 +15,7 @@
     />
   </div>
 </template>
+
 <script lang="ts" setup>
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps({
@@ -33,6 +34,7 @@ const props = defineProps({
   },
 })
 </script>
+
 <style scoped lang="scss">
 .home-banner {
   height: 100vh;
