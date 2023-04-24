@@ -74,12 +74,24 @@ export const getSteps = () => {
 
 export const getStep = (slug: string) => {
   const { find } = useStrapi4()
-  return find<ISteps>('api/steps', {
+  return useAsyncData(() =>
+    find<ISteps>('api/steps', {
+      populate: {
+        pageZone: {
+          populate: '*',
+        },
+      },
+      filters: { slug: { $eq: slug } },
+    })
+  )
+}
+export const getStrapiUser = (id: string) => {
+  const { find } = useStrapi4()
+  return find<User>('api/users', {
     populate: '*',
-    filters: { slug: { $eq: slug } },
+    filters: { id: { $eq: id } },
   })
 }
-
 export const getEvents = () => {
   const { find } = useStrapi4()
   return find<IEvents>('api/events', {

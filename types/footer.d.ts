@@ -5,7 +5,7 @@ declare interface IFooter {
       Title: string
       Links: Link[]
       Images: {
-        data: Iimage[]
+        data: Image[]
       }
     }
   }

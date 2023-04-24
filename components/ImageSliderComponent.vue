@@ -49,9 +49,10 @@
 
 <script lang="ts" setup>
 import { useImageStore } from '~~/store/image'
+import { Image } from '~~/types/image'
 const imageStore = useImageStore()
 const props = defineProps<{
-  images: Iimage[]
+  images: Image[]
 }>()
 onMounted(() => {
   imageStore.setImages(props.images)

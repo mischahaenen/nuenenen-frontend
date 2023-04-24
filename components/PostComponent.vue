@@ -17,9 +17,9 @@
           </div>
           <h2 class="card-title">{{ props.post.attributes.title }}</h2>
           <div class="card-subtitle">
-            <!-- <span>{{
-              $moment(props.post.attributes.createdAt).format('DD. MMMM YYYY')
-            }}</span> -->
+            <span>{{
+              moment(props.post.attributes.createdAt).format('DD. MMMM YYYY')
+            }}</span>
             |
             <span>{{ time }} {{ unit }} zum Lesen</span>
           </div>
@@ -155,6 +155,23 @@ h3 {
 
   .card-footer-grid {
     padding: var(--space-small);
+  }
+}
+.dark-mode {
+  .card-detailed {
+    background: var(--color-primary-800);
+    box-shadow: none;
+  }
+  .card-preview {
+    background: var(--color-primary-800);
+    box-shadow: none;
+  }
+  .card-subtitle {
+    color: var(--color-white);
+  }
+
+  .card-footer {
+    color: var(--color-accent-500);
   }
 }
 </style>

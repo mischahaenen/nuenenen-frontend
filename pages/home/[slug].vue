@@ -5,12 +5,12 @@
     ></ImageSliderComponent>
     <h1>{{ post.data[0].attributes.title }}</h1>
     <p>
-      <!--  {{
-        $moment(post.data[0].attributes.createdAt)
+      {{
+        moment(post.data[0].attributes.createdAt)
           .locale('de')
           .startOf('day')
           .fromNow()
-      }} -->
+      }}
     </p>
     <h3>#{{ post.data[0].attributes.step.data.attributes.Name }}</h3>
     <!-- eslint-disable-next-line vue/no-v-html -->
@@ -18,6 +18,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+import moment from 'moment'
 const route = useRoute()
 const post = await getBlogPost(route.params.slug as string)
 // navigate to 404 page when no slug is found

@@ -8,7 +8,7 @@ declare interface IStep {
     updatedAt: Date
     publishedAt: Date
     logo: {
-      data: Iimage
+      data: Image
     }
     event: {
       data: IEvent

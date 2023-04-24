@@ -3,12 +3,14 @@ declare interface IPost {
   attributes: {
     title: string
     description: string
-    step: string
+    step: {
+      data: IStep
+    }
     createdAt: Date
     author: string
     slug: string
     images: {
-      data: Iimage[]
+      data: Image[]
     }
   }
 }

@@ -9,16 +9,6 @@ $breakpoint-extra-large: 1280px;
 }
 
 body {
-  /*   --color-primary-50: #ebc4e2;
-  --color-primary-100: #e0a1d1;
-  --color-primary-200: #d47dbf;
-  --color-primary-300: #c85aae;
-  --color-primary-400: #bd369c;
-  --color-primary-500: #b1138b;
-  --color-primary-600: #961076;
-  --color-primary-700: #7c0d61;
-  --color-primary-800: #610a4c;
-  --color-primary-900: #470838; */
   --color-primary-50: #c7cdd6;
   --color-primary-100: #a6afbd;
   --color-primary-200: #8492a5;
@@ -29,16 +19,6 @@ body {
   --color-primary-700: #162740;
   --color-primary-800: #121f32;
   --color-primary-900: #0d1624;
-  /* --color-accent-50: #e4ebc4;
-  --color-accent-100: #d4e0a1;
-  --color-accent-200: #c4d47d;
-  --color-accent-300: #b3c85a;
-  --color-accent-400: #a3bd36;
-  --color-accent-500: #93b113;
-  --color-accent-600: #7d9610;
-  --color-accent-700: #677c0d;
-  --color-accent-800: #51610a;
-  --color-accent-900: #3b4708; */
   --color-accent-50: #ebc4e2;
   --color-accent-100: #e0a1d1;
   --color-accent-200: #d47dbf;
@@ -68,42 +48,34 @@ body {
   color: var(--color-black);
 }
 
-/* Enable Dark-Mode */
-body.dark {
-  --color-base: hsl(0deg 0% 0%);
-  --color-base-1: hsl(0deg 0% 17%);
-  --color-contrast: hsl(0deg 0% 100%);
-  --color-contrast-1: hsl(0deg 0% 95%);
-}
-
 .container {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
 }
 
+.colored-section {
+  padding: var(--space-extra-large) 0;
+}
+
 .section {
   padding: var(--space-extra-large) 0;
 }
-
-.colored-section {
-  background-color: var(--color-primary-900);
-  padding: var(--space-extra-large) 0;
-
-  h1,
-  h2,
-  h3 {
-    color: var(--color-white);
+@media screen and (max-width: 1024px) {
+  .container {
+    padding: 0 var(--space-medium);
   }
 
-  p {
-    color: var(--color-grey);
-    b {
-      color: var(--color-white);
-    }
+  .section {
+    padding: var(--space-medium);
+    margin-top: var(--space-medium);
+  }
+
+  .colored-section {
+    padding: var(--space-medium);
+    margin-bottom: var(--space-medium);
   }
 }
-
 @media screen and (max-width: 768px) {
   .container {
     padding: 0 var(--space-small);
@@ -119,10 +91,6 @@ body.dark {
     margin-bottom: var(--space-small);
   }
 }
-a {
-  color: inherit;
-  outline-color: var(--color-accent-900);
-}
 
 img {
   display: block;
@@ -137,31 +105,108 @@ img {
 }
 
 h1 {
-  color: var(--color-primary-700);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 3rem;
 }
 
 h2 {
-  color: var(--color-primary-700);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 2rem;
 }
 
 h3 {
-  color: var(--color-primary-700);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.5rem;
 }
 
 p {
-  color: var(--color-black);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 100;
   overflow: hidden;
   max-width: 75ch;
   line-height: 1.5;
-  b {
+}
+.light-mode {
+  h1 {
+    color: var(--color-primary-700);
+  }
+
+  h2 {
+    color: var(--color-primary-700);
+  }
+
+  h3 {
+    color: var(--color-primary-700);
+  }
+
+  p {
     color: var(--color-black);
+    b {
+      color: var(--color-black);
+    }
+  }
+  a {
+    color: var(--color-primary-500);
+    outline-color: var(--color-primary-700);
+  }
+  svg {
+    fill: var(--color-primary-700);
+  }
+
+  .colored-section {
+    background-color: var(--color-primary-900);
+
+    h1,
+    h2,
+    h3 {
+      color: var(--color-white);
+    }
+
+    p {
+      color: var(--color-grey);
+      b {
+        color: var(--color-white);
+      }
+    }
+    a {
+      color: var(--color-accent-50);
+      outline-color: var(--color-accent-900);
+    }
+    svg {
+      fill: var(--color-accent-50);
+    }
+  }
+}
+.dark-mode {
+  body {
+    background-color: var(--color-primary-900);
+  }
+  .colored-section {
+    background-color: var(--color-primary-800);
+  }
+  h1 {
+    color: var(--color-accent-50);
+  }
+
+  h2 {
+    color: var(--color-white);
+  }
+
+  h3 {
+    color: var(--color-accent-50);
+  }
+
+  p {
+    color: var(--color-white);
+    b {
+      color: var(--color-white);
+    }
+  }
+  a {
+    color: var(--color-accent-50);
+    outline-color: var(--color-accent-900);
+  }
+  svg {
+    fill: var(--color-accent-50);
   }
 }

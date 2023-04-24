@@ -5,7 +5,7 @@
         to="/home"
         :class="scroll > 50 ? 'home-link-scrolled' : 'home-link'"
       >
-        <b>PFADI</b> NÜNENEN
+        <p><b>PFADI</b> NÜNENEN</p>
       </nuxt-link>
     </div>
     <nav class="nav">
@@ -22,7 +22,7 @@
 const scroll = useScrollY()
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .header {
   padding: 0 var(--space-large);
   position: fixed;
@@ -66,12 +66,16 @@ const scroll = useScrollY()
   color: var(--color-primary-500);
 }
 
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
 .nav > * {
   color: var(--color-black);
   text-decoration: none;
-  margin-top: 4px;
-  margin-right: 4rem;
-  padding-bottom: 4px;
 }
 
 .nav > *:last-of-type {
@@ -80,5 +84,31 @@ const scroll = useScrollY()
 
 .nav > .router-link-active {
   font-weight: bold;
+}
+.dark-mode {
+  .nav > * {
+    color: var(--color-white);
+  }
+  .header-scrolled {
+    background-color: var(--color-primary-800);
+    color: var(--color-white);
+  }
+  .home-link {
+    p {
+      color: var(--color-white);
+    }
+  }
+
+  .home-link b {
+    color: var(--color-accent-100);
+  }
+  .home-link-scrolled {
+    p {
+      color: var(--color-white);
+    }
+    b {
+      color: var(--color-accent-100);
+    }
+  }
 }
 </style>

@@ -6,7 +6,17 @@ export default defineNuxtConfig({
   plugins: [],
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-  modules: ['@nuxtjs/strapi', '@pinia/nuxt'],
+  runtimeConfig: {
+    strapi: {
+      url: 'http://localhost:1337',
+    },
+    public: {
+      strapi: {
+        url: 'http://localhost:1337',
+      },
+    },
+  },
+  modules: ['@nuxtjs/strapi', '@pinia/nuxt', '@nuxtjs/color-mode'],
   strapi: {
     url: process.env.STRAPI_URL || 'http://localhost:1337',
     prefix: '',

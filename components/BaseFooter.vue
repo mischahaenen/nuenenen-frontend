@@ -15,6 +15,10 @@
       </div>
       <div>
         <h2>Soziale Medien</h2>
+        <h2>
+          {{ $colorMode.value === 'dark' ? 'Hell' : 'Dunkel' }}-Modus gefällig?
+        </h2>
+        <BaseColorSwitch></BaseColorSwitch>
       </div>
       <div class="sponsorLogo">
         <h2>Sponsoren</h2>

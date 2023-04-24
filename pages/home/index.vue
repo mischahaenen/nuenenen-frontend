@@ -6,54 +6,63 @@
       :key="index"
       :class="index % 2 === 0 ? 'colored-section' : 'section'"
     >
-      <div class="container">
-        <h2 v-if="index % 2 !== 0">{{ zone.Title }}</h2>
-        <ColoredTitleComponent v-else :title="zone.Title" />
+      <div v-if="zone.__component == 'pages.section'" class="container">
+        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
         <RichTextComponent
           v-if="zone.Description"
           :content="zone.Description"
         />
-        <div v-if="zone.__component === 'pages.blog'">
-          <div class="blog-filter">
-            <button
-              :class="{ active: activeButton === 'all' }"
-              @click="getPosts()"
-            >
-              Alle
-            </button>
-            <button
-              v-for="(step, jndex) of steps"
-              :key="jndex"
-              :class="{ active: activeButton === step.attributes.Name }"
-              @click="getPostsByStep(step.attributes.Name)"
-            >
-              {{ step.attributes.Name }}
-            </button>
-          </div>
-          <div v-if="posts.length" class="post-grid">
-            <PostComponent
-              v-for="(post, i) in posts"
-              :key="post.id"
-              :post="post"
-              :is-first="i === 0"
-              class="post-grid-item"
-            />
-          </div>
-          <div v-else class="fallback">
-            <p>Hier wurde noch nichts veröffentlicht.</p>
-            <img
-              src="../../assets/svg/not_found.svg"
-              alt="Space Aliens nothing found image"
-            />
-          </div>
+      </div>
+      <div v-if="zone.__component === 'pages.blog'" class="container">
+        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+        <RichTextComponent
+          v-if="zone.Description"
+          :content="zone.Description"
+        />
+        <div class="blog-filter">
+          <button
+            :class="{ active: activeButton === 'all' }"
+            @click="getPosts()"
+          >
+            Alle
+          </button>
+          <button
+            v-for="(step, jndex) of steps"
+            :key="jndex"
+            :class="{ active: activeButton === step.attributes.Name }"
+            @click="getPostsByStep(step.attributes.Name)"
+          >
+            {{ step.attributes.Name }}
+          </button>
         </div>
-        <div v-if="zone.__component === 'pages.event'">
-          <EventComponent
-            v-for="event in events"
-            :key="event.id"
-            :event="event"
+        <div v-if="posts.length" class="post-grid">
+          <PostComponent
+            v-for="(post, i) in posts"
+            :key="post.id"
+            :post="post"
+            :is-first="i === 0"
+            class="post-grid-item"
           />
         </div>
+        <div v-else class="fallback">
+          <p>Hier wurde noch nichts veröffentlicht.</p>
+          <img
+            src="../../assets/svg/not_found.svg"
+            alt="Space Aliens nothing found image"
+          />
+        </div>
+      </div>
+      <div v-if="zone.__component === 'pages.event'" class="container">
+        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+        <RichTextComponent
+          v-if="zone.Description"
+          :content="zone.Description"
+        />
+        <EventComponent
+          v-for="event in events"
+          :key="event.id"
+          :event="event"
+        />
       </div>
     </div>
   </div>
@@ -124,6 +133,24 @@ if (page.pageZone.some((zone) => zone.__component === 'pages.event')) {
   .active {
     background-color: var(--color-accent-900);
     color: var(--color-white);
+  }
+}
+.dark-mode {
+  .blog-filter {
+    button {
+      background: var(--color-primary-500);
+      color: var(--color-primary-100);
+      outline-color: var(--color-primary-50);
+
+      &:hover {
+        background-color: var(--color-primary-400);
+        color: var(--color-primary-100);
+      }
+    }
+    .active {
+      background-color: var(--color-primary-200);
+      color: var(--color-primary-800);
+    }
   }
 }
 .fallback {

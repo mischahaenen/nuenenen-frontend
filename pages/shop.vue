@@ -6,11 +6,12 @@
       :key="index"
       :class="index % 2 === 0 ? 'colored-section' : 'section'"
     >
-      <div class="container">
-        <h2>{{ zone.Title }}</h2>
-        <div v-if="zone.Description">
-          <RichTextComponent :content="zone.Description" />
-        </div>
+      <div v-if="zone.__component == 'pages.section'" class="container">
+        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+        <RichTextComponent
+          v-if="zone.Description"
+          :content="zone.Description"
+        />
       </div>
     </div>
   </div>

@@ -6,13 +6,20 @@
       :key="index"
       :class="index % 2 === 0 ? 'colored-section' : 'section'"
     >
-      <div class="container">
-        <h2 v-if="index % 2 !== 0">{{ zone.Title }}</h2>
-        <ColoredTitleComponent v-else :title="zone.Title" />
-        <div v-if="zone.Description">
-          <RichTextComponent :content="zone.Description" />
-        </div>
-        <div v-if="zone.__component === 'pages.steps'" class="flexRow">
+      <div v-if="zone.__component == 'pages.section'" class="container">
+        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+        <RichTextComponent
+          v-if="zone.Description"
+          :content="zone.Description"
+        />
+      </div>
+      <div v-if="zone.__component === 'pages.steps'" class="container">
+        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+        <RichTextComponent
+          v-if="zone.Description"
+          :content="zone.Description"
+        />
+        <div class="flexRow">
           <nuxt-link
             v-for="step of steps"
             :key="step.attributes.Name"
