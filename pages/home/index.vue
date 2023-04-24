@@ -140,6 +140,7 @@ if (page.pageZone.some((zone) => zone.__component === 'pages.event')) {
     color: var(--color-white);
   }
 }
+
 .dark-mode {
   .blog-filter {
     button {
@@ -158,6 +159,7 @@ if (page.pageZone.some((zone) => zone.__component === 'pages.event')) {
     }
   }
 }
+
 .fallback {
   display: flex;
   flex-direction: column;
