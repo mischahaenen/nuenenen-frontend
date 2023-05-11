@@ -1,4 +1,4 @@
-declare interface IPage {
+declare interface Page {
   id: number
   attributes: {
     title: string
@@ -12,6 +12,6 @@ declare interface IPage {
   }
 }
 
-declare interface IPages {
-  data: IPage[]
+declare interface PageResponse {
+  data: Page[]
 }

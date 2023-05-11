@@ -63,7 +63,5 @@ declare interface ImageV2 {
 }
 
 declare interface ImagesResponse {
-  images: {
-    data: Image[]
-  }
+  data: Image[]
 }

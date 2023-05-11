@@ -80,11 +80,13 @@ svg {
 .flex {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-small);
 }
 .title {
   display: flex;
   align-items: center;
+  justify-content: center;
   p {
     font-weight: 700;
   }
@@ -93,6 +95,11 @@ svg {
   margin: var(--space-medium) 0;
 }
 svg {
-  fill: var(--color-white);
+  fill: var(--color-primary-700);
+}
+.dark-mode {
+  svg {
+    fill: var(--color-white);
+  }
 }
 </style>

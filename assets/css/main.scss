@@ -43,15 +43,11 @@ body {
   padding: 0;
 }
 
-::selection {
-  background-color: var(--color-accent-50);
-  color: var(--color-black);
-}
-
 .container {
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
 .colored-section {
@@ -126,7 +122,61 @@ p {
   max-width: 75ch;
   line-height: 1.5;
 }
+
+.button {
+  border: none;
+  padding: var(--space-small);
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.primary-button {
+  background: var(--color-primary-700);
+  color: var(--color-white);
+  transition: all 0.2s ease-in-out;
+  outline-color: var(--color-accent-50);
+
+  &:hover {
+    background-color: var(--color-primary-500);
+    color: var(--color-accent-50);
+  }
+}
+
+.accent-button {
+  background-color: transparent;
+  color: var(--color-accent-900);
+  transition: all 0.2s ease-in-out;
+  outline-color: var(--color-accent-900);
+
+  &:hover {
+    background-color: var(--color-accent-50);
+    color: var(--color-accent-900);
+  }
+}
+
+.link-button {
+  background: var(--color-primary-700);
+  color: var(--color-white) !important;
+  transition: all 0.2s ease-in-out;
+  outline-color: var(--color-accent-50);
+  text-decoration: none;
+  border: none;
+  padding: var(--space-small);
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 700;
+
+  &:hover {
+    background-color: var(--color-primary-500);
+    color: var(--color-accent-50) !important;
+  }
+}
+
 .light-mode {
+  ::selection {
+    background-color: var(--color-accent-50);
+  }
   h1 {
     color: var(--color-primary-700);
   }
@@ -149,35 +199,16 @@ p {
     color: var(--color-primary-500);
     outline-color: var(--color-primary-700);
   }
-  svg {
-    fill: var(--color-primary-700);
-  }
 
   .colored-section {
-    background-color: var(--color-primary-900);
-
-    h1,
-    h2,
-    h3 {
-      color: var(--color-white);
-    }
-
-    p {
-      color: var(--color-grey);
-      b {
-        color: var(--color-white);
-      }
-    }
-    a {
-      color: var(--color-accent-50);
-      outline-color: var(--color-accent-900);
-    }
-    svg {
-      fill: var(--color-accent-50);
-    }
+    background-color: var(--color-primary-50);
   }
 }
 .dark-mode {
+  ::selection {
+    background-color: var(--color-accent-50);
+    color: var(--color-black);
+  }
   body {
     background-color: var(--color-primary-900);
   }
@@ -202,5 +233,35 @@ p {
   a {
     color: var(--color-accent-50);
     outline-color: var(--color-accent-900);
+  }
+  .primary-button {
+    background: var(--color-accent-700);
+    color: var(--color-white);
+    outline-color: var(--color-accent-50);
+
+    &:hover {
+      background-color: var(--color-primary-500);
+      color: var(--color-accent-50);
+    }
+  }
+
+  .link-button {
+    background: var(--color-accent-700);
+    outline-color: var(--color-accent-50);
+
+    &:hover {
+      background-color: var(--color-accent-500);
+      color: var(--color-primary-50) !important;
+    }
+  }
+  .accent-button {
+    background: var(--color-primary-500);
+    color: var(--color-primary-100);
+    outline-color: var(--color-primary-50);
+
+    &:hover {
+      background-color: var(--color-primary-400);
+      color: var(--color-primary-100);
+    }
   }
 }

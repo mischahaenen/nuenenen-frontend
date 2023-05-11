@@ -11,7 +11,7 @@
     <div
       v-for="(zone, index) in step.data[0].attributes.pageZone"
       :key="index"
-      :class="index % 2 === 0 ? 'colored-section' : 'section'"
+      :class="index % 2 === 0 ? 'section' : 'colored-section'"
     >
       <div v-if="zone.__component == 'pages.section'" class="container">
         <TitleComponent :title="zone.Title" :index="index"></TitleComponent>

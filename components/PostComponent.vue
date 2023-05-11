@@ -104,6 +104,16 @@ a {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .card-detailed {
+    flex-direction: column;
+    .card-image {
+      max-width: 100%;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+  }
+}
+
 .card-preview {
   display: flex;
   flex-direction: column;

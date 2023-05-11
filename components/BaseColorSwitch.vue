@@ -28,7 +28,7 @@ const IconSystem = resolveComponent('IconSystem')
 const IconDark = resolveComponent('IconDark')
 const IconLight = resolveComponent('IconLight')
 </script>
-<style scoped>
+<style scoped lang="scss">
 ul {
   list-style: none;
   padding: 0;
@@ -61,5 +61,11 @@ ul li {
 
 .selected .feather {
   color: var(--color-accent-500);
+}
+
+.dark-mode {
+  svg {
+    color: var(--color-white);
+  }
 }
 </style>

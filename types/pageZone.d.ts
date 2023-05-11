@@ -8,5 +8,6 @@ declare interface IPageZone {
   files?: FilesResponse
   images?: ImagesResponse
   members?: UsersResponse
+  iFrame?: string
   __component: string
 }

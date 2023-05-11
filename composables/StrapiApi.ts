@@ -1,13 +1,17 @@
 export const getPage = (title: string) => {
   const { find } = useStrapi4()
-  return find<IPages>('api/pages', {
-    populate: '*',
+  return find<PageResponse>('api/pages', {
+    populate: {
+      pageZone: {
+        populate: '*',
+      },
+    },
     filters: { slug: { $eq: title } },
   })
 }
 export const getPageWithGraphQL = (slug: string) => {
   const graphql = useStrapiGraphQL()
-  return graphql<IPages>(`
+  return graphql<PageResponse>(`
   query {
   pages(filters: { Slug: { eq: "${slug}" } }) {
     data {
@@ -63,13 +67,7 @@ export const getBlogPost = (slug: string) => {
 export const getStepNames = () => {
   const { find } = useStrapi4()
   return find<ISteps>('api/steps', {
-    fields: ['Name'],
-  })
-}
-
-export const getSteps = () => {
-  const { find } = useStrapi4()
-  return find<ISteps>('api/steps', {
+    fields: ['Name', 'Slug', 'logo'],
     populate: '*',
   })
 }

@@ -3,10 +3,7 @@
     <div class="slide">
       <img
         class="fade active-slide"
-        :src="
-          useStrapiUrl() +
-          imageStore.getCurrentSlide.attributes.formats.large.url
-        "
+        :src="useStrapiUrl() + getImageUrl()"
         :alt="imageStore.getCurrentSlide.attributes.alternativeText"
       />
       <button
@@ -49,7 +46,6 @@
 
 <script lang="ts" setup>
 import { useImageStore } from '~~/store/image'
-import { Image } from '~~/types/image'
 const imageStore = useImageStore()
 const props = defineProps<{
   images: Image[]
@@ -57,6 +53,12 @@ const props = defineProps<{
 onMounted(() => {
   imageStore.setImages(props.images)
 })
+const getImageUrl = () => {
+  return (
+    imageStore.getCurrentSlide.attributes.formats.large?.url ||
+    imageStore.getCurrentSlide.attributes.url
+  )
+}
 const selectSlide = (index: number) => {
   imageStore.setCurrentSlide(index)
 }

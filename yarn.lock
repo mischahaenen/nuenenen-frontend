@@ -1405,6 +1405,11 @@
   "resolved" "https://registry.npmjs.org/@types/stack-utils/-/stack-utils-2.0.1.tgz"
   "version" "2.0.1"
 
+"@types/web-bluetooth@^0.0.16":
+  "integrity" "sha512-oh8q2Zc32S6gd/j50GowEjKLoOVOwHP/bWVjKJInBwQqdOYMdPrf1oVlelTlyfFK3CKxL1uahMDAr+vy8T7yMQ=="
+  "resolved" "https://registry.npmjs.org/@types/web-bluetooth/-/web-bluetooth-0.0.16.tgz"
+  "version" "0.0.16"
+
 "@types/yargs-parser@*":
   "integrity" "sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA=="
   "resolved" "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-21.0.0.tgz"
@@ -1704,6 +1709,16 @@
   "resolved" "https://registry.npmjs.org/@vue/test-utils/-/test-utils-2.2.7.tgz"
   "version" "2.2.7"
 
+"@vueuse/core@^10.1.0":
+  "integrity" "sha512-3Znoa5m5RO+z4/C9w6DRaKTR3wCVJvD5rav8HTDGsr+7rOZRHtcgFJ8NcCs0ZvIpmev2kExTa311ns5j2RbzDQ=="
+  "resolved" "https://registry.npmjs.org/@vueuse/core/-/core-10.1.0.tgz"
+  "version" "10.1.0"
+  dependencies:
+    "@types/web-bluetooth" "^0.0.16"
+    "@vueuse/metadata" "10.1.0"
+    "@vueuse/shared" "10.1.0"
+    "vue-demi" ">=0.14.0"
+
 "@vueuse/head@^1.0.15":
   "integrity" "sha512-YmUdbzNdCnhmrAFxGnJS+Rixj+swE+TQC9OEaYDHIro6gE7W11jugcdwVP00HrA4WRQhg+TOQ4YcY2oL/PP1hw=="
   "resolved" "https://registry.npmjs.org/@vueuse/head/-/head-1.0.22.tgz"
@@ -1713,6 +1728,18 @@
     "@unhead/schema" "^1.0.9"
     "@unhead/ssr" "^1.0.9"
     "@unhead/vue" "^1.0.9"
+
+"@vueuse/metadata@10.1.0":
+  "integrity" "sha512-cM28HjDEw5FIrPE9rgSPFZvQ0ZYnOLAOr8hl1XM6tFl80U3WAR5ROdnAqiYybniwP5gt9MKKAJAqd/ab2aHkqg=="
+  "resolved" "https://registry.npmjs.org/@vueuse/metadata/-/metadata-10.1.0.tgz"
+  "version" "10.1.0"
+
+"@vueuse/shared@10.1.0":
+  "integrity" "sha512-2X52ogu12i9DkKOQ01yeb/BKg9UO87RNnpm5sXkQvyORlbq8ONS5l39MYkjkeVWWjdT0teJru7a2S41dmHmqjQ=="
+  "resolved" "https://registry.npmjs.org/@vueuse/shared/-/shared-10.1.0.tgz"
+  "version" "10.1.0"
+  dependencies:
+    "vue-demi" ">=0.14.0"
 
 "@webassemblyjs/ast@1.11.1":
   "integrity" "sha512-ukBh14qFLjxTQNTXocdyksN5QdM28S1CxHt2rdskFyL+xFV7VremuBLVbmCePj+URalXBENx/9Lm7lnhihtCSw=="
@@ -8521,6 +8548,11 @@
   "integrity" "sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A=="
   "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.13.11.tgz"
   "version" "0.13.11"
+
+"vue-demi@>=0.14.0":
+  "integrity" "sha512-gt58r2ogsNQeVoQ3EhoUAvUsH9xviydl0dWJj7dabBC/2L4uBId7ujtCwDRD0JhkGsV1i0CtfLAeyYKBht9oWg=="
+  "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.0.tgz"
+  "version" "0.14.0"
 
 "vue-devtools-stub@^0.1.0":
   "integrity" "sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ=="
