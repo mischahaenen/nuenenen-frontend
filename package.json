@@ -19,9 +19,9 @@
     "*.**": "prettier --check --ignore-unknown"
   },
   "dependencies": {
+    "@nuxtjs/strapi": "^1.9.1",
     "@pinia/nuxt": "^0.4.6",
     "@vueuse/core": "^10.1.0",
-    "@nuxtjs/strapi": "^1.9.1",
     "cross-env": "^7.0.3",
     "editorjs-html": "^3.4.2",
     "express": "^4.18.2",
