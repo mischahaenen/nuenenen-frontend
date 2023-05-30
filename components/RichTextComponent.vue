@@ -22,7 +22,7 @@ const props = defineProps<{
   isPreview?: boolean
   previewLines?: number
 }>()
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 const htmlContent = edjsHTML().parseStrict(JSON.parse(props.content))
 </script>
 <!-- TODO: Fix dirty solution .center -->

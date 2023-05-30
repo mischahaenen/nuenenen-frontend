@@ -64,7 +64,6 @@
   </nuxt-link>
 </template>
 <script lang="ts" setup>
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import moment from 'moment'
 const url = useStrapiUrl()
 const props = defineProps<{ post: IPost; isFirst: boolean }>()
@@ -75,7 +74,7 @@ const readingTime = (text: string) => {
   return Math.ceil(words / wpm)
 }
 const time = readingTime(props.post.attributes.description)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 const unit = time === 1 ? 'Minute' : 'Minuten'
 </script>
 <style scoped lang="scss">

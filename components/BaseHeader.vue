@@ -19,7 +19,7 @@
 
 <script lang="ts" setup>
 // add class on scroll
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 const scroll = useScrollY()
 </script>
 
