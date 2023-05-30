@@ -48,7 +48,10 @@
 import { useImageStore } from '~~/store/image'
 const imageStore = useImageStore()
 const props = defineProps<{
-  images: Image[]
+  images: {
+    type: Image[]
+    required: true
+  }
 }>()
 onMounted(() => {
   imageStore.setImages(props.images)

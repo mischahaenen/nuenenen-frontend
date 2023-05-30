@@ -8,10 +8,12 @@
       v-if="props.zone.Description"
       :content="props.zone.Description"
     />
-    <KastenzeddelComponent v-if="props.zone.event" :event="props.zone.event" />
   </div>
 </template>
 
-<script lang="ts" setup>
-const props = defineProps<{ zone: IPageZone; index: number }>()
+<script setup lang="ts">
+const props = defineProps<{
+  zone: IPageZone
+  index: number
+}>()
 </script>

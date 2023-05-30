@@ -1,31 +1,35 @@
 <template>
-  <div v-if="post.data" class="container">
-    <ImageSliderComponent
-      :images="post.data[0].attributes.images.data"
-    ></ImageSliderComponent>
-    <h1>{{ post.data[0].attributes.title }}</h1>
-    <p>
-      {{
-        moment(post.data[0].attributes.createdAt)
-          .locale('de')
-          .startOf('day')
-          .fromNow()
-      }}
-    </p>
-    <h3>#{{ post.data[0].attributes.step.data.attributes.Name }}</h3>
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <RichTextComponent :content="post.data[0].attributes.description" />
+  <div v-if="postData" class="container">
+    <ImageSliderComponent :images="postData.images.data"></ImageSliderComponent>
+    <h1>{{ postData.title }}</h1>
+
+    <h3>
+      {{ postData.step.data.attributes.Name }} -
+      <span>
+        {{ moment(postData.createdAt).locale('de').startOf('day').fromNow() }}
+      </span>
+    </h3>
+    <RichTextComponent :content="postData.description" />
   </div>
 </template>
 
 <script lang="ts" setup>
+import { ref, computed } from 'vue'
 import moment from 'moment'
 const route = useRoute()
-const post = await getBlogPost(route.params.slug as string)
-// navigate to 404 page when no slug is found
-if (!post.data) await navigateTo('/not-found')
+const post = ref(null)
+
+try {
+  post.value = await getBlogPost(route.params.slug as string)
+  if (!post.value.data) throw new Error('No post found')
+} catch (error) {
+  await navigateTo('/not-found')
+}
+
+const postData = computed(() => post.value?.data[0].attributes || null)
+
 useHead({
-  title: `Pfadi Nünenen - ${post.data[0].attributes.title}`,
+  title: `Pfadi Nünenen - ${postData.value?.title || 'Not found'}`,
 })
 </script>
 

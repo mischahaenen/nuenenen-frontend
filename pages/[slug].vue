@@ -57,18 +57,6 @@
           />
         </div>
       </div>
-      <div v-if="zone.__component === 'pages.event'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <RichTextComponent
-          v-if="zone.Description"
-          :content="zone.Description"
-        />
-        <EventComponent
-          v-for="event in events"
-          :key="event.id"
-          :event="event"
-        />
-      </div>
       <div v-if="zone.__component === 'pages.steps'" class="container">
         <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
         <RichTextComponent
