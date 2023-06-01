@@ -1,10 +1,16 @@
 <template>
-  <div v-if="imageStore.getImages.length" class="slider">
+  <div v-if="pending">
+    <p>Loading...</p>
+  </div>
+  <div v-else-if="error">
+    <p>Error loading images</p>
+  </div>
+  <div v-else-if="images?.length" class="slider">
     <div class="slide">
       <img
         class="fade active-slide"
         :src="useStrapiUrl() + getImageUrl()"
-        :alt="imageStore.getCurrentSlide.attributes.alternativeText"
+        :alt="imageStore.getCurrentSlide.attributes.alternativeText || ''"
       />
       <button
         class="prev"
@@ -12,6 +18,7 @@
         :disabled="imageStore.getCurrentIndex === 0"
         @click="slide(-1)"
       >
+        <span class="sr-only">Previous Image</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <path d="M28.05 36 16 23.95 28.05 11.9l2.15 2.15-9.9 9.9 9.9 9.9Z" />
         </svg>
@@ -24,97 +31,125 @@
         "
         @click="slide(1)"
       >
+        <span class="sr-only">Next Image</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
           <path d="m18.75 36-2.15-2.15 9.9-9.9-9.9-9.9 2.15-2.15L30.8 23.95Z" />
         </svg>
       </button>
     </div>
-    <div class="dots">
-      <div v-if="imageStore.getImages.length < 10">
-        <button
-          v-for="(image, index) in imageStore.getImages"
-          :key="image.id"
-          class="dot"
-          :aria-label="`Select Image ${index + 1}`"
-          :class="{ active: imageStore.getCurrentIndex === index }"
-          @click="selectSlide(index)"
-        ></button>
-      </div>
+    <div v-if="images?.length < 10" class="dots">
+      <button
+        v-for="(image, index) in images"
+        :key="image.id"
+        class="dot"
+        :aria-label="`Select Image ${index + 1}`"
+        :class="{ active: imageStore.getCurrentIndex === index }"
+        @click="selectSlide(index)"
+      ></button>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useImageStore } from '~~/store/image'
 const imageStore = useImageStore()
+const slider = useState<any>(() => null)
 const props = defineProps<{
-  images: {
-    type: Image[]
-    required: true
-  }
+  images: Image[] | null
 }>()
-onMounted(() => {
-  imageStore.setImages(props.images)
+
+const {
+  data: images,
+  pending,
+  error,
+} = useAsyncData('images', async () => {
+  await imageStore.setImages(props.images || [])
+  return props.images
 })
+
 const getImageUrl = () => {
   return (
-    imageStore.getCurrentSlide.attributes.formats.large?.url ||
-    imageStore.getCurrentSlide.attributes.url
+    imageStore.getCurrentSlide?.attributes?.formats?.large?.url ||
+    imageStore.getCurrentSlide?.attributes.url
   )
 }
-const selectSlide = (index: number) => {
-  imageStore.setCurrentSlide(index)
-}
-const slide = (n: number) => {
-  imageStore.slide(n)
+
+const startInterval = () => {
+  clearInterval(slider.value)
+  slider.value = setInterval(() => {
+    if (imageStore.getCurrentIndex + 1 !== imageStore.getImages.length) {
+      imageStore.slide(1)
+    } else {
+      imageStore.setCurrentSlide(0)
+    }
+  }, 3000)
 }
 
-const slider = setInterval(() => {
-  if (imageStore.getCurrentIndex + 1 !== imageStore.getImages.length) {
-    imageStore.slide(1)
-  } else {
-    imageStore.setCurrentSlide(0)
-  }
-}, 3000)
+const selectSlide = (index: number) => {
+  imageStore.setCurrentSlide(index)
+  startInterval()
+}
+
+const slide = (n: number) => {
+  imageStore.slide(n)
+  startInterval()
+}
+
+startInterval()
 
 onBeforeUnmount(() => {
   imageStore.setCurrentSlide(0)
   imageStore.setImages([])
-  clearInterval(slider)
+  clearInterval(slider.value)
 })
 </script>
 
 <style lang="scss" scoped>
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .slider {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 .slide {
-  height: fit-content;
   position: relative;
+  max-width: 100%;
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 50px;
+  }
 }
 
 .slide > *:not(img) {
   position: absolute;
 }
 
-.active-slide {
-  display: block;
-}
-
 .prev,
 .next {
+  position: absolute;
+  top: calc(50% - 24px);
   cursor: pointer;
-  top: 50%;
-  display: block;
   height: 48px;
   width: 48px;
-  border-radius: 100%;
   border: none;
+  border-radius: 50%;
   background: rgba($color: #ffffff, $alpha: 0.6);
-  transition: 0.6s ease;
+  transition: background-color 0.6s ease;
   svg {
     height: 36px;
     path {
@@ -123,20 +158,26 @@ onBeforeUnmount(() => {
   }
 }
 
+.prev:hover,
+.next:hover {
+  background: var(--color-white);
+}
+
 .prev {
-  left: 0.5rem;
+  left: 5%;
 }
 
 .next {
-  right: 0.5rem;
+  right: 5%;
 }
 
-.prev:hover,
-.next:hover {
-  background-color: var(--color-white);
-  svg {
-    path {
-      fill: var(--color-accent-500);
+@media screen and (max-width: 768px) {
+  .prev,
+  .next {
+    height: 36px;
+    width: 36px;
+    svg {
+      height: 24px;
     }
   }
 }
@@ -164,7 +205,6 @@ onBeforeUnmount(() => {
   background-color: var(--color-accent-900);
 }
 
-/* Fading animation */
 .fade {
   animation-name: fade;
   animation-duration: 1.5s;

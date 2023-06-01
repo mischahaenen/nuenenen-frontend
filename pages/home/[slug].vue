@@ -2,7 +2,6 @@
   <div v-if="postData" class="container">
     <ImageSliderComponent :images="postData.images.data"></ImageSliderComponent>
     <h1>{{ postData.title }}</h1>
-
     <h3>
       {{ postData.step.data.attributes.Name }} -
       <span>
@@ -14,19 +13,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
 import moment from 'moment'
-const route = useRoute()
-const post = ref(null)
 
-try {
-  post.value = await getBlogPost(route.params.slug as string)
-  if (!post.value.data) throw new Error('No post found')
-} catch (error) {
-  await navigateTo('/not-found')
+const route = useRoute()
+const post = useState<IPosts | null>(() => null)
+const postData = computed(() => post.value?.data[0].attributes || null)
+
+const fetchData = async () => {
+  try {
+    post.value = await getBlogPost(route.params.slug as string)
+    if (!post.value.data) throw new Error('No post found')
+  } catch (error) {
+    await navigateTo('/not-found')
+  }
 }
 
-const postData = computed(() => post.value?.data[0].attributes || null)
+onMounted(fetchData)
+
+watch(() => route.params.slug, fetchData)
 
 useHead({
   title: `Pfadi Nünenen - ${postData.value?.title || 'Not found'}`,

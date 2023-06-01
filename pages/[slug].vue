@@ -9,92 +9,89 @@
       :key="index"
       :class="index % 2 === 0 ? 'section' : 'colored-section'"
     >
-      <div v-if="zone.__component == 'pages.section'" class="container">
+      <div
+        v-if="
+          [
+            'pages.section',
+            'pages.blog',
+            'pages.steps',
+            'pages.pfadiheim',
+          ].includes(zone.__component)
+        "
+        class="container"
+      >
         <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
         <RichTextComponent
           v-if="zone.Description"
           :content="zone.Description"
         />
-      </div>
-      <div v-if="zone.__component === 'pages.blog'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <RichTextComponent
-          v-if="zone.Description"
-          :content="zone.Description"
-        />
-        <div class="blog-filter">
-          <button
-            class="button accent-button"
-            :class="{ active: activeButton === 'all' }"
-            @click="getPosts()"
-          >
-            Alle
-          </button>
-          <button
-            v-for="(step, jndex) of steps"
-            :key="jndex"
-            class="button accent-button"
-            :class="{ active: activeButton === step.attributes.Name }"
-            @click="getPostsByStep(step.attributes.Name)"
-          >
-            {{ step.attributes.Name }}
-          </button>
-        </div>
-        <div v-if="posts.length" class="post-grid">
-          <PostComponent
-            v-for="(post, i) in posts"
-            :key="post.id"
-            :post="post"
-            :is-first="i === 0"
-            class="post-grid-item"
-          />
-        </div>
-        <div v-else class="fallback">
-          <p>Hier wurde noch nichts veröffentlicht.</p>
-          <img
-            src="../assets/svg/not_found.svg"
-            alt="Space Aliens nothing found image"
-          />
-        </div>
-      </div>
-      <div v-if="zone.__component === 'pages.steps'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <RichTextComponent
-          v-if="zone.Description"
-          :content="zone.Description"
-        />
-        <div class="flexRow">
-          <nuxt-link
-            v-for="step of steps"
-            :key="step.attributes.Name"
-            :to="'abteilung/' + step.attributes.Slug"
-          >
-            <img
-              class="image"
-              :src="url + step.attributes.logo.data.attributes.url"
-              :alt="step.attributes.logo.data.attributes.name"
+
+        <div v-if="zone.__component === 'pages.blog'">
+          <div class="blog-filter">
+            <button
+              class="button accent-button"
+              :class="{ active: activeButton === 'all' }"
+              @click="getPosts()"
+            >
+              Alle
+            </button>
+            <button
+              v-for="(step, jndex) of steps"
+              :key="jndex"
+              class="button accent-button"
+              :class="{ active: activeButton === step.attributes.Name }"
+              @click="getPostsByStep(step.attributes.Name)"
+            >
+              {{ step.attributes.Name }}
+            </button>
+          </div>
+          <div v-if="posts.length" class="post-grid">
+            <PostComponent
+              v-for="(post, i) in posts"
+              :key="post.id"
+              :post="post"
+              :is-first="i === 0"
+              class="post-grid-item"
             />
-            <h3>{{ step.attributes.Name }}</h3>
-          </nuxt-link>
+          </div>
+          <div v-else class="fallback">
+            <p>Hier wurde noch nichts veröffentlicht.</p>
+            <img
+              src="../assets/svg/not_found.svg"
+              alt="Space Aliens nothing found image"
+            />
+          </div>
         </div>
-      </div>
-      <div v-if="zone.__component === 'pages.pfadiheim'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <RichTextComponent
-          v-if="zone.Description"
-          :content="zone.Description"
-        />
-        <h3>Reserviere das Pfadiheim</h3>
-        <iframe
-          scrolling="no"
-          class="pfadiheim-frame"
-          :src="zone.iFrame"
-        ></iframe>
-        <h3>Impressionen</h3>
-        <ImageSliderComponent
-          v-if="zone.images"
-          :images="zone.images?.data"
-        ></ImageSliderComponent>
+        <div v-if="zone.__component === 'pages.steps'">
+          <div class="flexRow">
+            <nuxt-link
+              v-for="step of steps"
+              :key="step.attributes.Name"
+              :to="'abteilung/' + step.attributes.Slug"
+            >
+              <img
+                class="image"
+                :src="url + step.attributes.logo.data.attributes.url"
+                :alt="step.attributes.logo.data.attributes.name"
+              />
+              <h3>{{ step.attributes.Name }}</h3>
+            </nuxt-link>
+          </div>
+        </div>
+
+        <div v-if="zone.__component === 'pages.pfadiheim'">
+          <h3>Reserviere das Pfadiheim</h3>
+          <iframe
+            scrolling="no"
+            class="pfadiheim-frame"
+            :src="zone.iFrame"
+          ></iframe>
+          <h3>Impressionen</h3>
+          <ImageSliderComponent
+            v-if="zone.images"
+            :images="zone.images?.data"
+          ></ImageSliderComponent>
+        </div>
       </div>
     </div>
   </div>
@@ -230,6 +227,23 @@ a:hover h3 {
   margin: var(--space-large) 0;
   img {
     width: 400px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .pfadiheim-frame {
+    height: auto;
+  }
+
+  .image {
+    max-width: 100%;
+  }
+
+  .post-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-filter {
+    flex-direction: column;
   }
 }
 </style>

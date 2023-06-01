@@ -1,6 +1,5 @@
 <template>
-  <p v-if="pending">Loading...</p>
-  <div v-else>
+  <div v-if="stepAttributes">
     <BaseBanner
       :title="stepAttributes.Name"
       :description="stepAttributes.Description"
@@ -40,23 +39,28 @@
 </template>
 <script setup lang="ts">
 const route = useRoute()
-const {
-  data: step,
-  pending,
-  error,
-} = await getStep(route.params.slug as string)
-
-if (error.value) {
-  await navigateTo('/not-found')
-  throw createError({
-    statusCode: 404,
-    statusMessage: error.value.name,
-  })
-}
+const step = useState<ISteps | null>(() => null)
 
 const stepAttributes = computed(() => step.value?.data[0]?.attributes || null)
+
+const fetchData = async () => {
+  const { data, error: fetchError } = await getStep(route.params.slug as string)
+
+  if (fetchError.value) {
+    await navigateTo('/not-found')
+    throw createError({
+      statusCode: 404,
+      statusMessage: fetchError.value.name,
+    })
+  }
+  step.value = data.value
+}
 
 useHead({
   title: `Pfadi Nünenen - ${stepAttributes.value?.Name || ''}`,
 })
+
+onMounted(fetchData)
+
+watch(() => route.params.slug, fetchData)
 </script>

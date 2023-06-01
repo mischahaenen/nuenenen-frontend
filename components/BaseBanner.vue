@@ -57,13 +57,13 @@ onscroll = () => {
   display: flex;
   align-items: center;
   margin-top: 6rem;
-  height: 75dvh;
+  min-height: 70dvh;
   position: relative;
 }
 
 .banner::after {
   content: '';
-  height: 100%;
+  min-height: 100%;
   width: 75dvw;
   background-color: var(--color-primary-50);
   border-radius: 0 0 50% 0;
@@ -75,17 +75,6 @@ onscroll = () => {
 .dark-mode {
   .banner::after {
     background-color: var(--color-primary-800);
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .banner {
-    height: 50dvh;
-  }
-  .banner::after {
-    width: 100%;
-    height: 50dvh;
-    border-radius: 0;
   }
 }
 
@@ -115,12 +104,14 @@ onscroll = () => {
   }
 }
 .link-button {
-  margin-top: var(--space-medium);
+  margin: var(--space-medium);
 }
 @media screen and (max-width: 1024px) {
+  .container {
+    gap: 0;
+  }
   .home-banner {
     flex-direction: column;
-    gap: var(--space-medium);
   }
 
   .home-image-background {
@@ -129,6 +120,16 @@ onscroll = () => {
 
   img {
     display: none;
+  }
+}
+@media screen and (max-width: 768px) {
+  .banner {
+    min-height: 50dvh;
+  }
+  .banner::after {
+    width: 100%;
+    min-height: 50dvh;
+    border-radius: 0;
   }
 }
 </style>
