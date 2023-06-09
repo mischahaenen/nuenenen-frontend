@@ -27,40 +27,7 @@
         />
 
         <div v-if="zone.__component === 'pages.blog'">
-          <div class="blog-filter">
-            <button
-              class="button accent-button"
-              :class="{ active: activeButton === 'all' }"
-              @click="getPosts()"
-            >
-              Alle
-            </button>
-            <button
-              v-for="(step, jndex) of steps"
-              :key="jndex"
-              class="button accent-button"
-              :class="{ active: activeButton === step.attributes.Name }"
-              @click="getPostsByStep(step.attributes.Name)"
-            >
-              {{ step.attributes.Name }}
-            </button>
-          </div>
-          <div v-if="posts.length" class="post-grid">
-            <PostComponent
-              v-for="(post, i) in posts"
-              :key="post.id"
-              :post="post"
-              :is-first="i === 0"
-              class="post-grid-item"
-            />
-          </div>
-          <div v-else class="fallback">
-            <p>Hier wurde noch nichts veröffentlicht.</p>
-            <img
-              src="../assets/svg/not_found.svg"
-              alt="Space Aliens nothing found image"
-            />
-          </div>
+          <BlogComponent />
         </div>
         <div v-if="zone.__component === 'pages.steps'">
           <div class="flexRow">
@@ -78,7 +45,6 @@
             </nuxt-link>
           </div>
         </div>
-
         <div v-if="zone.__component === 'pages.pfadiheim'">
           <h3>Reserviere das Pfadiheim</h3>
           <iframe
@@ -93,6 +59,16 @@
           ></ImageSliderComponent>
         </div>
       </div>
+      <div v-if="zone.__component === 'pages.testimonials'" class="container">
+        <div v-if="zone.__component === 'pages.testimonials'">
+          <TestimonialComponent
+            v-if="zone.testimonials && zone.Title && zone.Subtitle"
+            :title="zone.Title"
+            :sub-title="zone.Subtitle"
+            :testimonials="zone.testimonials"
+          ></TestimonialComponent>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -100,35 +76,16 @@
 <script lang="ts" setup>
 const route = useRoute()
 const page = ref<Page | null>(null)
-const posts = useState<IPost[]>(() => [])
-const events = useState<IEvent[]>(() => [])
 const steps = useState<IStep[]>(() => [])
-const activeButton = useState<string>(() => 'all')
+const events = useState<IEvent[]>(() => [])
 const url = useStrapiUrl()
 
 useHead(() => ({ title: `Pfadi Nünenen - ${page.value?.attributes?.slug}` }))
-
-const getPostsByStep = async (step: string) => {
-  const res = await getBlogPostsByStep(step)
-  posts.value = res.data
-  activeButton.value = step
-}
-
-const getPosts = async () => {
-  const res = await getBlogPosts()
-  posts.value = res.data
-  activeButton.value = 'all'
-}
 
 const fetchData = async () => {
   const response = await getPage(route.params.slug as string)
   page.value = response.data[0]
 
-  if (hasComponent('pages.blog')) {
-    await getPosts()
-    const stepRes = await getStepNames()
-    steps.value = stepRes.data
-  }
   if (hasComponent('pages.steps')) {
     const stepRes = await getStepNames()
     steps.value = stepRes.data
@@ -185,49 +142,11 @@ a {
 a:hover h3 {
   text-decoration: underline;
 }
-.post-grid {
-  display: grid;
-  grid-template: auto / repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: var(--space-medium);
-}
-
-.post-grid-item:nth-child(1) {
-  grid-column: 1 / -1;
-}
-
-.blog-filter {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-medium);
-  margin: var(--space-medium) 0;
-  justify-content: center;
-
-  .active {
-    background-color: var(--color-accent-900);
-    color: var(--color-white);
-  }
-}
 .pfadiheim-frame {
   width: 100%;
   height: 903px;
   overflow: hidden;
   border: none;
-}
-.dark-mode {
-  .active {
-    background-color: var(--color-primary-200);
-    color: var(--color-primary-800);
-  }
-}
-.fallback {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-medium);
-  margin: var(--space-large) 0;
-  img {
-    width: 400px;
-  }
 }
 @media screen and (max-width: 600px) {
   .pfadiheim-frame {
@@ -236,14 +155,6 @@ a:hover h3 {
 
   .image {
     max-width: 100%;
-  }
-
-  .post-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .blog-filter {
-    flex-direction: column;
   }
 }
 </style>

@@ -48,7 +48,7 @@ const props = defineProps({
   },
 })
 onscroll = () => {
-  translateY.value = window.scrollY * -0.2
+  translateY.value = 20 + window.scrollY * -0.2
 }
 </script>
 
