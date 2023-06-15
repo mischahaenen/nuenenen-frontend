@@ -8,7 +8,9 @@
           :content="props.description"
         ></RichTextComponent>
         <p v-else>{{ props.description }}</p>
-        <nuxt-link class="link-button" to="contact">Kontaktiere uns!</nuxt-link>
+        <nuxt-link v-if="!isContactPage" class="link-button" to="kontakt"
+          >Kontaktiere uns!</nuxt-link
+        >
       </div>
       <div class="rocket-image-background">
         <img
@@ -32,6 +34,8 @@ const translateY = ref(20)
 const rocketStyle = computed(() => ({
   transform: `translateY(${translateY.value}%) translateX(40%) rotate(10deg)`,
 }))
+const route = useRoute()
+const isContactPage = computed(() => route.path === '/kontakt')
 const props = defineProps({
   title: {
     type: String,

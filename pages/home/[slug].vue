@@ -1,5 +1,21 @@
 <template>
   <div v-if="postData" class="container">
+    <NuxtLink to="/" class="back-link">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      Zurück
+    </NuxtLink>
     <ImageSliderComponent :images="postData.images.data"></ImageSliderComponent>
     <h1>{{ postData.title }}</h1>
     <h3>
@@ -35,6 +51,10 @@ watch(() => route.params.slug, fetchData)
 useHead({
   title: `Pfadi Nünenen - ${postData.value?.title || 'Not found'}`,
 })
+
+onUnmounted(() => {
+  post.value = null
+})
 </script>
 
 <style scoped lang="scss">
@@ -46,5 +66,19 @@ useHead({
     font-weight: 300;
     color: var(--color-accent-900);
   }
+}
+.back-link {
+  display: flex;
+  align-items: center;
+  color: var(--color-primary-700);
+  text-decoration: none;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.back-link svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 }
 </style>
