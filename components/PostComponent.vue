@@ -1,12 +1,13 @@
 <template>
   <nuxt-link :to="'home/' + props.post.attributes.slug">
     <div v-if="isFirst" class="card-detailed">
-      <img
+      <nuxt-img
         v-if="props.post.attributes.images.data"
+        format="webp"
         class="card-image"
         :src="
           url +
-          props.post.attributes.images.data[0].attributes.formats.large.url
+          props.post.attributes.images.data[0].attributes.formats.medium.url
         "
         :alt="props.post.attributes.images.data[0].attributes.name"
       />
@@ -33,8 +34,9 @@
     </div>
     <div v-else class="card-preview">
       <div>
-        <img
+        <nuxt-img
           v-if="props.post.attributes.images.data"
+          format="webp"
           class="card-image"
           :src="
             url +
@@ -89,7 +91,7 @@ a {
   box-shadow: 0px 50px 60px rgb(0 0 0 / 10%);
 
   .card-image {
-    max-width: 50%;
+    width: min(100%, 400px);
     object-fit: cover;
     border-radius: var(--border-radius) 0 0 var(--border-radius);
   }
@@ -107,7 +109,7 @@ a {
   .card-detailed {
     flex-direction: column;
     .card-image {
-      max-width: 100%;
+      width: min(100%, 400px);
       border-radius: var(--border-radius) var(--border-radius) 0 0;
     }
   }
@@ -169,13 +171,10 @@ h3 {
   }
 }
 .dark-mode {
-  .card-detailed {
-    background: var(--color-primary-800);
-    box-shadow: none;
-  }
+  .card-detailed,
   .card-preview {
     background: var(--color-primary-800);
-    box-shadow: none;
+    box-shadow: 0px 50px 60px var(--color-primary-600);
   }
   .card-subtitle {
     color: var(--color-white);

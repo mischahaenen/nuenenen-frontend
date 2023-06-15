@@ -36,7 +36,7 @@
               :key="step.attributes.Name"
               :to="'abteilung/' + step.attributes.Slug"
             >
-              <img
+              <nuxt-img
                 class="image"
                 :src="url + step.attributes.logo.data.attributes.url"
                 :alt="step.attributes.logo.data.attributes.name"

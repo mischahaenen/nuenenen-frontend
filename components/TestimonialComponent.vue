@@ -7,7 +7,7 @@
     <div v-if="testimonial" class="testimonial-container">
       <div class="img-container">
         <Transition mode="out-in">
-          <img
+          <nuxt-img
             :key="testimonial.id"
             :src="
               useStrapiUrl() + testimonial.attributes.Image.data.attributes.url
@@ -181,13 +181,11 @@ onBeforeUnmount(() => {
   font-family: 'Times New Roman', Times, serif;
 }
 .bold-name {
-  color: var(--color-primary-700);
   font-weight: bold;
 }
 
 .testimonial-position {
   font-size: 0.9em;
-  color: var(--color-primary-400);
   margin: 0;
 }
 @media screen and (max-width: 768px) {

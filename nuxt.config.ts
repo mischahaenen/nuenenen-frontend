@@ -1,5 +1,5 @@
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
-export default {
+export default defineNuxtConfig({
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/css/main.scss'],
   plugins: [],
@@ -7,9 +7,8 @@ export default {
   modules: [
     '@nuxtjs/strapi',
     '@pinia/nuxt',
-    '@nuxtjs/color-mode' /*
-    '@nuxtjs/moment',
-    ['@nuxtjs/moment', { defaultLocale: 'de', locales: ['de'] }], */,
+    '@nuxtjs/color-mode',
+    '@nuxt/image',
   ],
   strapi: {
     url: process.env.STRAPI_URL || 'http://localhost:1337',
@@ -27,4 +26,8 @@ export default {
     // @ts-ignore ssr:
     noExternal: ['moment'],
   },
-}
+  image: {},
+  nitro: {
+    compressPublicAssets: true,
+  },
+})

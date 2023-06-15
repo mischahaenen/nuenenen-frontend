@@ -8,8 +8,8 @@
         Die Seite, die du suchst, existiert nicht. Möglicherweise wurde sie
         verschoben oder gelöscht.
       </p>
-      <img
-        src="./assets/svg/not_found.svg"
+      <nuxt-img
+        src="/svg/not_found.svg"
         alt="Space Aliens nothing found image"
       />
     </main>

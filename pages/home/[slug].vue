@@ -64,13 +64,11 @@ onUnmounted(() => {
   h3 {
     margin: var(--space-medium) 0 0 0;
     font-weight: 300;
-    color: var(--color-accent-900);
   }
 }
 .back-link {
   display: flex;
   align-items: center;
-  color: var(--color-primary-700);
   text-decoration: none;
   font-size: 18px;
   margin-bottom: 20px;
