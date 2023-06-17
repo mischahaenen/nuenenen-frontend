@@ -1,19 +1,21 @@
-const express = require('express');
-const { Nuxt, Builder } = require('nuxt');
+// Require `Nuxt` And `Builder` modules
+const {Nuxt, Builder} = require('nuxt');
 
-const config = require('./nuxt.config.ts');
+const NuxtServer = require('nuxt-server');
+// Require Nuxt config
+const config = require('../nuxt.config.js');
 
-// Create new express app
-const app = express();
-
-// Listen to port 3000 or PORT env if provided
-app.listen(process.env.PORT || 3000);
-
-// Enable production mode
-config.dev = false;
-
-// Create instance of nuxt
-const nuxt = new Nuxt(config);
-
-// Add nuxt middleware
-app.use(nuxt.render);
+const server = new NuxtServer(Nuxt, Builder, config);
+// ---
+server.run(function(err, ports) {
+  if (err) console.error(err);
+  console.log(ports);
+});
+// OR
+const psRun = server.run();
+psRun.then(function(ports) {
+  console.log(ports);
+});
+psRun.catch(function(err) {
+  console.error(err);
+});
