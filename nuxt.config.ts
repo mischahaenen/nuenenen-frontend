@@ -26,4 +26,6 @@ export default defineNuxtConfig({
     // @ts-ignore ssr:
     noExternal: ['moment'],
   },
+
+  devtools: { enabled: true }
 })
