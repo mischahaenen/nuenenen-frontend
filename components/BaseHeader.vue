@@ -8,19 +8,29 @@
         <p><b>PFADI</b> NÜNENEN</p>
       </nuxt-link>
     </div>
-    <nav class="nav">
-      <nuxt-link to="/home">Home</nuxt-link>
-      <nuxt-link to="/abteilung">Abteilung</nuxt-link>
-      <nuxt-link to="/mitmachen">Mitmachen</nuxt-link>
-      <nuxt-link class="link-button" to="/kontakt">Kontakt</nuxt-link>
+    <nav class="nav" :class="{ 'nav-expanded': navExpanded }">
+      <div class="nav-toggle" @click="toggleNav">
+        <div class="toggle-line"></div>
+        <div class="toggle-line"></div>
+        <div class="toggle-line"></div>
+      </div>
+      <div class="nav-links">
+        <nuxt-link to="/home">Home</nuxt-link>
+        <nuxt-link to="/abteilung">Abteilung</nuxt-link>
+        <nuxt-link to="/mitmachen">Mitmachen</nuxt-link>
+        <nuxt-link class="link-button" to="/kontakt">Kontakt</nuxt-link>
+      </div>
     </nav>
   </header>
 </template>
 
 <script lang="ts" setup>
-// add class on scroll
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const scroll = useScrollY()
+const navExpanded = useState(() => false)
+
+function toggleNav() {
+  navExpanded.value = !navExpanded.value
+}
 </script>
 
 <style scoped lang="scss">
@@ -67,27 +77,27 @@ const scroll = useScrollY()
   color: var(--color-primary-500);
 }
 
-.nav {
+.nav-links {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
 }
 
-.nav > * {
+.nav-links > * {
   color: var(--color-black);
   text-decoration: none;
 }
 
-.nav > *:last-of-type {
+.nav-links > *:last-of-type {
   margin: 0;
 }
 
-.nav > .router-link-active {
+.nav-links > .router-link-active {
   font-weight: bold;
 }
 .dark-mode {
-  .nav > * {
+  .nav-links > * {
     color: var(--color-white);
   }
   .header-scrolled {
@@ -110,6 +120,70 @@ const scroll = useScrollY()
     b {
       color: var(--color-accent-100);
     }
+  }
+}
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 0 var(--space-medium);
+  }
+
+  .nav-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .toggle-line {
+    width: 30px;
+    height: 2px;
+    background-color: var(--color-primary-700);
+    margin: 4px 0;
+    transition: background-color 0.3s ease;
+  }
+
+  .nav-expanded .toggle-line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .nav-expanded .toggle-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-expanded .toggle-line:nth-child(3) {
+    transform: rotate(-45deg) translate(9px, -9px);
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav {
+    transform: translateY(0px);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-expanded {
+    transform: translateY(120px);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-expanded .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 40px;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: var(--color-white);
+    box-shadow: 0 2px 4px #0000001a;
+  }
+
+  .header-scrolled .nav-expanded {
+    transform: translateY(110px);
+  }
+  .header-scrolled .nav-expanded .nav-links {
+    margin-top: 20px;
   }
 }
 </style>

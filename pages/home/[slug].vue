@@ -1,31 +1,59 @@
 <template>
-  <div v-if="post.data" class="container">
-    <ImageSliderComponent
-      :images="post.data[0].attributes.images.data"
-    ></ImageSliderComponent>
-    <h1>{{ post.data[0].attributes.title }}</h1>
-    <p>
-      {{
-        moment(post.data[0].attributes.createdAt)
-          .locale('de')
-          .startOf('day')
-          .fromNow()
-      }}
-    </p>
-    <h3>#{{ post.data[0].attributes.step.data.attributes.Name }}</h3>
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <RichTextComponent :content="post.data[0].attributes.description" />
+  <div v-if="postData" class="container">
+    <NuxtLink to="/" class="back-link">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      Zurück
+    </NuxtLink>
+    <ImageSliderComponent :images="postData.images.data"></ImageSliderComponent>
+    <h1>{{ postData.title }}</h1>
+    <h3>
+      {{ postData.step.data.attributes.Name }} -
+      <span>
+        {{ moment(postData.createdAt).locale('de').startOf('day').fromNow() }}
+      </span>
+    </h3>
+    <RichTextComponent :content="postData.description" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import moment from 'moment'
+
 const route = useRoute()
-const post = await getBlogPost(route.params.slug as string)
-// navigate to 404 page when no slug is found
-if (!post.data) await navigateTo('/not-found')
+const post = useState<IPosts | null>(() => null)
+const postData = computed(() => post.value?.data[0].attributes || null)
+
+const fetchData = async () => {
+  try {
+    post.value = await getBlogPost(route.params.slug as string)
+    if (!post.value.data) throw new Error('No post found')
+  } catch (error) {
+    await navigateTo('/not-found')
+  }
+}
+
+onMounted(fetchData)
+
+watch(() => route.params.slug, fetchData)
+
 useHead({
-  title: `Pfadi Nünenen - ${post.data[0].attributes.title}`,
+  title: `Pfadi Nünenen - ${postData.value?.title || 'Not found'}`,
+})
+
+onUnmounted(() => {
+  post.value = null
 })
 </script>
 
@@ -36,7 +64,19 @@ useHead({
   h3 {
     margin: var(--space-medium) 0 0 0;
     font-weight: 300;
-    color: var(--color-accent-900);
   }
+}
+.back-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.back-link svg {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 }
 </style>

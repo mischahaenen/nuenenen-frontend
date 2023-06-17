@@ -8,18 +8,20 @@
           :content="props.description"
         ></RichTextComponent>
         <p v-else>{{ props.description }}</p>
-        <nuxt-link class="link-button" to="contact">Kontaktiere uns!</nuxt-link>
+        <nuxt-link v-if="!isContactPage" class="link-button" to="kontakt"
+          >Kontaktiere uns!</nuxt-link
+        >
       </div>
       <div class="rocket-image-background">
-        <img
+        <nuxt-img
           class="background-image"
-          src="../assets/img/cloud.webp"
+          src="/img/cloud.webp"
           alt="Space Background with stars"
         />
-        <img
+        <nuxt-img
           class="rocket-image"
           :style="rocketStyle"
-          src="../assets/img/nuenenen_logo.webp"
+          src="/img/nuenenen_logo.webp"
           alt="Nünenen Logo which shows a rocket"
         />
       </div>
@@ -32,6 +34,8 @@ const translateY = ref(20)
 const rocketStyle = computed(() => ({
   transform: `translateY(${translateY.value}%) translateX(40%) rotate(10deg)`,
 }))
+const route = useRoute()
+const isContactPage = computed(() => route.path === '/kontakt')
 const props = defineProps({
   title: {
     type: String,
@@ -48,7 +52,7 @@ const props = defineProps({
   },
 })
 onscroll = () => {
-  translateY.value = window.scrollY * -0.2
+  translateY.value = 20 + window.scrollY * -0.2
 }
 </script>
 
@@ -57,13 +61,13 @@ onscroll = () => {
   display: flex;
   align-items: center;
   margin-top: 6rem;
-  height: 75dvh;
+  min-height: 70dvh;
   position: relative;
 }
 
 .banner::after {
   content: '';
-  height: 100%;
+  min-height: 100%;
   width: 75dvw;
   background-color: var(--color-primary-50);
   border-radius: 0 0 50% 0;
@@ -75,17 +79,6 @@ onscroll = () => {
 .dark-mode {
   .banner::after {
     background-color: var(--color-primary-800);
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .banner {
-    height: 50dvh;
-  }
-  .banner::after {
-    width: 100%;
-    height: 50dvh;
-    border-radius: 0;
   }
 }
 
@@ -115,12 +108,14 @@ onscroll = () => {
   }
 }
 .link-button {
-  margin-top: var(--space-medium);
+  margin: var(--space-medium);
 }
 @media screen and (max-width: 1024px) {
+  .container {
+    gap: 0;
+  }
   .home-banner {
     flex-direction: column;
-    gap: var(--space-medium);
   }
 
   .home-image-background {
@@ -129,6 +124,16 @@ onscroll = () => {
 
   img {
     display: none;
+  }
+}
+@media screen and (max-width: 768px) {
+  .banner {
+    min-height: 50dvh;
+  }
+  .banner::after {
+    width: 100%;
+    min-height: 50dvh;
+    border-radius: 0;
   }
 }
 </style>

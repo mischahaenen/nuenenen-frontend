@@ -85,6 +85,7 @@ export const getStep = (slug: string) => {
     })
   )
 }
+
 export const getStrapiUser = (id: string) => {
   const { find } = useStrapi4()
   return find<User>('api/users', {
@@ -92,12 +93,22 @@ export const getStrapiUser = (id: string) => {
     filters: { id: { $eq: id } },
   })
 }
+
 export const getEvents = () => {
   const { find } = useStrapi4()
   return find<IEvents>('api/events', {
     populate: '*',
     filters: {},
   })
+}
+
+export const getTestimonial = (id: number) => {
+  const { find } = useStrapi4()
+  return useAsyncData(() =>
+    find<{ data: Testimonial }>(`api/testimonials/${id}`, {
+      populate: '*',
+    })
+  )
 }
 
 export const getFooter = () => {

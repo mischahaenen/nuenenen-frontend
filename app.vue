@@ -1,30 +1,24 @@
 <template>
-  <div>
-    <BaseHeader />
-    <main>
-      <NuxtPage />
-    </main>
-    <BaseFooter />
-  </div>
+  <NuxtLayout>
+    <NuxtPage></NuxtPage>
+  </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
-// TODO: Add favicon
 useHead({
   title: 'Pfadi Nünenen',
   htmlAttrs: {
     lang: 'de',
   },
-  meta: [
-    { charset: 'utf-8' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-    {
-      hid: 'description',
-      name: 'description',
-      content: 'Official Website der Pfadi Nünenen',
-    },
-    { name: 'author', content: 'Mischa Haenen' },
-    { name: 'format-detection', content: 'telephone=no' },
-  ],
+})
+useSeoMeta({
+  title: 'Pfadi Nünenen',
+  ogTitle: 'Pfadi Nünenen',
+  description:
+    'Willkommen auf der neuen Webseite der Pfadi Nünenen. Hier finden Sie alle Informationen über unsere Pfadfindergruppe, kommende Veranstaltungen, Mitgliedschaft und mehr.',
+  ogDescription:
+    'Willkommen auf der neuen Webseite der Pfadi Nünenen. Hier finden Sie alle Informationen über unsere Pfadfindergruppe, kommende Veranstaltungen, Mitgliedschaft und mehr.',
+  ogImage: './assets/img/nuenenen_logo.png',
+  author: 'Mischa Haenen',
 })
 </script>
