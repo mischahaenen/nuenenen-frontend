@@ -121,6 +121,34 @@ function toggleNav() {
       color: var(--color-accent-100);
     }
   }
+  @media screen and (max-width: 768px) {
+    .header {
+      padding: 0 var(--space-medium);
+    }
+
+    .nav-toggle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .toggle-line {
+      width: 30px;
+      height: 2px;
+      background-color: var(--color-white);
+      margin: 4px 0;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-expanded .nav-links {
+      background-color: var(--color-primary-800);
+      box-shadow: 0 2px 4px #ffffff1a;
+    }
+    .header-scrolled .nav-expanded .nav-links {
+      margin-top: 20px;
+    }
+  }
 }
 @media screen and (max-width: 768px) {
   .header {
@@ -137,7 +165,7 @@ function toggleNav() {
   .toggle-line {
     width: 30px;
     height: 2px;
-    background-color: var(--color-primary-700);
+    background-color: var(--color-white);
     margin: 4px 0;
     transition: background-color 0.3s ease;
   }

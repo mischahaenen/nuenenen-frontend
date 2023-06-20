@@ -112,9 +112,8 @@ onMounted(async () => {
   .post-grid {
     grid-template-columns: 1fr;
   }
-
   .blog-filter {
-    flex-direction: column;
+    gap: var(--space-small);
   }
 }
 </style>

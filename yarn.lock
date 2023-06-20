@@ -1196,7 +1196,7 @@
     rc9 "^2.1.0"
     semver "^7.5.1"
 
-"@nuxt/devtools@latest":
+"@nuxt/devtools@^0.6.1":
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/@nuxt/devtools/-/devtools-0.6.1.tgz#f48eed5dafb6904a4aa5168104eb7fb5780f76e5"
   integrity sha512-nz1FCJ2WViQWKUG9dTjwib/XZ7/dzeaP/r+++Y7W6a70y3ME5q58YldSNhNKJZXcbYWAU5UFzsoaslB5SWrlhw==
