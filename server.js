@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const express = require('express')
-const { Nuxt } = require('nuxt')
+import express from 'express'
+import { Nuxt } from 'nuxt'
 
 const config = require('./nuxt.config.js')
 

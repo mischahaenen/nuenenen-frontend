@@ -1,4 +1,4 @@
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
+// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/css/main.scss'],
@@ -30,4 +30,5 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
   },
+  devtools: { enabled: true }
 })
