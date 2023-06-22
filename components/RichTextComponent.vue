@@ -9,7 +9,7 @@
     <span
       v-for="(block, index) in htmlContent"
       :key="index"
-      class="center"
+      :class="props.textAlign || 'center'"
       v-html="block"
     ></span>
   </div>
@@ -21,6 +21,7 @@ const props = defineProps<{
   content: string
   isPreview?: boolean
   previewLines?: number
+  textAlign?: 'center' | 'left'
 }>()
 
 const htmlContent = edjsHTML().parseStrict(JSON.parse(props.content))
@@ -36,5 +37,8 @@ const htmlContent = edjsHTML().parseStrict(JSON.parse(props.content))
 .center {
   display: flex;
   justify-content: center;
+}
+.left {
+  text-align: left;
 }
 </style>

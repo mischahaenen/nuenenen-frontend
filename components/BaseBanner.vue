@@ -132,7 +132,7 @@ onscroll = () => {
   }
   .banner::after {
     width: 100%;
-    min-height: 50dvh;
+    min-height: 100%;
     border-radius: 0;
   }
 }

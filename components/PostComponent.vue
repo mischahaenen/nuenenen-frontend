@@ -181,7 +181,7 @@ h3 {
   }
 
   .card-footer {
-    color: var(--color-accent-500);
+    color: var(--color-accent-50);
   }
 }
 </style>

@@ -144,14 +144,14 @@ p {
 }
 
 .accent-button {
-  background-color: transparent;
-  color: var(--color-accent-900);
+  background-color: var(--color-white);
+  color: var(--color-primary-700);
   transition: all 0.2s ease-in-out;
   outline-color: var(--color-accent-900);
 
   &:hover {
-    background-color: var(--color-accent-50);
-    color: var(--color-accent-900);
+    background-color: var(--color-primary-100);
+    color: var(--color-primary-900);
   }
 }
 

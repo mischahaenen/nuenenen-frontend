@@ -152,9 +152,5 @@ a:hover h3 {
   .pfadiheim-frame {
     height: auto;
   }
-
-  .image {
-    max-width: 100%;
-  }
 }
 </style>

@@ -165,7 +165,7 @@ function toggleNav() {
   .toggle-line {
     width: 30px;
     height: 2px;
-    background-color: var(--color-white);
+    background-color: var(--color-primary-800);
     margin: 4px 0;
     transition: background-color 0.3s ease;
   }

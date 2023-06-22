@@ -80,12 +80,12 @@ onMounted(async () => {
 .blog-filter {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-medium);
+  gap: var(--space-small);
   margin: var(--space-medium) 0;
   justify-content: center;
 
   .active {
-    background-color: var(--color-accent-900);
+    background-color: var(--color-primary-900);
     color: var(--color-white);
   }
 }

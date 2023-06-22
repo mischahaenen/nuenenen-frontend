@@ -188,6 +188,16 @@ onBeforeUnmount(() => {
   font-size: 0.9em;
   margin: 0;
 }
+.dark-mode {
+  .prev,
+  .next {
+    svg {
+      path {
+        fill: var(--color-accent-50);
+      }
+    }
+  }
+}
 @media screen and (max-width: 768px) {
   .two-column {
     flex-direction: column;

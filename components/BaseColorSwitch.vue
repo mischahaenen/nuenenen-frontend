@@ -56,16 +56,9 @@ ul li {
 
 .preferred .feather {
   border-color: var(--color-accent-500);
-  top: -3px;
 }
 
 .selected .feather {
   color: var(--color-accent-500);
-}
-
-.dark-mode {
-  svg {
-    color: var(--color-white);
-  }
 }
 </style>
