@@ -10,29 +10,42 @@
       :key="index"
       :class="index % 2 === 0 ? 'section' : 'colored-section'"
     >
-      <SectionComponent
-        v-if="zone.__component == 'pages.section'"
-        :zone="zone"
-        :index="index"
-      />
-      <EventComponent
-        v-if="zone.__component == 'pages.kastenzeddel'"
-        :zone="zone"
-        :index="index"
-      />
-      <DocumentComponent
-        v-if="zone.__component == 'pages.document'"
-        :zone="zone"
-        :index="index"
-      />
-      <GroupComponent
-        v-if="zone.__component == 'pages.group'"
-        :zone="zone"
-        :index="index"
-      />
-      <div v-if="zone.__component == 'pages.image'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <ImageSliderComponent v-if="zone.images" :images="zone.images.data" />
+      <div
+        v-if="
+          [
+            'pages.section',
+            'pages.kastenzeddel',
+            'pages.document',
+            'pages.group',
+            'pages.image',
+          ].includes(zone.__component)
+        "
+        class="container"
+      >
+        <SectionComponent
+          v-if="zone.__component == 'pages.section'"
+          :zone="zone"
+          :index="index"
+        />
+        <EventComponent
+          v-if="zone.__component == 'pages.kastenzeddel'"
+          :zone="zone"
+          :index="index"
+        />
+        <DocumentComponent
+          v-if="zone.__component == 'pages.document'"
+          :zone="zone"
+          :index="index"
+        />
+        <GroupComponent
+          v-if="zone.__component == 'pages.group'"
+          :zone="zone"
+          :index="index"
+        />
+        <div v-if="zone.__component == 'pages.image'">
+          <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+          <ImageSliderComponent v-if="zone.images" :images="zone.images.data" />
+        </div>
       </div>
     </div>
   </div>

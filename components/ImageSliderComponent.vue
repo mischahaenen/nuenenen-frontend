@@ -131,7 +131,7 @@ onBeforeUnmount(() => {
   img {
     width: 100%;
     height: auto;
-    border-radius: 50px;
+    border-radius: var(--border-radius);
   }
 }
 

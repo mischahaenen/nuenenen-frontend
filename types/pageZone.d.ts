@@ -8,6 +8,7 @@ declare interface IPageZone {
   }
   files?: FilesResponse
   images?: ImagesResponse
+  Image?: ImagesResponse
   members?: UsersResponse
   testimonials?: TestimonialResponse
   iFrame?: string

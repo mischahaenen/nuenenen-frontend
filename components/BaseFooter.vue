@@ -33,7 +33,8 @@
         <nuxt-img
           v-for="image of footer.Images.data"
           :key="image.attributes.name"
-          :src="strapiUrl + image.attributes.url"
+          provider="strapi"
+          :src="image.attributes.url"
           :alt="image.attributes.name"
         />
       </div>
@@ -42,7 +43,6 @@
 </template>
 
 <script lang="ts" setup>
-const strapiUrl = useStrapiUrl()
 const footerRes = await getFooter()
 const footer = footerRes.data.attributes || null
 </script>

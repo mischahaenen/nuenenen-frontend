@@ -1,7 +1,7 @@
 <template>
   <div v-if="user">
     <div class="member-card">
-      <nuxt-img class="image" :src="useStrapiUrl() + user[0].Picture.url" />
+      <nuxt-img class="image" provider="strapi" :src="user[0].Picture.url" />
       <div class="member-card__content">
         <h3>{{ user[0].username }}</h3>
         <a :href="'mailto:' + user[0].email">{{ user[0].email }}</a>

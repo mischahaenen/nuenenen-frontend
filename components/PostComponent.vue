@@ -3,10 +3,9 @@
     <div v-if="isFirst" class="card-detailed">
       <nuxt-img
         v-if="props.post.attributes.images.data"
-        format="webp"
+        provider="strapi"
         class="card-image"
         :src="
-          url +
           props.post.attributes.images.data[0].attributes.formats.medium.url
         "
         :alt="props.post.attributes.images.data[0].attributes.name"
@@ -36,10 +35,9 @@
       <div>
         <nuxt-img
           v-if="props.post.attributes.images.data"
-          format="webp"
+          provider="strapi"
           class="card-image"
           :src="
-            url +
             props.post.attributes.images.data[0].attributes.formats.small.url
           "
           :alt="props.post.attributes.images.data[0].attributes.name"
@@ -67,7 +65,6 @@
 </template>
 <script lang="ts" setup>
 import moment from 'moment'
-const url = useStrapiUrl()
 const props = defineProps<{ post: IPost; isFirst: boolean }>()
 
 const readingTime = (text: string) => {

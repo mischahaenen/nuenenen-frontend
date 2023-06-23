@@ -37,7 +37,7 @@ body {
   --space-medium: 2rem;
   --space-large: 4rem;
   --space-extra-large: 8rem;
-  --border-radius: 10px;
+  --border-radius: 50px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
@@ -126,7 +126,7 @@ p {
 .button {
   border: none;
   padding: var(--space-small);
-  border-radius: 50px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   font-weight: 700;
 }
@@ -163,7 +163,7 @@ p {
   text-decoration: none;
   border: none;
   padding: var(--space-small);
-  border-radius: 50px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   font-weight: 700;
 

@@ -13,12 +13,12 @@
         >
       </div>
       <div class="rocket-image-background">
-        <nuxt-img
+        <img
           class="background-image"
           src="/img/cloud.webp"
           alt="Space Background with stars"
         />
-        <nuxt-img
+        <img
           class="rocket-image"
           :style="rocketStyle"
           src="/img/nuenenen_logo.webp"

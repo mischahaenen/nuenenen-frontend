@@ -26,9 +26,13 @@ export default defineNuxtConfig({
     // @ts-ignore ssr:
     noExternal: ['moment'],
   },
-  image: {},
+  image: {
+    strapi: {
+      baseURL: process.env.STRAPI_URL || 'http://localhost:1337',
+    },
+  },
   nitro: {
     compressPublicAssets: true,
   },
-  devtools: { enabled: true }
+  devtools: { enabled: true },
 })

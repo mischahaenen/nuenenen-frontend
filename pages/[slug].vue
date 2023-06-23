@@ -16,20 +16,28 @@
             'pages.blog',
             'pages.steps',
             'pages.pfadiheim',
+            'pages.testimonials',
           ].includes(zone.__component)
         "
         class="container"
       >
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <RichTextComponent
-          v-if="zone.Description"
-          :content="zone.Description"
-        />
-
+        <div v-if="zone.__component === 'pages.section'">
+          <SectionComponent :zone="zone" :index="index"></SectionComponent>
+        </div>
         <div v-if="zone.__component === 'pages.blog'">
+          <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+          <RichTextComponent
+            v-if="zone.Description"
+            :content="zone.Description"
+          />
           <BlogComponent />
         </div>
         <div v-if="zone.__component === 'pages.steps'">
+          <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+          <RichTextComponent
+            v-if="zone.Description"
+            :content="zone.Description"
+          />
           <div class="flexRow">
             <nuxt-link
               v-for="step of steps"
@@ -37,8 +45,9 @@
               :to="'abteilung/' + step.attributes.Slug"
             >
               <nuxt-img
+                provider="strapi"
                 class="image"
-                :src="url + step.attributes.logo.data.attributes.url"
+                :src="step.attributes.logo.data.attributes.url"
                 :alt="step.attributes.logo.data.attributes.name"
               />
               <h3>{{ step.attributes.Name }}</h3>
@@ -46,20 +55,23 @@
           </div>
         </div>
         <div v-if="zone.__component === 'pages.pfadiheim'">
+          <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+          <RichTextComponent
+            v-if="zone.Description"
+            :content="zone.Description"
+          />
           <h3>Reserviere das Pfadiheim</h3>
           <iframe
             scrolling="no"
             class="pfadiheim-frame"
             :src="zone.iFrame"
           ></iframe>
-          <h3>Impressionen</h3>
+          <h3 v-if="zone.images">Impressionen</h3>
           <ImageSliderComponent
             v-if="zone.images"
             :images="zone.images?.data"
           ></ImageSliderComponent>
         </div>
-      </div>
-      <div v-if="zone.__component === 'pages.testimonials'" class="container">
         <div v-if="zone.__component === 'pages.testimonials'">
           <TestimonialComponent
             v-if="zone.testimonials && zone.Title && zone.Subtitle"
@@ -78,9 +90,17 @@ const route = useRoute()
 const page = ref<Page | null>(null)
 const steps = useState<IStep[]>(() => [])
 const events = useState<IEvent[]>(() => [])
-const url = useStrapiUrl()
+const title = computed(() => {
+  if (!page.value) return 'Pfadi Nünenen'
+  return `Pfadi Nünenen - ${
+    page.value?.attributes?.slug.charAt(0).toUpperCase() +
+    page.value?.attributes?.slug.slice(1)
+  }`
+})
 
-useHead(() => ({ title: `Pfadi Nünenen - ${page.value?.attributes?.slug}` }))
+useHead(() => ({
+  title: title.value,
+}))
 
 const fetchData = async () => {
   const response = await getPage(route.params.slug as string)
@@ -147,6 +167,8 @@ a:hover h3 {
   height: 903px;
   overflow: hidden;
   border: none;
+  background-color: var(--color-white);
+  border-radius: var(--border-radius);
 }
 @media screen and (max-width: 600px) {
   .pfadiheim-frame {
