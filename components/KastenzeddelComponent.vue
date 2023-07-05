@@ -29,8 +29,8 @@
         </div>
         <p>
           {{ moment(props.event.data.attributes.DateStart).format('hh:mm') }}
-          bis
-          {{ moment(props.event.data.attributes.DateEnd).format('hh:mm') }}
+          Uhr bis
+          {{ moment(props.event.data.attributes.DateEnd).format('hh:mm') }} Uhr
         </p>
       </div>
       <div class="flex">

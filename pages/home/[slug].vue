@@ -18,19 +18,11 @@
     </NuxtLink>
     <ImageSliderComponent :images="postData.images.data"></ImageSliderComponent>
     <h1>{{ postData.title }}</h1>
-    <h3>
-      {{ postData.step.data.attributes.Name }} -
-      <span>
-        {{ moment(postData.createdAt).locale('de').startOf('day').fromNow() }}
-      </span>
-    </h3>
     <RichTextComponent :content="postData.description" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import moment from 'moment'
-
 const route = useRoute()
 const post = useState<IPosts | null>(() => null)
 const postData = computed(() => post.value?.data[0].attributes || null)

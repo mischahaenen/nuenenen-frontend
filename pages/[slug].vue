@@ -17,6 +17,7 @@
             'pages.steps',
             'pages.pfadiheim',
             'pages.testimonials',
+            'pages.contact',
           ].includes(zone.__component)
         "
         class="container"
@@ -79,6 +80,14 @@
             :sub-title="zone.Subtitle"
             :testimonials="zone.testimonials"
           ></TestimonialComponent>
+        </div>
+        <div v-if="zone.__component === 'pages.contact'">
+          <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+          <RichTextComponent
+            v-if="zone.Description"
+            :content="zone.Description"
+          ></RichTextComponent>
+          <ContactComponent :index="index" />
         </div>
       </div>
     </div>

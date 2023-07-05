@@ -34,7 +34,8 @@
     "moment": "^2.29.4",
     "nuxt": "^3.5.3",
     "pinia": "^2.1.4",
-    "vue": "^3.3.4"
+    "vue": "^3.3.4",
+    "vue-recaptcha-v3": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",

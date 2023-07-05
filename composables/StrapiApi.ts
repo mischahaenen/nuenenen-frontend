@@ -111,6 +111,16 @@ export const getTestimonial = (id: number) => {
   )
 }
 
+export const createContactEntry = (token: string, formData: any) => {
+  const { create } = useStrapi4()
+  return useAsyncData(() =>
+    create<any>('api/contacts/', {
+      token,
+      formData,
+    })
+  )
+}
+
 export const getFooter = () => {
   const { find } = useStrapi4()
   return find<IFooter>('api/footer', {
