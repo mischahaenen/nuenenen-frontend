@@ -58,8 +58,6 @@ const stepAttributes = computed(() => step.value?.data[0]?.attributes || null)
 
 const fetchData = async () => {
   const { data, error: fetchError } = await getStep(route.params.slug as string)
-  console.log(data.value)
-
   if (fetchError.value) {
     await navigateTo('/not-found')
     throw createError({

@@ -1,10 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div
-    v-if="props.isPreview"
-    class="preview"
-    v-html="htmlContent.find((x) => x.includes('<p>'))"
-  ></div>
+  <div v-if="props.isPreview" class="preview" v-html="previewHtml"></div>
   <div v-else>
     <span
       v-for="(block, index) in htmlContent"
@@ -24,7 +20,17 @@ const props = defineProps<{
   textAlign?: 'center' | 'left'
 }>()
 
-const htmlContent = edjsHTML().parseStrict(JSON.parse(props.content))
+const htmlContent = ref<string[] | Error>([])
+const previewHtml = ref<string>('')
+
+watch(
+  () => props.content,
+  () => {
+    htmlContent.value = edjsHTML().parseStrict(JSON.parse(props.content))
+    previewHtml.value = htmlContent.value.find((x) => x.includes('<p>')) || ''
+  },
+  { immediate: true, deep: true }
+)
 </script>
 <!-- TODO: Fix dirty solution .center -->
 <style scoped lang="scss">
