@@ -129,8 +129,8 @@ onBeforeUnmount(() => {
   position: relative;
   max-width: 100%;
   img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 500px;
     border-radius: var(--border-radius);
   }
 }
