@@ -45,6 +45,7 @@ export const getBlogPosts = () => {
   const { find } = useStrapi4()
   return find<IPosts>('api/blogs', {
     populate: '*',
+    sort: 'createdAt:desc',
   })
 }
 
