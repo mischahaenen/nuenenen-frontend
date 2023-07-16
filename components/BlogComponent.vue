@@ -20,14 +20,32 @@
         {{ step.attributes.Name }}
       </button>
     </div>
-    <div v-if="posts.length" class="post-grid">
+    <div v-if="posts.length" class="post-grid wrapper">
       <PostComponent
-        v-for="(post, i) in posts"
-        :key="post.id"
-        :post="post"
-        :is-first="i === 0"
+        v-if="posts.at(0)"
+        :key="posts.at(0)?.id"
+        :post="posts.at(0)"
+        :is-first="true"
         class="post-grid-item"
       />
+      <div class="grid left">
+        <PostComponent
+          v-for="(post, i) in posts.filter((_, i) => i % 2 === 0 && i !== 0)"
+          :key="post.id"
+          :post="post"
+          :is-first="false"
+          class="post-grid-item"
+        />
+      </div>
+      <div class="grid right">
+        <PostComponent
+          v-for="(post, i) in posts.filter((_, i) => i % 2 !== 0 && i !== 0)"
+          :key="post.id"
+          :post="post"
+          :is-first="false"
+          class="post-grid-item"
+        />
+      </div>
     </div>
     <div v-else class="fallback">
       <p>Hier wurde noch nichts veröffentlicht.</p>
@@ -40,6 +58,7 @@
 </template>
 
 <script lang="ts" setup>
+/* TODO: Rethink subgrid strategy */
 const posts = useState<IPost[]>(() => [])
 const steps = useState<IStep[]>(() => [])
 const activeButton = useState<string>(() => 'all')
@@ -67,14 +86,29 @@ onMounted(async () => {
 })
 </script>
 <style scoped lang="scss">
-.post-grid {
+.post-grid.wrapper {
   display: grid;
-  grid-template: auto / repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr;
   grid-gap: var(--space-medium);
+}
+
+.grid.left,
+.grid.right {
+  display: grid;
+  grid-gap: var(--space-medium);
+  grid-auto-rows: min-content;
 }
 
 .post-grid-item:nth-child(1) {
   grid-column: 1 / -1;
+}
+
+.grid.left {
+  grid-column: 1 / span 1;
+}
+
+.grid.right {
+  grid-column: span 1 / -1;
 }
 
 .blog-filter {
@@ -109,9 +143,10 @@ onMounted(async () => {
 }
 
 @media screen and (max-width: 600px) {
-  .post-grid {
+  .post-grid.wrapper {
     grid-template-columns: 1fr;
   }
+
   .blog-filter {
     gap: var(--space-small);
   }

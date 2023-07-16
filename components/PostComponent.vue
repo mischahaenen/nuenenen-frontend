@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="'home/' + props.post.attributes.slug">
+  <nuxt-link v-if="props.post" :to="'home/' + props.post.attributes.slug">
     <div v-if="isFirst" class="card-detailed">
       <nuxt-img
         v-if="props.post.attributes.images.data"
@@ -89,14 +89,14 @@
 </template>
 <script lang="ts" setup>
 import moment from 'moment'
-const props = defineProps<{ post: IPost; isFirst: boolean }>()
+const props = defineProps<{ post: IPost | undefined; isFirst: boolean }>()
 
 const readingTime = (text: string) => {
   const wpm = 225
   const words = text.trim().split(/\s+/).length
   return Math.ceil(words / wpm)
 }
-const time = readingTime(props.post.attributes.description)
+const time = readingTime(props.post?.attributes?.description || '')
 
 const unit = time === 1 ? 'Minute' : 'Minuten'
 </script>
