@@ -21,9 +21,6 @@
     "*.{css,scss,sass,html,vue}": "stylelint",
     "*.**": "prettier --check --ignore-unknown"
   },
-  "engines": {
-    "node": "16.x"
-  },
   "dependencies": {
     "@nuxtjs/strapi": "^1.9.3",
     "@pinia/nuxt": "^0.4.11",

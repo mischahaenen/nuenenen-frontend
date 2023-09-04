@@ -33,6 +33,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     compressPublicAssets: true,
+    preset: 'vercel-edge',
   },
   devtools: { enabled: true },
 })
