@@ -57,12 +57,13 @@
           v-model="form.contactOption"
           aria-label="Select contact type"
         >
-          <option value="Abteilung">Abteilung</option>
-          <option value="Biberstufe">Biberstufe</option>
-          <option value="Wolfstufe">Wolfstufe</option>
-          <option value="Pfadistufe">Pfadistufe</option>
-          <option value="Piostufe">Piostufe</option>
-          <option value="Roverstufe">Roverstufe</option>
+          <option
+            v-for="sender of contactDistributionList"
+            :key="sender.id"
+            :value="sender.id"
+          >
+            {{ sender.attributes.Name }}
+          </option>
         </select>
       </div>
       <button
@@ -78,20 +79,34 @@
 
 <script setup lang="ts">
 import { useReCaptcha } from 'vue-recaptcha-v3'
+import { ContactSender } from '~/types/contact-sender'
 const props = defineProps<{
   index?: number
 }>()
 const isOdd = computed(() => {
   return props.index ? props.index % 2 === 0 : true
 })
+const contactDistributionList = useState<ContactSender[] | null>(() => null)
 const form = ref({
   firstname: '',
   lastname: '',
   email: '',
   message: '',
-  contactOption: 'Abteilung',
+  contactOption: 1,
 })
 const recaptchaInstance = useReCaptcha()
+
+onMounted(async () => {
+  const response = await getContactDistributionList()
+  contactDistributionList.value = response.data
+  form.value = {
+    ...form.value,
+    contactOption:
+      contactDistributionList.value?.find(
+        (sender) => sender.attributes.Name === 'Abteilung'
+      )?.id || 1,
+  }
+})
 
 const recaptcha = async () => {
   await recaptchaInstance?.recaptchaLoaded()
@@ -101,15 +116,17 @@ const recaptcha = async () => {
 
 const submitForm = async () => {
   const token = await recaptcha()
-  const response = await createContactEntry(token, form.value)
-
-  form.value = {
-    firstname: '',
-    lastname: '',
-    email: '',
-    message: '',
-    contactOption: 'Abteilung',
-  }
+  createContactEntry(token, form.value)
+    .then(() => {
+      form.value = {
+        firstname: '',
+        lastname: '',
+        email: '',
+        message: '',
+        contactOption: 1,
+      }
+    })
+    .catch((error) => console.error(error))
 }
 </script>
 

@@ -19,10 +19,6 @@
         </ul>
       </div>
       <div>
-        <h2>Kontakt</h2>
-      </div>
-      <div>
-        <h2>Soziale Medien</h2>
         <h2>
           {{ $colorMode.value === 'dark' ? 'Hell' : 'Dunkel' }}-Modus gefällig?
         </h2>

@@ -1,3 +1,5 @@
+import { ContactSenderReponse } from '~/types/contact-sender'
+
 export const getPage = (title: string) => {
   const { find } = useStrapi4()
   return find<PageResponse>('api/pages', {
@@ -112,7 +114,10 @@ export const getTestimonial = (id: number) => {
   )
 }
 
-export const createContactEntry = (token: string, formData: any) => {
+export const createContactEntry = (
+  token: string | undefined,
+  formData: any
+) => {
   const { create } = useStrapi4()
   return useAsyncData(() =>
     create<any>('api/contacts/', {
@@ -120,6 +125,13 @@ export const createContactEntry = (token: string, formData: any) => {
       formData,
     })
   )
+}
+
+export const getContactDistributionList = (): Promise<ContactSenderReponse> => {
+  const { find } = useStrapi4()
+  return find<any>('api/contact-distribution-lists/', {
+    populate: '*',
+  })
 }
 
 export const getFooter = () => {
