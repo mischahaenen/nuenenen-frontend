@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: IPageZone
+  zone: Group
   index: number
 }>()
 </script>

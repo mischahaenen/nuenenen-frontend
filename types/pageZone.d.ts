@@ -1,16 +1,64 @@
-declare interface IPageZone {
+interface PageZoneComponent {
   id: number
-  Title?: string
-  Subtitle?: string
-  Description?: string
-  event?: {
-    data: IEvent
-  }
-  files?: FilesResponse
-  images?: ImagesResponse
-  Image?: ImagesResponse
-  members?: UsersResponse
-  testimonials?: TestimonialResponse
-  iFrame?: string
   __component: string
 }
+
+interface Kastenzeddel extends PageZoneComponent {
+  Title: string
+  Description: string
+  StartDate: string
+  EndDate: string
+  Location: string
+  StartTime: string
+  EndTime: string
+}
+interface Section extends PageZoneComponent {
+  Title: string
+  Description: string
+  Image: ImagesResponse
+}
+
+interface Document extends PageZoneComponent {
+  Title: string
+  files: FilesResponse
+}
+
+interface Group extends PageZoneComponent {
+  Title: string
+  members: UsersResponse
+}
+
+interface ImageZone extends PageZoneComponent {
+  Title: string
+  Description: string
+  images: ImagesResponse
+}
+
+interface Testimonial extends PageZoneComponent {
+  Title: string
+  Subtitle: string
+  Description: string
+  testimonials: TestimonialResponse
+}
+
+interface IFrame extends PageZoneComponent {
+  Title: string
+  Description: string
+  iFrame: string
+}
+
+interface ContactZone extends PageZoneComponent {
+  Title: string
+  Description: string
+}
+
+type PageZoneItem =
+  | Kastenzeddel
+  | Section
+  | Document
+  | Group
+  | ImageZone
+  | Testimonial
+  | IFrame
+
+type PageZone = PageZoneItem[]

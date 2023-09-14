@@ -24,27 +24,29 @@
       >
         <SectionComponent
           v-if="zone.__component == 'pages.section'"
-          :zone="zone"
+          :zone="(zone as Section)"
           :index="index"
         />
-        <EventComponent
-          v-if="zone.__component == 'pages.kastenzeddel'"
-          :zone="zone"
-          :index="index"
-        />
+        <div v-if="zone.__component == 'pages.kastenzeddel'">
+          <TitleComponent title="Kastenzeddel" :index="index"></TitleComponent>
+          <KastenzeddelComponent :kastenzeddel="(zone as Kastenzeddel)" />
+        </div>
         <DocumentComponent
           v-if="zone.__component == 'pages.document'"
-          :zone="zone"
+          :zone="(zone as Document)"
           :index="index"
         />
         <GroupComponent
           v-if="zone.__component == 'pages.group'"
-          :zone="zone"
+          :zone="(zone as Group)"
           :index="index"
         />
         <div v-if="zone.__component == 'pages.image'">
           <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-          <ImageSliderComponent v-if="zone.images" :images="zone.images.data" />
+          <ImageSliderComponent
+            v-if="(zone as ImageZone).images"
+            :images="(zone as ImageZone).images.data"
+          />
         </div>
       </div>
     </div>

@@ -1,17 +1,27 @@
 <template>
   <div class="event-details">
     <div class="calendar-item">
-      <p class="bold">
-        {{ moment(props.event.data.attributes.DateStart).format('DD') }}
-      </p>
-      <p>
-        {{ moment(props.event.data.attributes.DateStart).format('MMM') }}
-      </p>
+      <template
+        v-if="props.kastenzeddel.StartDate === props.kastenzeddel.EndDate"
+      >
+        <p class="bold">
+          {{ moment(props.kastenzeddel.StartDate).format('DD') }}
+        </p>
+        <p>
+          {{ moment(props.kastenzeddel.StartDate).format('MMM') }}
+        </p>
+      </template>
+      <template v-else>
+        <p class="bold">
+          {{ moment(props.kastenzeddel.StartDate).format('DD.MM') }}
+        </p>
+        <p>bis {{ moment(props.kastenzeddel.EndDate).format('DD.MM') }}</p>
+      </template>
     </div>
     <div class="description-location">
-      <h3>{{ props.event.data.attributes.Title }}</h3>
+      <h3>{{ props.kastenzeddel.Title }}</h3>
       <RichTextComponent
-        :content="props.event.data.attributes.Description"
+        :content="props.kastenzeddel.Description"
         :text-align="'left'"
       />
       <div class="flex">
@@ -28,9 +38,35 @@
           </svg>
         </div>
         <p>
-          {{ moment(props.event.data.attributes.DateStart).format('hh:mm') }}
-          Uhr bis
-          {{ moment(props.event.data.attributes.DateEnd).format('hh:mm') }} Uhr
+          <template
+            v-if="props.kastenzeddel.StartDate === props.kastenzeddel.EndDate"
+          >
+            <b>{{
+              moment(props.kastenzeddel.StartTime, 'HH:mm:ss.SSS').format(
+                'HH:mm'
+              )
+            }}</b>
+            bis
+            <b>{{
+              moment(props.kastenzeddel.EndTime, 'HH:mm:ss.SSS').format('HH:mm')
+            }}</b>
+            Uhr
+          </template>
+          <template v-else>
+            {{ moment(props.kastenzeddel.StartDate).format('DD. MMM. yyyy') }}
+            am
+            <b>{{
+              moment(props.kastenzeddel.StartTime, 'HH:mm:ss.SSS').format(
+                'HH:mm'
+              )
+            }}</b>
+            Uhr bis
+            {{ moment(props.kastenzeddel.EndDate).format('DD. MMM. yyyy') }} am
+            <b>{{
+              moment(props.kastenzeddel.EndTime, 'HH:mm:ss.SSS').format('HH:mm')
+            }}</b>
+            Uhr
+          </template>
         </p>
       </div>
       <div class="flex">
@@ -46,7 +82,7 @@
             />
           </svg>
         </div>
-        <p>{{ props.event.data.attributes.Location }}</p>
+        <p>{{ props.kastenzeddel.Location }}</p>
       </div>
     </div>
   </div>
@@ -55,9 +91,7 @@
 <script setup lang="ts">
 import moment from 'moment'
 const props = defineProps<{
-  event: {
-    data: IEvent
-  }
+  kastenzeddel: Kastenzeddel
 }>()
 </script>
 
@@ -80,8 +114,8 @@ svg {
   padding: var(--space-medium);
   background-color: var(--color-accent-100);
   border-radius: var(--border-radius);
-  width: min(200px, 100%);
-  height: min(200px, 100%);
+  width: min(250px, 100%);
+  height: min(250px, 100%);
 
   p {
     margin: 0;

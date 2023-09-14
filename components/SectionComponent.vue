@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: IPageZone
+  zone: Section
   index: number
 }>()
 const image = computed(() => props.zone.Image?.data)

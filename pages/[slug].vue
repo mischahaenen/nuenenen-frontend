@@ -23,7 +23,10 @@
         class="container"
       >
         <div v-if="zone.__component === 'pages.section'">
-          <SectionComponent :zone="zone" :index="index"></SectionComponent>
+          <SectionComponent
+            :zone="(zone as Section)"
+            :index="index"
+          ></SectionComponent>
         </div>
         <div v-if="zone.__component === 'pages.blog'">
           <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
@@ -84,8 +87,8 @@
         <div v-if="zone.__component === 'pages.contact'">
           <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
           <RichTextComponent
-            v-if="zone.Description"
-            :content="zone.Description"
+            v-if="(zone as ContactZone).Description"
+            :content="(zone as ContactZone).Description"
           ></RichTextComponent>
           <ContactComponent :index="index" />
         </div>
@@ -98,7 +101,6 @@
 const route = useRoute()
 const page = ref<Page | null>(null)
 const steps = useState<IStep[]>(() => [])
-const events = useState<IEvent[]>(() => [])
 const title = computed(() => {
   if (!page.value) return 'Pfadi Nünenen'
   return `Pfadi Nünenen - ${
@@ -118,11 +120,6 @@ const fetchData = async () => {
   if (hasComponent('pages.steps')) {
     const stepRes = await getStepNames()
     steps.value = stepRes.data
-  }
-
-  if (hasComponent('pages.event')) {
-    const res = await getEvents()
-    events.value = res.data
   }
 }
 const hasComponent = (component: string) => {

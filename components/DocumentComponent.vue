@@ -5,6 +5,7 @@
       :index="props.index"
     ></TitleComponent>
     <a
+      v-if="props.zone.files"
       v-for="file in props.zone.files.data"
       :key="file.id"
       :href="useStrapiUrl() + file.attributes.url"
@@ -16,7 +17,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: IPageZone
+  zone: Document
   index: number
 }>()
 </script>

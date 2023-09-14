@@ -81,7 +81,9 @@
     </div>
   </form>
   <div v-else class="successMessage">
-    <h3>Deine Nachricht wurde erfolgreich übermittelt!</h3>
+    <h3>
+      {{ form.firstname }}, deine Nachricht wurde erfolgreich übermittelt!
+    </h3>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       data-name="Layer 1"
@@ -183,13 +185,6 @@ const submitForm = async () => {
   try {
     const token = await recaptcha()
     await createContactEntry(token, form.value)
-    form.value = {
-      firstname: '',
-      lastname: '',
-      email: '',
-      message: '',
-      contactOption: 1,
-    }
     mailState.value = 'SUCCESS'
   } catch (error) {
     console.error(error)

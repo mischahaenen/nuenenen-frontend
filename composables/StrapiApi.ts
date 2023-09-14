@@ -70,7 +70,7 @@ export const getBlogPost = (slug: string) => {
 export const getStepNames = () => {
   const { find } = useStrapi4()
   return find<ISteps>('api/steps', {
-    fields: ['Name', 'Slug', 'logo'],
+    fields: ['Name', 'Slug'],
     populate: '*',
   })
 }
@@ -84,7 +84,7 @@ export const getStep = (slug: string) => {
           populate: '*',
         },
       },
-      filters: { slug: { $eq: slug } },
+      filters: { Slug: { $eq: slug } },
     })
   )
 }

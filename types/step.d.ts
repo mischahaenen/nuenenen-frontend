@@ -13,7 +13,7 @@ declare interface IStep {
     event: {
       data: IEvent
     }
-    pageZone: IPageZone[]
+    pageZone: PageZone
   }
 }
 
