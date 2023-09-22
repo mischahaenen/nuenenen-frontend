@@ -19,9 +19,7 @@
         </ul>
       </div>
       <div>
-        <h2>
-          {{ $colorMode.value === 'dark' ? 'Hell' : 'Dunkel' }}-Modus gefällig?
-        </h2>
+        <h2>{{ modeHeader }}</h2>
         <BaseColorSwitch></BaseColorSwitch>
       </div>
       <div class="sponsorLogo">
@@ -39,8 +37,14 @@
 </template>
 
 <script setup>
+const colorMode = useColorMode()
 const footerRes = await getFooter()
 const footer = footerRes.data.attributes || null
+const modeHeader = computed(() => {
+  return colorMode.value === 'dark'
+    ? 'Hell-Modus gefällig?'
+    : 'Dunkel-Modus gefällig?'
+})
 
 onMounted(() => {
   let _paq = (window._paq = window._paq || [])

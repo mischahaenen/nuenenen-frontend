@@ -114,6 +114,16 @@ export const getTestimonial = (id: number) => {
   )
 }
 
+export const getSponsors = (ids: number[]) => {
+  const { find } = useStrapi4()
+  return useAsyncData(() =>
+    find<SponsorResponse>('api/sponsors', {
+      populate: '*',
+      filters: { id: { $in: ids } },
+    })
+  )
+}
+
 export const createContactEntry = (
   token: string | undefined,
   formData: any

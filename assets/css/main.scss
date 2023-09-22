@@ -77,14 +77,10 @@ body {
     padding: 0 var(--space-small);
   }
 
-  .section {
-    padding: var(--space-small);
-    margin-top: var(--space-small);
-  }
-
+  .section,
   .colored-section {
     padding: var(--space-small);
-    margin-bottom: var(--space-small);
+    margin: var(--space-small);
   }
 }
 

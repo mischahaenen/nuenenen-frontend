@@ -9,7 +9,7 @@
     <div class="slide">
       <img
         class="fade active-slide"
-        :src="useStrapiUrl() + getImageUrl()"
+        :src="getImageUrl()"
         :alt="imageStore.getCurrentSlide.attributes.alternativeText || ''"
       />
       <button

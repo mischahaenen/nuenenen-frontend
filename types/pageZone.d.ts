@@ -52,6 +52,18 @@ interface ContactZone extends PageZoneComponent {
   Description: string
 }
 
+interface StepZone extends PageZoneComponent {
+  Title: string
+  Description: string
+  steps: StepsResponse
+}
+
+interface SponsorZone extends PageZoneComponent {
+  Title: string
+  Description: string
+  sponsors: SponsorResponse
+}
+
 type PageZoneItem =
   | Kastenzeddel
   | Section
@@ -60,5 +72,7 @@ type PageZoneItem =
   | ImageZone
   | Testimonial
   | IFrame
+  | StepZone
+  | SponsorZone
 
 type PageZone = PageZoneItem[]

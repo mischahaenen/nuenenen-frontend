@@ -8,7 +8,7 @@
       v-if="props.zone.files"
       v-for="file in props.zone.files.data"
       :key="file.id"
-      :href="useStrapiUrl() + file.attributes.url"
+      :href="file.attributes.url"
       download=""
       >Download {{ file.attributes.name }}</a
     >

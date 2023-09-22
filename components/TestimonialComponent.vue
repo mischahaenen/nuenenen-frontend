@@ -9,9 +9,7 @@
         <Transition mode="out-in">
           <nuxt-img
             :key="testimonial.id"
-            :src="
-              useStrapiUrl() + testimonial.attributes.Image.data.attributes.url
-            "
+            :src="testimonial.attributes.Image.data.attributes.url"
             alt="Bild von {{ testimonial.attributes.Name }}"
           />
         </Transition>

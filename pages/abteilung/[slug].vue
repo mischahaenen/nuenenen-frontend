@@ -75,6 +75,5 @@ useHead({
 })
 
 onMounted(fetchData)
-
-watch(() => route.params.slug, fetchData)
+watch(() => route.params.slug, fetchData, { immediate: true })
 </script>
