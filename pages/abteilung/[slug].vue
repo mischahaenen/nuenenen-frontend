@@ -29,7 +29,10 @@
         />
         <div v-if="zone.__component == 'pages.kastenzeddel'">
           <TitleComponent title="Kastenzeddel" :index="index"></TitleComponent>
-          <KastenzeddelComponent :kastenzeddel="(zone as Kastenzeddel)" />
+          <KastenzeddelComponent
+            :kastenzeddel="(zone as Kastenzeddel)"
+            :step="stepAttributes.Slug"
+          />
         </div>
         <DocumentComponent
           v-if="zone.__component == 'pages.document'"

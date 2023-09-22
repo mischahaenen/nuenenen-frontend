@@ -84,15 +84,25 @@
         </div>
         <p>{{ props.kastenzeddel.Location }}</p>
       </div>
+      <button class="button primary-button" @click="deregister()">
+        Abmelden
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import moment from 'moment'
+import { useDeregisterStore } from '~/store/deregister'
 const props = defineProps<{
   kastenzeddel: Kastenzeddel
+  step: string
 }>()
+const deregister = async () => {
+  const deregisterStore = useDeregisterStore()
+  deregisterStore.setStep(props.step)
+  await navigateTo('/kontakt')
+}
 </script>
 
 <style scoped lang="scss">

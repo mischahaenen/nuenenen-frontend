@@ -15,10 +15,12 @@
         <div class="toggle-line"></div>
       </div>
       <div class="nav-links">
-        <nuxt-link to="/home">Home</nuxt-link>
-        <nuxt-link to="/abteilung">Abteilung</nuxt-link>
-        <nuxt-link to="/mitmachen">Mitmachen</nuxt-link>
-        <nuxt-link class="link-button" to="/kontakt">Kontakt</nuxt-link>
+        <nuxt-link
+          v-for="page in pages"
+          :to="`/${page.attributes.url}`"
+          :key="page.attributes.slug"
+          >{{ page.attributes.slug }}</nuxt-link
+        >
       </div>
     </nav>
   </header>
@@ -27,6 +29,12 @@
 <script lang="ts" setup>
 const scroll = useScrollY()
 const navExpanded = useState(() => false)
+const pages = useState<Page[]>(() => [])
+
+onMounted(async () => {
+  const pagesResponse = await getPageNavigation()
+  pages.value = pagesResponse.data
+})
 
 function toggleNav() {
   navExpanded.value = !navExpanded.value
@@ -82,6 +90,24 @@ function toggleNav() {
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
+}
+
+.nav-links a:last-child {
+  background: var(--color-primary-700);
+  color: var(--color-white) !important;
+  transition: all 0.2s ease-in-out;
+  outline-color: var(--color-accent-50);
+  text-decoration: none;
+  border: none;
+  padding: var(--space-small);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 700;
+
+  &:hover {
+    background-color: var(--color-primary-500);
+    color: var(--color-accent-50) !important;
+  }
 }
 
 .nav-links > * {

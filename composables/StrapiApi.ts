@@ -1,5 +1,11 @@
 import { ContactSenderReponse } from '~/types/contact-sender'
 
+export const getPageNavigation = () => {
+  const { find } = useStrapi4()
+  return find<PageResponse>('api/pages', {
+    fields: ['slug', 'url'],
+  })
+}
 export const getPage = (title: string) => {
   const { find } = useStrapi4()
   return find<PageResponse>('api/pages', {

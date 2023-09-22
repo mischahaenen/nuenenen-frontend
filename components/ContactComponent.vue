@@ -135,12 +135,13 @@
 
 <script setup lang="ts">
 import { useReCaptcha } from 'vue-recaptcha-v3'
+import { useDeregisterStore } from '~/store/deregister'
 import { ContactSender } from '~/types/contact-sender'
 
 const props = defineProps<{
   index?: number
 }>()
-
+const deregisterStore = useDeregisterStore()
 const isOdd = computed(() => (props.index ? props.index % 2 === 0 : true))
 const contactDistributionList = useState<ContactSender[] | null>(() => null)
 const form = ref({
@@ -158,16 +159,25 @@ onMounted(async () => {
   try {
     const response = await getContactDistributionList()
     contactDistributionList.value = response.data
-    form.value.contactOption =
-      contactDistributionList.value?.find(
-        (sender) => sender.attributes.Name === 'Abteilung'
-      )?.id || 1
+    form.value.contactOption = await getDefaultContactOption()
+    form.value.message = deregisterStore.step ? deregisterStore.message : ''
   } catch (error) {
     console.error(error)
     errorMessage.value =
       'Ein Fehler trat beim Laden der Kontaktverteilung auf. Bitte versuche es später erneut.'
   }
 })
+
+const getDefaultContactOption = () => {
+  const step = deregisterStore.step
+  return (
+    contactDistributionList.value?.find((sender) =>
+      step
+        ? sender.attributes.Name.toLocaleLowerCase() === step
+        : sender.attributes.Name.toLocaleLowerCase() === 'abteilung'
+    )?.id || 1
+  )
+}
 
 const recaptcha = async () => {
   try {
@@ -190,8 +200,14 @@ const submitForm = async () => {
     console.error(error)
     errorMessage.value =
       'Deine Nachricht konnte nicht übermittelt werden. Bitte versuche es erneut.'
+  } finally {
+    deregisterStore.setStep('')
   }
 }
+
+onBeforeUnmount(() => {
+  mailState.value = 'UNKNOWN'
+})
 </script>
 
 <style scoped lang="scss">
