@@ -1,4 +1,4 @@
-declare interface IStep {
+declare interface Step {
   id: number
   attributes: {
     Name: string
@@ -17,6 +17,6 @@ declare interface IStep {
   }
 }
 
-declare interface ISteps {
-  data: IStep[]
+declare interface Steps {
+  data: Step[]
 }

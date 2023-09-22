@@ -54,7 +54,7 @@
 </template>
 <script setup lang="ts">
 const route = useRoute()
-const step = useState<ISteps | null>(() => null)
+const step = useState<Steps | null>(() => null)
 
 const stepAttributes = computed(() => step.value?.data[0]?.attributes || null)
 

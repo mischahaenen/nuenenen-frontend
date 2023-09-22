@@ -38,7 +38,7 @@
             :preview-lines="9"
           />
           <div class="card-footer">
-            #{{ props.post.attributes.step.data.attributes.Name }}
+            #{{ props.post.attributes.step?.data?.attributes?.Name }}
           </div>
         </div>
       </div>
@@ -80,7 +80,7 @@
             :is-preview="true"
           />
           <div class="card-footer">
-            #{{ props.post.attributes.step.data.attributes.Name }}
+            #{{ props.post.attributes.step?.data?.attributes?.Name }}
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@
 </template>
 <script lang="ts" setup>
 import moment from 'moment'
-const props = defineProps<{ post: IPost | undefined; isFirst: boolean }>()
+const props = defineProps<{ post: Post | undefined; isFirst: boolean }>()
 
 const readingTime = (text: string) => {
   const wpm = 225

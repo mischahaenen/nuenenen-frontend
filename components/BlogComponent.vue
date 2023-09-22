@@ -59,8 +59,8 @@
 
 <script lang="ts" setup>
 /* TODO: Rethink subgrid strategy */
-const posts = useState<IPost[]>(() => [])
-const steps = useState<IStep[]>(() => [])
+const posts = useState<Post[]>(() => [])
+const steps = useState<Step[]>(() => [])
 const activeButton = useState<string>(() => 'all')
 
 const getPostsByStep = async (step: string) => {

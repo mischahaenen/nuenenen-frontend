@@ -130,7 +130,7 @@ onBeforeUnmount(() => {
   max-width: 100%;
   img {
     width: 100%;
-    height: 500px;
+    max-height: 500px;
     object-fit: cover;
     object-position: center;
     border-radius: var(--border-radius);

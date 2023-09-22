@@ -45,6 +45,7 @@ interface IFrame extends PageZoneComponent {
   Title: string
   Description: string
   iFrame: string
+  images: ImagesResponse
 }
 
 interface ContactZone extends PageZoneComponent {
@@ -55,13 +56,19 @@ interface ContactZone extends PageZoneComponent {
 interface StepZone extends PageZoneComponent {
   Title: string
   Description: string
-  steps: StepsResponse
+  steps: Steps
 }
 
 interface SponsorZone extends PageZoneComponent {
   Title: string
   Description: string
   sponsors: SponsorResponse
+}
+
+interface BlogZone extends PageZoneComponent {
+  Title: string
+  Description: string
+  posts: PostResponse
 }
 
 type PageZoneItem =
@@ -74,5 +81,6 @@ type PageZoneItem =
   | IFrame
   | StepZone
   | SponsorZone
+  | BlogZone
 
 type PageZone = PageZoneItem[]

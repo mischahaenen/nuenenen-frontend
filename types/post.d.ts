@@ -1,10 +1,10 @@
-declare interface IPost {
+declare interface Post {
   id: number
   attributes: {
     title: string
     description: string
     step: {
-      data: IStep
+      data: Step
     }
     createdAt: Date
     author: string
@@ -15,6 +15,6 @@ declare interface IPost {
   }
 }
 
-declare interface IPosts {
-  data: IPost[]
+declare interface PostResponse {
+  data: Post[]
 }

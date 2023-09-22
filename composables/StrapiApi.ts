@@ -45,7 +45,7 @@ export const getPageWithGraphQL = (slug: string) => {
 
 export const getBlogPosts = () => {
   const { find } = useStrapi4()
-  return find<IPosts>('api/blogs', {
+  return find<PostResponse>('api/blogs', {
     populate: '*',
     sort: 'createdAt:desc',
   })
@@ -53,7 +53,7 @@ export const getBlogPosts = () => {
 
 export const getBlogPostsByStep = (step: string) => {
   const { find } = useStrapi4()
-  return find<IPosts>('api/blogs', {
+  return find<PostResponse>('api/blogs', {
     populate: '*',
     filters: { step: { Name: { $eq: step } } },
   })
@@ -61,7 +61,7 @@ export const getBlogPostsByStep = (step: string) => {
 
 export const getBlogPost = (slug: string) => {
   const { find } = useStrapi4()
-  return find<IPosts>('api/blogs', {
+  return find<PostResponse>('api/blogs', {
     populate: '*',
     filters: { slug: { $eq: slug } },
   })
@@ -69,7 +69,8 @@ export const getBlogPost = (slug: string) => {
 
 export const getStepNames = () => {
   const { find } = useStrapi4()
-  return find<ISteps>('api/steps', {
+  return find<Steps>('api/steps', {
+    sort: 'id:asc',
     fields: ['Name', 'Slug'],
     populate: '*',
   })
@@ -78,7 +79,7 @@ export const getStepNames = () => {
 export const getStep = (slug: string) => {
   const { find } = useStrapi4()
   return useAsyncData(() =>
-    find<ISteps>('api/steps', {
+    find<Steps>('api/steps', {
       populate: {
         pageZone: {
           populate: '*',

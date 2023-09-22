@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 const route = useRoute()
-const post = useState<IPosts | null>(() => null)
+const post = useState<PostResponse | null>(() => null)
 const postData = computed(() => post.value?.data[0].attributes || null)
 
 const fetchData = async () => {

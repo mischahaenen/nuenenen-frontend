@@ -23,10 +23,13 @@
         ></SectionComponent>
       </div>
       <div v-if="zone.__component === 'pages.blog'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+        <TitleComponent
+          :title="(zone as BlogZone).Title"
+          :index="index"
+        ></TitleComponent>
         <RichTextComponent
-          v-if="zone.Description"
-          :content="zone.Description"
+          v-if="(zone as BlogZone).Description"
+          :content="(zone as BlogZone).Description"
         />
         <BlogComponent />
       </div>
@@ -38,37 +41,25 @@
         />
         <div class="flexRow">
           <nuxt-link
-            v-for="step of (zone as StepZone).steps.data"
+            v-for="step of steps"
             :key="step.attributes.Name"
             :to="'abteilung/' + step.attributes.Slug"
           >
-            <!-- <nuxt-img
+            <nuxt-img
               provider="strapi"
               class="image"
               :src="step.attributes.logo.data.attributes.url"
               :alt="step.attributes.logo.data.attributes.name"
-            /> -->
+            />
             <h3>{{ step.attributes.Name }}</h3>
           </nuxt-link>
         </div>
       </div>
       <div v-if="zone.__component === 'pages.pfadiheim'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <RichTextComponent
-          v-if="zone.Description"
-          :content="zone.Description"
-        />
-        <h3>Reserviere das Pfadiheim</h3>
-        <iframe
-          scrolling="no"
-          class="pfadiheim-frame"
-          :src="zone.iFrame"
-        ></iframe>
-        <h3 v-if="zone.images">Impressionen</h3>
-        <ImageSliderComponent
-          v-if="zone.images"
-          :images="zone.images?.data"
-        ></ImageSliderComponent>
+        <PfadiheimComponent
+          :index="index"
+          :zone="(zone as IFrame)"
+        ></PfadiheimComponent>
       </div>
       <div v-if="zone.__component === 'pages.testimonials'" class="container">
         <TestimonialComponent
@@ -105,7 +96,8 @@
 
 <script lang="ts" setup>
 const route = useRoute()
-const page = ref<Page | null>(null)
+const page = useState<Page | null>(() => null)
+const steps = useState<Step[]>(() => [])
 const title = computed(() => {
   if (!page.value) return 'Pfadi Nünenen'
   return `Pfadi Nünenen - ${
@@ -118,9 +110,19 @@ useHead(() => ({
   title: title.value,
 }))
 
+const hasComponent = (component: string) => {
+  return page.value?.attributes?.pageZone.some(
+    (zone) => zone.__component === component
+  )
+}
+
 const fetchData = async () => {
   const response = await getPage(route.params.slug as string)
   page.value = response.data[0]
+  if (hasComponent('pages.steps')) {
+    const response = await getStepNames()
+    steps.value = response.data
+  }
 }
 
 onMounted(() => {
@@ -156,19 +158,5 @@ a {
 
 a:hover h3 {
   text-decoration: underline;
-}
-.pfadiheim-frame {
-  width: 100%;
-  max-width: 660px;
-  height: 903px;
-  overflow: hidden;
-  border: none;
-  background-color: var(--color-white);
-  border-radius: var(--border-radius);
-}
-@media screen and (max-width: 600px) {
-  .pfadiheim-frame {
-    height: auto;
-  }
 }
 </style>
