@@ -41,7 +41,7 @@
         />
         <div class="flexRow">
           <nuxt-link
-            v-for="step of steps"
+            v-for="step of (zone as StepZone).steps.data"
             :key="step.attributes.Name"
             :to="'abteilung/' + step.attributes.Slug"
           >
@@ -86,9 +86,7 @@
           v-if="(zone as SponsorZone).Description"
           :content="(zone as SponsorZone).Description"
         ></RichTextComponent>
-        <SponsorComponent
-          :ids="(zone as SponsorZone).sponsors.data.map((sponsor) => sponsor.id)"
-        />
+        <SponsorComponent :sponsors="(zone as SponsorZone).sponsors.data" />
       </div>
     </div>
   </div>
@@ -97,7 +95,6 @@
 <script lang="ts" setup>
 const route = useRoute()
 const page = useState<Page | null>(() => null)
-const steps = useState<Step[]>(() => [])
 const title = computed(() => {
   if (!page.value) return 'Pfadi Nünenen'
   return `Pfadi Nünenen - ${
@@ -110,19 +107,9 @@ useHead(() => ({
   title: title.value,
 }))
 
-const hasComponent = (component: string) => {
-  return page.value?.attributes?.pageZone.some(
-    (zone) => zone.__component === component
-  )
-}
-
 const fetchData = async () => {
   const response = await getPage(route.params.slug as string)
   page.value = response.data[0]
-  if (hasComponent('pages.steps')) {
-    const response = await getStepNames()
-    steps.value = response.data
-  }
 }
 
 onMounted(() => {

@@ -6,15 +6,11 @@ export const getPageNavigation = () => {
     fields: ['slug', 'url'],
   })
 }
-export const getPage = (title: string) => {
+export const getPage = (url: string) => {
   const { find } = useStrapi4()
   return find<PageResponse>('api/pages', {
-    populate: {
-      pageZone: {
-        populate: '*',
-      },
-    },
-    filters: { slug: { $eq: title } },
+    populate: 'deep',
+    filters: { url: { $eq: url } },
   })
 }
 export const getPageWithGraphQL = (slug: string) => {
@@ -52,7 +48,7 @@ export const getPageWithGraphQL = (slug: string) => {
 export const getBlogPosts = () => {
   const { find } = useStrapi4()
   return find<PostResponse>('api/blogs', {
-    populate: '*',
+    populate: 'deep',
     sort: 'createdAt:desc',
   })
 }
@@ -60,7 +56,7 @@ export const getBlogPosts = () => {
 export const getBlogPostsByStep = (step: string) => {
   const { find } = useStrapi4()
   return find<PostResponse>('api/blogs', {
-    populate: '*',
+    populate: 'deep',
     filters: { step: { Name: { $eq: step } } },
   })
 }
@@ -68,7 +64,7 @@ export const getBlogPostsByStep = (step: string) => {
 export const getBlogPost = (slug: string) => {
   const { find } = useStrapi4()
   return find<PostResponse>('api/blogs', {
-    populate: '*',
+    populate: 'deep',
     filters: { slug: { $eq: slug } },
   })
 }
@@ -78,7 +74,7 @@ export const getStepNames = () => {
   return find<Steps>('api/steps', {
     sort: 'id:asc',
     fields: ['Name', 'Slug'],
-    populate: '*',
+    populate: 'deep',
   })
 }
 
@@ -86,11 +82,7 @@ export const getStep = (slug: string) => {
   const { find } = useStrapi4()
   return useAsyncData(() =>
     find<Steps>('api/steps', {
-      populate: {
-        pageZone: {
-          populate: '*',
-        },
-      },
+      populate: 'deep',
       filters: { Slug: { $eq: slug } },
     })
   )
@@ -99,7 +91,7 @@ export const getStep = (slug: string) => {
 export const getStrapiUser = (id: string) => {
   const { find } = useStrapi4()
   return find<User>('api/users', {
-    populate: '*',
+    populate: 'deep',
     filters: { id: { $eq: id } },
   })
 }
@@ -107,7 +99,7 @@ export const getStrapiUser = (id: string) => {
 export const getEvents = () => {
   const { find } = useStrapi4()
   return find<IEvents>('api/events', {
-    populate: '*',
+    populate: 'deep',
     filters: {},
   })
 }
@@ -116,7 +108,7 @@ export const getTestimonial = (id: number) => {
   const { find } = useStrapi4()
   return useAsyncData(() =>
     find<{ data: Testimonial }>(`api/testimonials/${id}`, {
-      populate: '*',
+      populate: 'deep',
     })
   )
 }
@@ -125,7 +117,7 @@ export const getSponsors = (ids: number[]) => {
   const { find } = useStrapi4()
   return useAsyncData(() =>
     find<SponsorResponse>('api/sponsors', {
-      populate: '*',
+      populate: 'deep',
       filters: { id: { $in: ids } },
     })
   )
@@ -147,13 +139,13 @@ export const createContactEntry = (
 export const getContactDistributionList = (): Promise<ContactSenderReponse> => {
   const { find } = useStrapi4()
   return find<any>('api/contact-distribution-lists/', {
-    populate: '*',
+    populate: 'deep',
   })
 }
 
 export const getFooter = () => {
   const { find } = useStrapi4()
   return find<IFooter>('api/footer', {
-    populate: '*',
+    populate: 'deep',
   })
 }

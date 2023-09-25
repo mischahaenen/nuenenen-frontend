@@ -1,6 +1,6 @@
 <template>
   <div class="sponsor-grid">
-    <div v-for="sponsor of sponsors" :key="sponsor.attributes.Name">
+    <div v-for="sponsor of props.sponsors" :key="sponsor.attributes.Name">
       <nuxt-img
         class="sponsor-logo"
         format="webp"
@@ -16,23 +16,10 @@
 
 <script setup lang="ts">
 const props = defineProps({
-  ids: {
-    type: Array as PropType<number[]>,
+  sponsors: {
+    type: Array as PropType<Sponsor[]>,
     required: true,
   },
-})
-const sponsors = useState<Sponsor[] | null>(() => null)
-const fetchData = async () => {
-  const { data, error } = await getSponsors(props.ids)
-  if (error.value) {
-    console.error(error)
-  }
-  if (data.value) {
-    sponsors.value = data.value.data
-  }
-}
-onMounted(() => {
-  fetchData()
 })
 </script>
 
