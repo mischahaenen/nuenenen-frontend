@@ -32,7 +32,8 @@
     "nuxt": "^3.5.3",
     "pinia": "^2.1.4",
     "vue": "^3.3.4",
-    "vue-recaptcha-v3": "^2.0.1"
+    "vue-recaptcha-v3": "^2.0.1",
+    "vue3-carousel-nuxt": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",

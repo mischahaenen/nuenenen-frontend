@@ -38,6 +38,7 @@ const props = defineProps<{
   display: flex;
   gap: var(--space-extra-large);
   justify-content: center;
+  align-items: center;
 }
 .pfadiheim-frame {
   width: 100%;

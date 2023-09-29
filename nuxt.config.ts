@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/image',
+    'vue3-carousel-nuxt',
   ],
   strapi: {
     url: process.env.STRAPI_URL || 'http://localhost:1337',
