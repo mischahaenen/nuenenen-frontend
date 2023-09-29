@@ -47,6 +47,7 @@
           >
             <nuxt-img
               provider="strapi"
+              format="webp"
               class="image"
               :src="step.attributes.logo.data.attributes.url"
               :alt="step.attributes.logo.data.attributes.name"

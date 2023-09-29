@@ -5,10 +5,19 @@
         class="sponsor-logo"
         format="webp"
         :src="sponsor.attributes.Logo.data.attributes.url"
+        :alt="
+          sponsor.attributes.Logo.data.attributes.alternativeText ||
+          sponsor.attributes.Name
+        "
       ></nuxt-img>
-      <a :href="sponsor.attributes.Url" target="_blank">
+      <a
+        v-if="sponsor.attributes.Url"
+        :href="sponsor.attributes.Url"
+        target="_blank"
+      >
         <h3>{{ sponsor.attributes.Name }}</h3></a
       >
+      <h3 v-else>{{ sponsor.attributes.Name }}</h3>
       <p>{{ sponsor.attributes.Description }}</p>
     </div>
   </div>

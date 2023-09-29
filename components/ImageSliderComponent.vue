@@ -4,8 +4,10 @@
       <div class="carousel__item">
         <nuxt-img
           provider="strapi"
+          format="webp"
           class="carousel__image"
           :src="image.attributes.url"
+          :alt="image.attributes.alternativeText || image.attributes.name"
         >
         </nuxt-img>
       </div>
@@ -18,8 +20,13 @@
   <nuxt-img
     v-else
     provider="strapi"
+    format="webp"
     class="carousel__image_standalone"
     :src="props.images[0].attributes.url"
+    :alt="
+      props.images[0].attributes.alternativeText ||
+      props.images[0].attributes.name
+    "
   ></nuxt-img>
 </template>
 

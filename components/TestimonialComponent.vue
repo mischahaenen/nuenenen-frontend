@@ -8,9 +8,14 @@
       <div class="img-container">
         <Transition mode="out-in">
           <nuxt-img
+            format="webp"
+            provider="strapi"
             :key="testimonial.id"
             :src="testimonial.attributes.Image.data.attributes.url"
-            alt="Bild von {{ testimonial.attributes.Name }}"
+            :alt="
+              testimonial.attributes.Image.data.attributes.alternativeText ||
+              testimonial.attributes.Name
+            "
           />
         </Transition>
         <button class="prev" aria-label="Vorheriges Bild" @click="previous()">

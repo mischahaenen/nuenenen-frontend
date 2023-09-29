@@ -1,11 +1,15 @@
 <template>
-  <div v-if="user">
-    <div class="member-card">
-      <nuxt-img class="image" provider="strapi" :src="user[0].Picture.url" />
-      <div class="member-card__content">
-        <h3>{{ user[0].username }}</h3>
-        <a :href="'mailto:' + user[0].email">{{ user[0].email }}</a>
-      </div>
+  <div v-if="user" class="member-card">
+    <nuxt-img
+      class="image"
+      format="webp"
+      provider="strapi"
+      :src="user[0].Picture.url"
+      :alt="user[0].Picture.alternativeText"
+    />
+    <div class="member-card__content">
+      <h3>{{ user[0].username }}</h3>
+      <a :href="'mailto:' + user[0].email">{{ user[0].email }}</a>
     </div>
   </div>
 </template>
@@ -14,8 +18,10 @@
 const props = defineProps<{
   id: number
 }>()
-
-const user = await getStrapiUser(props.id)
+const user = useState<UsersResponse | null>(() => null)
+onMounted(async () => {
+  user.value = await getStrapiUser(props.id)
+})
 </script>
 
 <style scoped lang="scss">

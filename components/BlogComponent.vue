@@ -52,6 +52,7 @@
       <nuxt-img
         src="/svg/not_found.svg"
         alt="Illustration of an alien indicating that nothing has been found"
+        format="webp"
       />
     </div>
   </div>

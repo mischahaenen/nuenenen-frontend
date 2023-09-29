@@ -11,6 +11,7 @@
       <nuxt-img
         src="/svg/not_found.svg"
         alt="Space Aliens nothing found image"
+        format="webp"
       />
     </main>
     <BaseFooter />

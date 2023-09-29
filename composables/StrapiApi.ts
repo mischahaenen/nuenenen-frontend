@@ -88,9 +88,9 @@ export const getStep = (slug: string) => {
   )
 }
 
-export const getStrapiUser = (id: string) => {
+export const getStrapiUser = (id: number) => {
   const { find } = useStrapi4()
-  return find<User>('api/users', {
+  return find<UsersResponse>('api/users', {
     populate: 'deep',
     filters: { id: { $eq: id } },
   })
