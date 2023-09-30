@@ -3,7 +3,6 @@
     <slide v-for="image in props.images" :key="image.attributes.name">
       <div class="carousel__item">
         <nuxt-img
-          provider="strapi"
           format="webp"
           class="carousel__image"
           :src="image.attributes.url"
@@ -19,7 +18,6 @@
   </carousel>
   <nuxt-img
     v-else
-    provider="strapi"
     format="webp"
     class="carousel__image_standalone"
     :src="props.images[0].attributes.url"

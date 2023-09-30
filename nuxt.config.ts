@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['@/assets/css/main.scss'],
   plugins: [],
   components: true,
@@ -28,9 +27,7 @@ export default defineNuxtConfig({
     noExternal: ['moment'],
   },
   image: {
-    strapi: {
-      baseURL: process.env.STRAPI_URL || 'http://localhost:1337',
-    },
+    format: ['webp'],
   },
   nitro: {
     compressPublicAssets: true,

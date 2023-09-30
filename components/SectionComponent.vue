@@ -13,7 +13,6 @@
     <nuxt-img
       v-if="image"
       class="image"
-      provider="strapi"
       format="webp"
       :src="image[0].attributes.url"
       :alt="image[0].attributes.name"

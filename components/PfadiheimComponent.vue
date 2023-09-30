@@ -21,7 +21,7 @@
     <iframe
       scrolling="no"
       class="pfadiheim-frame"
-      :src="'https://www.google.com/search?q=%' + props.zone.iFrame"
+      :src="props.zone.iFrame"
       :title="props.zone.Title"
     ></iframe>
   </div>

@@ -3,7 +3,6 @@
     <div v-if="isFirst" class="card-detailed">
       <nuxt-img
         v-if="props.post.attributes.images.data"
-        provider="strapi"
         format="webp"
         class="card-image"
         :src="
@@ -48,7 +47,6 @@
       <div>
         <nuxt-img
           v-if="props.post.attributes.images.data"
-          provider="strapi"
           class="card-image"
           :src="
             props.post.attributes.images.data[0].attributes.formats.small.url

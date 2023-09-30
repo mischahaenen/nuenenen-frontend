@@ -9,7 +9,6 @@
         <Transition mode="out-in">
           <nuxt-img
             format="webp"
-            provider="strapi"
             :key="testimonial.id"
             :src="testimonial.attributes.Image.data.attributes.url"
             :alt="

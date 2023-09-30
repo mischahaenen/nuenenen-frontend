@@ -3,7 +3,6 @@
     <nuxt-img
       class="image"
       format="webp"
-      provider="strapi"
       :src="user[0].Picture.url"
       :alt="user[0].Picture.alternativeText"
     />

@@ -27,7 +27,6 @@
         <nuxt-img
           v-for="image of footer.Images.data"
           :key="image.attributes.name"
-          provider="strapi"
           :src="image.attributes.url"
           :alt="image.attributes.name"
         />

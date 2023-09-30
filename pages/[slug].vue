@@ -46,7 +46,6 @@
             :to="'abteilung/' + step.attributes.Slug"
           >
             <nuxt-img
-              provider="strapi"
               format="webp"
               class="image"
               :src="step.attributes.logo.data.attributes.url"
@@ -106,6 +105,7 @@ const title = computed(() => {
 
 useHead(() => ({
   title: title.value,
+  'Content-Security-Policy': 'upgrade-insecure-requests',
 }))
 
 const fetchData = async () => {
