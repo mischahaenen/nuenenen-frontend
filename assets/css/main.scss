@@ -38,7 +38,8 @@ body {
   --space-large: 4rem;
   --space-extra-large: 8rem;
   --border-radius: 50px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font-family);
   margin: 0;
   padding: 0;
 }
@@ -57,6 +58,7 @@ body {
 .section {
   padding: var(--space-large) 0;
 }
+
 @media screen and (max-width: 1024px) {
   .container {
     padding: 0 var(--space-medium);
@@ -80,7 +82,6 @@ body {
   .section,
   .colored-section {
     padding: var(--space-small);
-    margin: var(--space-small);
   }
 }
 

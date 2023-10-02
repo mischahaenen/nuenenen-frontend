@@ -50,7 +50,7 @@ const props = defineProps<{
 .carousel__item {
   max-height: 500px;
   width: 100%;
-  background-color: var(--color-primary-100);
+  background-color: var(--color-primary-50);
   border-radius: var(--border-radius);
 }
 
@@ -63,19 +63,19 @@ const props = defineProps<{
 .carousel__next {
   box-sizing: content-box;
   border-radius: 50%;
-  background-color: var(--color-primary-100);
+  background-color: var(--color-primary-50);
 }
 
 .dark-mode {
   .carousel__item {
-    background-color: var(--color-primary-500);
+    background-color: var(--color-primary-800);
     color: var(--vc-clr-white);
   }
 
   .carousel__prev,
   .carousel__next {
     color: var(--color-white);
-    background-color: var(--color-primary-500);
+    background-color: var(--color-primary-800);
   }
 
   .carousel__pagination-button::after {

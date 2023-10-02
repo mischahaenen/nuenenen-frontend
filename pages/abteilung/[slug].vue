@@ -5,54 +5,48 @@
       :description="stepAttributes.Description"
       :is-rich-text="true"
     />
-    <div
+    <section
       v-for="(zone, index) in stepAttributes.pageZone"
       :key="index"
       :class="index % 2 === 0 ? 'section' : 'colored-section'"
     >
-      <div
-        v-if="
-          [
-            'pages.section',
-            'pages.kastenzeddel',
-            'pages.document',
-            'pages.group',
-            'pages.image',
-          ].includes(zone.__component)
-        "
+      <SectionComponent
+        v-if="zone.__component == 'pages.section'"
+        :zone="(zone as Section)"
+        :index="index"
         class="container"
-      >
-        <SectionComponent
-          v-if="zone.__component == 'pages.section'"
-          :zone="(zone as Section)"
-          :index="index"
+      />
+      <div v-if="zone.__component == 'pages.kastenzeddel'" class="container">
+        <TitleComponent title="Kastenzeddel" :index="index"></TitleComponent>
+        <KastenzeddelComponent
+          :kastenzeddel="(zone as Kastenzeddel)"
+          :step="stepAttributes.Slug"
         />
-        <div v-if="zone.__component == 'pages.kastenzeddel'">
-          <TitleComponent title="Kastenzeddel" :index="index"></TitleComponent>
-          <KastenzeddelComponent
-            :kastenzeddel="(zone as Kastenzeddel)"
-            :step="stepAttributes.Slug"
-          />
-        </div>
-        <DocumentComponent
-          v-if="zone.__component == 'pages.document'"
-          :zone="(zone as Document)"
-          :index="index"
-        />
-        <GroupComponent
-          v-if="zone.__component == 'pages.group'"
-          :zone="(zone as Group)"
-          :index="index"
-        />
-        <div v-if="zone.__component == 'pages.image'">
-          <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-          <ImageSliderComponent
-            v-if="(zone as ImageZone).images"
-            :images="(zone as ImageZone).images.data"
-          />
+      </div>
+      <div v-if="zone.__component == 'pages.group'" class="container">
+        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+        <div v-if="(zone as Group).members" class="member-section">
+          <UserCard
+            v-for="member in (zone as Group).members.data"
+            :user="member"
+            :key="`${member.id}-${member.attributes.username}`"
+          ></UserCard>
         </div>
       </div>
-    </div>
+      <DocumentComponent
+        v-if="zone.__component == 'pages.document'"
+        :zone="(zone as Document)"
+        :index="index"
+        class="container"
+      />
+      <div v-if="zone.__component == 'pages.image'" class="container">
+        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+        <ImageSliderComponent
+          v-if="(zone as ImageZone).images"
+          :images="(zone as ImageZone).images.data"
+        />
+      </div>
+    </section>
   </div>
 </template>
 <script setup lang="ts">
@@ -80,3 +74,11 @@ useHead({
 onMounted(fetchData)
 watch(() => route.params.slug, fetchData, { immediate: true })
 </script>
+<style scoped lang="scss">
+.member-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-medium);
+  justify-content: center;
+}
+</style>

@@ -4,7 +4,7 @@
       :title="page.attributes.title"
       :description="page.attributes.description"
     />
-    <div
+    <section
       v-for="(zone, index) in page.attributes.pageZone"
       :key="index"
       :class="index % 2 === 0 ? 'section' : 'colored-section'"
@@ -88,7 +88,7 @@
         ></RichTextComponent>
         <SponsorComponent :sponsors="(zone as SponsorZone).sponsors.data" />
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
