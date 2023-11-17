@@ -81,9 +81,32 @@ const fetchSteps = async () => {
   steps.value = res.data
 }
 
+const initializeObserver = () => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('post-grid-item--hidden')
+          observer.unobserve(entry.target)
+        }
+      })
+    },
+    {
+      threshold: 0.5,
+    }
+  )
+
+  document.querySelectorAll('.post-grid-item').forEach((item) => {
+    item.classList.add('post-grid-item--hidden')
+    observer.observe(item)
+  })
+}
+
 onMounted(async () => {
   await getPosts()
   await fetchSteps()
+
+  initializeObserver()
 })
 </script>
 <style scoped lang="scss">
@@ -102,6 +125,18 @@ onMounted(async () => {
 
 .post-grid-item:nth-child(1) {
   grid-column: 1 / -1;
+}
+
+.post-grid-item {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.post-grid-item--hidden {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 .grid.left {

@@ -1,6 +1,10 @@
 <template>
   <div class="sponsor-grid">
-    <div v-for="sponsor of props.sponsors" :key="sponsor.attributes.Name">
+    <div
+      v-for="sponsor of props.sponsors"
+      :key="sponsor.attributes.Name"
+      class="sponsor"
+    >
       <nuxt-img
         class="sponsor-logo"
         format="webp"
@@ -30,6 +34,29 @@ const props = defineProps({
     required: true,
   },
 })
+
+const initializeObserver = () => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('sponsor--hidden')
+          observer.unobserve(entry.target)
+        }
+      })
+    },
+    {
+      threshold: 0.5,
+    }
+  )
+
+  document.querySelectorAll('.sponsor').forEach((item) => {
+    item.classList.add('sponsor--hidden')
+    observer.observe(item)
+  })
+}
+
+onMounted(() => initializeObserver())
 </script>
 
 <style scoped>
@@ -41,6 +68,18 @@ const props = defineProps({
   justify-items: center;
   align-items: start;
   text-align: center;
+}
+
+.sponsor {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.sponsor--hidden {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 .sponsor-logo {

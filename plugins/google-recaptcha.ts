@@ -6,7 +6,7 @@ export default defineNuxtPlugin((nuxtApp) => {
       process.env.RECAPTCHA_SITE_KEY ||
       '6Ld0QeYmAAAAAD1IoaQHoqvU7ucRUOwDEn_C0zaA',
     loaderOptions: {
-      autoHideBadge: false,
+      autoHideBadge: true,
       explicitRenderParameters: {
         badge: 'bottomright',
       },
