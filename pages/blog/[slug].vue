@@ -17,8 +17,10 @@
       Zurück
     </NuxtLink>
     <ImageSliderComponent :images="postData.images.data"></ImageSliderComponent>
-    <h1>{{ postData.title }}</h1>
-    <RichTextComponent :content="postData.description" />
+    <article>
+      <h1>{{ postData.title }}</h1>
+      <RichTextComponent :content="postData.description" />
+    </article>
   </div>
 </template>
 

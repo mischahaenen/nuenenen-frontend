@@ -1,6 +1,11 @@
 <template>
   <footer v-if="footer">
-    <nuxt-img src="/svg/gantrisch.svg" format="svg"></nuxt-img>
+    <NuxtImg
+      class="mountains"
+      :src="`/svg/gantrisch_${
+        colorMode.value === 'dark' ? 'dark' : 'white'
+      }.svg`"
+    ></NuxtImg>
     <div class="footer-content">
       <div>
         <h2>{{ footer.Title }}</h2>
@@ -93,15 +98,10 @@ footer {
     height: auto;
   }
 }
-.woods {
-  fill: var(--color-primary-50);
-}
+
 .dark-mode {
   .footer-content {
     background-color: var(--color-primary-800);
-  }
-  .woods {
-    fill: var(--color-primary-800);
   }
 }
 </style>

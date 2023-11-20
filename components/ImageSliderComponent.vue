@@ -37,8 +37,8 @@ const props = defineProps<{
 </script>
 <style lang="scss">
 .carousel__image_standalone {
-  max-height: 500px;
-  width: 100%;
+  height: 300px;
+  width: auto;
   object-fit: cover;
   border-radius: var(--border-radius);
 }
