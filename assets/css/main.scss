@@ -137,13 +137,13 @@ p {
 
 .accent-button {
   background-color: var(--color-white);
-  color: var(--color-primary-700);
+  color: var(--color-accent-700);
   transition: all 0.2s ease-in-out;
   outline-color: var(--color-accent-900);
 
   &:hover {
-    background-color: var(--color-primary-100);
-    color: var(--color-primary-900);
+    background-color: var(--color-accent-100);
+    color: var(--color-accent-900);
   }
 }
 
@@ -247,13 +247,13 @@ p {
     }
   }
   .accent-button {
-    background: var(--color-primary-500);
-    color: var(--color-primary-100);
-    outline-color: var(--color-primary-50);
+    background: var(--color-accent-900);
+    color: var(--color-accent-100);
+    outline-color: var(--color-accent-50);
 
     &:hover {
-      background-color: var(--color-primary-400);
-      color: var(--color-primary-100);
+      background-color: var(--color-accent-800);
+      color: var(--color-accent-100);
     }
   }
 }

@@ -18,27 +18,26 @@
       </div>
       <div v-if="zone.__component === 'pages.section'" class="container">
         <SectionComponent
-          :zone="(zone as Section)"
+          :title="(zone as Section).Title"
+          :description="(zone as Section).Description"
+          :image="(zone as Section).Image"
           :index="index"
         ></SectionComponent>
       </div>
       <div v-if="zone.__component === 'pages.blog'" class="container">
-        <TitleComponent
+        <SectionComponent
           :title="(zone as BlogZone).Title"
+          :description="(zone as BlogZone).Description"
           :index="index"
-        ></TitleComponent>
-        <RichTextComponent
-          v-if="(zone as BlogZone).Description"
-          :content="(zone as BlogZone).Description"
-        />
+        ></SectionComponent>
         <BlogComponent />
       </div>
       <div v-if="zone.__component === 'pages.steps'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <RichTextComponent
-          v-if="(zone as StepZone).Description"
-          :content="(zone as StepZone).Description"
-        />
+        <SectionComponent
+          :title="(zone as StepZone).Title"
+          :description="(zone as StepZone).Description"
+          :index="index"
+        ></SectionComponent>
         <div class="flexRow">
           <nuxt-link
             v-for="step of (zone as StepZone).steps.data"
@@ -56,6 +55,13 @@
         </div>
       </div>
       <div v-if="zone.__component === 'pages.pfadiheim'" class="container">
+        <SectionComponent
+          :title="(zone as IFrame).Title"
+          :description="(zone as IFrame).Description"
+          :images="(zone as IFrame).images"
+          :index="index"
+        >
+        </SectionComponent>
         <PfadiheimComponent
           :index="index"
           :zone="(zone as IFrame)"
@@ -63,29 +69,29 @@
       </div>
       <div v-if="zone.__component === 'pages.testimonials'" class="container">
         <TestimonialComponent
-          v-if="zone.testimonials && zone.Title && zone.Subtitle"
-          :title="zone.Title"
-          :sub-title="zone.Subtitle"
-          :testimonials="zone.testimonials"
+          v-if="(zone as Testimonial).testimonials && (zone as Testimonial).Title && (zone as Testimonial).Subtitle"
+          :title="(zone as Testimonial).Title"
+          :sub-title="(zone as Testimonial).Subtitle"
+          :testimonials="(zone as Testimonial).testimonials"
         ></TestimonialComponent>
       </div>
       <div v-if="zone.__component === 'pages.contact'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <RichTextComponent
-          v-if="(zone as ContactZone).Description"
-          :content="(zone as ContactZone).Description"
-        ></RichTextComponent>
+        <SectionComponent
+          :title="(zone as ContactZone).Title"
+          :description="(zone as ContactZone).Description"
+          :index="index"
+        ></SectionComponent>
         <ContactComponent :index="index" />
       </div>
       <div v-if="zone.__component == 'pages.document'" class="container">
         <DocumentComponent :zone="(zone as Document)" :index="index" />
       </div>
       <div v-if="zone.__component == 'pages.sponsors'" class="container">
-        <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-        <RichTextComponent
-          v-if="(zone as SponsorZone).Description"
-          :content="(zone as SponsorZone).Description"
-        ></RichTextComponent>
+        <SectionComponent
+          :title="(zone as SponsorZone).Title"
+          :description="(zone as SponsorZone).Description"
+          :index="index"
+        ></SectionComponent>
         <SponsorComponent :sponsors="(zone as SponsorZone).sponsors.data" />
       </div>
     </section>

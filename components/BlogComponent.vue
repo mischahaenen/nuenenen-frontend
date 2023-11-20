@@ -155,15 +155,14 @@ onMounted(async () => {
   justify-content: center;
 
   .active {
-    background-color: var(--color-primary-900);
+    background-color: var(--color-accent-900);
     color: var(--color-white);
   }
 }
 
 .dark-mode {
   .active {
-    background-color: var(--color-primary-200);
-    color: var(--color-primary-800);
+    background-color: var(--color-accent-700);
   }
 }
 
@@ -178,7 +177,7 @@ onMounted(async () => {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .post-grid.wrapper {
     grid-template-columns: 1fr;
   }

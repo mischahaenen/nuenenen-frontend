@@ -12,7 +12,9 @@
     >
       <SectionComponent
         v-if="zone.__component == 'pages.section'"
-        :zone="(zone as Section)"
+        :title="(zone as Section).Title"
+        :description="(zone as Section).Description"
+        :image="(zone as Section).Image.data[0]"
         :index="index"
         class="container"
       />

@@ -104,12 +104,23 @@ a {
   text-decoration: none;
 }
 
+.card-detailed,
+.card-preview {
+  transition: all 0.2s ease-in-out;
+}
+
 .card-preview {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: var(--border-radius);
   box-shadow: 0px 50px 60px rgb(0 0 0 / 10%);
+}
+
+.card-detailed:hover,
+.card-preview:hover {
+  background-color: var(--color-primary-100);
+  box-shadow: 0px 50px 60px rgb(0 0 0 / 20%);
 }
 
 .card-image {
