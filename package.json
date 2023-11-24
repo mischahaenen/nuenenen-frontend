@@ -24,6 +24,7 @@
   "dependencies": {
     "@nuxtjs/strapi": "^1.9.3",
     "@pinia/nuxt": "^0.5.1",
+    "@vercel/analytics": "^1.1.1",
     "@vueuse/core": "^10.6.1",
     "cross-env": "^7.0.3",
     "editorjs-html": "^3.4.3",
