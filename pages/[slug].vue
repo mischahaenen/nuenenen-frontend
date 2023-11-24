@@ -3,11 +3,13 @@
     <BaseBanner
       :title="page.attributes.title"
       :description="page.attributes.description"
+      id="main"
     />
     <section
       v-for="(zone, index) in page.attributes.pageZone"
       :key="index"
       :class="index % 2 === 0 ? 'section' : 'colored-section'"
+      :id="String(index + 1)"
     >
       <div v-if="zone.__component === 'pages.image'" class="container">
         <TitleComponent :title="zone.Title" :index="index"></TitleComponent>

@@ -37,22 +37,21 @@ const props = defineProps<{
 </script>
 <style lang="scss">
 .carousel__image_standalone {
-  height: 300px;
-  width: auto;
-  object-fit: cover;
-  border-radius: var(--border-radius);
-}
-.carousel__image {
-  max-height: 500px;
+  max-height: 300px;
   width: 100%;
   object-fit: cover;
-  border-radius: var(--border-radius);
-  box-shadow: 0px 25px 30px rgb(0 0 0 / 10%);
+}
+.carousel__image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
 }
 
 .carousel__slide {
-  width: 100%;
-  padding: 4rem;
+  max-width: 100%;
+  background: var(--color-primary-800);
+  border-radius: var(--border-radius);
 }
 
 .carousel__prev,
@@ -85,9 +84,6 @@ const props = defineProps<{
 }
 
 .dark-mode {
-  .carousel__image {
-    box-shadow: 0px 25px 30px rgb(255 255 255 / 10%);
-  }
   .carousel__prev,
   .carousel__next {
     color: var(--color-white);
@@ -105,6 +101,16 @@ const props = defineProps<{
   .carousel__pagination-button:hover::after,
   .carousel__pagination-button--active::after {
     background-color: var(--color-accent-500);
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel__image {
+    max-height: 300px;
+  }
+
+  .carousel__pagination-button::after {
+    display: none;
   }
 }
 </style>

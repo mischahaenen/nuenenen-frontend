@@ -88,4 +88,10 @@ onMounted(() => initializeObserver())
   object-fit: cover;
   border-radius: var(--border-radius);
 }
+@media (max-width: 768px) {
+  .sponsor-logo {
+    height: 150px;
+    width: 150px;
+  }
+}
 </style>

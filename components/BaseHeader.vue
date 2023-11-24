@@ -1,5 +1,6 @@
 <template>
   <header class="header" :class="{ 'header-scrolled': scroll > 50 }">
+    <a class="skip-main" href="#main">Zum Hauptinhalt</a>
     <nuxt-link
       to="/home"
       :class="['home-link', { 'home-link-scrolled': scroll > 50 }]"
@@ -13,9 +14,16 @@
         @click="toggleNav"
         aria-label="Toggle navigation"
       >
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 -960 960 960"
+          width="24"
+        >
+          <path
+            d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"
+          />
+        </svg>
       </button>
       <ul class="nav-links">
         <li
@@ -73,8 +81,33 @@ const toggleNav = () => {
 </script>
 
 <style scoped lang="scss">
-a.router-link-active {
-  font-weight: bold;
+a.skip-main {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: -1;
+}
+a.skip-main:focus,
+a.skip-main:active {
+  color: var(--color-primary-50);
+  background-color: var(--color-primary-500);
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: auto;
+  overflow: auto;
+  border-radius: 5px;
+  padding: 0.25rem;
+  text-align: center;
+  z-index: 999;
+}
+.nav-links {
+  a.router-link-active {
+    font-weight: bold;
+  }
 }
 .header {
   padding: 0 var(--space-large);
@@ -241,101 +274,90 @@ a.router-link-active {
   }
 
   @media screen and (max-width: 768px) {
-    .header {
-      padding: 0 var(--space-medium);
-    }
-
-    .nav-toggle {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .toggle-line {
-      width: 30px;
-      height: 2px;
-      background-color: var(--color-white);
-      margin: 4px 0;
-      transition: background-color 0.3s ease;
-    }
-
-    .nav-expanded .nav-link {
+    .nav-links {
       background-color: var(--color-primary-800);
-      box-shadow: 0 2px 4px #ffffff1a;
-    }
-    .header-scrolled .nav-expanded .nav-link {
-      margin-top: 20px;
+      box-shadow: 0px 25px 30px rgb(255 255 255 / 20%);
     }
   }
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 768px) {
   .header {
     padding: 0 var(--space-medium);
   }
-
+  .nav {
+    position: relative;
+  }
   .nav-toggle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block;
+    background: var(--color-accent-700);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    border: none;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    svg {
+      fill: var(--color-white);
+    }
+  }
+
+  .nav-toggle:focus,
+  .nav-toggle:hover {
+    outline-color: var(--color-accent-50);
+    background: var(--color-accent-500);
   }
 
   .nav-links {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 200px;
     display: none;
-  }
-
-  .toggle-line {
-    width: 30px;
-    height: 2px;
-    background-color: var(--color-primary-800);
-    margin: 4px 0;
-    transition: background-color 0.3s ease;
-  }
-
-  .nav-expanded .toggle-line:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .nav-expanded .toggle-line:nth-child(2) {
-    opacity: 0;
-  }
-
-  .nav-expanded .toggle-line:nth-child(3) {
-    transform: rotate(-45deg) translate(9px, -9px);
-  }
-
-  .nav-link {
-    display: none;
-  }
-
-  .nav {
-    transform: translateY(0px);
-    transition: transform 0.3s ease;
-  }
-
-  .nav-expanded {
-    transform: translateY(120px);
-    transition: transform 0.3s ease;
-  }
-
-  .nav-expanded .nav-link {
-    display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 1rem;
-    margin-top: 40px;
     padding: 1rem;
-    border-radius: 10px;
     background-color: var(--color-white);
-    box-shadow: 0 2px 4px #0000001a;
+    box-shadow: 0px 25px 30px rgb(0 0 0 / 20%);
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
   }
 
-  .header-scrolled .nav-expanded {
-    transform: translateY(110px);
+  .nav-item {
+    width: 100%;
+    a {
+      display: block;
+      padding: 0.5rem 1rem 0.5rem 0;
+      border-bottom: var(--color-primary-50) 1px solid;
+    }
   }
-  .header-scrolled .nav-expanded .nav-link {
-    margin-top: 20px;
+
+  .nav-expanded .nav-links {
+    display: flex;
+  }
+
+  .nav-item:last-child {
+    border-bottom: none;
+    text-align: center;
+  }
+
+  .nav-item-expandable {
+    position: unset;
+    display: block;
+  }
+
+  .submenu {
+    position: unset;
+    display: none;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    text-align: left;
+    list-style: none;
+
+    li {
+      border-bottom: none !important;
+    }
   }
 }
 </style>
