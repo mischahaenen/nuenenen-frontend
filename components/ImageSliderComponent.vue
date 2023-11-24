@@ -47,10 +47,12 @@ const props = defineProps<{
   width: 100%;
   object-fit: cover;
   border-radius: var(--border-radius);
+  box-shadow: 0px 25px 30px rgb(0 0 0 / 10%);
 }
 
 .carousel__slide {
   width: 100%;
+  padding: 4rem;
 }
 
 .carousel__prev,
@@ -83,11 +85,9 @@ const props = defineProps<{
 }
 
 .dark-mode {
-  .carousel__item {
-    background-color: var(--color-primary-800);
-    color: var(--vc-clr-white);
+  .carousel__image {
+    box-shadow: 0px 25px 30px rgb(255 255 255 / 10%);
   }
-
   .carousel__prev,
   .carousel__next {
     color: var(--color-white);

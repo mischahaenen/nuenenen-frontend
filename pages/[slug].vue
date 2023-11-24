@@ -38,15 +38,16 @@
           :description="(zone as StepZone).Description"
           :index="index"
         ></SectionComponent>
-        <div class="flexRow">
+        <div class="step-grid">
           <nuxt-link
             v-for="step of (zone as StepZone).steps.data"
             :key="step.attributes.Name"
             :to="'abteilung/' + step.attributes.Slug"
+            class="step-item"
           >
             <nuxt-img
               format="webp"
-              class="image"
+              class="step-image"
               :src="step.attributes.logo.data.attributes.url"
               :alt="step.attributes.logo.data.attributes.name"
             />
@@ -127,21 +128,6 @@ watch(() => route.params.slug, fetchData, { immediate: true })
 </script>
 
 <style scoped lang="scss">
-.flexRow {
-  display: flex;
-  gap: var(--space-large);
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-end;
-}
-
-.image {
-  display: block;
-  width: 100%;
-  max-width: 200px;
-  height: auto;
-}
-
 h3 {
   text-align: center;
 }
@@ -152,5 +138,50 @@ a {
 
 a:hover h3 {
   text-decoration: underline;
+}
+.step-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+  justify-content: center;
+  gap: var(--space-medium);
+}
+
+@media screen and (max-width: 640px) {
+  .step-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: var(--border-radius);
+  padding: var(--space-medium);
+  overflow: hidden;
+  box-shadow: 0px 25px 30px rgb(0 0 0 / 10%);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.step-item:hover {
+  box-shadow: 0px 25px 30px rgb(0 0 0 / 20%);
+  .step-image {
+    transform: scale(1.05);
+  }
+}
+
+.step-image {
+  width: min(100%, 200px);
+  height: auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+.dark-mode {
+  .step-item {
+    box-shadow: 0px 25px 30px rgb(255 255 255 / 10%);
+  }
+  .step-item:hover {
+    box-shadow: 0px 25px 30px rgb(255 255 255 / 20%);
+  }
 }
 </style>

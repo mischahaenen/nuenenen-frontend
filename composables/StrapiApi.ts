@@ -4,6 +4,15 @@ export const getPageNavigation = () => {
   const { find } = useStrapi4()
   return find<PageResponse>('api/pages', {
     fields: ['slug', 'url'],
+    populate: {
+      pageZone: {
+        on: {
+          'pages.steps': {
+            populate: '*',
+          },
+        },
+      },
+    },
   })
 }
 export const getPage = (url: string) => {

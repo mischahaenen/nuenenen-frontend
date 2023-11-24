@@ -101,7 +101,7 @@ footer {
 
 .dark-mode {
   .footer-content {
-    background-color: var(--color-primary-800);
+    background-color: var(--color-primary-700);
   }
 }
 </style>

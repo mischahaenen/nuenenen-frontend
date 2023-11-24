@@ -122,29 +122,38 @@ onMounted(async () => {
   grid-gap: var(--space-medium);
   grid-auto-rows: min-content;
 }
-
-.post-grid-item:nth-child(1) {
-  grid-column: 1 / -1;
-}
-
 .post-grid-item {
   opacity: 1;
+  transform: translateX(0);
   transform: translateY(0);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-}
-
-.post-grid-item--hidden {
-  opacity: 0;
-  transform: translateY(50px);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 .grid.left {
   grid-column: 1 / span 1;
+  .post-grid-item--hidden {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
 }
 
 .grid.right {
   grid-column: span 1 / -1;
+  .post-grid-item--hidden {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+}
+
+.post-grid-item:nth-child(1) {
+  grid-column: 1 / -1;
+}
+.post-grid-item--hidden:nth-child(1) {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 .blog-filter {

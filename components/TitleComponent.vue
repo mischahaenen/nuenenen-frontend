@@ -20,7 +20,10 @@
 <script setup lang="ts">
 const props = defineProps<{ title: string | undefined; index: number }>()
 
-const words = props.title?.split(' ') || []
+const words = computed(() => {
+  if (!props.title) return []
+  return props.title.split(' ')
+})
 </script>
 <style scoped lang="scss">
 .letter {

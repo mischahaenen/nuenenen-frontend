@@ -21,13 +21,18 @@ const props = defineProps<{
 }>()
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .reading-time {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 svg {
-  fill: var(--color-primary-500);
+  fill: var(--color-accent-800);
+}
+.dark-mode {
+  svg {
+    fill: var(--color-accent-50);
+  }
 }
 </style>

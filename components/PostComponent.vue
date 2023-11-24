@@ -16,7 +16,7 @@
           <span>{{ formattedDate }}</span> |
           <ReadingTime :time="readingTime" :unit="timeUnit" />
         </div>
-        <h2 class="card-title">{{ post.attributes.title }}</h2>
+        <h2>{{ post.attributes.title }}</h2>
         <RichTextComponent
           :content="post.attributes.description"
           :is-preview="true"
@@ -71,12 +71,16 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
 }
 
 .card-detailed:hover,
 .card-preview:hover {
-  background-color: var(--color-primary-100);
   box-shadow: 0px 50px 60px rgb(0 0 0 / 20%);
+
+  .card-image {
+    transform: scale(1.05);
+  }
 }
 
 .card-image {
@@ -84,6 +88,7 @@ a {
   height: auto;
   object-fit: cover;
   border-radius: var(--border-radius) var(--border-radius) 0 0;
+  transition: transform 0.2s ease-in-out;
 }
 
 .card-detailed {
@@ -114,6 +119,28 @@ a {
   font-size: 0.8rem;
   display: flex;
   gap: 10px;
+}
+
+.card-subtitle,
+.card-footer {
+  color: var(--color-accent-800);
+}
+
+.dark-mode {
+  .card-detailed,
+  .card-preview {
+    box-shadow: 0px 50px 60px rgba(255, 255, 255, 0.1);
+  }
+
+  .card-detailed:hover,
+  .card-preview:hover {
+    box-shadow: 0px 50px 60px rgba(255, 255, 255, 0.2);
+  }
+
+  .card-subtitle,
+  .card-footer {
+    color: var(--color-accent-50);
+  }
 }
 
 @media screen and (max-width: 768px) {
