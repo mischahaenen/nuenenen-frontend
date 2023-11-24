@@ -4,7 +4,7 @@
       <button
         class="button accent-button"
         :class="{ active: activeButton === 'all' }"
-        aria-label="Show all posts"
+        aria-label="Alle Posts anzeigen"
         @click="getPosts()"
       >
         Alle
@@ -14,7 +14,7 @@
         :key="jndex"
         class="button accent-button"
         :class="{ active: activeButton === step.attributes.Name }"
-        :aria-label="'Show posts for ' + step.attributes.Name"
+        :aria-label="`Posts für die ${step.attributes.Name} anzeigen`"
         @click="getPostsByStep(step.attributes.Name)"
       >
         {{ step.attributes.Name }}
@@ -30,7 +30,7 @@
       />
       <div class="grid left">
         <PostComponent
-          v-for="(post, i) in posts.filter((_, i) => i % 2 !== 0 && i !== 0)"
+          v-for="post in posts.filter((_, i) => i % 2 !== 0 && i !== 0)"
           :key="post.id"
           :post="post"
           :is-first="false"
@@ -39,7 +39,7 @@
       </div>
       <div class="grid right">
         <PostComponent
-          v-for="(post, i) in posts.filter((_, i) => i % 2 === 0 && i !== 0)"
+          v-for="post in posts.filter((_, i) => i % 2 === 0 && i !== 0)"
           :key="post.id"
           :post="post"
           :is-first="false"
@@ -122,29 +122,38 @@ onMounted(async () => {
   grid-gap: var(--space-medium);
   grid-auto-rows: min-content;
 }
-
-.post-grid-item:nth-child(1) {
-  grid-column: 1 / -1;
-}
-
 .post-grid-item {
   opacity: 1;
+  transform: translateX(0);
   transform: translateY(0);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-}
-
-.post-grid-item--hidden {
-  opacity: 0;
-  transform: translateY(50px);
   transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 .grid.left {
   grid-column: 1 / span 1;
+  .post-grid-item--hidden {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
 }
 
 .grid.right {
   grid-column: span 1 / -1;
+  .post-grid-item--hidden {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  }
+}
+
+.post-grid-item:nth-child(1) {
+  grid-column: 1 / -1;
+}
+.post-grid-item--hidden:nth-child(1) {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
 }
 
 .blog-filter {
@@ -155,15 +164,14 @@ onMounted(async () => {
   justify-content: center;
 
   .active {
-    background-color: var(--color-primary-900);
+    background-color: var(--color-accent-900);
     color: var(--color-white);
   }
 }
 
 .dark-mode {
   .active {
-    background-color: var(--color-primary-200);
-    color: var(--color-primary-800);
+    background-color: var(--color-accent-700);
   }
 }
 
@@ -178,7 +186,7 @@ onMounted(async () => {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .post-grid.wrapper {
     grid-template-columns: 1fr;
   }

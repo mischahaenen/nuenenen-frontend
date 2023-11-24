@@ -4,6 +4,7 @@
       :title="stepAttributes.Name"
       :description="stepAttributes.Description"
       :is-rich-text="true"
+      :image="stepAttributes.logo.data"
     />
     <section
       v-for="(zone, index) in stepAttributes.pageZone"
@@ -12,7 +13,9 @@
     >
       <SectionComponent
         v-if="zone.__component == 'pages.section'"
-        :zone="(zone as Section)"
+        :title="(zone as Section).Title"
+        :description="(zone as Section).Description"
+        :image="(zone as Section).Image.data[0]"
         :index="index"
         class="container"
       />
@@ -28,8 +31,8 @@
         <div v-if="(zone as Group).members" class="member-section">
           <UserCard
             v-for="member in (zone as Group).members.data"
-            :user="member"
             :key="`${member.id}-${member.attributes.username}`"
+            :user="member"
           ></UserCard>
         </div>
       </div>

@@ -1,30 +1,11 @@
 <template>
-  <div>
-    <div class="two-column">
-      <div>
-        <TitleComponent
-          :title="(zone as IFrame).Title"
-          :index="index"
-        ></TitleComponent>
-        <RichTextComponent
-          v-if="(zone as IFrame).Description"
-          :content="(zone as IFrame).Description"
-        />
-      </div>
-      <ImageSliderComponent
-        v-if="props.zone.images.data"
-        :images="props.zone.images.data"
-      ></ImageSliderComponent>
-    </div>
-
-    <h3>Reserviere das Pfadiheim</h3>
-    <iframe
-      scrolling="no"
-      class="pfadiheim-frame"
-      :src="props.zone.iFrame"
-      :title="props.zone.Title"
-    ></iframe>
-  </div>
+  <h3>Reserviere das Pfadiheim</h3>
+  <iframe
+    scrolling="no"
+    class="pfadiheim-frame"
+    :src="props.zone.iFrame"
+    :title="props.zone.Title"
+  ></iframe>
 </template>
 
 <script setup lang="ts">

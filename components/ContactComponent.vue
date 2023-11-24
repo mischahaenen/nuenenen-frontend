@@ -7,57 +7,57 @@
     <div class="formfield">
       <label for="firstname">Vorname:</label>
       <input
+        id="firstname"
+        v-model="form.firstname"
         class="forminput"
         :class="{ even: !isOdd }"
         placeholder="Vorname"
         type="text"
-        id="firstname"
-        v-model="form.firstname"
         required
       />
     </div>
     <div class="formfield">
       <label for="lastname">Nachname:</label>
       <input
+        id="lastname"
+        v-model="form.lastname"
         class="forminput"
         :class="{ even: !isOdd }"
         placeholder="Nachname"
         type="text"
-        id="lastname"
-        v-model="form.lastname"
         required
       />
     </div>
     <div class="formfield">
       <label for="email">Email:</label>
       <input
+        id="email"
+        v-model="form.email"
         class="forminput"
         :class="{ even: !isOdd }"
         placeholder="Email Adresse"
         type="email"
-        id="email"
-        v-model="form.email"
         required
       />
     </div>
     <div class="formfield">
       <label for="message">Deine Nachricht:</label>
       <textarea
+        id="message"
+        v-model="form.message"
         class="forminput"
         :class="{ even: !isOdd }"
         placeholder="Hier deine Nachricht..."
-        id="message"
-        v-model="form.message"
         required
       ></textarea>
     </div>
     <div class="formfield">
       <label for="contact">Kontakt:</label>
       <select
-        class="forminput"
-        :class="{ even: !isOdd }"
         id="contact"
         v-model="form.contactOption"
+        class="forminput"
+        :class="{ even: !isOdd }"
         aria-label="Select contact type"
       >
         <option
@@ -77,7 +77,7 @@
       Absenden
     </button>
     <div class="errorMessage">
-      <p class="error" v-if="errorMessage">{{ errorMessage }}</p>
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </div>
   </form>
   <div v-else class="successMessage">
@@ -136,7 +136,7 @@
 <script setup lang="ts">
 import { useReCaptcha } from 'vue-recaptcha-v3'
 import { useDeregisterStore } from '~/store/deregister'
-import { ContactSender } from '~/types/contact-sender'
+import type { ContactSender } from '~/types/contact-sender'
 
 const props = defineProps<{
   index?: number
@@ -162,7 +162,6 @@ onMounted(async () => {
     form.value.contactOption = await getDefaultContactOption()
     form.value.message = deregisterStore.step ? deregisterStore.message : ''
   } catch (error) {
-    console.error(error)
     errorMessage.value =
       'Ein Fehler trat beim Laden der Kontaktverteilung auf. Bitte versuche es später erneut.'
   }
@@ -184,7 +183,6 @@ const recaptcha = async () => {
     await recaptchaInstance?.recaptchaLoaded()
     return await recaptchaInstance?.executeRecaptcha('submit')
   } catch (error) {
-    console.error('Recaptcha error:', error)
     errorMessage.value =
       'Deine Verifizierung ist fehlgeschlagen. Bitte versuche es später erneut.'
     throw error
@@ -197,7 +195,6 @@ const submitForm = async () => {
     await createContactEntry(token, form.value)
     mailState.value = 'SUCCESS'
   } catch (error) {
-    console.error(error)
     errorMessage.value =
       'Deine Nachricht konnte nicht übermittelt werden. Bitte versuche es erneut.'
   } finally {

@@ -59,7 +59,7 @@ const initializeObserver = () => {
 onMounted(() => initializeObserver())
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .sponsor-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -86,5 +86,12 @@ onMounted(() => initializeObserver())
   height: 200px;
   width: 200px;
   object-fit: cover;
+  border-radius: var(--border-radius);
+}
+@media (max-width: 768px) {
+  .sponsor-logo {
+    height: 150px;
+    width: 150px;
+  }
 }
 </style>

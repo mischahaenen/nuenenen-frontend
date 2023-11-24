@@ -1,86 +1,29 @@
 <template>
-  <nuxt-link v-if="props.post" :to="'home/' + props.post.attributes.slug">
-    <div v-if="isFirst" class="card-detailed">
-      <nuxt-img
-        v-if="props.post.attributes.images.data"
-        format="webp"
+  <nuxt-link v-if="post" :to="'blog/' + post.attributes.slug">
+    <div :class="cardClass">
+      <NuxtImg
+        v-if="post.attributes.images?.data?.length"
         class="card-image"
-        :src="
-          props.post.attributes.images.data[0].attributes.formats.medium.url
+        :src="post.attributes.images.data[0].attributes.url"
+        :alt="
+          post.attributes.images.data[0].attributes.alternativeText ||
+          post.attributes.images.data[0].attributes.name
         "
-        :alt="props.post.attributes.images.data[0].attributes.name"
+        format="webp"
       />
-      <div>
-        <div class="card-content">
-          <div class="card-subtitle">
-            <span>{{
-              moment(props.post.attributes.createdAt).format('DD. MMMM YYYY')
-            }}</span>
-            |
-            <div class="flex">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16px"
-                viewBox="0 -960 960 960"
-                width="16px"
-              >
-                <path
-                  d="m627-287 45-45-159-160v-201h-60v225l174 181ZM480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-82 31.5-155t86-127.5Q252-817 325-848.5T480-880q82 0 155 31.5t127.5 86Q817-708 848.5-635T880-480q0 82-31.5 155t-86 127.5Q708-143 635-111.5T480-80Zm0-400Zm0 340q140 0 240-100t100-240q0-140-100-240T480-820q-140 0-240 100T140-480q0 140 100 240t240 100Z"
-                />
-              </svg>
-              <span> {{ time }} {{ unit }} zum Lesen</span>
-            </div>
-          </div>
-          <h2 class="card-title">{{ props.post.attributes.title }}</h2>
-          <RichTextComponent
-            :content="props.post.attributes.description"
-            :is-preview="true"
-            :preview-lines="9"
-          />
-          <div class="card-footer">
-            #{{ props.post.attributes.step?.data?.attributes?.Name }}
-          </div>
+      <div class="card-content">
+        <div class="card-subtitle">
+          <span>{{ formattedDate }}</span> |
+          <ReadingTime :time="readingTime" :unit="timeUnit" />
         </div>
-      </div>
-    </div>
-    <div v-else class="card-preview">
-      <div>
-        <nuxt-img
-          v-if="props.post.attributes.images.data"
-          class="card-image"
-          :src="
-            props.post.attributes.images.data[0].attributes.formats.small.url
-          "
-          :alt="props.post.attributes.images.data[0].attributes.name"
+        <h2>{{ post.attributes.title }}</h2>
+        <RichTextComponent
+          :content="post.attributes.description"
+          :is-preview="true"
+          :preview-lines="isFirst ? 9 : undefined"
         />
-        <div class="card-content">
-          <div class="card-subtitle">
-            <span>{{
-              moment(props.post.attributes.createdAt).format('DD. MMMM YYYY')
-            }}</span>
-            |
-            <div class="flex">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16px"
-                viewBox="0 -960 960 960"
-                width="16px"
-              >
-                <path
-                  d="m627-287 45-45-159-160v-201h-60v225l174 181ZM480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-82 31.5-155t86-127.5Q252-817 325-848.5T480-880q82 0 155 31.5t127.5 86Q817-708 848.5-635T880-480q0 82-31.5 155t-86 127.5Q708-143 635-111.5T480-80Zm0-400Zm0 340q140 0 240-100t100-240q0-140-100-240T480-820q-140 0-240 100T140-480q0 140 100 240t240 100Z"
-                />
-              </svg>
-              <span> {{ time }} {{ unit }} zum Lesen</span>
-            </div>
-          </div>
-          <h3 class="card-title">{{ props.post.attributes.title }}</h3>
-          <RichTextComponent
-            :content="props.post.attributes.description"
-            :is-preview="true"
-          />
-          <div class="card-footer">
-            #{{ props.post.attributes.step?.data?.attributes?.Name }}
-          </div>
+        <div v-if="post.attributes.step.data" class="card-footer">
+          #{{ post.attributes.step?.data?.attributes?.Name }}
         </div>
       </div>
     </div>
@@ -88,28 +31,56 @@
 </template>
 <script lang="ts" setup>
 import moment from 'moment'
-const props = defineProps<{ post: Post | undefined; isFirst: boolean }>()
 
-const readingTime = (text: string) => {
+const props = defineProps<{
+  post: Post | undefined
+  isFirst: boolean
+}>()
+const { post, isFirst } = toRefs(props)
+
+const formattedDate = computed(() =>
+  moment(post.value?.attributes.createdAt).format('DD. MMMM YYYY')
+)
+
+const readingTime = computed(() => {
   const wpm = 225
-  const words = text.trim().split(/\s+/).length
+  const words =
+    post.value?.attributes.description.trim().split(/\s+/).length || 0
   return Math.ceil(words / wpm)
-}
-const time = readingTime(props.post?.attributes?.description || '')
+})
 
-const unit = time === 1 ? 'Minute' : 'Minuten'
+const timeUnit = computed(() =>
+  readingTime.value === 1 ? 'Minute' : 'Minuten'
+)
+
+const cardClass = computed(() =>
+  isFirst.value ? 'card-detailed' : 'card-preview'
+)
 </script>
 <style scoped lang="scss">
 a {
   text-decoration: none;
+  color: inherit;
 }
 
+.card-detailed,
 .card-preview {
+  transition: all 0.2s ease-in-out;
+  border-radius: var(--border-radius);
+  box-shadow: 0px 50px 60px rgb(0 0 0 / 10%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: var(--border-radius);
-  box-shadow: 0px 50px 60px rgb(0 0 0 / 10%);
+  overflow: hidden;
+}
+
+.card-detailed:hover,
+.card-preview:hover {
+  box-shadow: 0px 50px 60px rgb(0 0 0 / 20%);
+
+  .card-image {
+    transform: scale(1.05);
+  }
 }
 
 .card-image {
@@ -117,77 +88,56 @@ a {
   height: auto;
   object-fit: cover;
   border-radius: var(--border-radius) var(--border-radius) 0 0;
+  transition: transform 0.2s ease-in-out;
 }
 
-.card-content {
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-small);
-}
-
-.card-title {
-  margin: 0.5rem 0;
-}
-
-.card-subtitle {
-  font-size: 0.8rem;
-  font-weight: 100;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  svg {
-    fill: var(--color-primary-500);
-  }
-
-  .flex {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-}
-
-.card-footer {
-  font-size: 0.8rem;
-  font-weight: 100;
-  color: var(--color-accent-900);
-}
 .card-detailed {
-  display: flex;
+  flex-direction: row;
   justify-content: space-between;
-  border-radius: var(--border-radius);
-  box-shadow: 0px 50px 60px rgb(0 0 0 / 10%);
-
   .card-image {
     width: min(100%, 400px);
     object-fit: cover;
     border-radius: var(--border-radius) 0 0 var(--border-radius);
   }
+}
 
-  .card-content {
-    padding: var(--space-medium);
-    text-align: left;
-  }
-
-  .card-subtitle {
-    justify-content: flex-start;
+.card-preview {
+  .card-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
   }
 }
+
+.card-content {
+  padding: var(--space-medium);
+  text-align: left;
+}
+
+.card-subtitle {
+  font-size: 0.8rem;
+  display: flex;
+  gap: 10px;
+}
+
+.card-subtitle,
+.card-footer {
+  color: var(--color-accent-800);
+}
+
 .dark-mode {
   .card-detailed,
   .card-preview {
-    background: var(--color-primary-800);
-    box-shadow: 0px 50px 60px var(--color-primary-600);
-  }
-  .card-subtitle {
-    color: var(--color-white);
+    box-shadow: 0px 50px 60px rgba(255, 255, 255, 0.1);
   }
 
-  svg {
-    fill: var(--color-white);
+  .card-detailed:hover,
+  .card-preview:hover {
+    box-shadow: 0px 50px 60px rgba(255, 255, 255, 0.2);
   }
 
+  .card-subtitle,
   .card-footer {
     color: var(--color-accent-50);
   }
@@ -197,23 +147,9 @@ a {
   .card-detailed {
     flex-direction: column;
     .card-image {
-      width: min(100%, 400px);
+      width: 100%;
       border-radius: var(--border-radius) var(--border-radius) 0 0;
     }
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .card-image-list {
-    display: none;
-  }
-
-  .card-content {
-    padding: var(--space-small);
-  }
-
-  .card-footer-grid {
-    padding: var(--space-small);
   }
 }
 </style>

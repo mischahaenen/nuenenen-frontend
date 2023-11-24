@@ -56,7 +56,7 @@ body {
 }
 
 .section {
-  padding: var(--space-large) 0;
+  padding-block: var(--space-large);
 }
 
 @media screen and (max-width: 1024px) {
@@ -66,7 +66,7 @@ body {
 
   .section {
     padding: var(--space-medium);
-    margin-top: var(--space-medium);
+    margin-block: var(--space-medium);
   }
 
   .colored-section {
@@ -137,13 +137,13 @@ p {
 
 .accent-button {
   background-color: var(--color-white);
-  color: var(--color-primary-700);
+  color: var(--color-accent-700);
   transition: all 0.2s ease-in-out;
   outline-color: var(--color-accent-900);
 
   &:hover {
-    background-color: var(--color-primary-100);
-    color: var(--color-primary-900);
+    background-color: var(--color-accent-100);
+    color: var(--color-accent-900);
   }
 }
 
@@ -187,9 +187,14 @@ p {
       color: var(--color-black);
     }
   }
+
   a {
     color: var(--color-primary-500);
     outline-color: var(--color-primary-700);
+  }
+
+  a:hover {
+    color: var(--color-primary-700);
   }
 
   .colored-section {
@@ -205,7 +210,7 @@ p {
     background-color: var(--color-primary-900);
   }
   .colored-section {
-    background-color: var(--color-primary-800);
+    background-color: var(--color-primary-700);
   }
   h1 {
     color: var(--color-accent-50);
@@ -222,10 +227,16 @@ p {
       color: var(--color-white);
     }
   }
+
   a {
     color: var(--color-accent-50);
     outline-color: var(--color-accent-900);
   }
+
+  a:hover {
+    color: var(--color-accent-100);
+  }
+
   .primary-button {
     background: var(--color-accent-700);
     color: var(--color-white);
@@ -238,22 +249,22 @@ p {
   }
 
   .link-button {
+    color: var(--color-white);
     background: var(--color-accent-700);
     outline-color: var(--color-accent-50);
 
     &:hover {
       background-color: var(--color-accent-500);
-      color: var(--color-primary-50) !important;
     }
   }
   .accent-button {
-    background: var(--color-primary-500);
-    color: var(--color-primary-100);
-    outline-color: var(--color-primary-50);
+    background: var(--color-accent-900);
+    color: var(--color-accent-100);
+    outline-color: var(--color-accent-50);
 
     &:hover {
-      background-color: var(--color-primary-400);
-      color: var(--color-primary-100);
+      background-color: var(--color-accent-800);
+      color: var(--color-accent-100);
     }
   }
 }

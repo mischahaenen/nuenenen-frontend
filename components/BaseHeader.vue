@@ -1,27 +1,66 @@
 <template>
   <header class="header" :class="{ 'header-scrolled': scroll > 50 }">
-    <div>
-      <nuxt-link
-        to="/home"
-        :class="scroll > 50 ? 'home-link-scrolled' : 'home-link'"
-      >
-        <p><b>PFADI</b> NÜNENEN</p>
-      </nuxt-link>
-    </div>
+    <a class="skip-main" href="#main">Zum Hauptinhalt</a>
+    <nuxt-link
+      to="/home"
+      :class="['home-link', { 'home-link-scrolled': scroll > 50 }]"
+    >
+      <p><b>PFADI</b> NÜNENEN</p>
+    </nuxt-link>
+
     <nav class="nav" :class="{ 'nav-expanded': navExpanded }">
-      <div class="nav-toggle" @click="toggleNav">
-        <div class="toggle-line"></div>
-        <div class="toggle-line"></div>
-        <div class="toggle-line"></div>
-      </div>
-      <div class="nav-links">
-        <nuxt-link
-          v-for="page in pages"
-          :to="`/${page.attributes.url}`"
-          :key="page.attributes.slug"
-          >{{ page.attributes.slug }}</nuxt-link
+      <button
+        class="nav-toggle"
+        aria-label="Toggle navigation"
+        @click="toggleNav"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24"
+          viewBox="0 -960 960 960"
+          width="24"
         >
-      </div>
+          <path
+            d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"
+          />
+        </svg>
+      </button>
+      <ul class="nav-links">
+        <li
+          v-for="page in pages"
+          :key="page.attributes.slug"
+          :class="[
+            'nav-item',
+            { 'nav-item-expandable': page.attributes.pageZone.length },
+          ]"
+        >
+          <nuxt-link :to="`/${page.attributes.url}`"
+            >{{ page.attributes.slug
+            }}<svg
+              v-if="page.attributes.pageZone.length"
+              class="chevron"
+              xmlns="http://www.w3.org/2000/svg"
+              height="24"
+              viewBox="0 -960 960 960"
+              width="24"
+            >
+              <path
+                d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"
+              /></svg
+          ></nuxt-link>
+          <ul v-if="page.attributes.pageZone.length" class="submenu">
+            <li
+              v-for="step in (page.attributes.pageZone[0] as StepZone).steps.data"
+              :key="step.id"
+            >
+              <nuxt-link
+                :to="`/${page.attributes.url}/${step.attributes.Slug}`"
+                >{{ step.attributes.Name }}</nuxt-link
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
     </nav>
   </header>
 </template>
@@ -36,12 +75,40 @@ onMounted(async () => {
   pages.value = pagesResponse.data
 })
 
-function toggleNav() {
+const toggleNav = () => {
   navExpanded.value = !navExpanded.value
 }
 </script>
 
 <style scoped lang="scss">
+a.skip-main {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: -1;
+}
+a.skip-main:focus,
+a.skip-main:active {
+  color: var(--color-primary-50);
+  background-color: var(--color-primary-500);
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: auto;
+  overflow: auto;
+  border-radius: 5px;
+  padding: 0.25rem;
+  text-align: center;
+  z-index: 999;
+}
+.nav-links {
+  a.router-link-active {
+    font-weight: bold;
+  }
+}
 .header {
   padding: 0 var(--space-large);
   position: fixed;
@@ -52,6 +119,7 @@ function toggleNav() {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  transition: background-color 0.3s ease, height 0.3s ease;
 }
 
 .header-scrolled {
@@ -63,38 +131,89 @@ function toggleNav() {
   box-shadow: 0 2px 4px #0000001a;
 }
 
-.home-link {
-  text-decoration: none;
-  color: var(--color-black);
-  word-spacing: 0.2rem;
-  letter-spacing: 0.05rem;
-}
-
-.home-link b {
-  color: var(--color-primary-500);
-}
-
+.home-link,
 .home-link-scrolled {
   text-decoration: none;
-  color: var(--color-black);
   word-spacing: 0.2rem;
   letter-spacing: 0.05rem;
 }
 
+.home-link b,
 .home-link-scrolled b {
   color: var(--color-primary-500);
 }
 
 .nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 4rem;
 }
 
-.nav-links a:last-child {
-  background: var(--color-primary-700);
-  color: var(--color-white) !important;
+.nav-item a {
+  text-decoration: none;
+}
+
+.nav-toggle {
+  display: none;
+}
+
+.nav-item-expandable {
+  position: relative;
+}
+
+.nav-item-expandable a {
+  display: flex;
+  align-items: center;
+}
+
+.chevron {
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+}
+
+.nav-item-expandable:hover .chevron,
+.nav-item-expandable:focus-within .chevron {
+  transform: rotate(180deg);
+}
+
+.nav-item-expandable:hover .submenu,
+.nav-item-expandable:focus-within .submenu {
+  display: block;
+
+  .chevron {
+    transform: rotate(180deg);
+  }
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  left: 0;
+  background-color: var(--color-white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: var(--space-small);
+  text-align: left;
+  list-style: none;
+  z-index: 20;
+}
+
+.submenu li {
+  padding: 0.5rem 1rem 0.5rem 0;
+  border-bottom: var(--color-primary-50) 1px solid;
+}
+
+.submenu li:last-child {
+  border-bottom: none;
+}
+
+.nav-item:last-child a {
+  background: var(--color-accent-700);
+  color: var(--color-white);
   transition: all 0.2s ease-in-out;
   outline-color: var(--color-accent-50);
   text-decoration: none;
@@ -105,29 +224,16 @@ function toggleNav() {
   font-weight: 700;
 
   &:hover {
-    background-color: var(--color-primary-500);
-    color: var(--color-accent-50) !important;
+    background-color: var(--color-accent-500);
   }
 }
 
-.nav-links > * {
-  color: var(--color-black);
-  text-decoration: none;
-}
-
-.nav-links > *:last-of-type {
-  margin: 0;
-}
-
-.nav-links > .router-link-active {
-  font-weight: bold;
-}
 .dark-mode {
-  .nav-links > * {
+  .nav-link > * {
     color: var(--color-white);
   }
   .header-scrolled {
-    background-color: var(--color-primary-800);
+    background-color: var(--color-primary-700);
     color: var(--color-white);
   }
   .home-link {
@@ -147,97 +253,111 @@ function toggleNav() {
       color: var(--color-accent-100);
     }
   }
+
+  .nav-item-expandable {
+    svg {
+      fill: var(--color-accent-50);
+    }
+  }
+
+  .submenu {
+    background-color: var(--color-primary-700);
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  }
+
+  .submenu li {
+    border-bottom: var(--color-primary-500) 1px solid;
+  }
+
+  .submenu li:last-child {
+    border-bottom: none;
+  }
+
   @media screen and (max-width: 768px) {
-    .header {
-      padding: 0 var(--space-medium);
-    }
-
-    .nav-toggle {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .toggle-line {
-      width: 30px;
-      height: 2px;
-      background-color: var(--color-white);
-      margin: 4px 0;
-      transition: background-color 0.3s ease;
-    }
-
-    .nav-expanded .nav-links {
+    .nav-links {
       background-color: var(--color-primary-800);
-      box-shadow: 0 2px 4px #ffffff1a;
-    }
-    .header-scrolled .nav-expanded .nav-links {
-      margin-top: 20px;
+      box-shadow: 0px 25px 30px rgb(255 255 255 / 20%);
     }
   }
 }
-@media screen and (max-width: 768px) {
+
+@media (max-width: 768px) {
   .header {
     padding: 0 var(--space-medium);
   }
-
+  .nav {
+    position: relative;
+  }
   .nav-toggle {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: block;
+    background: var(--color-accent-700);
+    border-radius: var(--border-radius);
+    padding: 0.5rem;
+    border: none;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    svg {
+      fill: var(--color-white);
+    }
   }
 
-  .toggle-line {
-    width: 30px;
-    height: 2px;
-    background-color: var(--color-primary-800);
-    margin: 4px 0;
-    transition: background-color 0.3s ease;
-  }
-
-  .nav-expanded .toggle-line:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
-  }
-
-  .nav-expanded .toggle-line:nth-child(2) {
-    opacity: 0;
-  }
-
-  .nav-expanded .toggle-line:nth-child(3) {
-    transform: rotate(-45deg) translate(9px, -9px);
+  .nav-toggle:focus,
+  .nav-toggle:hover {
+    outline-color: var(--color-accent-50);
+    background: var(--color-accent-500);
   }
 
   .nav-links {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 200px;
     display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--color-white);
+    box-shadow: 0px 25px 30px rgb(0 0 0 / 20%);
+    border-radius: 10px;
+    transition: all 0.2s ease-in-out;
   }
 
-  .nav {
-    transform: translateY(0px);
-    transition: transform 0.3s ease;
-  }
-
-  .nav-expanded {
-    transform: translateY(120px);
-    transition: transform 0.3s ease;
+  .nav-item {
+    width: 100%;
+    a {
+      display: block;
+      padding: 0.5rem 1rem 0.5rem 0;
+      border-bottom: var(--color-primary-50) 1px solid;
+    }
   }
 
   .nav-expanded .nav-links {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 40px;
-    padding: 1rem;
-    border-radius: 10px;
-    background-color: var(--color-white);
-    box-shadow: 0 2px 4px #0000001a;
   }
 
-  .header-scrolled .nav-expanded {
-    transform: translateY(110px);
+  .nav-item:last-child {
+    border-bottom: none;
+    text-align: center;
   }
-  .header-scrolled .nav-expanded .nav-links {
-    margin-top: 20px;
+
+  .nav-item-expandable {
+    position: unset;
+    display: block;
+  }
+
+  .submenu {
+    position: unset;
+    display: none;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    text-align: left;
+    list-style: none;
+
+    li {
+      border-bottom: none !important;
+    }
   }
 }
 </style>

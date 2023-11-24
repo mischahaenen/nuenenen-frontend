@@ -1,9 +1,18 @@
-import { ContactSenderReponse } from '~/types/contact-sender'
+import type { ContactSenderReponse } from '~/types/contact-sender'
 
 export const getPageNavigation = () => {
   const { find } = useStrapi4()
   return find<PageResponse>('api/pages', {
     fields: ['slug', 'url'],
+    populate: {
+      pageZone: {
+        on: {
+          'pages.steps': {
+            populate: '*',
+          },
+        },
+      },
+    },
   })
 }
 export const getPage = (url: string) => {

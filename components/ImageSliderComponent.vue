@@ -37,52 +37,75 @@ const props = defineProps<{
 </script>
 <style lang="scss">
 .carousel__image_standalone {
-  max-height: 400px;
-  width: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  height: auto;
+  width: min(100%, 500px);
+  object-fit: cover;
   border-radius: var(--border-radius);
-}
-.carousel__image {
-  max-height: 500px;
-  width: 100%;
-  object-fit: contain;
-}
-.carousel__item {
-  max-height: 500px;
-  width: 100%;
-  background-color: var(--color-primary-50);
-  border-radius: var(--border-radius);
+  margin: 0;
 }
 
-.carousel__slide {
-  padding: 10px;
-  width: 100% !important;
+.carousel__image {
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
 }
 
 .carousel__prev,
 .carousel__next {
   box-sizing: content-box;
   border-radius: 50%;
-  background-color: var(--color-primary-50);
+  background-color: var(--color-accent-900);
+  color: var(--color-accent-50);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.carousel__prev:hover,
+.carousel__next:hover {
+  background-color: var(--color-accent-800);
+  color: var(--color-accent-50);
+}
+
+.carousel__pagination-button::after {
+  display: block;
+  content: '';
+  width: 2rem;
+  height: 0.75rem;
+  border-radius: 50px;
+  background-color: var(--color-accent-50);
+}
+
+.carousel__pagination-button:hover::after,
+.carousel__pagination-button--active::after {
+  background-color: var(--color-accent-900);
 }
 
 .dark-mode {
-  .carousel__item {
-    background-color: var(--color-primary-800);
-    color: var(--vc-clr-white);
-  }
-
   .carousel__prev,
   .carousel__next {
     color: var(--color-white);
-    background-color: var(--color-primary-800);
+    background-color: var(--color-accent-900);
+  }
+  .carousel__prev:hover,
+  .carousel__next:hover {
+    color: var(--color-white);
+    background-color: var(--color-accent-800);
   }
 
   .carousel__pagination-button::after {
-    background-color: var(--color-white);
+    background-color: var(--color-accent-100);
   }
+  .carousel__pagination-button:hover::after,
   .carousel__pagination-button--active::after {
-    background-color: var(--color-primary-100);
+    background-color: var(--color-accent-500);
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel__pagination-button::after {
+    display: none;
   }
 }
 </style>

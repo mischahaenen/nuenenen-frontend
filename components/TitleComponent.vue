@@ -1,8 +1,8 @@
 <template>
-  <h2 v-if="props.index % 2 !== 0">
+  <h2 v-if="props.index % 2 !== 0" class="title">
     {{ props.title }}
   </h2>
-  <h2 v-else>
+  <h2 v-else class="title">
     <span v-for="word in words" :key="word" class="word">
       <span
         v-for="letter in word"
@@ -20,7 +20,10 @@
 <script setup lang="ts">
 const props = defineProps<{ title: string | undefined; index: number }>()
 
-const words = props.title?.split(' ') || []
+const words = computed(() => {
+  if (!props.title) return []
+  return props.title.split(' ')
+})
 </script>
 <style scoped lang="scss">
 .letter {

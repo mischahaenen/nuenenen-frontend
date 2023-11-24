@@ -12,7 +12,13 @@
           >Kontaktiere uns!</nuxt-link
         >
       </div>
-      <div class="rocket-image-background">
+      <NuxtImg
+        v-if="!!props.image"
+        :src="props.image.attributes.url"
+        alt="test"
+        class="background-image"
+      />
+      <div v-else class="rocket-image-background">
         <img
           class="background-image"
           src="/img/cloud.webp"
@@ -36,21 +42,12 @@ const rocketStyle = computed(() => ({
 }))
 const route = useRoute()
 const isContactPage = computed(() => route.path === '/kontakt')
-const props = defineProps({
-  title: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  isRichText: {
-    type: Boolean,
-    required: false,
-    default: false,
-  },
-})
+const props = defineProps<{
+  title: string
+  description: string
+  isRichText?: boolean
+  image?: Image
+}>()
 onscroll = () => {
   translateY.value = 20 + window.scrollY * -0.2
 }
@@ -78,7 +75,7 @@ onscroll = () => {
 
 .dark-mode {
   .banner::after {
-    background-color: var(--color-primary-800);
+    background-color: var(--color-primary-700);
   }
 }
 
@@ -95,11 +92,13 @@ onscroll = () => {
   align-items: center;
 }
 
+.background-image {
+  width: 500px;
+  height: auto;
+}
+
 .rocket-image-background {
   position: relative;
-  .background-image {
-    width: 100%;
-  }
   .rocket-image {
     max-width: 300px;
     position: absolute;
@@ -107,6 +106,7 @@ onscroll = () => {
     left: 0;
   }
 }
+
 .link-button {
   margin: var(--space-medium);
 }
