@@ -1,11 +1,10 @@
 <template>
-  <div class="container">
+  <div v-if="props.zone.files" class="container">
     <TitleComponent
       :title="props.zone.Title"
       :index="props.index"
     ></TitleComponent>
     <a
-      v-if="props.zone.files"
       v-for="file in props.zone.files.data"
       :key="file.id"
       :href="file.attributes.url"

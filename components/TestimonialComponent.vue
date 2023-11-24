@@ -8,8 +8,8 @@
       <div class="img-container">
         <Transition mode="out-in">
           <nuxt-img
-            format="webp"
             :key="testimonial.id"
+            format="webp"
             :src="testimonial.attributes.Image.data.attributes.url"
             :alt="
               testimonial.attributes.Image.data.attributes.alternativeText ||
@@ -66,11 +66,8 @@ const slider = useState<any>(() => null)
 
 const fetchData = async () => {
   const id = testimonialIDs.value[useIndex.value]
-  const { data, error } = await getTestimonial(id)
+  const { data } = await getTestimonial(id)
 
-  if (error.value) {
-    console.error(error)
-  }
   if (data.value) {
     testimonial.value = data.value.data
   }

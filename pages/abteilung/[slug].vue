@@ -31,8 +31,8 @@
         <div v-if="(zone as Group).members" class="member-section">
           <UserCard
             v-for="member in (zone as Group).members.data"
-            :user="member"
             :key="`${member.id}-${member.attributes.username}`"
+            :user="member"
           ></UserCard>
         </div>
       </div>

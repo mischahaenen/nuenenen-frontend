@@ -5,7 +5,7 @@
       props.index % 2 === 0 ? 'flex-even' : 'flex-odd',
     ]"
   >
-    <div class="section">
+    <div>
       <TitleComponent
         :title="props.title"
         :index="props.index"
@@ -59,6 +59,7 @@ onMounted(() => initializeObserver())
   display: flex;
   gap: var(--space-large);
   align-items: center;
+  justify-content: space-between;
 }
 
 .section {
@@ -85,20 +86,10 @@ onMounted(() => initializeObserver())
   }
 }
 
-.image {
-  width: 500px;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: cover;
-  border-radius: var(--border-radius);
-}
-
 @media screen and (max-width: 1000px) {
   .flex {
     flex-direction: column;
-  }
-  .image {
-    width: 100%;
+    gap: var(--space-small);
   }
 }
 </style>

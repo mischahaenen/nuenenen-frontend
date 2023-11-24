@@ -30,7 +30,7 @@
       />
       <div class="grid left">
         <PostComponent
-          v-for="(post, i) in posts.filter((_, i) => i % 2 !== 0 && i !== 0)"
+          v-for="post in posts.filter((_, i) => i % 2 !== 0 && i !== 0)"
           :key="post.id"
           :post="post"
           :is-first="false"
@@ -39,7 +39,7 @@
       </div>
       <div class="grid right">
         <PostComponent
-          v-for="(post, i) in posts.filter((_, i) => i % 2 === 0 && i !== 0)"
+          v-for="post in posts.filter((_, i) => i % 2 === 0 && i !== 0)"
           :key="post.id"
           :post="post"
           :is-first="false"

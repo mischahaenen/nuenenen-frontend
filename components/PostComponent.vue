@@ -2,8 +2,8 @@
   <nuxt-link v-if="post" :to="'blog/' + post.attributes.slug">
     <div :class="cardClass">
       <NuxtImg
-        class="card-image"
         v-if="post.attributes.images?.data?.length"
+        class="card-image"
         :src="post.attributes.images.data[0].attributes.url"
         :alt="
           post.attributes.images.data[0].attributes.alternativeText ||
@@ -22,7 +22,7 @@
           :is-preview="true"
           :preview-lines="isFirst ? 9 : undefined"
         />
-        <div class="card-footer" v-if="post.attributes.step.data">
+        <div v-if="post.attributes.step.data" class="card-footer">
           #{{ post.attributes.step?.data?.attributes?.Name }}
         </div>
       </div>

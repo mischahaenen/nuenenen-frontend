@@ -1,15 +1,15 @@
 <template>
   <div v-if="page">
     <BaseBanner
+      id="main"
       :title="page.attributes.title"
       :description="page.attributes.description"
-      id="main"
     />
     <section
       v-for="(zone, index) in page.attributes.pageZone"
+      :id="String(index + 1)"
       :key="index"
       :class="index % 2 === 0 ? 'section' : 'colored-section'"
-      :id="String(index + 1)"
     >
       <div v-if="zone.__component === 'pages.image'" class="container">
         <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
@@ -22,7 +22,7 @@
         <SectionComponent
           :title="(zone as Section).Title"
           :description="(zone as Section).Description"
-          :image="(zone as Section).Image"
+          :images="(zone as Section).Image"
           :index="index"
         ></SectionComponent>
       </div>
@@ -161,12 +161,11 @@ a:hover h3 {
   border-radius: var(--border-radius);
   padding: var(--space-medium);
   overflow: hidden;
-  box-shadow: 0px 25px 30px rgb(0 0 0 / 10%);
-  transition: box-shadow 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .step-item:hover {
-  box-shadow: 0px 25px 30px rgb(0 0 0 / 20%);
+  background-color: var(--color-accent-50);
   .step-image {
     transform: scale(1.05);
   }
@@ -179,11 +178,8 @@ a:hover h3 {
 }
 
 .dark-mode {
-  .step-item {
-    box-shadow: 0px 25px 30px rgb(255 255 255 / 10%);
-  }
   .step-item:hover {
-    box-shadow: 0px 25px 30px rgb(255 255 255 / 20%);
+    background-color: var(--color-accent-900);
   }
 }
 </style>

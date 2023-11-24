@@ -11,8 +11,8 @@
     <nav class="nav" :class="{ 'nav-expanded': navExpanded }">
       <button
         class="nav-toggle"
-        @click="toggleNav"
         aria-label="Toggle navigation"
+        @click="toggleNav"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
