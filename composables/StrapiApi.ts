@@ -1,4 +1,4 @@
-import { ContactSenderReponse } from '~/types/contact-sender'
+import type { ContactSenderReponse } from '~/types/contact-sender'
 
 export const getPageNavigation = () => {
   const { find } = useStrapi4()

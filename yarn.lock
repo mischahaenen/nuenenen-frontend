@@ -9761,11 +9761,6 @@ stylelint-config-html@>=1.0.0:
   resolved "https://registry.npmjs.org/stylelint-config-html/-/stylelint-config-html-1.1.0.tgz"
   integrity sha512-IZv4IVESjKLumUGi+HWeb7skgO6/g4VMuAYrJdlqQFndgbj6WJAXPhaysvBiXefX79upBdQVumgYcdd17gCpjQ==
 
-stylelint-config-prettier@^9.0.5:
-  version "9.0.5"
-  resolved "https://registry.npmjs.org/stylelint-config-prettier/-/stylelint-config-prettier-9.0.5.tgz"
-  integrity sha512-U44lELgLZhbAD/xy/vncZ2Pq8sh2TnpiPvo38Ifg9+zeioR+LAkHu0i6YORIOxFafZoVg0xqQwex6e6F25S5XA==
-
 stylelint-config-recommended-vue@^1.5.0:
   version "1.5.0"
   resolved "https://registry.npmjs.org/stylelint-config-recommended-vue/-/stylelint-config-recommended-vue-1.5.0.tgz"
@@ -9798,7 +9793,7 @@ stylelint-webpack-plugin@^4.1.1:
     normalize-path "^3.0.0"
     schema-utils "^4.0.0"
 
-"stylelint@^13.0.0 || ^14.0.0 || ^15.0.0", stylelint@^15.10.0, stylelint@^15.11.0, "stylelint@>= 11.x < 15", stylelint@>=13, stylelint@>=14.0.0:
+"stylelint@^13.0.0 || ^14.0.0 || ^15.0.0", stylelint@^15.10.0, stylelint@^15.11.0, stylelint@>=13, stylelint@>=14.0.0:
   version "15.11.0"
   resolved "https://registry.npmjs.org/stylelint/-/stylelint-15.11.0.tgz"
   integrity sha512-78O4c6IswZ9TzpcIiQJIN49K3qNoXTM8zEJzhaTE/xRTCZswaovSEVIa/uwbOltZrk16X4jAxjaOhzz/hTm1Kw==

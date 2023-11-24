@@ -118,15 +118,25 @@ useHead(() => ({
 }))
 
 const fetchData = async () => {
-  const response = await getPage(route.params.slug as string)
-  page.value = response.data[0]
+  const { data: pageResponse, error } = await useAsyncData(() =>
+    getPage(route.params.slug as string)
+  )
+  if (error.value) navigateTo('/404')
+  if (!pageResponse.value) return
+  page.value = pageResponse.value.data[0]
 }
 
 onMounted(() => {
   fetchData()
 })
 
-watch(() => route.params.slug, fetchData, { immediate: true })
+watch(
+  () => route.params.slug,
+  async () => {
+    await fetchData()
+  },
+  { immediate: true }
+)
 </script>
 
 <style scoped lang="scss">

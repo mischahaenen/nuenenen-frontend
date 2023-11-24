@@ -136,7 +136,7 @@
 <script setup lang="ts">
 import { useReCaptcha } from 'vue-recaptcha-v3'
 import { useDeregisterStore } from '~/store/deregister'
-import { ContactSender } from '~/types/contact-sender'
+import type { ContactSender } from '~/types/contact-sender'
 
 const props = defineProps<{
   index?: number

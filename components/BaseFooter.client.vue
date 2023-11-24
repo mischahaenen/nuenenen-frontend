@@ -5,6 +5,7 @@
       :src="`/svg/gantrisch_${
         colorMode.value === 'dark' ? 'dark' : 'white'
       }.svg`"
+      :alt="`Berge in ${colorMode.value === 'dark' ? 'Dunkel' : 'Hell'}`"
     ></NuxtImg>
     <div class="footer-content">
       <div>
@@ -44,7 +45,6 @@ const modeHeader = computed(() => {
 
 onMounted(() => {
   const _paq = (window._paq = window._paq || [])
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
   _paq.push(['trackPageView'])
   _paq.push(['enableLinkTracking'])
   ;(function () {

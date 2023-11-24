@@ -4,7 +4,7 @@
       <button
         class="button accent-button"
         :class="{ active: activeButton === 'all' }"
-        aria-label="Show all posts"
+        aria-label="Alle Posts anzeigen"
         @click="getPosts()"
       >
         Alle
@@ -14,7 +14,7 @@
         :key="jndex"
         class="button accent-button"
         :class="{ active: activeButton === step.attributes.Name }"
-        :aria-label="'Show posts for ' + step.attributes.Name"
+        :aria-label="`Posts für die ${step.attributes.Name} anzeigen`"
         @click="getPostsByStep(step.attributes.Name)"
       >
         {{ step.attributes.Name }}
