@@ -139,8 +139,8 @@ export const createContactEntry = (
   const { create } = useStrapi4()
   return useAsyncData(() =>
     create<any>('api/contacts/', {
-      token,
       formData,
+      token,
     })
   )
 }

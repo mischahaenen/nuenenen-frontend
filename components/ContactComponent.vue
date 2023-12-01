@@ -5,10 +5,10 @@
     @submit.prevent="submitForm"
   >
     <div class="formfield">
-      <label for="firstname">Vorname:</label>
+      <label for="Firstname">Vorname:</label>
       <input
-        id="firstname"
-        v-model="form.firstname"
+        id="Firstname"
+        v-model="form.Firstname"
         class="forminput"
         :class="{ even: !isOdd }"
         placeholder="Vorname"
@@ -17,10 +17,10 @@
       />
     </div>
     <div class="formfield">
-      <label for="lastname">Nachname:</label>
+      <label for="Lastname">Nachname:</label>
       <input
-        id="lastname"
-        v-model="form.lastname"
+        id="Lastname"
+        v-model="form.Lastname"
         class="forminput"
         :class="{ even: !isOdd }"
         placeholder="Nachname"
@@ -29,22 +29,22 @@
       />
     </div>
     <div class="formfield">
-      <label for="email">Email:</label>
+      <label for="Email">Email:</label>
       <input
-        id="email"
-        v-model="form.email"
+        id="Email"
+        v-model="form.Email"
         class="forminput"
         :class="{ even: !isOdd }"
         placeholder="Email Adresse"
-        type="email"
+        type="Email"
         required
       />
     </div>
     <div class="formfield">
-      <label for="message">Deine Nachricht:</label>
+      <label for="Message">Deine Nachricht:</label>
       <textarea
-        id="message"
-        v-model="form.message"
+        id="Message"
+        v-model="form.Message"
         class="forminput"
         :class="{ even: !isOdd }"
         placeholder="Hier deine Nachricht..."
@@ -82,7 +82,7 @@
   </form>
   <div v-else class="successMessage">
     <h3>
-      {{ form.firstname }}, deine Nachricht wurde erfolgreich übermittelt!
+      {{ form.Firstname }}, deine Nachricht wurde erfolgreich übermittelt!
     </h3>
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -145,11 +145,12 @@ const deregisterStore = useDeregisterStore()
 const isOdd = computed(() => (props.index ? props.index % 2 === 0 : true))
 const contactDistributionList = useState<ContactSender[] | null>(() => null)
 const form = ref({
-  firstname: '',
-  lastname: '',
-  email: '',
-  message: '',
+  Firstname: '',
+  Lastname: '',
+  Email: '',
+  Message: '',
   contactOption: 1,
+  Score: 0,
 })
 const recaptchaInstance = useReCaptcha()
 const errorMessage = useState(() => '')
@@ -159,8 +160,8 @@ onMounted(async () => {
   try {
     const response = await getContactDistributionList()
     contactDistributionList.value = response.data
-    form.value.contactOption = await getDefaultContactOption()
-    form.value.message = deregisterStore.step ? deregisterStore.message : ''
+    form.value.contactOption = getDefaultContactOption()
+    form.value.Message = deregisterStore.step ? deregisterStore.message : ''
   } catch (error) {
     errorMessage.value =
       'Ein Fehler trat beim Laden der Kontaktverteilung auf. Bitte versuche es später erneut.'
