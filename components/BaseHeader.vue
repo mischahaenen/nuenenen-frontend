@@ -31,13 +31,15 @@
           :key="page.attributes.slug"
           :class="[
             'nav-item',
-            { 'nav-item-expandable': page.attributes.pageZone.length },
+            {
+              'nav-item-expandable': hasSteps(page),
+            },
           ]"
         >
           <nuxt-link :to="`/${page.attributes.url}`"
             >{{ page.attributes.slug
             }}<svg
-              v-if="page.attributes.pageZone.length"
+              v-if="hasSteps(page)"
               class="chevron"
               xmlns="http://www.w3.org/2000/svg"
               height="24"
@@ -48,10 +50,10 @@
                 d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"
               /></svg
           ></nuxt-link>
-          <ul v-if="page.attributes.pageZone.length" class="submenu">
+          <ul v-if="hasSteps(page)" class="submenu">
             <li
-              v-for="step in (page.attributes.pageZone[0] as StepZone).steps.data"
-              :key="step.id"
+              v-for="step in (page.attributes.pageZone.filter((zone) => zone.__component === 'pages.steps')[0] as StepZone).steps.data"
+              :key="step.attributes.Name"
             >
               <nuxt-link
                 :to="`/${page.attributes.url}/${step.attributes.Slug}`"
@@ -71,12 +73,18 @@ const navExpanded = useState(() => false)
 const pages = useState<Page[]>(() => [])
 
 onMounted(async () => {
-  const pagesResponse = await getPageNavigation()
-  pages.value = pagesResponse.data
+  const pagesResponse = await getNavigation()
+  pages.value = pagesResponse.data?.attributes?.pages?.data
 })
 
 const toggleNav = () => {
   navExpanded.value = !navExpanded.value
+}
+
+const hasSteps = (page: Page) => {
+  return page.attributes.pageZone.some(
+    (zone) => zone.__component === 'pages.steps'
+  )
 }
 </script>
 

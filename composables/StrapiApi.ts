@@ -1,20 +1,28 @@
 import type { ContactSenderReponse } from '~/types/contact-sender'
 
-export const getPageNavigation = () => {
+interface Attributes {
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
+  pages: PageResponse
+}
+interface Data {
+  id: number
+  attributes: Attributes
+}
+
+interface ApiResponse {
+  data: Data
+  meta: any
+}
+
+export const getNavigation = () => {
   const { find } = useStrapi4()
-  return find<PageResponse>('api/pages', {
-    fields: ['slug', 'url'],
-    populate: {
-      pageZone: {
-        on: {
-          'pages.steps': {
-            populate: '*',
-          },
-        },
-      },
-    },
+  return find<ApiResponse>('api/navigation', {
+    populate: 'deep',
   })
 }
+
 export const getPage = (url: string) => {
   const { find } = useStrapi4()
   return find<PageResponse>('api/pages', {
@@ -22,6 +30,7 @@ export const getPage = (url: string) => {
     filters: { url: { $eq: url } },
   })
 }
+
 export const getPageWithGraphQL = (slug: string) => {
   const graphql = useStrapiGraphQL()
   return graphql<PageResponse>(`
