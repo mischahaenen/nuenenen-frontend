@@ -12,13 +12,36 @@
         <h2>{{ footer.Title }}</h2>
         <ul>
           <li v-for="link of footer.Links" :key="link.Link">
-            <a :href="link.Link">{{ link.Name }}</a>
+            <a :href="link.Link" target="_blank">{{ link.Name }}</a>
           </li>
         </ul>
       </div>
       <div>
         <h2>{{ modeHeader }}</h2>
         <BaseColorSwitch></BaseColorSwitch>
+      </div>
+      <div>
+        <h2>Soziale Medien</h2>
+        <ul class="socialmedia-section">
+          <li>
+            <a href="https://www.instagram.com/pfadipink" target="_blank">
+              <img src="/svg/instagram.svg" alt="Github Logo" />Instagram</a
+            >
+          </li>
+          <li>
+            <a href="https://www.facebook.com/PfadiNuenenen/" target="_blank">
+              <img src="/svg/facebook.svg" alt="Github Logo" />Facebook</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/mischahaenen/nuenenen-frontend"
+              target="_blank"
+            >
+              <img src="/svg/github.svg" alt="Github Logo" />Github</a
+            >
+          </li>
+        </ul>
       </div>
       <div class="sponsorLogo">
         <h2>Sponsoren</h2>
@@ -79,6 +102,22 @@ footer {
   img {
     width: 300px;
     height: auto;
+  }
+}
+
+.socialmedia-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-small);
+  a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-small);
+    img {
+      width: 30px;
+      height: auto;
+    }
   }
 }
 
