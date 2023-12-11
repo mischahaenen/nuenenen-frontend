@@ -1,0 +1,17 @@
+# Nuenenen Frontend
+
+Welcome to the Nuenenen Frontend repository! This project is the frontend part of the Nuenenen application, built using Vue.js and Nuxt.js. It's designed to provide a seamless and interactive user experience for our web platform.
+
+## Technologies Used
+- **Vue.js**: A progressive JavaScript framework for building user interfaces.
+- **Nuxt.js**: An intuitive Vue framework for building server-side rendered applications.
+- **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+- **SCSS**: A preprocessor scripting language that is interpreted or compiled into CSS.
+
+## Setup and Installation
+To get the project running locally on your machine, follow these steps:
+
+**Clone the Repository**:
+```bash
+git clone https://github.com/mischahaenen/nuenenen-frontend.git
+cd nuenenen-frontend
