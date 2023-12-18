@@ -7,6 +7,7 @@
     "
   >
     <nuxt-img
+      v-if="props.user.attributes.Picture.data"
       class="image"
       format="webp"
       :src="props.user.attributes.Picture.data.attributes.url"

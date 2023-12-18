@@ -1474,6 +1474,15 @@
     pathe "^1.1.0"
     vite-plugin-eslint "^1.8.1"
 
+"@nuxtjs/google-fonts@^3.1.3":
+  version "3.1.3"
+  resolved "https://registry.npmjs.org/@nuxtjs/google-fonts/-/google-fonts-3.1.3.tgz"
+  integrity sha512-gHwstHXQKd/r9O2WnQR4UJbi7Rfb9No1/gF4gqP+y18h1DAAZUOYPBF5EAPGjZKgDOW2XbZHP8Rw3oSDTpIT1A==
+  dependencies:
+    "@nuxt/kit" "^3.8.2"
+    google-fonts-helper "^3.4.1"
+    pathe "^1.1.1"
+
 "@nuxtjs/strapi@^1.9.3":
   version "1.9.3"
   resolved "https://registry.npmjs.org/@nuxtjs/strapi/-/strapi-1.9.3.tgz"
@@ -3876,7 +3885,7 @@ deep-is@^0.1.3:
   resolved "https://registry.npmjs.org/deep-is/-/deep-is-0.1.4.tgz"
   integrity sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==
 
-deepmerge@^4.2.2:
+deepmerge@^4.2.2, deepmerge@^4.3.1:
   version "4.3.1"
   resolved "https://registry.npmjs.org/deepmerge/-/deepmerge-4.3.1.tgz"
   integrity sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==
@@ -5394,6 +5403,16 @@ globjoin@^0.1.4:
   version "0.1.4"
   resolved "https://registry.npmjs.org/globjoin/-/globjoin-0.1.4.tgz"
   integrity sha512-xYfnw62CKG8nLkZBfWbhWwDw02CHty86jfPcc2cr3ZfeuK9ysoVPPEUxf21bAD/rWAgk52SuBrLJlefNy8mvFg==
+
+google-fonts-helper@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.npmjs.org/google-fonts-helper/-/google-fonts-helper-3.4.1.tgz"
+  integrity sha512-unq9c1NF771916DrVR2MTpMJ5iHiMSjMBApErjhWT1FZIE+7x+Qik+w6cYi5jw/KtHELz+tyGAKgQetTU9wrlA==
+  dependencies:
+    deepmerge "^4.3.1"
+    hookable "^5.5.3"
+    ofetch "^1.3.3"
+    ufo "^1.3.2"
 
 gopd@^1.0.1:
   version "1.0.1"

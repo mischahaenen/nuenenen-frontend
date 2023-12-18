@@ -1,5 +1,9 @@
 <template>
-  <carousel v-if="props.images.length > 1" :autoplay="3000" :wrap-around="true">
+  <carousel
+    v-if="props.images && props.images.length > 1"
+    :autoplay="3000"
+    :wrap-around="true"
+  >
     <slide v-for="image in props.images" :key="image.attributes.name">
       <div class="carousel__item">
         <nuxt-img
@@ -17,7 +21,7 @@
     </template>
   </carousel>
   <nuxt-img
-    v-else
+    v-if="props.images && props.images.length === 1"
     format="webp"
     class="carousel__image_standalone"
     :src="props.images[0].attributes.url"
@@ -32,7 +36,7 @@
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 const props = defineProps<{
-  images: Image[]
+  images: Image[] | null
 }>()
 </script>
 <style lang="scss">

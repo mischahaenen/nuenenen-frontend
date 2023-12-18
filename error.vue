@@ -1,7 +1,7 @@
 <template>
   <div>
     <BaseHeader />
-    <main class="container error-banner">
+    <main class="error-banner">
       <!-- 404 Page -->
       <h1>404 - Seite nicht gefunden</h1>
       <p>

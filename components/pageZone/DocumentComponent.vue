@@ -1,5 +1,14 @@
 <template>
-  <div v-if="props.zone.files" class="container">
+  <section
+    v-if="props.zone.files"
+    :class="[
+      'pt-medium pb-medium',
+      {
+        'full-width content-grid bg-primary-50 dark:bg-primary-800':
+          props.index % 2 === 1,
+      },
+    ]"
+  >
     <TitleComponent
       :title="props.zone.Title"
       :index="props.index"
@@ -11,7 +20,7 @@
       download=""
       >Download {{ file.attributes.name }}</a
     >
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">

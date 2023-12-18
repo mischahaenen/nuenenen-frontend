@@ -1,0 +1,97 @@
+@import 'variables';
+
+@mixin breakpoint-xs {
+  @media (max-width: $breakpoint-extra-small) {
+    @content;
+  }
+}
+
+@mixin breakpoint-sm {
+  @media (max-width: $breakpoint-small) {
+    @content;
+  }
+}
+
+@mixin breakpoint-md {
+  @media (max-width: $breakpoint-medium) {
+    @content;
+  }
+}
+
+@mixin breakpoint-lg {
+  @media (max-width: $breakpoint-large) {
+    @content;
+  }
+}
+
+@mixin breakpoint-xl {
+  @media (max-width: $breakpoint-extra-large) {
+    @content;
+  }
+}
+
+.light-mode {
+  @each $name, $color in $colors {
+    .text-#{$name} {
+      color: $color;
+    }
+
+    .bg-#{$name} {
+      background-color: $color;
+    }
+  }
+}
+
+.dark-mode {
+  @each $name, $color in $colors {
+    .dark\:text-#{$name} {
+      color: $color;
+    }
+
+    .dark\:bg-#{$name} {
+      background-color: $color;
+    }
+  }
+}
+
+@each $name, $size in $spaces {
+  .m-#{$name} {
+    margin: $size;
+  }
+
+  .p-#{$name} {
+    padding: $size;
+  }
+
+  .mt-#{$name} {
+    margin-top: $size;
+  }
+
+  .mr-#{$name} {
+    margin-right: $size;
+  }
+
+  .mb-#{$name} {
+    margin-bottom: $size;
+  }
+
+  .ml-#{$name} {
+    margin-left: $size;
+  }
+
+  .pt-#{$name} {
+    padding-top: $size;
+  }
+
+  .pr-#{$name} {
+    padding-right: $size;
+  }
+
+  .pb-#{$name} {
+    padding-bottom: $size;
+  }
+
+  .pl-#{$name} {
+    padding-left: $size;
+  }
+}
