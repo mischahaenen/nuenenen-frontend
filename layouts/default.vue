@@ -1,9 +1,7 @@
 <template>
   <div>
     <BaseHeader />
-    <main>
-      <slot />
-    </main>
+    <slot />
     <BaseFooter />
   </div>
 </template>

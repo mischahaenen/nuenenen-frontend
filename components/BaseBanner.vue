@@ -1,10 +1,10 @@
 <template>
-  <div class="banner">
-    <div class="container">
+  <section class="banner full-width content-grid">
+    <div class="container breakout">
       <div class="home-text">
         <h1>{{ props.title }}</h1>
         <RichTextComponent
-          v-if="props.isRichText"
+          v-if="props.isRichText && props.description"
           :content="props.description"
         ></RichTextComponent>
         <p v-else>{{ props.description }}</p>
@@ -14,9 +14,12 @@
       </div>
       <NuxtImg
         v-if="!!props.image"
+        class="custom-background-image"
         :src="props.image.attributes.url"
-        alt="test"
-        class="background-image"
+        :alt="
+          props.image.attributes.alternativeText ||
+          props.image.attributes.name + ' Logo'
+        "
       />
       <div v-else class="rocket-image-background">
         <img
@@ -32,7 +35,7 @@
         />
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
@@ -55,8 +58,6 @@ onscroll = () => {
 
 <style scoped lang="scss">
 .banner {
-  display: flex;
-  align-items: center;
   margin-top: 6rem;
   min-height: 70dvh;
   position: relative;
@@ -89,7 +90,13 @@ onscroll = () => {
 .home-text {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+}
+.custom-background-image {
+  width: 500px;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .background-image {
@@ -108,8 +115,9 @@ onscroll = () => {
 }
 
 .link-button {
-  margin: var(--space-medium);
+  margin-block: var(--space-medium);
 }
+
 @media screen and (max-width: 1024px) {
   .container {
     gap: 0;

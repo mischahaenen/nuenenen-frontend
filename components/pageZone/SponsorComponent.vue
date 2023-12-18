@@ -1,7 +1,12 @@
 <template>
+  <SectionComponent
+    :title="props.zone.Title"
+    :description="props.zone.Description"
+    :index="props.index"
+  ></SectionComponent>
   <div class="sponsor-grid">
     <div
-      v-for="sponsor of props.sponsors"
+      v-for="sponsor of props.zone.sponsors.data"
       :key="sponsor.attributes.Name"
       class="sponsor"
     >
@@ -28,12 +33,10 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps({
-  sponsors: {
-    type: Array as PropType<Sponsor[]>,
-    required: true,
-  },
-})
+const props = defineProps<{
+  zone: SponsorZone
+  index: number
+}>()
 
 const initializeObserver = () => {
   const observer = new IntersectionObserver(

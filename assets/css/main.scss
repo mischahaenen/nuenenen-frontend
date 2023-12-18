@@ -1,9 +1,5 @@
-$breakpoint-extra-small: 320px;
-$breakpoint-small: 480px;
-$breakpoint-medium: 768px;
-$breakpoint-large: 1024px;
-$breakpoint-extra-large: 1280px;
-
+@import 'utils';
+@import 'variables';
 * {
   box-sizing: border-box;
 }
@@ -38,51 +34,110 @@ body {
   --space-large: 4rem;
   --space-extra-large: 8rem;
   --border-radius: 50px;
-  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family: 'Noto Sans', Tahoma, Geneva, Verdana, sans-serif;
+  --font-heading: Orbitron, Lato, Tahoma, Geneva, Verdana, sans-serif;
   font-family: var(--font-family);
   margin: 0;
   padding: 0;
 }
 
-.container {
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+.content-grid,
+.full-width {
+  --padding-inline: 1rem;
+  --content-max-width: 680px;
+  --breakout-max-width: 1140px;
+  --breakout-size: calc(
+    (var(--breakout-max-width) - var(--content-max-width)) / 2
+  );
+
+  display: grid;
+  grid-template-columns:
+    [full-width-start] minmax(var(--padding-inline), 1fr)
+    [breakout-start] minmax(0, var(--breakout-size))
+    [content-start] min(
+      100% - (var(--padding-inline) * 2),
+      var(--content-max-width)
+    )
+    [content-end]
+    minmax(0, var(--breakout-size)) [breakout-end]
+    minmax(var(--padding-inline), 1fr) [full-width-end];
 }
 
-.colored-section {
-  padding: var(--space-large) 0;
+.content-grid > :not(.breakout, .full-width),
+.full-width > :not(.breakout, .full-width) {
+  grid-column: content;
 }
 
-.section {
-  padding-block: var(--space-large);
+.content-grid > .breakout {
+  grid-column: breakout;
+}
+
+.content-grid > .full-width {
+  grid-column: full-width;
+  display: grid;
+  grid-template-columns: inherit;
+}
+
+.content-grid > .full-width.breakout {
+  grid-column: full-width-start / full-width-end;
+}
+
+img.full-width {
+  width: 100%;
+  max-height: 45vh;
+  object-fit: cover;
 }
 
 @media screen and (max-width: 1024px) {
-  .container {
-    padding: 0 var(--space-medium);
-  }
-
-  .section {
-    padding: var(--space-medium);
-    margin-block: var(--space-medium);
-  }
-
-  .colored-section {
-    padding: var(--space-medium);
-    margin-bottom: var(--space-medium);
+  .container-grid,
+  .breakout {
+    padding-block: var(--space-medium);
   }
 }
 @media screen and (max-width: 768px) {
-  .container {
-    padding: 0 var(--space-small);
+  .container-grid,
+  .breakout {
+    padding-block: var(--space-small);
   }
+}
 
-  .section,
-  .colored-section {
-    padding: var(--space-small);
-  }
+// Typography
+.font-body {
+  font-family: var(--font-family);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  font-weight: bold;
+}
+
+p,
+ul {
+  @extend .font-body;
+}
+
+p {
+  overflow: hidden;
+  max-width: 80ch;
+  line-height: 1.5;
+}
+
+ul {
+  max-width: 80ch;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+}
+h2 {
+  font-size: clamp(1.125rem, 4vw, 2rem);
+}
+h3 {
+  font-size: clamp(1rem, 3vw, 1.5rem);
 }
 
 img {
@@ -97,56 +152,36 @@ img {
   margin-bottom: 0.5rem;
 }
 
-h1 {
-  font-size: 3rem;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.5rem;
-}
-
-p {
-  overflow: hidden;
-  max-width: 75ch;
-  line-height: 1.5;
-}
-
-.button {
+.btn {
   border: none;
   padding: var(--space-small);
   border-radius: var(--border-radius);
   cursor: pointer;
   font-weight: 700;
+  transition: all 0.2s ease-in-out;
 }
 
-.primary-button {
+.btn-primary {
+  @extend .btn;
   background: var(--color-primary-700);
   color: var(--color-white);
-  transition: all 0.2s ease-in-out;
-  outline-color: var(--color-accent-50);
 
   &:hover {
     background-color: var(--color-primary-500);
-    color: var(--color-accent-50);
   }
 }
 
-.accent-button {
+.btn-accent {
+  @extend .btn;
   background-color: var(--color-white);
   color: var(--color-accent-700);
-  transition: all 0.2s ease-in-out;
-  outline-color: var(--color-accent-900);
 
   &:hover {
     background-color: var(--color-accent-100);
-    color: var(--color-accent-900);
   }
 }
 
+//TODO: Remove this class and replace by btn-accent
 .link-button {
   background: var(--color-primary-700);
   color: var(--color-white) !important;
@@ -169,19 +204,16 @@ p {
   ::selection {
     background-color: var(--color-accent-50);
   }
-  h1 {
+
+  h1,
+  h2,
+  h3,
+  h4 {
     color: var(--color-primary-700);
   }
 
-  h2 {
-    color: var(--color-primary-700);
-  }
-
-  h3 {
-    color: var(--color-primary-700);
-  }
-
-  p {
+  p,
+  ul {
     color: var(--color-black);
     b {
       color: var(--color-black);
@@ -196,11 +228,8 @@ p {
   a:hover {
     color: var(--color-primary-700);
   }
-
-  .colored-section {
-    background-color: var(--color-primary-50);
-  }
 }
+
 .dark-mode {
   ::selection {
     background-color: var(--color-accent-50);
@@ -217,11 +246,13 @@ p {
   }
 
   h2,
-  h3 {
+  h3,
+  h4 {
     color: var(--color-white);
   }
 
-  p {
+  p,
+  ul {
     color: var(--color-white);
     b {
       color: var(--color-white);
@@ -237,7 +268,7 @@ p {
     color: var(--color-accent-100);
   }
 
-  .primary-button {
+  .btn-primary {
     background: var(--color-accent-700);
     color: var(--color-white);
     outline-color: var(--color-accent-50);
@@ -257,7 +288,7 @@ p {
       background-color: var(--color-accent-500);
     }
   }
-  .accent-button {
+  .btn-accent {
     background: var(--color-accent-900);
     color: var(--color-accent-100);
     outline-color: var(--color-accent-50);

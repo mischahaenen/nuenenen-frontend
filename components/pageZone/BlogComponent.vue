@@ -1,8 +1,21 @@
 <template>
-  <div>
+  <section
+    :class="[
+      'pt-medium pb-medium',
+      {
+        'full-width content-grid bg-primary-50 dark:bg-primary-800':
+          props.index % 2 === 1,
+      },
+    ]"
+  >
+    <TitleComponent
+      :title="props.zone.Title"
+      :index="props.index"
+    ></TitleComponent>
+    <RichTextComponent :content="props.zone.Description" />
     <div class="blog-filter">
       <button
-        class="button accent-button"
+        class="btn btn-accent"
         :class="{ active: activeButton === 'all' }"
         aria-label="Alle Posts anzeigen"
         @click="getPosts()"
@@ -12,7 +25,7 @@
       <button
         v-for="(step, jndex) of steps"
         :key="jndex"
-        class="button accent-button"
+        class="btn btn-accent"
         :class="{ active: activeButton === step.attributes.Name }"
         :aria-label="`Posts für die ${step.attributes.Name} anzeigen`"
         @click="getPostsByStep(step.attributes.Name)"
@@ -20,7 +33,7 @@
         {{ step.attributes.Name }}
       </button>
     </div>
-    <div v-if="posts.length" class="post-grid wrapper">
+    <div v-if="posts.length" class="breakout post-grid wrapper">
       <PostComponent
         v-if="posts.at(0)"
         :key="posts.at(0)?.id"
@@ -55,7 +68,7 @@
         format="webp"
       />
     </div>
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
@@ -63,6 +76,10 @@
 const posts = useState<Post[]>(() => [])
 const steps = useState<Step[]>(() => [])
 const activeButton = useState<string>(() => 'all')
+const props = defineProps<{
+  zone: BlogZone
+  index: number
+}>()
 
 const getPostsByStep = async (step: string) => {
   const res = await getBlogPostsByStep(step)
@@ -161,7 +178,7 @@ onMounted(async () => {
   flex-wrap: wrap;
   gap: var(--space-small);
   margin: var(--space-medium) 0;
-  justify-content: center;
+  justify-content: flex-start;
 
   .active {
     background-color: var(--color-accent-900);

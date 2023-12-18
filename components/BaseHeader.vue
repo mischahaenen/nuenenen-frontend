@@ -5,6 +5,11 @@
       to="/home"
       :class="['home-link', { 'home-link-scrolled': scroll > 50 }]"
     >
+      <img
+        class="header-logo"
+        src="/img/nuenenen_logo.webp"
+        alt="Logo der Pfadi Nünenen"
+      />
       <p><b>PFADI</b> NÜNENEN</p>
     </nuxt-link>
 
@@ -144,6 +149,15 @@ a.skip-main:active {
   text-decoration: none;
   word-spacing: 0.2rem;
   letter-spacing: 0.05rem;
+  display: flex;
+  gap: 1rem;
+}
+.home-link p {
+  font-family: var(--font-heading);
+}
+.header-logo {
+  width: auto;
+  height: 50px;
 }
 
 .home-link b,

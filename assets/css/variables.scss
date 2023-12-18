@@ -1,0 +1,39 @@
+$colors: (
+  'primary-50': #c7cdd6,
+  'primary-100': #a6afbd,
+  'primary-200': #8492a5,
+  'primary-300': #63748c,
+  'primary-400': #415674,
+  'primary-500': #20385b,
+  'primary-600': #1b304d,
+  'primary-700': #162740,
+  'primary-800': #121f32,
+  'primary-900': #0d1624,
+  'accent-50': #ebc4e2,
+  'accent-100': #e0a1d1,
+  'accent-200': #d47dbf,
+  'accent-300': #c85aae,
+  'accent-400': #bd369c,
+  'accent-500': #b1138b,
+  'accent-600': #961076,
+  'accent-700': #7c0d61,
+  'accent-800': #610a4c,
+  'accent-900': #470838,
+  'white': #ffffff,
+  'grey': #efefef,
+  'grey-dark': #4b4b4b,
+  'black': hsl(0deg 0% 0%),
+);
+
+$spaces: (
+  'small': 1rem,
+  'medium': 2rem,
+  'large': 4rem,
+  'extra-large': 8rem,
+);
+
+$breakpoint-extra-small: 320px;
+$breakpoint-small: 480px;
+$breakpoint-medium: 768px;
+$breakpoint-large: 1024px;
+$breakpoint-extra-large: 1280px;

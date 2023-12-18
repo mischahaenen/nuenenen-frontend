@@ -1,5 +1,5 @@
 <template>
-  <div v-if="postData" class="container">
+  <section v-if="postData" class="content-grid container">
     <NuxtLink to="/" class="back-link">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -16,12 +16,15 @@
       </svg>
       Zurück
     </NuxtLink>
-    <ImageSliderComponent :images="postData.images.data"></ImageSliderComponent>
+    <ImageSliderComponent
+      class="image-slider"
+      :images="postData.images.data"
+    ></ImageSliderComponent>
     <article>
       <h1>{{ postData.title }}</h1>
       <RichTextComponent :content="postData.description" />
     </article>
-  </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
