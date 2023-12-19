@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
   css: ['@/assets/css/main.scss'],
   plugins: [],
   components: true,
@@ -13,7 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
   ],
   strapi: {
-    url: process.env.STRAPI_URL || 'http://localhost:1337',
+    url: process.env.STRAPI_URL,
     prefix: '',
     version: 'v4',
     cookie: {},

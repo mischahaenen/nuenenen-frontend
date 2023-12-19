@@ -22,7 +22,7 @@
     "*.**": "prettier --check --ignore-unknown"
   },
   "dependencies": {
-    "@nuxtjs/strapi": "^1.9.3",
+    "@nuxtjs/strapi": "^1.10.1",
     "@pinia/nuxt": "^0.5.1",
     "@vercel/analytics": "^1.1.1",
     "@vueuse/core": "^10.6.1",
@@ -31,6 +31,7 @@
     "express": "^4.18.2",
     "moment": "^2.29.4",
     "nuxt": "^3.8.2",
+    "nuxt-precompress": "^0.5.9",
     "pinia": "^2.1.7",
     "vue": "^3.3.8",
     "vue-recaptcha-v3": "^2.0.1",
@@ -41,7 +42,7 @@
     "@babel/eslint-parser": "^7.22.5",
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
-    "@nuxt/devtools": "^0.6.1",
+    "@nuxt/devtools": "^1.0.6",
     "@nuxt/image": "^1.0.0-rc.1",
     "@nuxtjs/color-mode": "^3.2.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",

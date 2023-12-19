@@ -51,9 +51,6 @@ const props = defineProps<{
   isRichText?: boolean
   image?: Image
 }>()
-onscroll = () => {
-  translateY.value = 20 + window.scrollY * -0.2
-}
 </script>
 
 <style scoped lang="scss">

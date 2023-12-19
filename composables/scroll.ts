@@ -1,5 +1,5 @@
 export function useScrollY() {
-  const scroll = ref(0)
+  const scroll = useState(() => 0)
   onMounted(() => {
     window.addEventListener('scroll', () => {
       scroll.value = window.scrollY
