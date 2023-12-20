@@ -1,56 +1,47 @@
 <template>
-  <section v-if="postData" class="content-grid container">
-    <NuxtLink to="/" class="back-link">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M15 19l-7-7 7-7"
-        />
-      </svg>
-      Zurück
-    </NuxtLink>
-    <ImageSliderComponent
-      class="image-slider"
-      :images="postData.images.data"
-    ></ImageSliderComponent>
-    <article>
-      <h1>{{ postData.title }}</h1>
-      <RichTextComponent :content="postData.description" />
-    </article>
-  </section>
+  <main v-if="postData" class="content-grid container">
+    <template v-if="pending"><p>Loading...</p></template>
+    <template v-if="error"><p>Something went wrong</p></template>
+    <template v-if="postData">
+      <NuxtLink to="/" class="back-link">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        Zurück
+      </NuxtLink>
+      <ImageSliderComponent
+        :images="postData.images.data"
+      ></ImageSliderComponent>
+      <article>
+        <h1>{{ postData.title }}</h1>
+        <RichTextComponent :content="postData.description" />
+      </article>
+    </template>
+  </main>
 </template>
 
 <script lang="ts" setup>
 const route = useRoute()
-const post = useState<PostResponse | null>(() => null)
 const postData = computed(() => post.value?.data[0].attributes || null)
 
-const fetchData = async () => {
-  try {
-    post.value = await getBlogPost(route.params.slug as string)
-    if (!post.value.data) throw new Error('No post found')
-  } catch (error) {
-    await navigateTo('/not-found')
-  }
-}
-
-onMounted(fetchData)
-
-watch(() => route.params.slug, fetchData)
+const {
+  data: post,
+  pending,
+  error,
+} = await useAsyncData('post', () => getBlogPost(route.params.slug as string))
 
 useHead({
-  title: `Pfadi Nünenen - ${postData.value?.title || 'Not found'}`,
-})
-
-onUnmounted(() => {
-  post.value = null
+  title: `Pfadi Nünenen - ${postData.value?.title || ''}`,
 })
 </script>
 

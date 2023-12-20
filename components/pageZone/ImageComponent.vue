@@ -3,7 +3,7 @@
     :class="[
       'pt-medium pb-medium',
       {
-        'full-width content-grid bg-primary-50 dark:bg-primary-800':
+        'full-width content-grid bg-primary-50 dark:bg-primary-700':
           props.index % 2 === 1,
       },
     ]"

@@ -5,7 +5,7 @@
       to="/home"
       :class="['home-link', { 'home-link-scrolled': scroll > 50 }]"
     >
-      <img
+      <NuxtImg
         class="header-logo"
         src="/img/nuenenen_logo.webp"
         alt="Logo der Pfadi Nünenen"

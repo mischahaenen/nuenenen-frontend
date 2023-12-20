@@ -1,5 +1,5 @@
 <template>
-  <main v-if="page" class="content-grid">
+  <main class="content-grid">
     <template v-if="pending"><p>Loading...</p></template>
     <template v-if="error"><p>Something went wrong</p></template>
     <template v-if="page">
@@ -71,7 +71,6 @@ const route = useRoute()
 const {
   data: page,
   pending,
-  refresh,
   error,
 } = await useAsyncData('page', () => getPage(route.params.slug as string))
 

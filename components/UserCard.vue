@@ -6,7 +6,7 @@
       props.user.attributes.username + ', ' + props.user.attributes.Position
     "
   >
-    <nuxt-img
+    <NuxtImg
       v-if="props.user.attributes.Picture.data"
       class="image"
       format="webp"

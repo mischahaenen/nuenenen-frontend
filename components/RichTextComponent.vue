@@ -17,7 +17,7 @@
 <script lang="ts" setup>
 import edjsHTML from 'editorjs-html'
 const props = defineProps<{
-  content: string | null
+  content?: string
   isPreview?: boolean
   previewLines?: number
 }>()

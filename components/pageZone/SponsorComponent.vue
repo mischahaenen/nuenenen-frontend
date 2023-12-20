@@ -10,7 +10,7 @@
       :key="sponsor.attributes.Name"
       class="sponsor"
     >
-      <nuxt-img
+      <NuxtImg
         class="sponsor-logo"
         format="webp"
         :src="sponsor.attributes.Logo.data.attributes.url"
@@ -18,7 +18,7 @@
           sponsor.attributes.Logo.data.attributes.alternativeText ||
           sponsor.attributes.Name
         "
-      ></nuxt-img>
+      ></NuxtImg>
       <a
         v-if="sponsor.attributes.Url"
         :href="sponsor.attributes.Url"

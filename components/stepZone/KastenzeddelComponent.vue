@@ -3,7 +3,7 @@
     :class="[
       'pt-medium pb-medium',
       {
-        'full-width content-grid bg-primary-50 dark:bg-primary-800':
+        'full-width content-grid bg-primary-50 dark:bg-primary-700':
           props.index % 2 === 1,
       },
     ]"
@@ -102,19 +102,21 @@
   </section>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" defer>
 import moment from 'moment'
 import { useDeregisterStore } from '~/store/deregister'
+
 const props = defineProps<{
   kastenzeddel: Kastenzeddel
   step: string
   index: number
 }>()
-const deregister = async () => {
+
+/* const deregister = async () => {
   const deregisterStore = useDeregisterStore()
   deregisterStore.setStep(props.step)
   await navigateTo('/kontakt')
-}
+} */
 </script>
 
 <style scoped lang="scss">

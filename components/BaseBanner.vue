@@ -1,74 +1,82 @@
 <template>
-  <section class="banner full-width content-grid">
-    <div class="container breakout">
+  <div class="banner full-width content-grid">
+    <section class="container breakout">
       <div class="home-text">
         <h1>{{ props.title }}</h1>
         <RichTextComponent
           v-if="props.isRichText && props.description"
           :content="props.description"
         ></RichTextComponent>
-        <p v-else>{{ props.description }}</p>
+        <p v-if="!props.isRichText && props.description">
+          {{ props.description }}
+        </p>
         <nuxt-link v-if="!isContactPage" class="link-button" to="kontakt"
           >Kontaktiere uns!</nuxt-link
         >
-      </div>
-      <NuxtImg
-        v-if="!!props.image"
-        class="custom-background-image"
-        :src="props.image.attributes.url"
-        :alt="
-          props.image.attributes.alternativeText ||
-          props.image.attributes.name + ' Logo'
-        "
-      />
-      <div v-else class="rocket-image-background">
-        <img
-          class="background-image"
-          src="/img/cloud.webp"
-          alt="Space Background with stars"
-        />
-        <img
+        <NuxtImg
+          v-if="!props.image"
           class="rocket-image"
           :style="rocketStyle"
+          format="webp"
+          loading="lazy"
           src="/img/nuenenen_logo.webp"
           alt="Nünenen Logo which shows a rocket"
         />
+        <NuxtImg
+          v-else
+          class="custom-background-image"
+          :src="props.image.attributes.url"
+          :alt="
+            props.image.attributes.alternativeText ||
+            props.image.attributes.name + ' Logo'
+          "
+        />
       </div>
-    </div>
-  </section>
+    </section>
+    <NuxtImg
+      class="full-width woods-image"
+      format="webp"
+      loading="lazy"
+      :src="woodsImageSrc"
+      alt="Space Background
+    with stars"
+    />
+  </div>
 </template>
 
 <script lang="ts" setup>
-const translateY = ref(20)
+const scrollY = useScrollY()
+const rocketSpeed = computed(() => 20 + scrollY.value * -0.5)
 const rocketStyle = computed(() => ({
-  transform: `translateY(${translateY.value}%) translateX(40%) rotate(10deg)`,
+  transform: `translateY(${rocketSpeed.value}%) translateX(40%) rotate(10deg)`,
 }))
+const woodsImageSrc = useState(() =>
+  useColorMode().value === 'dark'
+    ? '/svg/woods_dark.svg'
+    : '/svg/woods_white.svg'
+)
 const route = useRoute()
 const isContactPage = computed(() => route.path === '/kontakt')
 const props = defineProps<{
-  title: string
-  description: string
+  title: string | null
+  description: string | null
   isRichText?: boolean
   image?: Image
 }>()
+
+onMounted(
+  () =>
+    (woodsImageSrc.value =
+      useColorMode().value === 'dark'
+        ? '/svg/woods_dark.svg'
+        : '/svg/woods_white.svg')
+)
 </script>
 
 <style scoped lang="scss">
 .banner {
-  margin-top: 6rem;
   min-height: 70dvh;
   position: relative;
-}
-
-.banner::after {
-  content: '';
-  min-height: 100%;
-  width: 75dvw;
-  background-color: var(--color-primary-50);
-  border-radius: 0 0 50% 0;
-  position: absolute;
-  top: 0;
-  z-index: -1;
 }
 
 .dark-mode {
@@ -88,27 +96,29 @@ const props = defineProps<{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  max-width: 75ch;
 }
 .custom-background-image {
   width: 500px;
   height: auto;
   border-radius: 50%;
   object-fit: cover;
+  position: absolute;
+  right: 100px;
 }
 
-.background-image {
-  width: 500px;
-  height: auto;
+.rocket-image {
+  max-width: 300px;
+  position: absolute;
+  right: 100px;
 }
 
-.rocket-image-background {
-  position: relative;
-  .rocket-image {
-    max-width: 300px;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+.woods-image {
+  width: 100%;
+  object-fit: cover;
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
 }
 
 .link-button {

@@ -6,7 +6,7 @@
       { flex: !!props.zone.Image?.data?.length },
       props.index % 2 === 0
         ? 'flex-even'
-        : 'flex-odd full-width bg-primary-50 dark:bg-primary-800',
+        : 'flex-odd full-width bg-primary-50 dark:bg-primary-700',
     ]"
   >
     <div>

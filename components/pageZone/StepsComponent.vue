@@ -13,7 +13,7 @@
         :to="'abteilung/' + step.attributes.Slug"
         class="step-item"
       >
-        <nuxt-img
+        <NuxtImg
           format="webp"
           class="step-image"
           :src="step.attributes.logo.data.attributes.url"

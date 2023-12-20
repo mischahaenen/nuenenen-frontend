@@ -98,12 +98,10 @@ export const getStepNames = () => {
 
 export const getStep = (slug: string) => {
   const { find } = useStrapi4()
-  return useAsyncData(() =>
-    find<Steps>('api/steps', {
-      populate: 'deep',
-      filters: { Slug: { $eq: slug } },
-    })
-  )
+  return find<Steps>('api/steps', {
+    populate: 'deep',
+    filters: { Slug: { $eq: slug } },
+  })
 }
 
 export const getStrapiUser = (id: number) => {

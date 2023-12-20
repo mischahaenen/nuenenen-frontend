@@ -6,13 +6,13 @@
   >
     <slide v-for="image in props.images" :key="image.attributes.name">
       <div class="carousel__item">
-        <nuxt-img
+        <NuxtImg
           format="webp"
           class="carousel__image"
           :src="image.attributes.url"
           :alt="image.attributes.alternativeText || image.attributes.name"
         >
-        </nuxt-img>
+        </NuxtImg>
       </div>
     </slide>
     <template #addons>
@@ -20,16 +20,16 @@
       <Pagination />
     </template>
   </carousel>
-  <nuxt-img
+  <NuxtImg
     v-if="props.images && props.images.length === 1"
     format="webp"
-    class="carousel__image_standalone"
+    class="carousel__image"
     :src="props.images[0].attributes.url"
     :alt="
       props.images[0].attributes.alternativeText ||
       props.images[0].attributes.name
     "
-  ></nuxt-img>
+  ></NuxtImg>
 </template>
 
 <script setup lang="ts">
@@ -40,19 +40,9 @@ const props = defineProps<{
 }>()
 </script>
 <style lang="scss">
-.carousel__image_standalone {
-  object-fit: cover;
-  height: auto;
-  width: min(100%, 500px);
-  object-fit: cover;
-  border-radius: var(--border-radius);
-  margin: 0;
-}
-
 .carousel__image {
-  width: 100%;
+  max-width: 680px;
   height: auto;
-  max-height: 500px;
   object-fit: cover;
   border-radius: var(--border-radius);
 }

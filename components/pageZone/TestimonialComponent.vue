@@ -3,7 +3,7 @@
     :class="[
       'pt-medium pb-medium full-width content-grid',
       {
-        'bg-primary-50 dark:bg-primary-800': props.index % 2 === 1,
+        'bg-primary-50 dark:bg-primary-700': props.index % 2 === 1,
       },
     ]"
   >
@@ -16,7 +16,7 @@
         :class="[
           'testimonial',
           props.index % 2 === 0
-            ? 'bg-primary-50 dark:bg-primary-800'
+            ? 'bg-primary-50 dark:bg-primary-700'
             : 'bg-white dark:bg-primary-900',
         ]"
       >
@@ -24,7 +24,7 @@
           {{ testimonial.attributes.Quote }}
         </p>
         <div class="author">
-          <nuxt-img
+          <NuxtImg
             format="webp"
             class="author-img"
             :src="testimonial.attributes.Image.data.attributes.url"
@@ -34,7 +34,7 @@
             "
           />
           <div class="name">
-            <h4>{{ testimonial.attributes.Name }}</h4>
+            <h3>{{ testimonial.attributes.Name }}</h3>
             <p>
               {{ testimonial.attributes.Position }}
             </p>
@@ -81,8 +81,9 @@ const props = defineProps<{
   gap: var(--space-small);
 }
 
-.author h4 {
+.author h3 {
   margin-top: 0;
+  font-size: 1rem;
 }
 
 .author img {

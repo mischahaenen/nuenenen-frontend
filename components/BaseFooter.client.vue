@@ -25,12 +25,12 @@
         <ul class="socialmedia-section">
           <li>
             <a href="https://www.instagram.com/pfadipink" target="_blank">
-              <img src="/svg/instagram.svg" alt="Github Logo" />Instagram</a
+              <NuxtImg src="/svg/instagram.svg" alt="Github Logo" />Instagram</a
             >
           </li>
           <li>
             <a href="https://www.facebook.com/PfadiNuenenen/" target="_blank">
-              <img src="/svg/facebook.svg" alt="Github Logo" />Facebook</a
+              <NuxtImg src="/svg/facebook.svg" alt="Github Logo" />Facebook</a
             >
           </li>
           <li>
@@ -38,14 +38,14 @@
               href="https://github.com/mischahaenen/nuenenen-frontend"
               target="_blank"
             >
-              <img src="/svg/github.svg" alt="Github Logo" />Github</a
+              <NuxtImg src="/svg/github.svg" alt="Github Logo" />Github</a
             >
           </li>
         </ul>
       </div>
       <div class="sponsorLogo">
         <h2>Sponsoren</h2>
-        <nuxt-img
+        <NuxtImg
           v-for="image of footer.Images.data"
           :key="image.attributes.name"
           :src="image.attributes.url"
