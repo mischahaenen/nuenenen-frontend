@@ -7,7 +7,7 @@
     >
       <NuxtImg
         class="header-logo"
-        src="/img/nuenenen_logo.webp"
+        src="img/nuenenen_logo.webp"
         alt="Logo der Pfadi Nünenen"
       />
       <p><b>PFADI</b> NÜNENEN</p>

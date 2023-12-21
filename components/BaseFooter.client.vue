@@ -14,6 +14,9 @@
           <li v-for="link of footer.Links" :key="link.Link">
             <a :href="link.Link" target="_blank">{{ link.Name }}</a>
           </li>
+          <li>
+            <a href="/datenschutz">Datenschutz</a>
+          </li>
         </ul>
       </div>
       <div>
@@ -25,12 +28,12 @@
         <ul class="socialmedia-section">
           <li>
             <a href="https://www.instagram.com/pfadipink" target="_blank">
-              <NuxtImg src="/svg/instagram.svg" alt="Github Logo" />Instagram</a
+              <NuxtImg src="svg/instagram.svg" alt="Github Logo" />Instagram</a
             >
           </li>
           <li>
             <a href="https://www.facebook.com/PfadiNuenenen/" target="_blank">
-              <NuxtImg src="/svg/facebook.svg" alt="Github Logo" />Facebook</a
+              <NuxtImg src="svg/facebook.svg" alt="Github Logo" />Facebook</a
             >
           </li>
           <li>
@@ -38,7 +41,7 @@
               href="https://github.com/mischahaenen/nuenenen-frontend"
               target="_blank"
             >
-              <NuxtImg src="/svg/github.svg" alt="Github Logo" />Github</a
+              <NuxtImg src="svg/github.svg" alt="Github Logo" />Github</a
             >
           </li>
         </ul>

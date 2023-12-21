@@ -13,18 +13,21 @@
         <nuxt-link v-if="!isContactPage" class="link-button" to="kontakt"
           >Kontaktiere uns!</nuxt-link
         >
-        <NuxtImg
+        <nuxt-img
           v-if="!props.image"
           class="rocket-image"
           :style="rocketStyle"
           format="webp"
           loading="lazy"
-          src="/img/nuenenen_logo.webp"
+          src="img/nuenenen_logo.webp"
           alt="Nünenen Logo which shows a rocket"
         />
         <NuxtImg
           v-else
           class="custom-background-image"
+          format="webp"
+          loading="lazy"
+          provider="strapi"
           :src="props.image.attributes.url"
           :alt="
             props.image.attributes.alternativeText ||
@@ -37,7 +40,11 @@
       class="full-width woods-image"
       format="webp"
       loading="lazy"
-      :src="woodsImageSrc"
+      :src="
+        $colorMode.value === 'dark'
+          ? 'svg/woods_dark.svg'
+          : 'svg/woods_white.svg'
+      "
       alt="Space Background
     with stars"
     />
@@ -50,11 +57,6 @@ const rocketSpeed = computed(() => 20 + scrollY.value * -0.5)
 const rocketStyle = computed(() => ({
   transform: `translateY(${rocketSpeed.value}%) translateX(40%) rotate(10deg)`,
 }))
-const woodsImageSrc = useState(() =>
-  useColorMode().value === 'dark'
-    ? '/svg/woods_dark.svg'
-    : '/svg/woods_white.svg'
-)
 const route = useRoute()
 const isContactPage = computed(() => route.path === '/kontakt')
 const props = defineProps<{
@@ -63,14 +65,6 @@ const props = defineProps<{
   isRichText?: boolean
   image?: Image
 }>()
-
-onMounted(
-  () =>
-    (woodsImageSrc.value =
-      useColorMode().value === 'dark'
-        ? '/svg/woods_dark.svg'
-        : '/svg/woods_white.svg')
-)
 </script>
 
 <style scoped lang="scss">
@@ -99,7 +93,7 @@ onMounted(
   max-width: 75ch;
 }
 .custom-background-image {
-  width: 500px;
+  max-width: 300px;
   height: auto;
   border-radius: 50%;
   object-fit: cover;

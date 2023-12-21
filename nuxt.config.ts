@@ -29,13 +29,20 @@ export default defineNuxtConfig({
     noExternal: ['moment'],
   },
   image: {
-    format: ['webp'],
+    dir: 'assets/',
+    strapi: {},
   },
   nitro: {
     compressPublicAssets: true,
     preset: 'vercel-edge',
   },
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
+  },
   googleFonts: {
     families: {
       Lato: [100, 200, 300, 400, 500, 600, 700, 800, 900],

@@ -63,7 +63,7 @@
     <div v-else class="fallback">
       <p>Hier wurde noch nichts veröffentlicht.</p>
       <NuxtImg
-        src="/svg/not_found.svg"
+        src="svg/not_found.svg"
         alt="Illustration of an alien indicating that nothing has been found"
         format="webp"
       />

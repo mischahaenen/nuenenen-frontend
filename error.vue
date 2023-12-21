@@ -9,7 +9,7 @@
         verschoben oder gelöscht.
       </p>
       <NuxtImg
-        src="/svg/not_found.svg"
+        src="svg/not_found.svg"
         alt="Space Aliens nothing found image"
         format="webp"
       />
