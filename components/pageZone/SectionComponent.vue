@@ -17,7 +17,6 @@
       <RichTextComponent :content="props.zone.Description" />
     </div>
     <ImageSliderComponent
-      v-if="props.zone.Image?.data"
       :images="props.zone.Image.data"
     ></ImageSliderComponent>
   </section>

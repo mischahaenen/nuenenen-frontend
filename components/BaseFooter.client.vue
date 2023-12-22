@@ -1,7 +1,7 @@
 <template>
   <footer v-if="footer">
     <NuxtImg
-      class="mountains"
+      class="full-width"
       :src="`/svg/gantrisch_${
         colorMode.value === 'dark' ? 'dark' : 'white'
       }.svg`"

@@ -52,6 +52,21 @@ const props = defineProps<{
   subTitle: string
   index: number
 }>()
+
+onMounted(() => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in')
+        observer.unobserve(entry.target)
+      }
+    })
+  })
+
+  document.querySelectorAll('.testimonial').forEach((ref) => {
+    observer.observe(ref)
+  })
+})
 </script>
 
 <style scoped lang="scss">
@@ -59,15 +74,23 @@ const props = defineProps<{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: var(--space-medium);
+  justify-content: center;
+  align-items: center;
 }
 
 .testimonial {
   padding: var(--space-medium);
   border-radius: var(--border-radius);
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   gap: var(--space-small);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s;
+
+  &.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .testimonial p {

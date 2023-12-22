@@ -108,8 +108,6 @@ const props = defineProps<{
 }
 
 .woods-image {
-  width: 100%;
-  object-fit: cover;
   position: absolute;
   bottom: 0;
   z-index: -1;
