@@ -39,7 +39,6 @@
     <NuxtImg
       class="full-width woods-image"
       format="webp"
-      loading="lazy"
       :src="
         $colorMode.value === 'dark'
           ? 'svg/woods_dark.svg'
@@ -103,6 +102,7 @@ const props = defineProps<{
 
 .rocket-image {
   max-width: 300px;
+  aspect-ratio: 1/1;
   position: absolute;
   right: 100px;
 }

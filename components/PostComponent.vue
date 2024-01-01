@@ -84,7 +84,7 @@ a {
 }
 
 .card-image {
-  width: 100%;
+  width: min(100%, 500px);
   height: auto;
   object-fit: cover;
   border-radius: var(--border-radius) var(--border-radius) 0 0;
@@ -95,8 +95,6 @@ a {
   flex-direction: row;
   justify-content: space-between;
   .card-image {
-    width: min(100%, 400px);
-    object-fit: cover;
     border-radius: var(--border-radius) 0 0 var(--border-radius);
   }
 }

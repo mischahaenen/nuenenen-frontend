@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <BaseHeader />
-    <main class="error-banner">
+  <NuxtLayout>
+    <section class="error-banner">
       <!-- 404 Page -->
       <h1>404 - Seite nicht gefunden</h1>
       <p>
@@ -13,9 +12,8 @@
         alt="Space Aliens nothing found image"
         format="webp"
       />
-    </main>
-    <BaseFooter />
-  </div>
+    </section>
+  </NuxtLayout>
 </template>
 
 <script>
@@ -28,6 +26,7 @@ export default {
 
 <style scoped lang="scss">
 .error-banner {
+  margin-top: 6rem;
   height: 80vh;
   display: flex;
   flex-direction: column;
@@ -36,7 +35,7 @@ export default {
 
   img {
     margin-top: var(--space-large);
-    max-width: 50%;
+    max-width: 500px;
   }
 }
 </style>

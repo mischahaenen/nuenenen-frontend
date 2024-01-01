@@ -156,8 +156,9 @@ a.skip-main:active {
   font-family: var(--font-heading);
 }
 .header-logo {
-  width: auto;
-  height: 50px;
+  width: 60px;
+  height: 60px;
+  aspect-ratio: 1 / 1;
 }
 
 .home-link b,

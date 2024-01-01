@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     'vue3-carousel-nuxt',
     '@nuxtjs/google-fonts',
     '@nuxtjs/robots',
+    '@nuxt/content'
   ],
   strapi: {
     url: process.env.STRAPI_URL,
