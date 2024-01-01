@@ -1,25 +1,31 @@
 <template>
-  <section
+  <div
     :class="[
-      'pt-medium pb-medium',
-      !!props.zone.Image?.data?.length ? 'breakout' : '',
-      { flex: !!props.zone.Image?.data?.length },
-      props.index % 2 === 0
-        ? 'flex-even'
-        : 'flex-odd full-width bg-primary-50 dark:bg-primary-700',
+      'pt-medium pb-medium full-width content-grid',
+      props.index % 2 === 0 ? '' : ' bg-primary-50 dark:bg-primary-700',
     ]"
   >
-    <div>
-      <TitleComponent
-        :title="props.zone.Title"
-        :index="props.index"
-      ></TitleComponent>
-      <RichTextComponent :content="props.zone.Description" />
-    </div>
-    <ImageSliderComponent
-      :images="props.zone.Image.data"
-    ></ImageSliderComponent>
-  </section>
+    <section :class="['section breakout', { flex: props.zone.Image.data }]">
+      <div>
+        <TitleComponent
+          :title="props.zone.Title"
+          :index="props.index"
+        ></TitleComponent>
+        <RichTextComponent :content="props.zone.Description" />
+      </div>
+      <NuxtImg
+        v-if="props.zone.Image?.data?.attributes?.url"
+        class="image"
+        provider="strapi"
+        format="webp"
+        :src="props.zone.Image.data.attributes.url"
+        :alt="
+          props.zone.Image.data.attributes.alternativeText ??
+          props.zone.Image.data.attributes.name
+        "
+      ></NuxtImg>
+    </section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -28,42 +34,35 @@ const props = defineProps<{
   index: number
 }>()
 
-const initializeObserver = () => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.remove('sectionComponent--hidden')
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    {
-      threshold: 0.1,
-    }
-  )
-
-  document.querySelectorAll('.sectionComponent').forEach((item) => {
-    item.classList.add('sectionComponent--hidden')
-    observer.observe(item)
+onMounted(() => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in')
+        observer.unobserve(entry.target)
+      }
+    })
   })
-}
 
-onMounted(() => initializeObserver())
+  document.querySelectorAll('.section').forEach((ref) => {
+    observer.observe(ref)
+  })
+})
 </script>
 
 <style scoped lang="scss">
-.sectionComponent {
-  width: min(640px, 90vw);
-  margin-left: auto;
-  margin-right: auto;
-  opacity: 1;
-  transform: translateX(0);
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+.section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s;
+
+  &.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .flex {
-  width: min(1140px, 90vw);
   display: flex;
   gap: var(--space-large);
   align-items: center;
@@ -78,10 +77,12 @@ onMounted(() => initializeObserver())
   flex-direction: row-reverse;
 }
 
-.sectionComponent--hidden {
-  opacity: 0 !important;
-  transform: translateY(50px) !important;
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out !important;
+.image {
+  max-width: 400px;
+  height: auto;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+  margin-block: 0;
 }
 
 @media screen and (max-width: 1000px) {

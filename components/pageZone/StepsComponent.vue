@@ -1,27 +1,34 @@
 <template>
-  <TitleComponent
-    class="pt-medium"
-    :title="props.zone.Title"
-    :index="index"
-  ></TitleComponent>
-  <RichTextComponent :content="props.zone.Description" />
-  <section class="breakout pb-medium">
-    <article class="step-grid">
-      <nuxt-link
-        v-for="step of props.zone.steps.data"
-        :key="step.attributes.Name"
-        :to="'abteilung/' + step.attributes.Slug"
-        class="step-item"
-      >
-        <NuxtImg
-          format="webp"
-          class="step-image"
-          :src="step.attributes.logo.data.attributes.url"
-          :alt="step.attributes.logo.data.attributes.name"
-        />
-        <h3>{{ step.attributes.Name }}</h3>
-      </nuxt-link>
-    </article>
+  <section
+    :class="[
+      'pt-medium pb-medium full-width content-grid',
+      props.index % 2 === 0 ? '' : ' bg-primary-50 dark:bg-primary-700',
+    ]"
+  >
+    <TitleComponent
+      class="pt-medium"
+      :title="props.zone.Title"
+      :index="index"
+    ></TitleComponent>
+    <RichTextComponent :content="props.zone.Description" />
+    <div class="breakout pb-medium">
+      <article class="step-grid">
+        <nuxt-link
+          v-for="step of props.zone.steps.data"
+          :key="step.attributes.Name"
+          :to="'abteilung/' + step.attributes.Slug"
+          class="step-item"
+        >
+          <NuxtImg
+            format="webp"
+            class="step-image"
+            :src="step.attributes.logo.data.attributes.url"
+            :alt="step.attributes.logo.data.attributes.name"
+          />
+          <h3>{{ step.attributes.Name }}</h3>
+        </nuxt-link>
+      </article>
+    </div>
   </section>
 </template>
 

@@ -15,7 +15,9 @@ interface Kastenzeddel extends PageZoneComponent {
 interface Section extends PageZoneComponent {
   Title: string
   Description: string
-  Image: ImagesResponse
+  Image: {
+    data: Image
+  }
 }
 
 interface Document extends PageZoneComponent {

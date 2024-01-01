@@ -41,7 +41,7 @@ const props = defineProps<{
 </script>
 <style lang="scss">
 .carousel__image {
-  max-width: 680px;
+  width: 100%;
   height: auto;
   object-fit: cover;
   border-radius: var(--border-radius);
