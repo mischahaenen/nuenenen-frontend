@@ -4,4 +4,5 @@
     <slot />
     <BaseFooter />
   </div>
+  <CookieConsent />
 </template>

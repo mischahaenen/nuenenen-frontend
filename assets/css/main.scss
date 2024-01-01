@@ -116,7 +116,8 @@ h4 {
 }
 
 p,
-ul {
+ul,
+button {
   @extend .font-body;
 }
 
@@ -158,6 +159,7 @@ img {
   border-radius: var(--border-radius);
   cursor: pointer;
   font-weight: 700;
+  font-size: 1rem;
   transition: all 0.2s ease-in-out;
 }
 
@@ -173,31 +175,16 @@ img {
 
 .btn-accent {
   @extend .btn;
-  background-color: var(--color-white);
-  color: var(--color-accent-700);
+  background-color: var(--color-primary-50);
+  color: var(--color-accent-900);
 
   &:hover {
-    background-color: var(--color-accent-100);
+    background-color: var(--color-primary-100);
   }
 }
 
-//TODO: Remove this class and replace by btn-accent
-.link-button {
-  background: var(--color-primary-700);
-  color: var(--color-white) !important;
-  transition: all 0.2s ease-in-out;
-  outline-color: var(--color-accent-50);
+.btn-link {
   text-decoration: none;
-  border: none;
-  padding: var(--space-small);
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  font-weight: 700;
-
-  &:hover {
-    background-color: var(--color-primary-500);
-    color: var(--color-accent-50) !important;
-  }
 }
 
 .light-mode {
@@ -274,18 +261,19 @@ img {
     outline-color: var(--color-accent-50);
 
     &:hover {
-      background-color: var(--color-primary-500);
-      color: var(--color-accent-50);
+      background-color: var(--color-accent-600);
+      color: var(--color-white);
     }
   }
 
-  .link-button {
-    color: var(--color-white);
-    background: var(--color-accent-700);
+  .btn-link {
+    color: var(--color-accent-100);
+    background: var(--color-accent-900);
     outline-color: var(--color-accent-50);
 
     &:hover {
-      background-color: var(--color-accent-500);
+      background-color: var(--color-accent-800);
+      color: var(--color-white);
     }
   }
   .btn-accent {
@@ -295,7 +283,7 @@ img {
 
     &:hover {
       background-color: var(--color-accent-800);
-      color: var(--color-accent-100);
+      color: var(--color-white);
     }
   }
 }
