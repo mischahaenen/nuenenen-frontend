@@ -84,7 +84,6 @@ a:hover {
 }
 
 footer {
-  margin-top: var(--space-extra-large);
   display: flex;
   flex-direction: column;
 }
