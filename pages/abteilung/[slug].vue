@@ -14,12 +14,14 @@
           v-if="zone.__component == 'pages.section'"
           :zone="(zone as Section)"
           :index="index"
+          :id="zone.Title"
         />
         <StepZoneKastenzeddelComponent
           v-if="zone.__component == 'pages.kastenzeddel'"
           :kastenzeddel="(zone as Kastenzeddel)"
           :step="stepAttributes.Slug"
           :index="index"
+          :id="zone.Title"
         />
         <section
           v-if="zone.__component == 'pages.group'"
@@ -30,6 +32,7 @@
                 index % 2 === 1,
             },
           ]"
+          :id="zone.Title"
         >
           <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
           <div v-if="(zone as Group).members" class="member-section">
@@ -44,12 +47,14 @@
           v-if="zone.__component == 'pages.document'"
           :zone="(zone as Document)"
           :index="index"
+          :id="zone.Title"
         />
         <PageZoneImageComponent
           v-if="zone.__component == 'pages.image'"
           :title="zone.Title"
           :zone="(zone as ImageZone)"
           :index="index"
+          :id="zone.Title"
         ></PageZoneImageComponent>
       </template>
     </template>

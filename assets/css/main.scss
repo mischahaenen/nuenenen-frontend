@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   --color-primary-50: #c7cdd6;
   --color-primary-100: #a6afbd;
@@ -163,26 +167,6 @@ img {
   transition: all 0.2s ease-in-out;
 }
 
-.btn-primary {
-  @extend .btn;
-  background: var(--color-primary-700);
-  color: var(--color-white);
-
-  &:hover {
-    background-color: var(--color-primary-500);
-  }
-}
-
-.btn-accent {
-  @extend .btn;
-  background-color: var(--color-primary-50);
-  color: var(--color-accent-900);
-
-  &:hover {
-    background-color: var(--color-primary-100);
-  }
-}
-
 .btn-link {
   text-decoration: none;
 }
@@ -214,6 +198,28 @@ img {
 
   a:hover {
     color: var(--color-primary-700);
+  }
+
+  .btn-primary {
+    @extend .btn;
+    background: var(--color-primary-700);
+    color: var(--color-white);
+
+    &:hover {
+      background-color: var(--color-primary-500);
+      color: var(--color-white);
+    }
+  }
+
+  .btn-accent {
+    @extend .btn;
+    background-color: var(--color-primary-50);
+    color: var(--color-accent-900);
+
+    &:hover {
+      background-color: var(--color-primary-100);
+      color: var(--color-accent-900);
+    }
   }
 }
 
@@ -266,16 +272,6 @@ img {
     }
   }
 
-  .btn-link {
-    color: var(--color-accent-100);
-    background: var(--color-accent-900);
-    outline-color: var(--color-accent-50);
-
-    &:hover {
-      background-color: var(--color-accent-800);
-      color: var(--color-white);
-    }
-  }
   .btn-accent {
     background: var(--color-accent-900);
     color: var(--color-accent-100);

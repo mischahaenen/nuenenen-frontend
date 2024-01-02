@@ -19,26 +19,31 @@
           :title="(zone as ImageZone).Title"
           :zone="(zone as ImageZone)"
           :index="index"
+          :id="zone.Title"
         />
         <PageZoneSectionComponent
           v-if="zone.__component === 'pages.section'"
           :zone="(zone as Section)"
           :index="index"
+          :id="zone.Title"
         />
         <PageZoneBlogComponent
           v-if="zone.__component === 'pages.blog'"
           :zone="(zone as BlogZone)"
           :index="index"
+          :id="zone.Title"
         />
         <PageZoneStepsComponent
           v-if="zone.__component === 'pages.steps'"
           :zone="(zone as StepZone)"
           :index="index"
+          :id="zone.Title"
         />
         <PageZonePfadiheimComponent
           v-if="zone.__component === 'pages.pfadiheim'"
           :zone="(zone as IFrame)"
           :index="index"
+          :id="zone.Title"
         />
         <PageZoneTestimonialComponent
           v-if="zone.__component === 'pages.testimonials'"
@@ -46,21 +51,25 @@
           :sub-title="(zone as Testimonial).Subtitle"
           :testimonials="(zone as Testimonial).testimonials"
           :index="index"
+          :id="zone.Title"
         />
         <PageZoneContactComponent
           v-if="zone.__component === 'pages.contact'"
           :zone="(zone as ContactZone)"
           :index="index"
+          :id="zone.Title"
         />
         <PageZoneDocumentComponent
           v-if="zone.__component == 'pages.document'"
           :zone="(zone as Document)"
           :index="index"
+          :id="zone.Title"
         />
         <PageZoneSponsorComponent
           v-if="zone.__component == 'pages.sponsors'"
           :zone="(zone as SponsorZone)"
           :index="index"
+          :id="zone.Title"
         />
       </template>
     </template>
