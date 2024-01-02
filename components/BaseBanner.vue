@@ -4,14 +4,18 @@
       <div class="home-text">
         <h1>{{ props.title }}</h1>
         <RichTextComponent
+          class="subtitle"
           v-if="props.isRichText && props.description"
           :content="props.description"
         ></RichTextComponent>
-        <p v-if="!props.isRichText && props.description">
+        <p class="subtitle" v-if="!props.isRichText && props.description">
           {{ props.description }}
         </p>
-        <nuxt-link v-if="!isContactPage" class="link-button" to="kontakt"
-          >Kontaktiere uns!</nuxt-link
+        <nuxt-link
+          v-if="props.actionButtonLink && props.actionButtonName"
+          class="btn btn-primary btn-link"
+          :to="props.actionButtonLink"
+          >{{ props.actionButtonName }}</nuxt-link
         >
         <nuxt-img
           v-if="!props.image"
@@ -56,12 +60,12 @@ const rocketSpeed = computed(() => 20 + scrollY.value * -0.5)
 const rocketStyle = computed(() => ({
   transform: `translateY(${rocketSpeed.value}%) translateX(40%) rotate(10deg)`,
 }))
-const route = useRoute()
-const isContactPage = computed(() => route.path === '/kontakt')
 const props = defineProps<{
   title: string | null
   description: string | null
   isRichText?: boolean
+  actionButtonName?: string
+  actionButtonLink?: string
   image?: Image
 }>()
 </script>
@@ -90,6 +94,11 @@ const props = defineProps<{
   flex-direction: column;
   align-items: flex-start;
   max-width: 75ch;
+}
+
+.subtitle {
+  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  margin-top: 0;
 }
 .custom-background-image {
   max-width: 300px;

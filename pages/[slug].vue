@@ -7,6 +7,8 @@
         id="main"
         :title="page.data[0].attributes.title"
         :description="page.data[0].attributes.description"
+        :action-button-name="page.data[0].attributes.ActionButtonName"
+        :action-button-link="page.data[0].attributes.ActionButtonLink"
       />
       <template
         v-for="(zone, index) in page.data[0].attributes.pageZone"
