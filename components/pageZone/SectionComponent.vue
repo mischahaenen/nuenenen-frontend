@@ -2,10 +2,16 @@
   <div
     :class="[
       'pt-medium pb-medium full-width content-grid',
-      props.index % 2 === 0 ? '' : ' bg-primary-50 dark:bg-primary-700',
+      props.index % 2 === 0 ? '' : ' bg-accent-50 dark:bg-primary-700',
     ]"
   >
-    <section :class="['section breakout', { flex: props.zone.Image.data }]">
+    <section
+      :class="[
+        'section breakout',
+        { flex: props.zone.Image?.data },
+        { 'row-reverse': index % 2 !== 0 },
+      ]"
+    >
       <div>
         <TitleComponent
           :title="props.zone.Title"
@@ -67,14 +73,11 @@ onMounted(() => {
   gap: var(--space-large);
   align-items: center;
   justify-content: space-between;
-}
-
-.flex .flex-even {
   flex-direction: row;
-}
 
-.flex .flex-odd {
-  flex-direction: row-reverse;
+  &.row-reverse {
+    flex-direction: row-reverse;
+  }
 }
 
 .image {

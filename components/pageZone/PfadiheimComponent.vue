@@ -1,7 +1,7 @@
 <template>
   <section
     :class="{
-      'full-width content-grid pt-medium pb-medium bg-primary-50 dark:bg-primary-700':
+      'full-width content-grid pt-medium pb-medium bg-accent-50 dark:bg-primary-700':
         props.index % 2 === 1,
     }"
   >

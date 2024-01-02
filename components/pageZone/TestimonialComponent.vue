@@ -3,7 +3,7 @@
     :class="[
       'pt-medium pb-medium full-width content-grid',
       {
-        'bg-primary-50 dark:bg-primary-700': props.index % 2 === 1,
+        'bg-accent-50 dark:bg-primary-700': props.index % 2 === 1,
       },
     ]"
   >
@@ -16,7 +16,7 @@
         :class="[
           'testimonial',
           props.index % 2 === 0
-            ? 'bg-primary-50 dark:bg-primary-700'
+            ? 'bg-accent-50 dark:bg-primary-700'
             : 'bg-white dark:bg-primary-900',
         ]"
       >
@@ -76,6 +76,7 @@ onMounted(() => {
   gap: var(--space-medium);
   justify-content: center;
   align-items: center;
+  justify-items: left;
 }
 
 .testimonial {

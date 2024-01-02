@@ -89,12 +89,16 @@ footer {
 }
 
 .footer-content {
-  background-color: var(--color-primary-50);
+  background-color: var(--color-accent-50);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--space-large);
   padding: var(--space-large);
+}
+
+.footer-content h2 {
+  color: var(--color-primary-900);
 }
 
 .sponsorLogo {
@@ -126,6 +130,10 @@ footer {
 .dark-mode {
   .footer-content {
     background-color: var(--color-primary-700);
+  }
+
+  .footer-content h2 {
+    color: var(--color-white);
   }
 }
 </style>

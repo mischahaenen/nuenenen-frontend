@@ -1,5 +1,13 @@
 <template>
-  <section class="pt-medium pb-medium">
+  <section
+    :class="[
+      'pt-medium pb-medium',
+      {
+        'full-width content-grid bg-accent-50 dark:bg-primary-700':
+          props.index % 2 === 1,
+      },
+    ]"
+  >
     <TitleComponent
       :title="props.zone.Title"
       :index="props.index"
@@ -270,7 +278,7 @@ onBeforeUnmount(() => {
   color: var(--color-primary-700);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
-  background-color: var(--color-primary-50);
+  background-color: var(--color-accent-50);
 }
 
 .even {

@@ -109,6 +109,8 @@ img.full-width {
 .font-body {
   font-family: var(--font-family);
   line-height: 1.5;
+  font-weight: 400;
+  font-size: clamp(1rem, 3vw, 1.125rem);
 }
 
 h1,
@@ -120,6 +122,7 @@ h4 {
 }
 
 p,
+a,
 ul,
 button {
   @extend .font-body;
@@ -173,31 +176,31 @@ img {
 
 .light-mode {
   ::selection {
-    background-color: var(--color-accent-50);
+    background-color: var(--color-primary-50);
   }
 
   h1,
   h2,
   h3,
   h4 {
-    color: var(--color-primary-700);
+    color: var(--color-accent-900);
   }
 
   p,
   ul {
-    color: var(--color-black);
+    color: var(--color-primary-800);
     b {
       color: var(--color-black);
     }
   }
 
   a {
-    color: var(--color-primary-500);
+    color: var(--color-primary-700);
     outline-color: var(--color-primary-700);
   }
 
   a:hover {
-    color: var(--color-primary-700);
+    color: var(--color-primary-500);
   }
 
   .btn-primary {
@@ -234,6 +237,7 @@ img {
   .colored-section {
     background-color: var(--color-primary-700);
   }
+
   h1 {
     color: var(--color-accent-50);
   }
