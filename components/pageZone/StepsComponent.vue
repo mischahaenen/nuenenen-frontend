@@ -49,12 +49,12 @@ a:hover h3 {
 }
 .step-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 200px));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
   justify-content: center;
   gap: var(--space-medium);
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 480px) {
   .step-grid {
     grid-template-columns: 1fr;
   }
@@ -63,7 +63,7 @@ a:hover h3 {
 .step-item {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  align-items: center;
   border-radius: var(--border-radius);
   padding: var(--space-medium);
   overflow: hidden;
@@ -78,8 +78,10 @@ a:hover h3 {
 }
 
 .step-image {
-  width: min(100%, 200px);
-  height: auto;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
   transition: transform 0.2s ease-in-out;
 }
 
