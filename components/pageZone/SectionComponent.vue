@@ -92,6 +92,10 @@ onMounted(() => {
   .flex {
     flex-direction: column;
     gap: var(--space-small);
+
+    &.row-reverse {
+      flex-direction: column;
+    }
   }
 }
 </style>

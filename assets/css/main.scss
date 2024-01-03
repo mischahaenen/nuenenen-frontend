@@ -82,6 +82,10 @@ body {
   grid-template-columns: inherit;
 }
 
+.content-grid > .full-width-image {
+  grid-column: full-width;
+}
+
 .content-grid > .full-width.breakout {
   grid-column: full-width-start / full-width-end;
 }

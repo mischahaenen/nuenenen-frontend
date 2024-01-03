@@ -3,6 +3,11 @@
     <template v-if="pending"><p>Loading...</p></template>
     <template v-if="error"><p>Something went wrong</p></template>
     <template v-if="postData">
+      <div class="full-width-image">
+        <ImageSliderComponent
+          :images="postData.images.data"
+        ></ImageSliderComponent>
+      </div>
       <NuxtLink to="/" class="back-link">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -19,9 +24,6 @@
         </svg>
         Zurück
       </NuxtLink>
-      <ImageSliderComponent
-        :images="postData.images.data"
-      ></ImageSliderComponent>
       <article>
         <h1>{{ postData.title }}</h1>
         <RichTextComponent :content="postData.description" />
@@ -60,6 +62,7 @@ useHead({
   text-decoration: none;
   font-size: 18px;
   margin-bottom: 20px;
+  margin-top: 2rem;
 }
 
 .back-link svg {
