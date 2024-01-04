@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <BaseHeader />
-    <main class="error-banner">
+  <NuxtLayout>
+    <section class="error-banner">
       <!-- 404 Page -->
       <h1>404 - Seite nicht gefunden</h1>
       <p>
         Die Seite, die du suchst, existiert nicht. Möglicherweise wurde sie
         verschoben oder gelöscht.
       </p>
-      <nuxt-img
-        src="/svg/not_found.svg"
+      <NuxtImg
+        src="svg/not_found.svg"
         alt="Space Aliens nothing found image"
         format="webp"
       />
-    </main>
-    <BaseFooter />
-  </div>
+    </section>
+  </NuxtLayout>
 </template>
 
 <script>
@@ -28,6 +26,7 @@ export default {
 
 <style scoped lang="scss">
 .error-banner {
+  margin-top: 6rem;
   height: 80vh;
   display: flex;
   flex-direction: column;
@@ -36,7 +35,7 @@ export default {
 
   img {
     margin-top: var(--space-large);
-    max-width: 50%;
+    max-width: 500px;
   }
 }
 </style>

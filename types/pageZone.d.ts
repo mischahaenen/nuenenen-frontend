@@ -15,7 +15,9 @@ interface Kastenzeddel extends PageZoneComponent {
 interface Section extends PageZoneComponent {
   Title: string
   Description: string
-  Image: ImagesResponse
+  Image: {
+    data: Image
+  }
 }
 
 interface Document extends PageZoneComponent {
@@ -23,9 +25,19 @@ interface Document extends PageZoneComponent {
   files: FilesResponse
 }
 
+interface QPZone extends PageZoneComponent {
+  Title: string
+  Document: {
+    data: IFile
+  }
+  Image: {
+    data: Image
+  }
+}
+
 interface Group extends PageZoneComponent {
   Title: string
-  members: UsersResponse
+  leaders: UsersResponse
 }
 
 interface ImageZone extends PageZoneComponent {
@@ -82,5 +94,6 @@ type PageZoneItem =
   | StepZone
   | SponsorZone
   | BlogZone
+  | QPZone
 
 type PageZone = PageZoneItem[]

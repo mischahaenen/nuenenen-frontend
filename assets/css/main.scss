@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   --color-primary-50: #c7cdd6;
   --color-primary-100: #a6afbd;
@@ -34,7 +38,7 @@ body {
   --space-large: 4rem;
   --space-extra-large: 8rem;
   --border-radius: 50px;
-  --font-family: 'Noto Sans', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family: Lato, Tahoma, Geneva, Verdana, sans-serif;
   --font-heading: Orbitron, Lato, Tahoma, Geneva, Verdana, sans-serif;
   font-family: var(--font-family);
   margin: 0;
@@ -78,6 +82,10 @@ body {
   grid-template-columns: inherit;
 }
 
+.content-grid > .full-width-image {
+  grid-column: full-width;
+}
+
 .content-grid > .full-width.breakout {
   grid-column: full-width-start / full-width-end;
 }
@@ -105,6 +113,8 @@ img.full-width {
 .font-body {
   font-family: var(--font-family);
   line-height: 1.5;
+  font-weight: 400;
+  font-size: clamp(1rem, 3vw, 1.125rem);
 }
 
 h1,
@@ -116,7 +126,9 @@ h4 {
 }
 
 p,
-ul {
+a,
+ul,
+button {
   @extend .font-body;
 }
 
@@ -158,75 +170,63 @@ img {
   border-radius: var(--border-radius);
   cursor: pointer;
   font-weight: 700;
+  font-size: 1rem;
   transition: all 0.2s ease-in-out;
 }
 
-.btn-primary {
-  @extend .btn;
-  background: var(--color-primary-700);
-  color: var(--color-white);
-
-  &:hover {
-    background-color: var(--color-primary-500);
-  }
-}
-
-.btn-accent {
-  @extend .btn;
-  background-color: var(--color-white);
-  color: var(--color-accent-700);
-
-  &:hover {
-    background-color: var(--color-accent-100);
-  }
-}
-
-//TODO: Remove this class and replace by btn-accent
-.link-button {
-  background: var(--color-primary-700);
-  color: var(--color-white) !important;
-  transition: all 0.2s ease-in-out;
-  outline-color: var(--color-accent-50);
+.btn-link {
   text-decoration: none;
-  border: none;
-  padding: var(--space-small);
-  border-radius: var(--border-radius);
-  cursor: pointer;
-  font-weight: 700;
-
-  &:hover {
-    background-color: var(--color-primary-500);
-    color: var(--color-accent-50) !important;
-  }
 }
 
 .light-mode {
   ::selection {
-    background-color: var(--color-accent-50);
+    background-color: var(--color-primary-50);
   }
 
   h1,
   h2,
   h3,
   h4 {
-    color: var(--color-primary-700);
+    color: var(--color-accent-900);
   }
 
   p,
   ul {
-    color: var(--color-black);
+    color: var(--color-primary-800);
     b {
       color: var(--color-black);
     }
   }
 
   a {
-    color: var(--color-primary-500);
+    color: var(--color-primary-700);
     outline-color: var(--color-primary-700);
   }
 
   a:hover {
-    color: var(--color-primary-700);
+    color: var(--color-primary-500);
+  }
+
+  .btn-primary {
+    @extend .btn;
+    background: var(--color-primary-700);
+    color: var(--color-white);
+
+    &:hover {
+      background-color: var(--color-primary-500);
+      color: var(--color-white);
+    }
+  }
+
+  .btn-accent {
+    @extend .btn;
+    background-color: var(--color-primary-50);
+    color: var(--color-primary-900);
+
+    &:hover {
+      background-color: var(--color-primary-100);
+      color: var(--color-primary-900);
+    }
   }
 }
 
@@ -241,6 +241,7 @@ img {
   .colored-section {
     background-color: var(--color-primary-700);
   }
+
   h1 {
     color: var(--color-accent-50);
   }
@@ -274,20 +275,11 @@ img {
     outline-color: var(--color-accent-50);
 
     &:hover {
-      background-color: var(--color-primary-500);
-      color: var(--color-accent-50);
+      background-color: var(--color-accent-600);
+      color: var(--color-white);
     }
   }
 
-  .link-button {
-    color: var(--color-white);
-    background: var(--color-accent-700);
-    outline-color: var(--color-accent-50);
-
-    &:hover {
-      background-color: var(--color-accent-500);
-    }
-  }
   .btn-accent {
     background: var(--color-accent-900);
     color: var(--color-accent-100);
@@ -295,7 +287,7 @@ img {
 
     &:hover {
       background-color: var(--color-accent-800);
-      color: var(--color-accent-100);
+      color: var(--color-white);
     }
   }
 }

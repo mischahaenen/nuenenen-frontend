@@ -1,38 +1,57 @@
 <template>
-  <button
-    v-if="props.user"
-    class="user-card"
-    :aria-label="
-      props.user.attributes.username + ', ' + props.user.attributes.Position
-    "
+  <section
+    :class="[
+      'pt-medium pb-medium',
+      {
+        'full-width content-grid bg-accent-50 dark:bg-primary-700':
+          index % 2 === 1,
+      },
+    ]"
   >
-    <nuxt-img
-      v-if="props.user.attributes.Picture.data"
-      class="image"
-      format="webp"
-      :src="props.user.attributes.Picture.data.attributes.url"
-      :alt="
-        props.user.attributes.Picture.data.attributes.alternativeText ||
-        props.user.attributes.Picture.data.attributes.name
-      "
-    />
-    <div class="user-card__content">
-      <h3>{{ props.user.attributes.username }}</h3>
-      <p>{{ props.user.attributes.Position }}</p>
-      <a :href="'mailto:' + props.user.attributes.email">{{
-        props.user.attributes.email
-      }}</a>
+    <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
+    <div class="member-section">
+      <button
+        v-for="leader of props.zone.leaders.data"
+        :key="leader.attributes.Name"
+        class="user-card"
+        :aria-label="leader.attributes.Name + ', ' + leader.attributes.Position"
+      >
+        <NuxtImg
+          v-if="leader.attributes.Image?.data"
+          class="image"
+          format="webp"
+          :src="leader.attributes.Image.data.attributes.url"
+          :alt="
+            leader.attributes.Image.data.attributes.alternativeText ||
+            leader.attributes.Image.data.attributes.name
+          "
+        />
+        <div class="user-card__content">
+          <h3>{{ leader.attributes.Name }}</h3>
+          <p>{{ leader.attributes.Position }}</p>
+          <a :href="'mailto:' + leader.attributes.Email">{{
+            leader.attributes.Email
+          }}</a>
+        </div>
+      </button>
     </div>
-  </button>
+  </section>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-  user: User
+  zone: Group
+  index: number
 }>()
 </script>
 
 <style scoped lang="scss">
+.member-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-medium);
+  justify-content: center;
+}
 .user-card {
   position: relative;
   display: flex;

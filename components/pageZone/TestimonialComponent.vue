@@ -3,20 +3,20 @@
     :class="[
       'pt-medium pb-medium full-width content-grid',
       {
-        'bg-primary-50 dark:bg-primary-800': props.index % 2 === 1,
+        'bg-accent-50 dark:bg-primary-700': props.index % 2 === 1,
       },
     ]"
   >
     <p>{{ props.subTitle }}</p>
     <h2>{{ props.title }}</h2>
-    <div class="breakout testimonial-grid">
+    <div class="breakout testimonials">
       <article
         v-for="testimonial of props.testimonials.data"
         :key="testimonial.id"
         :class="[
           'testimonial',
           props.index % 2 === 0
-            ? 'bg-primary-50 dark:bg-primary-800'
+            ? 'bg-accent-50 dark:bg-primary-700'
             : 'bg-white dark:bg-primary-900',
         ]"
       >
@@ -24,7 +24,8 @@
           {{ testimonial.attributes.Quote }}
         </p>
         <div class="author">
-          <nuxt-img
+          <NuxtImg
+            v-if="testimonial.attributes.Image?.data"
             format="webp"
             class="author-img"
             :src="testimonial.attributes.Image.data.attributes.url"
@@ -33,8 +34,15 @@
               testimonial.attributes.Name
             "
           />
+          <NuxtImg
+            v-else
+            format="webp"
+            class="author-img"
+            src="svg/female_avatar.svg"
+            alt="Placeholder"
+          />
           <div class="name">
-            <h4>{{ testimonial.attributes.Name }}</h4>
+            <h3>{{ testimonial.attributes.Name }}</h3>
             <p>
               {{ testimonial.attributes.Position }}
             </p>
@@ -52,22 +60,44 @@ const props = defineProps<{
   subTitle: string
   index: number
 }>()
+
+onMounted(() => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fade-in')
+        observer.unobserve(entry.target)
+      }
+    })
+  })
+
+  document.querySelectorAll('.testimonial').forEach((ref) => {
+    observer.observe(ref)
+  })
+})
 </script>
 
 <style scoped lang="scss">
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.testimonials {
+  display: flex;
   gap: var(--space-medium);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .testimonial {
   padding: var(--space-medium);
   border-radius: var(--border-radius);
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   gap: var(--space-small);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s;
+
+  &.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .testimonial p {
@@ -81,8 +111,9 @@ const props = defineProps<{
   gap: var(--space-small);
 }
 
-.author h4 {
+.author h3 {
   margin-top: 0;
+  font-size: 1rem;
 }
 
 .author img {
@@ -144,6 +175,13 @@ const props = defineProps<{
     }
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .testimonial {
+    flex-direction: column;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .two-column {
     grid-template-columns: 1fr;

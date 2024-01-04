@@ -47,7 +47,7 @@ ul li {
   padding: 7px;
   margin: 0;
   border-radius: 5px;
-  color: var(--color-primary-300);
+  color: var(--color-primary-500);
 }
 
 .feather:hover {
@@ -55,11 +55,11 @@ ul li {
 }
 
 .preferred .feather {
-  border-color: var(--color-primary-500);
+  border-color: var(--color-primary-900);
 }
 
 .selected .feather {
-  color: var(--color-primary-500);
+  color: var(--color-primary-900);
 }
 
 .dark-mode {

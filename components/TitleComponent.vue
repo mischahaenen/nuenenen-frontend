@@ -27,12 +27,12 @@ const words = computed(() => {
 </script>
 <style scoped lang="scss">
 .letter {
-  color: var(--color-primary-900);
+  color: var(--color-accent-900);
   display: inline-block;
   position: relative;
 
   &.highlight {
-    color: var(--color-accent-900);
+    color: var(--color-primary-900);
   }
 }
 

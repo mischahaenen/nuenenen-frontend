@@ -3,7 +3,7 @@
     :class="[
       'pt-medium pb-medium',
       {
-        'full-width content-grid bg-primary-50 dark:bg-primary-800':
+        'full-width content-grid bg-accent-50 dark:bg-primary-700':
           props.index % 2 === 1,
       },
     ]"
@@ -15,7 +15,7 @@
     <RichTextComponent :content="props.zone.Description" />
     <div class="blog-filter">
       <button
-        class="btn btn-accent"
+        class="btn btn-primary"
         :class="{ active: activeButton === 'all' }"
         aria-label="Alle Posts anzeigen"
         @click="getPosts()"
@@ -25,7 +25,7 @@
       <button
         v-for="(step, jndex) of steps"
         :key="jndex"
-        class="btn btn-accent"
+        class="btn btn-primary"
         :class="{ active: activeButton === step.attributes.Name }"
         :aria-label="`Posts für die ${step.attributes.Name} anzeigen`"
         @click="getPostsByStep(step.attributes.Name)"
@@ -62,8 +62,8 @@
     </div>
     <div v-else class="fallback">
       <p>Hier wurde noch nichts veröffentlicht.</p>
-      <nuxt-img
-        src="/svg/not_found.svg"
+      <NuxtImg
+        src="svg/not_found.svg"
         alt="Illustration of an alien indicating that nothing has been found"
         format="webp"
       />
@@ -181,8 +181,7 @@ onMounted(async () => {
   justify-content: flex-start;
 
   .active {
-    background-color: var(--color-accent-900);
-    color: var(--color-white);
+    background-color: var(--color-primary-400);
   }
 }
 

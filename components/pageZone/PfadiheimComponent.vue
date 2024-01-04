@@ -1,9 +1,11 @@
 <template>
   <section
-    :class="{
-      'full-width content-grid pt-medium pb-medium bg-primary-50 dark:bg-primary-800':
-        props.index % 2 === 1,
-    }"
+    :class="[
+      'full-width content-grid pt-medium',
+      {
+        'bg-accent-50 dark:bg-primary-700': props.index % 2 === 1,
+      },
+    ]"
   >
     <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
     <RichTextComponent :content="zone.Description"></RichTextComponent>
@@ -15,7 +17,10 @@
       :title="props.zone.Title"
     ></iframe>
     <h3>Impressionen</h3>
-    <ImageSliderComponent :images="zone.images.data"></ImageSliderComponent>
+
+    <div class="full-width-image">
+      <ImageSliderComponent :images="zone.images.data"></ImageSliderComponent>
+    </div>
   </section>
 </template>
 

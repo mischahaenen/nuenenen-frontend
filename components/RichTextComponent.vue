@@ -1,39 +1,31 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <div
-    v-if="props.isPreview && props.content"
-    class="preview"
-    v-html="previewHtml"
-  ></div>
-  <span
-    v-for="(block, index) in htmlContent"
-    v-else
-    :key="index"
-    v-html="block"
-  >
-  </span>
+    :class="{ preview: props.isPreview }"
+    v-html="$mdRenderer.render(markdown)"
+  />
 </template>
 
 <script lang="ts" setup>
-import edjsHTML from 'editorjs-html'
 const props = defineProps<{
-  content: string | null
+  content?: string
   isPreview?: boolean
   previewLines?: number
 }>()
 
-const htmlContent = ref<string[] | Error>([])
-const previewHtml = ref<string>('')
+const markdown = computed(() => {
+  if (!props.content) return ''
 
-watch(
-  () => props.content,
-  () => {
-    if (!props.content) return
-    htmlContent.value = edjsHTML().parseStrict(JSON.parse(props.content))
-    previewHtml.value = htmlContent.value.find((x) => x.includes('<p>')) || ''
-  },
-  { immediate: true, deep: true }
-)
+  if (props.isPreview) {
+    // Split the content into lines and take the specified number of lines for the preview
+    const lines = props.content.split('\n').slice(0, props.previewLines || 3)
+    // Join the lines back into a string and render
+    return lines.join('\n')
+  } else {
+    // Render the full content
+    return props.content
+  }
+})
 </script>
 <style scoped lang="scss">
 .preview :deep(p) {

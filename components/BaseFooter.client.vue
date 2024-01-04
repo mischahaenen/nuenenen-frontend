@@ -1,7 +1,7 @@
 <template>
   <footer v-if="footer">
     <NuxtImg
-      class="mountains"
+      class="full-width"
       :src="`/svg/gantrisch_${
         colorMode.value === 'dark' ? 'dark' : 'white'
       }.svg`"
@@ -14,6 +14,9 @@
           <li v-for="link of footer.Links" :key="link.Link">
             <a :href="link.Link" target="_blank">{{ link.Name }}</a>
           </li>
+          <li>
+            <a href="/datenschutz">Datenschutz</a>
+          </li>
         </ul>
       </div>
       <div>
@@ -25,12 +28,12 @@
         <ul class="socialmedia-section">
           <li>
             <a href="https://www.instagram.com/pfadipink" target="_blank">
-              <img src="/svg/instagram.svg" alt="Github Logo" />Instagram</a
+              <NuxtImg src="svg/instagram.svg" alt="Github Logo" />Instagram</a
             >
           </li>
           <li>
             <a href="https://www.facebook.com/PfadiNuenenen/" target="_blank">
-              <img src="/svg/facebook.svg" alt="Github Logo" />Facebook</a
+              <NuxtImg src="svg/facebook.svg" alt="Github Logo" />Facebook</a
             >
           </li>
           <li>
@@ -38,14 +41,14 @@
               href="https://github.com/mischahaenen/nuenenen-frontend"
               target="_blank"
             >
-              <img src="/svg/github.svg" alt="Github Logo" />Github</a
+              <NuxtImg src="svg/github.svg" alt="Github Logo" />Github</a
             >
           </li>
         </ul>
       </div>
       <div class="sponsorLogo">
         <h2>Sponsoren</h2>
-        <nuxt-img
+        <NuxtImg
           v-for="image of footer.Images.data"
           :key="image.attributes.name"
           :src="image.attributes.url"
@@ -81,18 +84,21 @@ a:hover {
 }
 
 footer {
-  margin-top: var(--space-extra-large);
   display: flex;
   flex-direction: column;
 }
 
 .footer-content {
-  background-color: var(--color-primary-50);
+  background-color: var(--color-accent-50);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: var(--space-large);
   padding: var(--space-large);
+}
+
+.footer-content h2 {
+  color: var(--color-primary-900);
 }
 
 .sponsorLogo {
@@ -124,6 +130,10 @@ footer {
 .dark-mode {
   .footer-content {
     background-color: var(--color-primary-700);
+  }
+
+  .footer-content h2 {
+    color: var(--color-white);
   }
 }
 </style>

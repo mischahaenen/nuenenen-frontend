@@ -1,35 +1,42 @@
 <template>
-  <SectionComponent
-    :title="props.zone.Title"
-    :description="props.zone.Description"
-    :index="props.index"
-  ></SectionComponent>
-  <div class="sponsor-grid">
-    <div
-      v-for="sponsor of props.zone.sponsors.data"
-      :key="sponsor.attributes.Name"
-      class="sponsor"
-    >
-      <nuxt-img
-        class="sponsor-logo"
-        format="webp"
-        :src="sponsor.attributes.Logo.data.attributes.url"
-        :alt="
-          sponsor.attributes.Logo.data.attributes.alternativeText ||
-          sponsor.attributes.Name
-        "
-      ></nuxt-img>
-      <a
-        v-if="sponsor.attributes.Url"
-        :href="sponsor.attributes.Url"
-        target="_blank"
+  <section
+    :class="[
+      'pt-medium pb-medium full-width content-grid',
+      props.index % 2 === 0 ? '' : ' bg-accent-50 dark:bg-primary-700',
+    ]"
+  >
+    <TitleComponent
+      :title="props.zone.Title"
+      :index="props.index"
+    ></TitleComponent>
+    <RichTextComponent :content="props.zone.Description"></RichTextComponent>
+    <div class="sponsor-grid breakout">
+      <article
+        v-for="sponsor of props.zone.sponsors.data"
+        :key="sponsor.attributes.Name"
+        class="sponsor"
       >
-        <h3>{{ sponsor.attributes.Name }}</h3></a
-      >
-      <h3 v-else>{{ sponsor.attributes.Name }}</h3>
-      <p>{{ sponsor.attributes.Description }}</p>
+        <NuxtImg
+          class="sponsor-logo"
+          format="webp"
+          :src="sponsor.attributes.Logo.data.attributes.url"
+          :alt="
+            sponsor.attributes.Logo.data.attributes.alternativeText ||
+            sponsor.attributes.Name
+          "
+        ></NuxtImg>
+        <a
+          v-if="sponsor.attributes.Url"
+          :href="sponsor.attributes.Url"
+          target="_blank"
+        >
+          <h3>{{ sponsor.attributes.Name }}</h3></a
+        >
+        <h3 v-else>{{ sponsor.attributes.Name }}</h3>
+        <p>{{ sponsor.attributes.Description }}</p>
+      </article>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -86,10 +93,10 @@ onMounted(() => initializeObserver())
 }
 
 .sponsor-logo {
-  height: 200px;
-  width: 200px;
+  width: max(100%, 200px);
+  aspect-ratio: 1;
   object-fit: cover;
-  border-radius: var(--border-radius);
+  border-radius: 50%;
 }
 @media (max-width: 768px) {
   .sponsor-logo {

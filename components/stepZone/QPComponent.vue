@@ -1,6 +1,5 @@
 <template>
   <section
-    v-if="props.zone.files"
     :class="[
       'pt-medium pb-medium',
       {
@@ -14,7 +13,7 @@
       :index="props.index"
     ></TitleComponent>
     <ul>
-      <li v-for="file in props.zone.files.data" :key="file.id">
+      <li>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="24"
@@ -25,17 +24,35 @@
             d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
           />
         </svg>
-        <a :href="file.attributes.url" download=""
-          >Download {{ file.attributes.name }}</a
+        <a
+          v-if="props.zone.Document?.data"
+          :href="props.zone.Document.data.attributes.url"
+          download=""
+          >Download {{ props.zone.Document.data.attributes.name }}</a
         >
       </li>
     </ul>
+    <a
+      v-if="props.zone.Document?.data"
+      :href="props.zone.Document.data.attributes.url"
+      download=""
+      ><NuxtImg
+        v-if="props.zone.Image?.data"
+        class="qp-image"
+        :src="props.zone.Image.data.attributes.url"
+        :alt="
+          props.zone.Image.data.attributes.alternativeText ||
+          props.zone.Image.data.attributes.name
+        "
+      >
+      </NuxtImg
+    ></a>
   </section>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: Document
+  zone: QPZone
   index: number
 }>()
 </script>
@@ -55,6 +72,11 @@ ul li {
 
 ul li svg {
   fill: var(--color-accent-900);
+}
+.qp-image {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
 }
 
 .dark-mode {

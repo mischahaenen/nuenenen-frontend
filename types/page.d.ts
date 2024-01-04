@@ -5,6 +5,8 @@ declare interface Page {
     description: string
     slug: string
     url: string
+    ActionButtonName: string
+    ActionButtonLink: string
     pageZone: PageZone
     created_at: string
     updated_at: string

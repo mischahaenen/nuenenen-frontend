@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
   css: ['@/assets/css/main.scss'],
   plugins: [],
   components: true,
@@ -11,9 +10,11 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'vue3-carousel-nuxt',
     '@nuxtjs/google-fonts',
+    '@nuxtjs/robots',
+    '@nuxt/content'
   ],
   strapi: {
-    url: process.env.STRAPI_URL || 'http://localhost:1337',
+    url: process.env.STRAPI_URL,
     prefix: '',
     version: 'v4',
     cookie: {},
@@ -29,13 +30,20 @@ export default defineNuxtConfig({
     noExternal: ['moment'],
   },
   image: {
-    format: ['webp'],
+    dir: 'assets/',
+    strapi: {},
   },
   nitro: {
     compressPublicAssets: true,
     preset: 'vercel-edge',
   },
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true,
+    },
+  },
   googleFonts: {
     families: {
       Lato: [100, 200, 300, 400, 500, 600, 700, 800, 900],
