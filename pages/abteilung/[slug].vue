@@ -42,6 +42,14 @@
           :zone="(zone as Group)"
           :index="index"
         ></PageZoneTeamComponent>
+        <PageZoneTestimonialComponent
+          v-if="zone.__component === 'pages.testimonials'"
+          :id="zone.Title"
+          :title="(zone as Testimonial).Title"
+          :sub-title="(zone as Testimonial).Subtitle"
+          :testimonials="(zone as Testimonial).testimonials"
+          :index="index"
+        />
         <StepZoneQPComponent
           v-if="zone.__component == 'pages.quartalsprogramm'"
           :id="zone.Title"
