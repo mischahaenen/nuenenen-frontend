@@ -16,61 +16,68 @@
       >
         <PageZoneImageComponent
           v-if="zone.__component === 'pages.image'"
+          :id="zone.Title"
           :title="(zone as ImageZone).Title"
           :zone="(zone as ImageZone)"
           :index="index"
-          :id="zone.Title"
         />
         <PageZoneSectionComponent
           v-if="zone.__component === 'pages.section'"
+          :id="zone.Title"
           :zone="(zone as Section)"
           :index="index"
-          :id="zone.Title"
         />
         <PageZoneBlogComponent
           v-if="zone.__component === 'pages.blog'"
+          :id="zone.Title"
           :zone="(zone as BlogZone)"
           :index="index"
-          :id="zone.Title"
         />
         <PageZoneStepsComponent
           v-if="zone.__component === 'pages.steps'"
+          :id="zone.Title"
           :zone="(zone as StepZone)"
           :index="index"
-          :id="zone.Title"
         />
         <PageZonePfadiheimComponent
           v-if="zone.__component === 'pages.pfadiheim'"
+          :id="zone.Title"
           :zone="(zone as IFrame)"
           :index="index"
-          :id="zone.Title"
         />
         <PageZoneTestimonialComponent
           v-if="zone.__component === 'pages.testimonials'"
+          :id="zone.Title"
           :title="(zone as Testimonial).Title"
           :sub-title="(zone as Testimonial).Subtitle"
           :testimonials="(zone as Testimonial).testimonials"
           :index="index"
-          :id="zone.Title"
         />
         <PageZoneContactComponent
           v-if="zone.__component === 'pages.contact'"
+          :id="zone.Title"
           :zone="(zone as ContactZone)"
           :index="index"
-          :id="zone.Title"
         />
         <PageZoneDocumentComponent
           v-if="zone.__component == 'pages.document'"
+          :id="zone.Title"
           :zone="(zone as Document)"
           :index="index"
-          :id="zone.Title"
         />
         <PageZoneSponsorComponent
           v-if="zone.__component == 'pages.sponsors'"
+          :id="zone.Title"
           :zone="(zone as SponsorZone)"
           :index="index"
-          :id="zone.Title"
         />
+
+        <PageZoneTeamComponent
+          v-if="zone.__component == 'pages.group'"
+          :id="zone.Title"
+          :zone="(zone as Group)"
+          :index="index"
+        ></PageZoneTeamComponent>
       </template>
     </template>
   </main>
