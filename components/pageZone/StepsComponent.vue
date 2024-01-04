@@ -49,7 +49,7 @@ a:hover h3 {
 }
 .step-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
   justify-content: center;
   gap: var(--space-medium);
 }
@@ -71,7 +71,7 @@ a:hover h3 {
 }
 
 .step-item:hover {
-  background-color: var(--color-accent-50);
+  background-color: var(--color-accent-100);
   .step-image {
     transform: scale(1.05);
   }

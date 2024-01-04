@@ -1,4 +1,4 @@
-declare interface File {
+declare interface IFile {
   id: number
   attributes: {
     name: string
@@ -21,5 +21,5 @@ declare interface File {
 }
 
 export interface FilesResponse {
-  data: File[]
+  data: IFile[]
 }

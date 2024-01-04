@@ -25,6 +25,16 @@ interface Document extends PageZoneComponent {
   files: FilesResponse
 }
 
+interface QPZone extends PageZoneComponent {
+  Title: string
+  Document: {
+    data: IFile
+  }
+  Image: {
+    data: Image
+  }
+}
+
 interface Group extends PageZoneComponent {
   Title: string
   members: UsersResponse
@@ -84,5 +94,6 @@ type PageZoneItem =
   | StepZone
   | SponsorZone
   | BlogZone
+  | QPZone
 
 type PageZone = PageZoneItem[]

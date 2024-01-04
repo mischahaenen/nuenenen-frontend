@@ -41,7 +41,7 @@
             },
           ]"
         >
-          <nuxt-link :to="`/${page.attributes.url}`"
+          <nuxt-link :to="`/${page.attributes.url}`" @click="toggleNav"
             >{{ page.attributes.slug
             }}<svg
               v-if="hasSteps(page)"
@@ -62,6 +62,7 @@
             >
               <nuxt-link
                 :to="`/${page.attributes.url}/${step.attributes.Slug}`"
+                @click="toggleNav"
                 >{{ step.attributes.Name }}</nuxt-link
               >
             </li>
@@ -235,10 +236,10 @@ a.skip-main:active {
 }
 
 .nav-item:last-child a {
-  background: var(--color-accent-700);
+  background-color: var(--color-primary-700);
   color: var(--color-white);
   transition: all 0.2s ease-in-out;
-  outline-color: var(--color-accent-50);
+  outline-color: var(--color-primary-50);
   text-decoration: none;
   border: none;
   padding: var(--space-small);
@@ -247,7 +248,7 @@ a.skip-main:active {
   font-weight: 700;
 
   &:hover {
-    background-color: var(--color-accent-500);
+    background-color: var(--color-primary-600);
   }
 }
 
@@ -283,6 +284,17 @@ a.skip-main:active {
     }
   }
 
+  .nav-item:last-child a {
+    background: var(--color-accent-700);
+    color: var(--color-white);
+    outline-color: var(--color-accent-50);
+
+    &:hover {
+      background-color: var(--color-accent-600);
+      color: var(--color-white);
+    }
+  }
+
   .submenu {
     background-color: var(--color-primary-700);
     box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
@@ -304,7 +316,7 @@ a.skip-main:active {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .header {
     padding: 0 var(--space-medium);
   }
@@ -314,10 +326,15 @@ a.skip-main:active {
   .nav-toggle {
     display: block;
     background: var(--color-accent-700);
-    border-radius: var(--border-radius);
+    border-radius: 50%;
     padding: 0.5rem;
     border: none;
     cursor: pointer;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.2s ease-in-out;
 
     svg {

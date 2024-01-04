@@ -9,7 +9,7 @@
   >
     <p>{{ props.subTitle }}</p>
     <h2>{{ props.title }}</h2>
-    <div class="breakout testimonial-grid">
+    <div class="breakout testimonials">
       <article
         v-for="testimonial of props.testimonials.data"
         :key="testimonial.id"
@@ -25,6 +25,7 @@
         </p>
         <div class="author">
           <NuxtImg
+            v-if="testimonial.attributes.Image?.data"
             format="webp"
             class="author-img"
             :src="testimonial.attributes.Image.data.attributes.url"
@@ -32,6 +33,13 @@
               testimonial.attributes.Image.data.attributes.alternativeText ||
               testimonial.attributes.Name
             "
+          />
+          <NuxtImg
+            v-else
+            format="webp"
+            class="author-img"
+            src="svg/female_avatar.svg"
+            alt="Placeholder"
           />
           <div class="name">
             <h3>{{ testimonial.attributes.Name }}</h3>
@@ -70,13 +78,11 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+.testimonials {
+  display: flex;
   gap: var(--space-medium);
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  justify-items: left;
 }
 
 .testimonial {
@@ -169,6 +175,13 @@ onMounted(() => {
     }
   }
 }
+
+@media screen and (max-width: 1024px) {
+  .testimonial {
+    flex-direction: column;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .two-column {
     grid-template-columns: 1fr;

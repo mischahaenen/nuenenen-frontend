@@ -101,23 +101,33 @@ const props = defineProps<{
 }
 
 .dark-mode {
+  .carousel__item,
+  .carousel__image {
+    background: var(--color-primary-900);
+  }
   .carousel__prev,
   .carousel__next {
     color: var(--color-white);
-    background-color: var(--color-primary-900);
+    background-color: var(--color-accent-700);
   }
   .carousel__prev:hover,
   .carousel__next:hover {
     color: var(--color-white);
-    background-color: var(--color-primary-800);
+    background-color: var(--color-accent-600);
+  }
+  .carousel__pagination {
+    background-color: var(--color-primary-900);
   }
 
   .carousel__pagination-button::after {
-    background-color: var(--color-primary-400);
+    background-color: var(--color-accent-100);
   }
-  .carousel__pagination-button:hover::after,
+  .carousel__pagination-button:hover::after {
+    background-color: var(--color-accent-600);
+  }
+
   .carousel__pagination-button--active::after {
-    background-color: var(--color-primary-500);
+    background-color: var(--color-accent-700);
   }
 }
 

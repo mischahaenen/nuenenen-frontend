@@ -221,11 +221,11 @@ img {
   .btn-accent {
     @extend .btn;
     background-color: var(--color-primary-50);
-    color: var(--color-accent-900);
+    color: var(--color-primary-900);
 
     &:hover {
       background-color: var(--color-primary-100);
-      color: var(--color-accent-900);
+      color: var(--color-primary-900);
     }
   }
 }

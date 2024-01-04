@@ -12,19 +12,20 @@
       <template v-for="(zone, index) in stepAttributes.pageZone" :key="index">
         <PageZoneSectionComponent
           v-if="zone.__component == 'pages.section'"
+          :id="zone.Title"
           :zone="(zone as Section)"
           :index="index"
-          :id="zone.Title"
         />
         <StepZoneKastenzeddelComponent
           v-if="zone.__component == 'pages.kastenzeddel'"
+          :id="zone.Title"
           :kastenzeddel="(zone as Kastenzeddel)"
           :step="stepAttributes.Slug"
           :index="index"
-          :id="zone.Title"
         />
         <section
           v-if="zone.__component == 'pages.group'"
+          :id="zone.Title"
           :class="[
             'pt-medium pb-medium',
             {
@@ -32,7 +33,6 @@
                 index % 2 === 1,
             },
           ]"
-          :id="zone.Title"
         >
           <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
           <div v-if="(zone as Group).members" class="member-section">
@@ -45,17 +45,24 @@
         </section>
         <PageZoneDocumentComponent
           v-if="zone.__component == 'pages.document'"
+          :id="zone.Title"
           :zone="(zone as Document)"
           :index="index"
-          :id="zone.Title"
         />
         <PageZoneImageComponent
           v-if="zone.__component == 'pages.image'"
+          :id="zone.Title"
           :title="zone.Title"
           :zone="(zone as ImageZone)"
           :index="index"
-          :id="zone.Title"
         ></PageZoneImageComponent>
+        <StepZoneQPComponent
+          v-if="zone.__component == 'pages.quartalsprogramm'"
+          :id="zone.Title"
+          :zone="(zone as QPZone)"
+          :index="index"
+        >
+        </StepZoneQPComponent>
       </template>
     </template>
   </main>
