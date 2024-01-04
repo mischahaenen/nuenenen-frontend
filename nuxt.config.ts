@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     'vue3-carousel-nuxt',
     '@nuxtjs/google-fonts',
     '@nuxtjs/robots',
-    '@nuxt/content'
+    '@nuxt/content',
   ],
   strapi: {
     url: process.env.STRAPI_URL,
@@ -31,6 +31,7 @@ export default defineNuxtConfig({
   },
   image: {
     dir: 'assets/',
+    formats: ['webp', 'svg', 'png', 'jpg'],
     strapi: {},
   },
   nitro: {

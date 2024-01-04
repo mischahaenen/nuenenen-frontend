@@ -2,7 +2,7 @@
   <footer v-if="footer">
     <NuxtImg
       class="full-width"
-      :src="`/svg/gantrisch_${
+      :src="`svg/gantrisch_${
         colorMode.value === 'dark' ? 'dark' : 'white'
       }.svg`"
       :alt="`Berge in ${colorMode.value === 'dark' ? 'Dunkel' : 'Hell'}`"
