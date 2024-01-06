@@ -107,12 +107,18 @@
 
 <script setup lang="ts" defer>
 import moment from 'moment'
+import { useDeregisterStore } from '~/store/deregister'
 
 const props = defineProps<{
   kastenzeddel: Kastenzeddel
   step: string
   index: number
 }>()
+const deregister = async () => {
+  const deregisterStore = useDeregisterStore()
+  deregisterStore.setStep(props.step)
+  await navigateTo('/kontakt')
+}
 </script>
 
 <style scoped lang="scss">

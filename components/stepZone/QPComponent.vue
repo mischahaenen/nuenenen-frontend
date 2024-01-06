@@ -41,9 +41,9 @@
           props.zone.Image.data.attributes.alternativeText ||
           props.zone.Image.data.attributes.name
         "
-      >
-      </NuxtImg
-    ></a>
+      />
+      ></a
+    >
     <NuxtImg
       v-else-if="props.zone.Image?.data"
       class="qp-image"
@@ -52,8 +52,7 @@
         props.zone.Image.data.attributes.alternativeText ||
         props.zone.Image.data.attributes.name
       "
-    >
-    </NuxtImg>
+    />
   </section>
 </template>
 

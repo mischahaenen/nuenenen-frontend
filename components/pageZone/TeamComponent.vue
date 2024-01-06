@@ -9,7 +9,7 @@
     ]"
   >
     <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-    <div class="member-section">
+    <div v-if="props.zone.leaders?.data" class="member-section">
       <button
         v-for="leader of props.zone.leaders.data"
         :key="leader.attributes.Name"
