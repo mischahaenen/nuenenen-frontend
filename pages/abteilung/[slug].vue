@@ -16,7 +16,7 @@
           :zone="(zone as Section)"
           :index="index"
         />
-        <StepZoneKastenzeddelComponent
+        <StepZoneKastenzettelComponent
           v-if="zone.__component == 'pages.kastenzeddel'"
           :id="zone.Title"
           :kastenzeddel="(zone as Kastenzeddel)"
