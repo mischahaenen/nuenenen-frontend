@@ -3,12 +3,7 @@
     <section class="container breakout">
       <div class="home-text">
         <h1>{{ props.title }}</h1>
-        <RichTextComponent
-          class="subtitle"
-          v-if="props.isRichText && props.description"
-          :content="props.description"
-        ></RichTextComponent>
-        <p class="subtitle" v-if="!props.isRichText && props.description">
+        <p class="subtitle">
           {{ props.description }}
         </p>
         <nuxt-link
@@ -63,7 +58,6 @@ const rocketStyle = computed(() => ({
 const props = defineProps<{
   title: string | null
   description: string | null
-  isRichText?: boolean
   actionButtonName?: string
   actionButtonLink?: string
   image?: Image

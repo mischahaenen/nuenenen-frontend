@@ -6,7 +6,6 @@
       <BaseBanner
         :title="stepAttributes.Name"
         :description="stepAttributes.Description"
-        :is-rich-text="true"
         :image="stepAttributes.logo.data"
       />
       <template v-for="(zone, index) in stepAttributes.pageZone" :key="index">
