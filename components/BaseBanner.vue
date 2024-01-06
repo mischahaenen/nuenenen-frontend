@@ -66,7 +66,7 @@ const props = defineProps<{
 
 <style scoped lang="scss">
 .banner {
-  min-height: 70dvh;
+  min-height: 75dvh;
   position: relative;
 }
 
@@ -131,23 +131,21 @@ const props = defineProps<{
   .container {
     gap: 0;
     flex-direction: column;
+    margin-top: 6rem;
   }
   .home-banner {
     flex-direction: column;
   }
+
+  .rocket-image {
+    bottom: 100px;
+  }
 }
 @media screen and (max-width: 768px) {
-  .banner {
-    min-height: 50dvh;
-  }
   .banner::after {
     width: 100%;
     min-height: 100%;
     border-radius: 0;
-  }
-
-  .rocket-image {
-    bottom: 50px;
   }
 }
 </style>
