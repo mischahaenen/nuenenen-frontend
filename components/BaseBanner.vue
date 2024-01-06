@@ -83,7 +83,6 @@ const props = defineProps<{
 }
 
 .container {
-  margin-top: 6rem;
   display: flex;
   gap: var(--space-large);
   align-items: center;
@@ -118,7 +117,7 @@ const props = defineProps<{
   z-index: -1;
 }
 
-.woods-image {
+.woods {
   position: absolute;
   bottom: 0;
   z-index: -1;
