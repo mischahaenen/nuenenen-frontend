@@ -40,6 +40,8 @@
               'nav-item-expandable': hasSteps(page),
             },
           ]"
+          @mouseover="submenuVisible = true"
+          @mouseleave="submenuVisible = false"
         >
           <nuxt-link :to="`/${page.attributes.url}`" @click="toggleNav"
             >{{ page.attributes.slug
@@ -55,7 +57,7 @@
                 d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"
               /></svg
           ></nuxt-link>
-          <ul v-if="hasSteps(page)" class="submenu">
+          <ul v-if="hasSteps(page)" v-show="submenuVisible" class="submenu">
             <li
               v-for="step in (page.attributes.pageZone.filter((zone) => zone.__component === 'pages.steps')[0] as StepZone).steps.data"
               :key="step.attributes.Name"
@@ -77,6 +79,7 @@
 const scroll = useScrollY()
 const navExpanded = useState(() => false)
 const pages = useState<Page[]>(() => [])
+const submenuVisible = useState(() => false)
 
 onMounted(async () => {
   const pagesResponse = await getNavigation()
