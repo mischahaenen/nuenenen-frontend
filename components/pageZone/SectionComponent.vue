@@ -81,8 +81,8 @@ onMounted(() => {
 }
 
 .image {
-  width: min(500px, 100%);
-  height: 100%;
+  width: min(600px, 100%);
+  height: auto;
   object-fit: cover;
   border-radius: var(--border-radius);
   margin-block: 0;
