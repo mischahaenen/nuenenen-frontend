@@ -3,6 +3,11 @@
     <BaseHeader />
     <slot />
     <BaseFooter />
+    <CookieConsent />
+    <SpeedInsights />
   </div>
-  <CookieConsent />
 </template>
+
+<script lang="ts" setup>
+import { SpeedInsights } from '@vercel/speed-insights/vue'
+</script>

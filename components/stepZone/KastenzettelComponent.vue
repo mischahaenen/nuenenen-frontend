@@ -8,7 +8,10 @@
       },
     ]"
   >
-    <TitleComponent title="Kastenzeddel" :index="props.index"></TitleComponent>
+    <TitleComponent
+      title="Nächste Aktivität"
+      :index="props.index"
+    ></TitleComponent>
     <div class="breakout event-details">
       <div class="calendar-item">
         <template
@@ -111,12 +114,11 @@ const props = defineProps<{
   step: string
   index: number
 }>()
-
-/* const deregister = async () => {
+const deregister = async () => {
   const deregisterStore = useDeregisterStore()
   deregisterStore.setStep(props.step)
   await navigateTo('/kontakt')
-} */
+}
 </script>
 
 <style scoped lang="scss">

@@ -55,17 +55,6 @@
         />
       </div>
       <div class="formfield">
-        <label for="Message">Deine Nachricht:</label>
-        <textarea
-          id="Message"
-          v-model="form.Message"
-          class="forminput"
-          :class="{ even: !isOdd }"
-          placeholder="Hier deine Nachricht..."
-          required
-        ></textarea>
-      </div>
-      <div class="formfield">
         <label for="contact">Kontakt:</label>
         <select
           id="contact"
@@ -82,6 +71,17 @@
             {{ sender.attributes.Name }}
           </option>
         </select>
+      </div>
+      <div class="formfield">
+        <label for="Message">Deine Nachricht:</label>
+        <textarea
+          id="Message"
+          v-model="form.Message"
+          class="forminput"
+          :class="{ even: !isOdd }"
+          placeholder="Hier deine Nachricht..."
+          required
+        ></textarea>
       </div>
       <button class="btn btn-primary" type="submit" aria-label="Submit form">
         Absenden

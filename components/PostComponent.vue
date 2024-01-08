@@ -45,7 +45,7 @@ const formattedDate = computed(() =>
 const readingTime = computed(() => {
   const wpm = 225
   const words =
-    post.value?.attributes.description.trim().split(/\s+/).length || 0
+    post.value?.attributes.description.trim().split(/\s+/).length ?? 0
   return Math.ceil(words / wpm)
 })
 

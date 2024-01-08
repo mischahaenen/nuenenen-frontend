@@ -6,7 +6,6 @@
       <BaseBanner
         :title="stepAttributes.Name"
         :description="stepAttributes.Description"
-        :is-rich-text="true"
         :image="stepAttributes.logo.data"
       />
       <template v-for="(zone, index) in stepAttributes.pageZone" :key="index">
@@ -16,7 +15,7 @@
           :zone="(zone as Section)"
           :index="index"
         />
-        <StepZoneKastenzeddelComponent
+        <StepZoneKastenzettelComponent
           v-if="zone.__component == 'pages.kastenzeddel'"
           :id="zone.Title"
           :kastenzeddel="(zone as Kastenzeddel)"

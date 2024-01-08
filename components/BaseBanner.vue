@@ -3,12 +3,7 @@
     <section class="container breakout">
       <div class="home-text">
         <h1>{{ props.title }}</h1>
-        <RichTextComponent
-          class="subtitle"
-          v-if="props.isRichText && props.description"
-          :content="props.description"
-        ></RichTextComponent>
-        <p class="subtitle" v-if="!props.isRichText && props.description">
+        <p class="subtitle">
           {{ props.description }}
         </p>
         <nuxt-link
@@ -63,7 +58,6 @@ const rocketStyle = computed(() => ({
 const props = defineProps<{
   title: string | null
   description: string | null
-  isRichText?: boolean
   actionButtonName?: string
   actionButtonLink?: string
   image?: Image
@@ -72,7 +66,7 @@ const props = defineProps<{
 
 <style scoped lang="scss">
 .banner {
-  min-height: 70dvh;
+  min-height: 75dvh;
   position: relative;
 }
 
@@ -89,7 +83,6 @@ const props = defineProps<{
 }
 
 .container {
-  margin-top: 6rem;
   display: flex;
   gap: var(--space-large);
   align-items: center;
@@ -124,7 +117,7 @@ const props = defineProps<{
   z-index: -1;
 }
 
-.woods-image {
+.woods {
   position: absolute;
   bottom: 0;
   z-index: -1;
@@ -138,23 +131,21 @@ const props = defineProps<{
   .container {
     gap: 0;
     flex-direction: column;
+    margin-top: 6rem;
   }
   .home-banner {
     flex-direction: column;
   }
+
+  .rocket-image {
+    bottom: 100px;
+  }
 }
 @media screen and (max-width: 768px) {
-  .banner {
-    min-height: 50dvh;
-  }
   .banner::after {
     width: 100%;
     min-height: 100%;
     border-radius: 0;
-  }
-
-  .rocket-image {
-    bottom: 50px;
   }
 }
 </style>

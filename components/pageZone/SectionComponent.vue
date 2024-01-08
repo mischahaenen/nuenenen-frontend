@@ -7,8 +7,8 @@
   >
     <section
       :class="[
-        'section breakout',
-        { flex: props.zone.Image?.data },
+        'section',
+        { 'flex breakout': props.zone.Image?.data },
         { 'row-reverse': index % 2 !== 0 },
       ]"
     >
@@ -81,8 +81,8 @@ onMounted(() => {
 }
 
 .image {
-  width: min(400px, 100%);
-  height: auto;
+  width: min(500px, 100%);
+  height: 100%;
   object-fit: cover;
   border-radius: var(--border-radius);
   margin-block: 0;

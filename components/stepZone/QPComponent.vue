@@ -13,7 +13,7 @@
       :index="props.index"
     ></TitleComponent>
     <ul>
-      <li>
+      <li v-if="props.zone.Document?.data">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="24"
@@ -24,10 +24,7 @@
             d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
           />
         </svg>
-        <a
-          v-if="props.zone.Document?.data"
-          :href="props.zone.Document.data.attributes.url"
-          download=""
+        <a :href="props.zone.Document.data.attributes.url" download=""
           >Download {{ props.zone.Document.data.attributes.name }}</a
         >
       </li>
@@ -44,9 +41,18 @@
           props.zone.Image.data.attributes.alternativeText ||
           props.zone.Image.data.attributes.name
         "
-      >
-      </NuxtImg
-    ></a>
+      />
+      ></a
+    >
+    <NuxtImg
+      v-else-if="props.zone.Image?.data"
+      class="qp-image"
+      :src="props.zone.Image.data.attributes.url"
+      :alt="
+        props.zone.Image.data.attributes.alternativeText ||
+        props.zone.Image.data.attributes.name
+      "
+    />
   </section>
 </template>
 
