@@ -42,8 +42,7 @@
           props.zone.Image.data.attributes.name
         "
       />
-      ></a
-    >
+    </a>
     <NuxtImg
       v-else-if="props.zone.Image?.data"
       class="qp-image"
