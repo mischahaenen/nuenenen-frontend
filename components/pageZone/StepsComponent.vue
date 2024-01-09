@@ -49,7 +49,7 @@ a:hover h3 {
 }
 .step-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+  grid-template-columns: repeat(auto-fit, 200px);
   justify-content: center;
   gap: var(--space-medium);
 }

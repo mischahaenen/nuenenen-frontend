@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  title: string
+  title?: string
   zone: ImageZone
   index: number
 }>()

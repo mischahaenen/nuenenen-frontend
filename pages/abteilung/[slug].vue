@@ -61,7 +61,9 @@
   </main>
 </template>
 <script setup lang="ts">
+import { useNavigationStore } from '~/store/navigation'
 const route = useRoute()
+const navigation = useNavigationStore()
 
 const {
   data: step,
@@ -69,4 +71,12 @@ const {
   error,
 } = await useAsyncData('step', () => getStep(route.params.slug as string))
 const stepAttributes = computed(() => step.value?.data[0].attributes ?? null)
+
+watch(
+  route,
+  () => {
+    navigation.close()
+  },
+  { immediate: true, deep: true }
+)
 </script>
