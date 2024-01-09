@@ -43,7 +43,7 @@
           @mouseover="submenuVisible = true"
           @mouseleave="submenuVisible = false"
         >
-          <nuxt-link :to="`/${page.attributes.url}`" @click="toggleNav"
+          <nuxt-link :to="`/${page.attributes.url}`"
             >{{ page.attributes.slug
             }}<svg
               v-if="hasSteps(page)"
