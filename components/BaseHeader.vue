@@ -154,6 +154,7 @@ a.skip-main:active {
   word-spacing: 0.2rem;
   letter-spacing: 0.05rem;
   display: flex;
+  align-items: center;
   gap: 1rem;
 }
 .home-link p {
@@ -177,7 +178,11 @@ a.skip-main:active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4rem;
+  gap: 2rem;
+
+  @include breakpoint-xl {
+    gap: 4rem;
+  }
 }
 
 .nav-item a {

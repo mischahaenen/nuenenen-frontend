@@ -28,6 +28,13 @@ export default defineNuxtConfig({
   vite: {
     // @ts-ignore ssr:
     noExternal: ['moment'],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@use "@/assets/css/utils.scss" as *;',
+        },
+      },
+    },
   },
   image: {
     dir: 'assets/',

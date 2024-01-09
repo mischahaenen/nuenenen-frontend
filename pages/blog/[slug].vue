@@ -1,6 +1,6 @@
 <template>
   <main v-if="postData" class="content-grid container">
-    <template v-if="pending"><p>Loading...</p></template>
+    <template v-if="pending"></template>
     <template v-if="error"><p>Something went wrong</p></template>
     <template v-if="postData">
       <div class="full-width-image">

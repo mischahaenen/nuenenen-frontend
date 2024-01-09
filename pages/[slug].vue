@@ -1,6 +1,6 @@
 <template>
   <main class="content-grid">
-    <template v-if="pending"><p>Loading...</p></template>
+    <template v-if="pending"></template>
     <template v-if="error"><p>Something went wrong</p></template>
     <template v-if="page">
       <BaseBanner
