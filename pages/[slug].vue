@@ -84,9 +84,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useNavigationStore } from '~/store/navigation'
 const route = useRoute()
-const navigation = useNavigationStore()
 
 const {
   data: page,
@@ -106,13 +104,4 @@ useHead(() => ({
   title: title.value,
   'Content-Security-Policy': 'upgrade-insecure-requests',
 }))
-
-watch(
-  route,
-  () => {
-    if (navigation.hasSubMenu(page.value?.data[0])) return
-    navigation.close()
-  },
-  { immediate: true, deep: true }
-)
 </script>

@@ -13,11 +13,11 @@
       <p><b>PFADI</b> NÜNENEN</p>
     </nuxt-link>
 
-    <nav class="nav" :class="{ 'nav-expanded': navigation.expanded }">
+    <nav class="nav" :class="{ 'nav-expanded': navExpanded }">
       <button
         class="nav-toggle"
         aria-label="Toggle navigation"
-        @click="navigation.toggle"
+        @click="toggleNav"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -32,22 +32,21 @@
       </button>
       <ul class="nav-links">
         <li
-          v-for="page in navigation.pages"
+          v-for="page in pages"
           :key="page.attributes.slug"
           :class="[
             'nav-item',
             {
-              'nav-item-expandable': navigation.hasSubMenu(page),
+              'nav-item-expandable': hasSteps(page),
             },
           ]"
-          @click="isMobile ? navigation.toggleSubMenu(page) : null"
-          @mouseover="!isMobile ? navigation.openSubMenu(page) : null"
-          @mouseleave="!isMobile ? navigation.closeSubMenu(page) : null"
+          @mouseover="submenuVisible = true"
+          @mouseleave="submenuVisible = false"
         >
-          <nuxt-link :to="`/${page.attributes.url}`"
+          <nuxt-link :to="`/${page.attributes.url}`" @click="toggleNav"
             >{{ page.attributes.slug
             }}<svg
-              v-if="navigation.hasSubMenu(page)"
+              v-if="hasSteps(page)"
               class="chevron"
               xmlns="http://www.w3.org/2000/svg"
               height="24"
@@ -58,17 +57,14 @@
                 d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"
               /></svg
           ></nuxt-link>
-          <ul
-            v-if="navigation.hasSubMenu(page)"
-            v-show="navigation.isSubmenuOpen(page)"
-            class="submenu"
-          >
+          <ul v-if="hasSteps(page)" v-show="submenuVisible" class="submenu">
             <li
               v-for="step in (page.attributes.pageZone.filter((zone) => zone.__component === 'pages.steps')[0] as StepZone).steps.data"
               :key="step.attributes.Name"
             >
               <nuxt-link
                 :to="`/${page.attributes.url}/${step.attributes.Slug}`"
+                @click="toggleNav"
                 >{{ step.attributes.Name }}</nuxt-link
               >
             </li>
@@ -80,18 +76,25 @@
 </template>
 
 <script lang="ts" setup>
-import { useNavigationStore } from '~/store/navigation'
 const scroll = useScrollY()
-const { windowWidth } = useWindowSize()
-const navigation = useNavigationStore()
-const isMobile = computed(() => {
-  return windowWidth.value <= 1024
-})
+const navExpanded = useState(() => false)
+const pages = useState<Page[]>(() => [])
+const submenuVisible = useState(() => false)
 
 onMounted(async () => {
   const pagesResponse = await getNavigation()
-  navigation.pages = pagesResponse.data?.attributes?.pages?.data ?? []
+  pages.value = pagesResponse.data?.attributes?.pages?.data
 })
+
+const toggleNav = () => {
+  navExpanded.value = !navExpanded.value
+}
+
+const hasSteps = (page: Page) => {
+  return page.attributes.pageZone.some(
+    (zone) => zone.__component === 'pages.steps'
+  )
+}
 </script>
 
 <style scoped lang="scss">
@@ -313,7 +316,7 @@ a.skip-main:active {
     border-bottom: none;
   }
 
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: 768px) {
     .nav-links {
       background-color: var(--color-primary-800);
       box-shadow: 0px 25px 30px rgb(255 255 255 / 20%);
