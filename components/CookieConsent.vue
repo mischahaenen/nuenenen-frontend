@@ -28,11 +28,12 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const consentGiven = useState(() => false)
 const { grantConsent } = useGtag()
 
 onMounted(() => {
+  console.log(document.cookie)
   consentGiven.value =
     document.cookie.includes('cookie_consent_given=true') &&
     document.cookie.includes('F1TXT7Y96H')
@@ -40,8 +41,8 @@ onMounted(() => {
 
 const giveConsent = () => {
   document.cookie = 'cookie_consent_given=true'
-  consentGiven.value = true
   grantConsent('G-F1TXT7Y96H')
+  consentGiven.value = true
 }
 </script>
 

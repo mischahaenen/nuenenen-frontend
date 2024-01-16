@@ -59,8 +59,4 @@ export default defineNuxtConfig({
       Orbitron: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
   },
-  gtag: {
-    id: 'G-F1TXT7Y96H',
-    initialConsent: false,
-  },
 })
