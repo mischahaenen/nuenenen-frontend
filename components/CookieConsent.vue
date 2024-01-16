@@ -33,7 +33,6 @@ const consentGiven = useState(() => false)
 const { grantConsent } = useGtag()
 
 onMounted(() => {
-  console.log(document.cookie)
   consentGiven.value =
     document.cookie.includes('cookie_consent_given=true') &&
     document.cookie.includes('F1TXT7Y96H')
