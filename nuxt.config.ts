@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxtjs/robots',
     '@nuxt/content',
+    'nuxt-gtag',
   ],
   strapi: {
     url: process.env.STRAPI_URL,
@@ -57,5 +58,9 @@ export default defineNuxtConfig({
       Lato: [100, 200, 300, 400, 500, 600, 700, 800, 900],
       Orbitron: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
+  },
+  gtag: {
+    id: 'G-F1TXT7Y96H',
+    initialConsent: false,
   },
 })

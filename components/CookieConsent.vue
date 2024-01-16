@@ -15,7 +15,7 @@
       angenehm zu gestalten, benutzen wir Cookies. Darüber hinaus setzen wir
       Tracking-Tools ein, damit wir unsere Seite laufend verbessern können.
       Durch die weitere Nutzung dieser Website erklären Sie sich mit der Nutzung
-      von Cookies, sowie dem Tracking-Tool Vercel einverstanden.
+      von Cookies, sowie dem Tracking-Tool Google Analytics einverstanden.
     </p>
     <div class="button-section">
       <button class="btn btn-primary" @click="giveConsent">
@@ -29,15 +29,19 @@
 </template>
 
 <script setup>
-const consentGiven = ref(false)
+const consentGiven = useState(() => false)
+const { grantConsent } = useGtag()
 
 onMounted(() => {
-  consentGiven.value = document.cookie.includes('consent_given=true')
+  consentGiven.value =
+    document.cookie.includes('cookie_consent_given=true') &&
+    document.cookie.includes('F1TXT7Y96H')
 })
 
 const giveConsent = () => {
-  document.cookie = 'consent_given=true'
+  document.cookie = 'cookie_consent_given=true'
   consentGiven.value = true
+  grantConsent('G-F1TXT7Y96H')
 }
 </script>
 

@@ -104,4 +104,12 @@ useHead(() => ({
   title: title.value,
   'Content-Security-Policy': 'upgrade-insecure-requests',
 }))
+
+const { gtag } = useGtag()
+
+// SSR-ready
+gtag('event', 'screen_view', {
+  app_name: 'Webapp',
+  screen_name: page.value?.data[0].attributes?.slug ?? 'slug',
+})
 </script>
