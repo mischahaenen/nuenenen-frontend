@@ -28,11 +28,13 @@
         format="webp"
         loading="lazy"
         provider="strapi"
-        :src="props.image.attributes.url"
+        :src="props.image.attributes.hash + props.image.attributes.ext"
         :alt="
           props.image.attributes.alternativeText ||
           props.image.attributes.name + ' Logo'
         "
+        sizes="100vw sm:50vw md:400px"
+        :modifiers="{ breakpoint: 'medium' }"
       />
     </section>
     <svg

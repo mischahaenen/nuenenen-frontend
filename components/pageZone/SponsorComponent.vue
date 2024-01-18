@@ -19,7 +19,11 @@
         <NuxtImg
           class="sponsor-logo"
           format="webp"
-          :src="sponsor.attributes.Logo.data.attributes.url"
+          provider="strapi"
+          :src="
+            sponsor.attributes.Logo.data.attributes.hash +
+            sponsor.attributes.Logo.data.attributes.ext
+          "
           :alt="
             sponsor.attributes.Logo.data.attributes.alternativeText ||
             sponsor.attributes.Name

@@ -4,12 +4,17 @@
       <NuxtImg
         v-if="post.attributes.images?.data?.length"
         class="card-image"
-        :src="post.attributes.images.data[0].attributes.url"
+        format="webp"
+        provider="strapi"
+        :src="
+          post.attributes.images.data[0].attributes.hash +
+          post.attributes.images.data[0].attributes.ext
+        "
         :alt="
           post.attributes.images.data[0].attributes.alternativeText ||
           post.attributes.images.data[0].attributes.name
         "
-        format="webp"
+        sizes="100vw sm:50vw md:400px"
       />
       <div class="card-content">
         <div class="card-subtitle">

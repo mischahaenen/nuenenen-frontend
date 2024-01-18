@@ -20,10 +20,16 @@
           class="step-item"
         >
           <NuxtImg
-            format="webp"
             class="step-image"
-            :src="step.attributes.logo.data.attributes.url"
+            format="webp"
+            provider="strapi"
+            :src="
+              step.attributes.logo.data.attributes.hash +
+              step.attributes.logo.data.attributes.ext
+            "
             :alt="step.attributes.logo.data.attributes.name"
+            sizes="100vw sm:50vw md:400px"
+            :modifiers="{ breakpoint: 'small' }"
           />
           <h3>{{ step.attributes.Name }}</h3>
         </nuxt-link>

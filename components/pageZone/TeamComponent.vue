@@ -1,15 +1,14 @@
 <template>
   <section
     :class="[
-      'pt-medium pb-medium',
+      'pt-medium pb-medium full-width content-grid',
       {
-        'full-width content-grid bg-accent-50 dark:bg-primary-700':
-          index % 2 === 1,
+        ' bg-accent-50 dark:bg-primary-700': index % 2 === 1,
       },
     ]"
   >
     <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-    <div v-if="props.zone.leaders?.data" class="member-section">
+    <div v-if="props.zone.leaders?.data" class="member-section breakout">
       <button
         v-for="leader of props.zone.leaders.data"
         :key="leader.attributes.Name"
@@ -20,11 +19,17 @@
           v-if="leader.attributes.Image?.data"
           class="image"
           format="webp"
-          :src="leader.attributes.Image.data.attributes.url"
+          provider="strapi"
+          :src="
+            leader.attributes.Image.data.attributes.hash +
+            leader.attributes.Image.data.attributes.ext
+          "
           :alt="
             leader.attributes.Image.data.attributes.alternativeText ||
             leader.attributes.Image.data.attributes.name
           "
+          sizes="100vw sm:50vw md:400px"
+          :modifiers="{ breakpoint: 'small' }"
         />
         <div class="user-card__content">
           <h3>{{ leader.attributes.Name }}</h3>
@@ -57,8 +62,8 @@ const props = defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 250px;
-  width: 250px;
+  width: max(16rem, 20vw);
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   cursor: pointer;
   border: none;

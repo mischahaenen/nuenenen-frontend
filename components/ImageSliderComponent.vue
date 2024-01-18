@@ -8,9 +8,11 @@
       <div class="carousel__item">
         <NuxtImg
           format="webp"
+          provider="strapi"
           class="carousel__image"
-          :src="image.attributes.url"
+          :src="image.attributes.hash + image.attributes.ext"
           :alt="image.attributes.alternativeText || image.attributes.name"
+          sizes="100vw sm:50vw md:400px"
         >
         </NuxtImg>
       </div>
@@ -22,13 +24,15 @@
   </carousel>
   <NuxtImg
     v-if="props.images && props.images.length === 1"
-    format="webp"
     class="carousel__image"
-    :src="props.images[0].attributes.url"
+    format="webp"
+    provider="strapi"
+    :src="props.images[0].attributes.hash + props.images[0].attributes.ext"
     :alt="
       props.images[0].attributes.alternativeText ||
       props.images[0].attributes.name
     "
+    sizes="100vw sm:50vw md:400px"
   ></NuxtImg>
 </template>
 

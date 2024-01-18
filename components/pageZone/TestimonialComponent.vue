@@ -26,18 +26,24 @@
         <div class="author">
           <NuxtImg
             v-if="testimonial.attributes.Image?.data"
-            format="webp"
             class="author-img"
-            :src="testimonial.attributes.Image.data.attributes.url"
+            format="webp"
+            provider="strapi"
+            :src="
+              testimonial.attributes.Image.data.attributes.hash +
+              testimonial.attributes.Image.data.attributes.ext
+            "
             :alt="
               testimonial.attributes.Image.data.attributes.alternativeText ||
               testimonial.attributes.Name
             "
+            sizes="100vw sm:50vw md:400px"
+            :modifiers="{ breakpoint: 'small' }"
           />
           <NuxtImg
             v-else
-            format="webp"
             class="author-img"
+            format="webp"
             src="svg/female_avatar.svg"
             alt="Placeholder"
           />
