@@ -316,7 +316,7 @@ a.skip-main:active {
     border-bottom: none;
   }
 
-  @media screen and (max-width: 768px) {
+  @include breakpoint-lg {
     .nav-links {
       background-color: var(--color-primary-800);
       box-shadow: 0px 25px 30px rgb(255 255 255 / 20%);
@@ -324,7 +324,7 @@ a.skip-main:active {
   }
 }
 
-@media (max-width: 1024px) {
+@include breakpoint-lg {
   .header {
     padding: 0 var(--space-medium);
   }

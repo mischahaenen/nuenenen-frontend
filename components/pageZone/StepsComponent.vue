@@ -5,20 +5,15 @@
       props.index % 2 === 0 ? '' : ' bg-accent-50 dark:bg-primary-700',
     ]"
   >
-    <TitleComponent
-      class="pt-medium"
-      :title="props.zone.Title"
-      :index="index"
-    ></TitleComponent>
+    <TitleComponent :title="props.zone.Title" :index="index"></TitleComponent>
     <RichTextComponent :content="props.zone.Description" />
-    <div class="breakout pb-medium">
-      <article class="step-grid">
-        <nuxt-link
-          v-for="step of props.zone.steps.data"
-          :key="step.attributes.Name"
-          :to="'abteilung/' + step.attributes.Slug"
-          class="step-item"
-        >
+    <div class="mt-medium step-grid">
+      <article
+        v-for="step of props.zone.steps.data"
+        :key="step.attributes.Name"
+        class="step-item"
+      >
+        <nuxt-link :to="'abteilung/' + step.attributes.Slug">
           <NuxtImg
             class="step-image"
             format="webp"
@@ -31,7 +26,10 @@
             sizes="100vw sm:50vw md:400px"
             :modifiers="{ breakpoint: 'small' }"
           />
-          <h3>{{ step.attributes.Name }}</h3>
+          <div class="step-content">
+            <h3>{{ step.attributes.Name }}</h3>
+            <p>{{ step.attributes.Description }}</p>
+          </div>
         </nuxt-link>
       </article>
     </div>
@@ -54,46 +52,79 @@ a:hover h3 {
   text-decoration: underline;
 }
 .step-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 200px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-small);
   justify-content: center;
-  gap: var(--space-medium);
-}
-
-@media screen and (max-width: 480px) {
-  .step-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .step-item {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  border-radius: var(--border-radius);
-  padding: var(--space-medium);
-  overflow: hidden;
+  align-items: flex-end;
   transition: all 0.2s ease-in-out;
 }
 
-.step-item:hover {
-  background-color: var(--color-accent-100);
-  .step-image {
-    transform: scale(1.05);
+.step-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-family);
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  font-size: 1rem;
+  text-align: center;
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary-50) 60%,
+    transparent
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+
+  h3 {
+    margin-bottom: 0;
   }
 }
 
 .step-image {
-  width: 100%;
+  width: 15rem;
   aspect-ratio: 1;
   object-fit: cover;
   border-radius: 50%;
-  transition: transform 0.2s ease-in-out;
+}
+
+.step-item:hover {
+  .step-content {
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-100) 80%,
+      transparent
+    );
+  }
 }
 
 .dark-mode {
+  .step-content {
+    background-color: color-mix(
+      in srgb,
+      var(--color-accent-900) 60%,
+      transparent
+    );
+  }
   .step-item:hover {
-    background-color: var(--color-accent-900);
+    .step-content {
+      background-color: color-mix(
+        in srgb,
+        var(--color-accent-800) 60%,
+        transparent
+      );
+    }
   }
 }
 </style>

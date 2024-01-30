@@ -8,7 +8,7 @@
     ]"
   >
     <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-    <div v-if="props.zone.leaders?.data" class="member-section breakout">
+    <div v-if="props.zone.leaders?.data" class="member-section">
       <button
         v-for="leader of props.zone.leaders.data"
         :key="leader.attributes.Name"
@@ -31,13 +31,13 @@
           sizes="100vw sm:50vw md:400px"
           :modifiers="{ breakpoint: 'small' }"
         />
-        <div class="user-card__content">
+        <article class="user-card__content">
           <h3>{{ leader.attributes.Name }}</h3>
           <p>{{ leader.attributes.Position }}</p>
           <a :href="'mailto:' + leader.attributes.Email">{{
             leader.attributes.Email
           }}</a>
-        </div>
+        </article>
       </button>
     </div>
   </section>
@@ -54,7 +54,7 @@ const props = defineProps<{
 .member-section {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-medium);
+  gap: var(--space-small);
   justify-content: center;
 }
 .user-card {
@@ -62,7 +62,8 @@ const props = defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
-  width: max(16rem, 20vw);
+  width: 100%;
+  max-width: 15rem;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   cursor: pointer;

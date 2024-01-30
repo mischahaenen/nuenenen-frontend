@@ -88,7 +88,7 @@ ul li svg {
 .qp-image {
   width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: 50px;
 }
 
 .dark-mode {
