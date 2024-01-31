@@ -1,10 +1,9 @@
 <template>
   <section
     :class="[
-      'pt-medium pb-medium',
+      'pt-medium pb-medium full-width content-grid',
       {
-        'full-width content-grid bg-accent-50 dark:bg-primary-700':
-          index % 2 === 1,
+        ' bg-accent-50 dark:bg-primary-700': index % 2 === 1,
       },
     ]"
   >
@@ -20,19 +19,25 @@
           v-if="leader.attributes.Image?.data"
           class="image"
           format="webp"
-          :src="leader.attributes.Image.data.attributes.url"
+          provider="strapi"
+          :src="
+            leader.attributes.Image.data.attributes.hash +
+            leader.attributes.Image.data.attributes.ext
+          "
           :alt="
             leader.attributes.Image.data.attributes.alternativeText ||
             leader.attributes.Image.data.attributes.name
           "
+          sizes="100vw sm:50vw md:400px"
+          :modifiers="{ breakpoint: 'small' }"
         />
-        <div class="user-card__content">
+        <article class="user-card__content">
           <h3>{{ leader.attributes.Name }}</h3>
           <p>{{ leader.attributes.Position }}</p>
           <a :href="'mailto:' + leader.attributes.Email">{{
             leader.attributes.Email
           }}</a>
-        </div>
+        </article>
       </button>
     </div>
   </section>
@@ -49,7 +54,7 @@ const props = defineProps<{
 .member-section {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-medium);
+  gap: var(--space-small);
   justify-content: center;
 }
 .user-card {
@@ -57,8 +62,9 @@ const props = defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 250px;
-  width: 250px;
+  width: 100%;
+  max-width: 15rem;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   cursor: pointer;
   border: none;

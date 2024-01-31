@@ -36,11 +36,18 @@
       ><NuxtImg
         v-if="props.zone.Image?.data"
         class="qp-image"
-        :src="props.zone.Image.data.attributes.url"
+        format="webp"
+        provider="strapi"
+        :src="
+          props.zone.Image.data.attributes.hash +
+          props.zone.Image.data.attributes.ext
+        "
         :alt="
           props.zone.Image.data.attributes.alternativeText ||
           props.zone.Image.data.attributes.name
         "
+        sizes="100vw sm:50vw md:400px"
+        :modifiers="{ breakpoint: 'large' }"
       />
     </a>
     <NuxtImg
@@ -81,7 +88,7 @@ ul li svg {
 .qp-image {
   width: 100%;
   height: auto;
-  border-radius: var(--border-radius);
+  border-radius: 50px;
 }
 
 .dark-mode {

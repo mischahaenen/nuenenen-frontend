@@ -40,7 +40,10 @@ export default defineNuxtConfig({
   image: {
     dir: 'assets/',
     formats: ['webp', 'svg', 'png', 'jpg'],
-    strapi: {},
+    strapi: {
+      baseURL:
+        'https://nuenenen-strapi-aws-s3-images-bucket.s3.eu-central-1.amazonaws.com/',
+    },
   },
   nitro: {
     compressPublicAssets: true,
@@ -48,7 +51,6 @@ export default defineNuxtConfig({
   },
   devtools: {
     enabled: true,
-
     timeline: {
       enabled: true,
     },

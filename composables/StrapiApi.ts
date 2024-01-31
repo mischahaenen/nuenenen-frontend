@@ -19,7 +19,7 @@ interface ApiResponse {
 export const getNavigation = () => {
   const { find } = useStrapi4()
   return find<ApiResponse>('api/navigation', {
-    populate: 'deep',
+    populate: 'pages',
   })
 }
 

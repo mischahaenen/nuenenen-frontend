@@ -33,7 +33,7 @@
         {{ step.attributes.Name }}
       </button>
     </div>
-    <div v-if="posts.length" class="breakout post-grid wrapper">
+    <div v-if="posts.length" class="post-grid wrapper">
       <PostComponent
         v-if="posts.at(0)"
         :key="posts.at(0)?.id"
