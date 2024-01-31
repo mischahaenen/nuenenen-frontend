@@ -22,6 +22,10 @@
       <NuxtImg
         v-if="props.zone.Image?.data?.attributes?.url"
         class="image"
+        :class="{
+          portrait: isPortrait(props.zone.Image.data.attributes),
+          landscape: !isPortrait(props.zone.Image.data.attributes),
+        }"
         provider="strapi"
         format="webp"
         :src="
@@ -44,6 +48,10 @@ const props = defineProps<{
   zone: Section
   index: number
 }>()
+
+const isPortrait = (image) => {
+  return image.height > image.width
+}
 
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
@@ -86,16 +94,23 @@ onMounted(() => {
 }
 
 .image {
-  max-width: 100%;
   width: auto;
-  max-height: 600px;
+  max-width: 100%;
   height: auto;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 50px;
   margin: 0;
 }
 
-@media screen and (max-width: 1000px) {
+.portrait {
+  max-height: 600px;
+}
+
+.landscape {
+  max-width: 600px;
+}
+
+@include breakpoint-lg {
   .flex {
     flex-direction: column;
     gap: var(--space-small);
@@ -103,6 +118,16 @@ onMounted(() => {
     &.row-reverse {
       flex-direction: column;
     }
+  }
+}
+
+@include breakpoint-md {
+  .portrait {
+    max-height: auto;
+  }
+
+  .landscape {
+    max-width: 100%;
   }
 }
 </style>
