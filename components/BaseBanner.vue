@@ -133,6 +133,7 @@ const props = defineProps<{
   .container {
     gap: 0;
     flex-direction: column;
+    align-items: flex-start;
     margin-top: 6rem;
   }
   .home-banner {

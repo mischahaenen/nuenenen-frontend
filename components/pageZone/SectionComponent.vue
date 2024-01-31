@@ -86,7 +86,11 @@ onMounted(() => {
 }
 
 .image {
-  object-fit: contain;
+  max-width: 100%;
+  width: auto;
+  max-height: 600px;
+  height: auto;
+  object-fit: cover;
   border-radius: 50px;
   margin: 0;
 }

@@ -86,7 +86,8 @@ ul li svg {
   fill: var(--color-accent-900);
 }
 .qp-image {
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   height: auto;
   border-radius: 50px;
 }
