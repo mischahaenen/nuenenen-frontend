@@ -32,7 +32,7 @@ pnpm run dev
 yarn dev
 ```
 
-## Production
+## Production :rocket:
 
 Build the application for production:
 

@@ -1,31 +1,31 @@
 @import 'variables';
 
 @mixin breakpoint-xs {
-  @media (min-width: $breakpoint-extra-small) {
+  @media (max-width: $breakpoint-extra-small) {
     @content;
   }
 }
 
 @mixin breakpoint-sm {
-  @media (min-width: $breakpoint-small) {
+  @media (max-width: $breakpoint-small) {
     @content;
   }
 }
 
 @mixin breakpoint-md {
-  @media (min-width: $breakpoint-medium) {
+  @media (max-width: $breakpoint-medium) {
     @content;
   }
 }
 
 @mixin breakpoint-lg {
-  @media (min-width: $breakpoint-large) {
+  @media (max-width: $breakpoint-large) {
     @content;
   }
 }
 
 @mixin breakpoint-xl {
-  @media (min-width: $breakpoint-extra-large) {
+  @media (max-width: $breakpoint-extra-large) {
     @content;
   }
 }

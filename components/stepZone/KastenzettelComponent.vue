@@ -66,7 +66,7 @@
             </template>
             <template v-else>
               {{ moment(props.kastenzeddel.StartDate).format('DD. MMM. yyyy') }}
-              am
+              um
               <b>{{
                 moment(props.kastenzeddel.StartTime, 'HH:mm:ss.SSS').format(
                   'HH:mm'
@@ -74,7 +74,7 @@
               }}</b>
               Uhr bis
               {{ moment(props.kastenzeddel.EndDate).format('DD. MMM. yyyy') }}
-              am
+              um
               <b>{{
                 moment(props.kastenzeddel.EndTime, 'HH:mm:ss.SSS').format(
                   'HH:mm'

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!consentGiven" class="cookie-consent">
+  <div :class="['cookie-consent', { display: !consentGiven }]">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       height="24"
@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-const consentGiven = useState(() => false)
+const consentGiven = useState(() => true)
 const { grantConsent } = useGtag()
 
 onMounted(() => {
@@ -48,7 +48,7 @@ const giveConsent = () => {
 <style scoped lang="scss">
 .cookie-consent {
   position: fixed;
-  display: flex;
+  display: none;
   align-items: center;
   background-color: var(--color-primary-50);
   padding: 2rem;
@@ -56,6 +56,10 @@ const giveConsent = () => {
   left: 0;
   right: 0;
   border-radius: 0;
+}
+
+.cookie-consent.display {
+  display: flex;
 }
 
 .cookie-consent svg {

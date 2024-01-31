@@ -24,11 +24,16 @@
         class="image"
         provider="strapi"
         format="webp"
-        :src="props.zone.Image.data.attributes.url"
+        :src="
+          props.zone.Image.data.attributes.hash +
+          props.zone.Image.data.attributes.ext
+        "
         :alt="
           props.zone.Image.data.attributes.alternativeText ??
           props.zone.Image.data.attributes.name
         "
+        sizes="100vw sm:50vw md:400px"
+        :modifiers="{ breakpoint: 'large' }"
       ></NuxtImg>
     </section>
   </div>
@@ -72,8 +77,8 @@ onMounted(() => {
   display: flex;
   gap: var(--space-large);
   align-items: center;
-  justify-content: space-between;
   flex-direction: row;
+  justify-content: center;
 
   &.row-reverse {
     flex-direction: row-reverse;
@@ -81,11 +86,9 @@ onMounted(() => {
 }
 
 .image {
-  width: min(600px, 100%);
-  height: auto;
-  object-fit: cover;
-  border-radius: var(--border-radius);
-  margin-block: 0;
+  object-fit: contain;
+  border-radius: 50px;
+  margin: 0;
 }
 
 @media screen and (max-width: 1000px) {
