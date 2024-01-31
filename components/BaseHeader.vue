@@ -13,7 +13,12 @@
       <p><b>PFADI</b> NÜNENEN</p>
     </nuxt-link>
 
-    <nav class="nav" :class="{ 'nav-expanded': navExpanded }">
+    <nav
+      v-if="navigation"
+      class="nav"
+      :class="{ 'nav-expanded': navExpanded }"
+      aria-label="Navigation"
+    >
       <button
         class="nav-toggle"
         aria-label="Toggle navigation"
@@ -32,43 +37,23 @@
       </button>
       <ul class="nav-links">
         <li
-          v-for="page in pages"
+          v-for="page in navigation.data.attributes.pages.data"
           :key="page.attributes.slug"
-          :class="[
-            'nav-item',
-            {
-              'nav-item-expandable': hasSteps(page),
-            },
-          ]"
-          @mouseover="submenuVisible = true"
-          @mouseleave="submenuVisible = false"
+          class="nav-item"
         >
-          <nuxt-link :to="`/${page.attributes.url}`"
-            >{{ page.attributes.slug
-            }}<svg
-              v-if="hasSteps(page)"
-              class="chevron"
-              xmlns="http://www.w3.org/2000/svg"
-              height="24"
-              viewBox="0 -960 960 960"
-              width="24"
-            >
-              <path
-                d="M480-345 240-585l56-56 184 184 184-184 56 56-240 240Z"
-              /></svg
-          ></nuxt-link>
-          <ul v-if="hasSteps(page)" v-show="submenuVisible" class="submenu">
-            <li
-              v-for="step in (page.attributes.pageZone.filter((zone) => zone.__component === 'pages.steps')[0] as StepZone).steps.data"
-              :key="step.attributes.Name"
-            >
-              <nuxt-link
-                :to="`/${page.attributes.url}/${step.attributes.Slug}`"
-                @click="toggleNav"
-                >{{ step.attributes.Name }}</nuxt-link
-              >
-            </li>
-          </ul>
+          <nuxt-link :to="`/${page.attributes.url}`" @click="toggleNav"
+            >{{ page.attributes.slug }}
+          </nuxt-link>
+        </li>
+      </ul>
+    </nav>
+    <nav v-else aria-label="Navigation">
+      <ul class="nav-links">
+        <li class="nav-item">
+          <nuxt-link to="/home">Home</nuxt-link>
+        </li>
+        <li class="nav-item">
+          <nuxt-link to="/kontakt">Kontakt</nuxt-link>
         </li>
       </ul>
     </nav>
@@ -78,22 +63,13 @@
 <script lang="ts" setup>
 const scroll = useScrollY()
 const navExpanded = useState(() => false)
-const pages = useState<Page[]>(() => [])
-const submenuVisible = useState(() => false)
 
-onMounted(async () => {
-  const pagesResponse = await getNavigation()
-  pages.value = pagesResponse.data?.attributes?.pages?.data
-})
+const { data: navigation } = await useAsyncData('navigation', () =>
+  getNavigation()
+)
 
 const toggleNav = () => {
   navExpanded.value = !navExpanded.value
-}
-
-const hasSteps = (page: Page) => {
-  return page.attributes.pageZone.some(
-    (zone) => zone.__component === 'pages.steps'
-  )
 }
 </script>
 
@@ -193,56 +169,6 @@ a.skip-main:active {
   display: none;
 }
 
-.nav-item-expandable {
-  position: relative;
-}
-
-.nav-item-expandable a {
-  display: flex;
-  align-items: center;
-}
-
-.chevron {
-  transform: rotate(0deg);
-  transition: transform 0.3s ease;
-}
-
-.nav-item-expandable:hover .chevron,
-.nav-item-expandable:focus-within .chevron {
-  transform: rotate(180deg);
-}
-
-.nav-item-expandable:hover .submenu,
-.nav-item-expandable:focus-within .submenu {
-  display: block;
-
-  .chevron {
-    transform: rotate(180deg);
-  }
-}
-
-.submenu {
-  display: none;
-  position: absolute;
-  left: 0;
-  background-color: var(--color-white);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: var(--space-small);
-  text-align: left;
-  list-style: none;
-  z-index: 20;
-}
-
-.submenu li {
-  padding: 0.5rem 1rem 0.5rem 0;
-  border-bottom: var(--color-primary-50) 1px solid;
-}
-
-.submenu li:last-child {
-  border-bottom: none;
-}
-
 .nav-item:last-child a {
   background-color: var(--color-primary-700);
   color: var(--color-white);
@@ -286,12 +212,6 @@ a.skip-main:active {
     }
   }
 
-  .nav-item-expandable {
-    svg {
-      fill: var(--color-accent-50);
-    }
-  }
-
   .nav-item:last-child a {
     background: var(--color-accent-700);
     color: var(--color-white);
@@ -301,19 +221,6 @@ a.skip-main:active {
       background-color: var(--color-accent-600);
       color: var(--color-white);
     }
-  }
-
-  .submenu {
-    background-color: var(--color-primary-700);
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
-  }
-
-  .submenu li {
-    border-bottom: var(--color-primary-500) 1px solid;
-  }
-
-  .submenu li:last-child {
-    border-bottom: none;
   }
 
   @include breakpoint-lg {
@@ -388,24 +295,6 @@ a.skip-main:active {
   .nav-item:last-child {
     border-bottom: none;
     text-align: center;
-  }
-
-  .nav-item-expandable {
-    position: unset;
-    display: block;
-  }
-
-  .submenu {
-    position: unset;
-    display: none;
-    background-color: transparent !important;
-    box-shadow: none !important;
-    text-align: left;
-    list-style: none;
-
-    li {
-      border-bottom: none !important;
-    }
   }
 }
 </style>

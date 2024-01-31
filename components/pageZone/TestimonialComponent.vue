@@ -38,7 +38,6 @@
               testimonial.attributes.Name
             "
             sizes="100vw sm:50vw md:400px"
-            :modifiers="{ breakpoint: 'small' }"
           />
           <NuxtImg
             v-else
