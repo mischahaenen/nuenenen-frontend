@@ -77,8 +77,8 @@ onMounted(() => {
   display: flex;
   gap: var(--space-large);
   align-items: center;
-  justify-content: space-between;
   flex-direction: row;
+  justify-content: center;
 
   &.row-reverse {
     flex-direction: row-reverse;
@@ -86,11 +86,9 @@ onMounted(() => {
 }
 
 .image {
-  width: min(600px, 100%);
-  height: auto;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 50px;
-  margin-block: 0;
+  margin: 0;
 }
 
 @media screen and (max-width: 1000px) {
