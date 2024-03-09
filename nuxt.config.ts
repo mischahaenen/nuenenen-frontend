@@ -48,6 +48,11 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: true,
     preset: 'vercel-edge',
+    wasm: {
+      rollup: {
+        targetEnv: 'browser',
+      },
+    },
   },
   devtools: {
     enabled: true,
