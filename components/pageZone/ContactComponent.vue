@@ -19,7 +19,7 @@
       @submit.prevent="submitForm"
     >
       <div class="formfield">
-        <label for="Firstname">Vorname:</label>
+        <label for="Firstname">Vorname (& Pfadiname):</label>
         <input
           id="Firstname"
           v-model="form.Firstname"
