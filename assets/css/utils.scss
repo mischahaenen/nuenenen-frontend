@@ -1,4 +1,4 @@
-@import 'variables';
+@use 'variables';
 
 @mixin breakpoint-xs {
   @media (max-width: $breakpoint-extra-small) {

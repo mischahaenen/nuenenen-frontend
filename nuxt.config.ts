@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   css: ['@/assets/css/main.scss'],
   plugins: [],
   components: true,
+
   modules: [
     '@nuxtjs/strapi',
     '@pinia/nuxt',
@@ -14,6 +15,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     'nuxt-gtag',
   ],
+
   strapi: {
     url: process.env.STRAPI_URL,
     prefix: '',
@@ -21,11 +23,14 @@ export default defineNuxtConfig({
     cookie: {},
     cookieName: 'strapi_jwt',
   },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
   typescript: {
     strict: true,
   },
+
   vite: {
     // @ts-ignore ssr:
     noExternal: ['moment'],
@@ -37,6 +42,7 @@ export default defineNuxtConfig({
       },
     },
   },
+
   image: {
     dir: 'assets/',
     formats: ['webp', 'svg', 'png', 'jpg'],
@@ -45,16 +51,20 @@ export default defineNuxtConfig({
         'https://nuenenen-strapi-aws-s3-images-bucket.s3.eu-central-1.amazonaws.com/',
     },
   },
+
   devtools: {
     enabled: true,
     timeline: {
       enabled: true,
     },
   },
+
   googleFonts: {
     families: {
       Lato: [100, 200, 300, 400, 500, 600, 700, 800, 900],
       Orbitron: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
   },
+
+  compatibilityDate: '2025-01-08',
 })
