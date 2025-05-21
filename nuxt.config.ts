@@ -3,7 +3,6 @@ export default defineNuxtConfig({
   css: ['@/assets/css/main.scss'],
   plugins: [],
   components: true,
-
   modules: [
     '@nuxtjs/strapi',
     '@pinia/nuxt',
@@ -22,6 +21,12 @@ export default defineNuxtConfig({
     version: 'v4',
     cookie: {},
     cookieName: 'strapi_jwt',
+  },
+
+  runtimeConfig: {
+    public: {
+      strapiUrl: process.env.STRAPI_URL ?? 'http://localhost:1337/api',
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

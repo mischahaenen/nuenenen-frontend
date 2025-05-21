@@ -1,17 +1,21 @@
 <template>
   <main class="content-grid">
-    <template v-if="pending"></template>
-    <template v-if="error"><p>Something went wrong</p></template>
-    <template v-if="page">
+    <template v-if="error">
+      <p>Something went wrong: {{ error }}</p>
+    </template>
+    <template v-if="!page || !page.data || page.data.length === 0">
+      <p>Loading...</p>
+    </template>
+    <template v-else-if="page && page.data && page.data.length > 0">
       <BaseBanner
         id="main"
-        :title="page.data[0].attributes.title"
-        :description="page.data[0].attributes.description"
-        :action-button-name="page.data[0].attributes.ActionButtonName"
-        :action-button-link="page.data[0].attributes.ActionButtonLink"
+        :title="page.data[0].title"
+        :description="page.data[0].description"
+        :action-button-name="page.data[0].ActionButtonName"
+        :action-button-link="page.data[0].ActionButtonLink"
       />
       <template
-        v-for="(zone, index) in page.data[0].attributes.pageZone"
+        v-for="(zone, index) in page.data[0].pageZone"
         :key="`${zone.__component}-${index}}`"
       >
         <PageZoneImageComponent
@@ -83,20 +87,20 @@
   </main>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 const route = useRoute()
+const pageId = computed(() => `page-${route.params.slug}`)
 
-const {
-  data: page,
-  pending,
-  error,
-} = await useAsyncData('page', () => getPage(route.params.slug as string))
+const { data: page, error } = useAsyncData(pageId, () =>
+  getPage(route.params.slug as string)
+)
 
 const title = computed(() => {
-  if (!page.value) return 'Pfadi Nünenen'
+  if (!page.value || !page.value.data || page.value.data.length === 0)
+    return 'Pfadi Nünenen'
   return `Pfadi Nünenen - ${
-    page.value?.data[0].attributes?.slug.charAt(0).toUpperCase() +
-    page.value?.data[0].attributes?.slug.slice(1)
+    page.value.data[0].slug.charAt(0).toUpperCase() +
+    page.value.data[0].slug.slice(1)
   }`
 })
 
@@ -106,10 +110,9 @@ useHead(() => ({
 }))
 
 const { gtag } = useGtag()
-
 // SSR-ready
 gtag('event', 'screen_view', {
   app_name: 'Webapp',
-  screen_name: page.value?.data[0].attributes?.slug ?? 'slug',
+  screen_name: page.value?.data?.[0]?.slug ?? route.params.slug ?? 'slug',
 })
 </script>

@@ -1,17 +1,15 @@
 declare interface Page {
   id: number
-  attributes: {
-    title: string
-    description: string
-    slug: string
-    url: string
-    ActionButtonName: string
-    ActionButtonLink: string
-    pageZone: PageZone
-    created_at: string
-    updated_at: string
-    published_at: string
-  }
+  title: string
+  description: string
+  slug: string
+  url: string
+  ActionButtonName: string
+  ActionButtonLink: string
+  pageZone: PageZone
+  createdAt: string
+  updatedAt: string
+  publishedAt: string
 }
 
 declare interface PageResponse {
