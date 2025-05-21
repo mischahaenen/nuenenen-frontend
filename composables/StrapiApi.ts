@@ -1,10 +1,12 @@
-import axios from 'axios'
+import { useMemoize } from '@vueuse/core'
 import qs from 'qs'
 import type { ContactSenderReponse } from '~/types/contact-sender'
 
-// API Base URL
-const config = useRuntimeConfig()
-const BASE_URL = config.public.strapiUrl
+// Create function to get base URL from runtime config
+const getBaseUrl = () => {
+  const config = useRuntimeConfig()
+  return config.public.strapiUrl
+}
 
 // Interface Definitions
 interface Attributes {
@@ -22,27 +24,33 @@ interface ApiResponse {
   meta: any
 }
 
-// Create an API instance with default config
-const api = axios.create({
-  baseURL: BASE_URL,
+// Default fetch options
+const fetchOptions = {
   headers: {
     'Content-Type': 'application/json',
   },
-})
-
-// Navigation
-export const getNavigation = async () => {
-  const res = await api.get<ApiResponse>('/navigation', {
-    params: {
-      populate: 'pages',
-    },
-  })
-  return res.data
 }
 
-// Pages
-const getPage = async (url: string) => {
+// Navigation
+export const getNavigation = useMemoize(async () => {
   try {
+    const BASE_URL = getBaseUrl()
+    return await $fetch<ApiResponse>(`${BASE_URL}/api/navigation`, {
+      params: {
+        populate: 'pages',
+      },
+      ...fetchOptions,
+    })
+  } catch (error) {
+    console.error('Error fetching navigation:', error)
+    throw error
+  }
+})
+
+// Pages
+export const getPage = useMemoize((url: string) => {
+  try {
+    const BASE_URL = getBaseUrl()
     const query = qs.stringify(
       {
         populate: {
@@ -57,180 +65,196 @@ const getPage = async (url: string) => {
       { encode: false }
     )
 
-    return $fetch<PageResponse>(`${BASE_URL}/pages?${query}`)
+    return $fetch<PageResponse>(`${BASE_URL}/api/pages?${query}`)
   } catch (error) {
     console.error('Error fetching page:', error)
     throw error
   }
-}
+})
 
 // Blog Posts
-export const getBlogPosts = async () => {
+export const getBlogPosts = useMemoize(async () => {
   try {
-    const res = await api.get<PostResponse>('/blogs', {
+    const BASE_URL = getBaseUrl()
+    return await $fetch<PostResponse>(`${BASE_URL}/api/blogs`, {
       params: {
         populate: '*',
         sort: 'createdAt:desc',
       },
+      ...fetchOptions,
     })
-    return res.data
   } catch (error) {
     console.error('Error fetching blog posts:', error)
     throw error
   }
-}
+})
 
 // Blog Posts by Step
-export const getBlogPostsByStep = async (step: string) => {
-  const query = qs.stringify(
-    {
-      populate: '*',
-      filters: {
-        step: { Name: { $eq: step } },
-      },
-    },
-    { encode: false }
-  )
-
+export const getBlogPostsByStep = useMemoize(async (step: string) => {
   try {
-    const res = await api.get<PostResponse>(`/blogs?${query}`)
-    return res.data
+    const BASE_URL = getBaseUrl()
+    const query = qs.stringify(
+      {
+        populate: '*',
+        filters: {
+          step: { Name: { $eq: step } },
+        },
+      },
+      { encode: false }
+    )
+
+    return await $fetch<PostResponse>(
+      `${BASE_URL}/api/blogs?${query}`,
+      fetchOptions
+    )
   } catch (error) {
     console.error('Error fetching blog posts by step:', error)
     throw error
   }
-}
+})
 
 // Blog Post by Slug
-export const getBlogPost = async (slug: string) => {
-  const query = qs.stringify(
-    {
-      populate: '*',
-      filters: {
-        slug: { $eq: slug },
-      },
-    },
-    { encode: false }
-  )
-
+export const getBlogPost = useMemoize(async (slug: string) => {
   try {
-    const res = await api.get<PostResponse>(`/blogs?${query}`)
-    return res.data
+    const BASE_URL = getBaseUrl()
+    const query = qs.stringify(
+      {
+        populate: '*',
+        filters: {
+          slug: { $eq: slug },
+        },
+      },
+      { encode: false }
+    )
+
+    return await $fetch<PostResponse>(
+      `${BASE_URL}/api/blogs?${query}`,
+      fetchOptions
+    )
   } catch (error) {
     console.error('Error fetching blog post:', error)
     throw error
   }
-}
+})
 
 // Step Names
-export const getStepNames = async () => {
+export const getStepNames = useMemoize(async () => {
   try {
-    const res = await api.get<Steps>('/steps', {
+    const BASE_URL = getBaseUrl()
+    return await $fetch<Steps>(`${BASE_URL}/api/steps`, {
       params: {
         sort: 'id:asc',
         fields: ['Name', 'Slug'],
         populate: '*',
       },
+      ...fetchOptions,
     })
-    return res.data
   } catch (error) {
     console.error('Error fetching step names:', error)
     throw error
   }
-}
+})
 
 // Step by Slug
-export const getStep = async (slug: string) => {
-  const query = qs.stringify(
-    {
-      populate: '*',
-      filters: {
-        Slug: { $eq: slug },
-      },
-    },
-    { encode: false }
-  )
-
+export const getStep = useMemoize(async (slug: string) => {
   try {
-    const res = await api.get<Steps>(`/steps?${query}`)
-    return res.data
+    const BASE_URL = getBaseUrl()
+    const query = qs.stringify(
+      {
+        populate: '*',
+        filters: {
+          Slug: { $eq: slug },
+        },
+      },
+      { encode: false }
+    )
+
+    return await $fetch<Steps>(`${BASE_URL}/api/steps?${query}`, fetchOptions)
   } catch (error) {
     console.error('Error fetching step:', error)
     throw error
   }
-}
+})
 
 // Strapi User by ID
-export const getStrapiUser = async (id: number) => {
-  const query = qs.stringify(
-    {
-      populate: '*',
-      filters: {
-        id: { $eq: id },
-      },
-    },
-    { encode: false }
-  )
-
+export const getStrapiUser = useMemoize(async (id: number) => {
   try {
-    const res = await api.get<UsersResponse>(`/users?${query}`)
-    return res.data
+    const BASE_URL = getBaseUrl()
+    const query = qs.stringify(
+      {
+        populate: '*',
+        filters: {
+          id: { $eq: id },
+        },
+      },
+      { encode: false }
+    )
+
+    return await $fetch<UsersResponse>(
+      `${BASE_URL}/api/users?${query}`,
+      fetchOptions
+    )
   } catch (error) {
     console.error('Error fetching Strapi user:', error)
     throw error
   }
-}
+})
 
 // Events
-export const getEvents = async () => {
+export const getEvents = useMemoize(async () => {
   try {
-    const res = await api.get<IEvents>('/events', {
+    const BASE_URL = getBaseUrl()
+    return await $fetch<IEvents>(`${BASE_URL}/api/events`, {
       params: {
         populate: '*',
       },
+      ...fetchOptions,
     })
-    return res.data
   } catch (error) {
     console.error('Error fetching events:', error)
     throw error
   }
-}
+})
 
 // Testimonial by ID
-export const getTestimonial = async (id: number) => {
+export const getTestimonial = useMemoize(async (id: number) => {
   try {
-    const res = await api.get<Testimonial>(`/testimonials/${id}`, {
+    const BASE_URL = getBaseUrl()
+    return await $fetch<Testimonial>(`${BASE_URL}/api/testimonials/${id}`, {
       params: {
         populate: '*',
       },
+      ...fetchOptions,
     })
-    return res.data
   } catch (error) {
     console.error('Error fetching testimonial:', error)
     throw error
   }
-}
+})
 
 // Sponsors by IDs
-export const getSponsors = async (ids: number[]) => {
-  const query = qs.stringify(
-    {
-      populate: '*',
-      filters: {
-        id: { $in: ids },
-      },
-    },
-    { encode: false }
-  )
-
+export const getSponsors = useMemoize(async (ids: number[]) => {
   try {
-    const res = await api.get<SponsorResponse>(`/sponsors?${query}`)
-    return res.data
+    const BASE_URL = getBaseUrl()
+    const query = qs.stringify(
+      {
+        populate: '*',
+        filters: {
+          id: { $in: ids },
+        },
+      },
+      { encode: false }
+    )
+
+    return await $fetch<SponsorResponse>(
+      `${BASE_URL}/api/sponsors?${query}`,
+      fetchOptions
+    )
   } catch (error) {
     console.error('Error fetching sponsors:', error)
     throw error
   }
-}
+})
 
 // Create Contact Entry
 export const createContactEntry = async (
@@ -238,12 +262,15 @@ export const createContactEntry = async (
   formData: any
 ) => {
   try {
-    const res = await api.post<any>('/contacts', formData, {
+    const BASE_URL = getBaseUrl()
+    return await $fetch<any>(`${BASE_URL}/api/contacts`, {
+      method: 'POST',
+      body: formData,
       headers: {
+        ...fetchOptions.headers,
         Authorization: `Bearer ${token}`,
       },
     })
-    return res.data
   } catch (error) {
     console.error('Error creating contact entry:', error)
     throw error
@@ -253,15 +280,16 @@ export const createContactEntry = async (
 // Contact Distribution List
 export const getContactDistributionList = async () => {
   try {
-    const res = await api.get<ContactSenderReponse>(
-      '/contact-distribution-lists',
+    const BASE_URL = getBaseUrl()
+    return await $fetch<ContactSenderReponse>(
+      `${BASE_URL}/api/contact-distribution-lists`,
       {
         params: {
           populate: '*',
         },
+        ...fetchOptions,
       }
     )
-    return res.data
   } catch (error) {
     console.error('Error fetching contact distribution list:', error)
     throw error
@@ -269,16 +297,17 @@ export const getContactDistributionList = async () => {
 }
 
 // Footer
-export const getFooter = async () => {
+export const getFooter = useMemoize(async () => {
   try {
-    const res = await api.get<IFooter>('/footer', {
+    const BASE_URL = getBaseUrl()
+    return await $fetch<IFooter>(`${BASE_URL}/api/footer`, {
       params: {
         populate: '*',
       },
+      ...fetchOptions,
     })
-    return res.data
   } catch (error) {
     console.error('Error fetching footer:', error)
     throw error
   }
-}
+})
