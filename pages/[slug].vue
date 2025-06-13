@@ -52,8 +52,8 @@ const { data: page, error } = await useAsyncData(
   () => getPage(slug.value),
   {
     server: true,
-    lazy: false,
     transform: (data) => {
+      console.log(data);
       if (!data) return [];
       return data.data ?? [];
     },
@@ -64,7 +64,7 @@ const componentMap = {
   "pages.image": PageZoneImageComponent,
   "pages.section": PageZoneSectionComponent,
   "pages.blog": PageZoneBlogComponent,
-  //"pages.steps": PageZoneStepsComponent,
+  "pages.steps": PageZoneStepsComponent,
   "pages.pfadiheim": PageZonePfadiheimComponent,
   "pages.contact": PageZoneContactComponent,
   "pages.document": PageZoneDocumentComponent,

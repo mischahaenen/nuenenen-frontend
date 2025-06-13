@@ -7,9 +7,8 @@
   >
     <TitleComponent :title="props.zone.Title" :index="index"></TitleComponent>
     <RichTextComponent :content="props.zone.Description" />
-    <p>{{ props.zone }}</p>
     <div class="mt-medium step-grid">
-      <article v-for="step of props.zone.steps" :key="step.Name" class="step-item">
+      <article v-for="step of steps" :key="step.Name" class="step-item">
         <nuxt-link :to="'abteilung/' + step.Slug">
           <NuxtImg
             class="step-image"
@@ -22,7 +21,6 @@
           />
           <div class="step-content">
             <h3>{{ step.Name }}</h3>
-            <p>{{ step.Description }}</p>
           </div>
         </nuxt-link>
       </article>
@@ -31,10 +29,20 @@
 </template>
 
 <script setup lang="ts">
+import { useStepsApi } from "~/composables/api/modules/steps";
+
+const { getSteps } = useStepsApi();
 const props = defineProps<{
   zone: StepZone;
   index: number;
 }>();
+const { data: steps, error } = await useAsyncData(`steps`, () => getSteps(), {
+  server: true,
+  transform: (data) => {
+    if (!data) return [];
+    return data.data ?? [];
+  },
+});
 </script>
 
 <style scoped lang="scss">
