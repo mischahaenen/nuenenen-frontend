@@ -2,9 +2,7 @@
   <footer v-if="footer">
     <NuxtImg
       class="full-width"
-      :src="`svg/gantrisch_${
-        colorMode.value === 'dark' ? 'dark' : 'white'
-      }.svg`"
+      :src="`svg/gantrisch_${colorMode.value === 'dark' ? 'dark' : 'white'}.svg`"
       :alt="`Berge in ${colorMode.value === 'dark' ? 'Dunkel' : 'Hell'}`"
     ></NuxtImg>
     <div class="footer-content">
@@ -37,10 +35,7 @@
             >
           </li>
           <li>
-            <a
-              href="https://github.com/mischahaenen/nuenenen-frontend"
-              target="_blank"
-            >
+            <a href="https://github.com/mischahaenen/nuenenen-frontend" target="_blank">
               <NuxtImg src="svg/github.svg" alt="Github Logo" />Github</a
             >
           </li>
@@ -49,10 +44,10 @@
       <div class="sponsorLogo">
         <h2>Sponsoren</h2>
         <NuxtImg
-          v-for="image of footer.Images.data"
-          :key="image.attributes.name"
-          :src="image.attributes.url"
-          :alt="image.attributes.name"
+          v-for="image of footer.Images"
+          :key="image.name"
+          :src="image.url"
+          :alt="image.name"
         />
       </div>
     </div>
@@ -60,14 +55,15 @@
 </template>
 
 <script setup>
-const colorMode = useColorMode()
-const footerRes = await getFooter()
-const footer = footerRes.data.attributes || null
+import { useFooterApi } from "~/composables/api/modules/footer";
+
+const { getFooter } = useFooterApi();
+const colorMode = useColorMode();
+const footerRes = await getFooter();
+const footer = footerRes || null;
 const modeHeader = computed(() => {
-  return colorMode.value === 'dark'
-    ? 'Hell-Modus gefällig?'
-    : 'Dunkel-Modus gefällig?'
-})
+  return colorMode.value === "dark" ? "Hell-Modus gefällig?" : "Dunkel-Modus gefällig?";
+});
 </script>
 
 <style scoped lang="scss">

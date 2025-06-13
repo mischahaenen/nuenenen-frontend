@@ -1,4 +1,4 @@
-declare interface Page {
+export type Page = {
   id: number
   title: string
   description: string
@@ -12,6 +12,14 @@ declare interface Page {
   publishedAt: string
 }
 
-declare interface PageResponse {
+export type PageResponse = {
   data: Page[]
+  meta: {
+    pagination: {
+      page: number
+      pageSize: number
+      pageCount: number
+      total: number
+    }
+  }
 }

@@ -18,6 +18,9 @@ export default defineNuxtConfig({
       strapiUrl: process.env.STRAPI_URL ?? 'http://localhost:1337/api',
     },
   },
+  imports: {
+    autoImport: true,
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
   vite: {

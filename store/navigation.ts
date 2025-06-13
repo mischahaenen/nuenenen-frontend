@@ -19,9 +19,7 @@ export const useNavigationStore = defineStore({
     },
     hasSubMenu(page: Page | undefined) {
       if (!page) return false
-      return page.attributes.pageZone.some(
-        (zone) => zone.__component === 'pages.steps'
-      )
+      return page.pageZone.some((zone) => zone.__component === 'pages.steps')
     },
     toggleSubMenu(page: Page) {
       if (this.openSubmenu?.id === page.id) {

@@ -15,18 +15,18 @@
       :src="props.zone.iFrame"
       :title="props.zone.Title"
     ></iframe>
-    <h3 v-if="zone.images.data">Impressionen</h3>
+    <h3 v-if="zone.images">Impressionen</h3>
     <div class="full-width-image">
-      <ImageSliderComponent :images="zone.images.data"></ImageSliderComponent>
+      <ImageSliderComponent :images="zone.images"></ImageSliderComponent>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-  index: number
-  zone: IFrame
-}>()
+  index: number;
+  zone: IFrame;
+}>();
 </script>
 
 <style scoped>

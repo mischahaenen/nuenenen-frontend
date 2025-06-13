@@ -8,34 +8,25 @@
     <section
       :class="[
         'section',
-        { 'flex breakout': props.zone.Image?.data },
+        { 'flex breakout': props.zone.Image },
         { 'row-reverse': index % 2 !== 0 },
       ]"
     >
       <div>
-        <TitleComponent
-          :title="props.zone.Title"
-          :index="props.index"
-        ></TitleComponent>
+        <TitleComponent :title="props.zone.Title" :index="props.index"></TitleComponent>
         <RichTextComponent :content="props.zone.Description" />
       </div>
       <NuxtImg
-        v-if="props.zone.Image?.data?.attributes?.url"
+        v-if="props.zone.Image.url"
         class="image"
         :class="{
-          portrait: isPortrait(props.zone.Image.data.attributes),
-          landscape: !isPortrait(props.zone.Image.data.attributes),
+          portrait: isPortrait(props.zone.Image),
+          landscape: !isPortrait(props.zone.Image),
         }"
         provider="strapi"
         format="webp"
-        :src="
-          props.zone.Image.data.attributes.hash +
-          props.zone.Image.data.attributes.ext
-        "
-        :alt="
-          props.zone.Image.data.attributes.alternativeText ??
-          props.zone.Image.data.attributes.name
-        "
+        :src="props.zone.Image.hash + props.zone.Image.ext"
+        :alt="props.zone.Image.alternativeText ?? props.zone.Image.name"
         sizes="100vw sm:50vw md:400px"
         :modifiers="{ breakpoint: 'large' }"
       ></NuxtImg>
@@ -45,28 +36,28 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: Section
-  index: number
-}>()
+  zone: Section;
+  index: number;
+}>();
 
 const isPortrait = (image) => {
-  return image.height > image.width
-}
+  return image.height > image.width;
+};
 
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('fade-in')
-        observer.unobserve(entry.target)
+        entry.target.classList.add("fade-in");
+        observer.unobserve(entry.target);
       }
-    })
-  })
+    });
+  });
 
-  document.querySelectorAll('.section').forEach((ref) => {
-    observer.observe(ref)
-  })
-})
+  document.querySelectorAll(".section").forEach((ref) => {
+    observer.observe(ref);
+  });
+});
 </script>
 
 <style scoped lang="scss">

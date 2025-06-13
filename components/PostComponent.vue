@@ -1,19 +1,13 @@
 <template>
-  <nuxt-link v-if="post" :to="'blog/' + post.attributes.slug">
+  <nuxt-link v-if="post" :to="'blog/' + post.slug">
     <div :class="cardClass">
       <NuxtImg
-        v-if="post.attributes.images?.data?.length"
+        v-if="post.images.length"
         class="card-image"
         format="webp"
         provider="strapi"
-        :src="
-          post.attributes.images.data[0].attributes.hash +
-          post.attributes.images.data[0].attributes.ext
-        "
-        :alt="
-          post.attributes.images.data[0].attributes.alternativeText ||
-          post.attributes.images.data[0].attributes.name
-        "
+        :src="post.images[0].hash + post.images[0].ext"
+        :alt="post.images[0].alternativeText || post.images[0].name"
         sizes="100vw sm:50vw md:400px"
       />
       <div class="card-content">
@@ -21,46 +15,38 @@
           <span>{{ formattedDate }}</span> |
           <ReadingTime :time="readingTime" :unit="timeUnit" />
         </div>
-        <h2>{{ post.attributes.title }}</h2>
+        <h2>{{ post.title }}</h2>
         <RichTextComponent
-          :content="post.attributes.description"
+          :content="post.description"
           :is-preview="true"
           :preview-lines="isFirst ? 9 : undefined"
         />
-        <div v-if="post.attributes.step.data" class="card-footer">
-          #{{ post.attributes.step?.data?.attributes?.Name }}
-        </div>
+        <div v-if="post.step" class="card-footer">#{{ post.step?.Name }}</div>
       </div>
     </div>
   </nuxt-link>
 </template>
 <script lang="ts" setup>
-import moment from 'moment'
-
+import moment from "moment";
 const props = defineProps<{
-  post: Post | undefined
-  isFirst: boolean
-}>()
-const { post, isFirst } = toRefs(props)
+  post: Post | undefined;
+  isFirst: boolean;
+}>();
+const { post, isFirst } = toRefs(props);
 
 const formattedDate = computed(() =>
-  moment(post.value?.attributes.createdAt).format('DD. MMMM YYYY')
-)
+  moment(post.value?.createdAt).format("DD. MMMM YYYY")
+);
 
 const readingTime = computed(() => {
-  const wpm = 225
-  const words =
-    post.value?.attributes.description.trim().split(/\s+/).length ?? 0
-  return Math.ceil(words / wpm)
-})
+  const wpm = 225;
+  const words = post.value?.description.trim().split(/\s+/).length ?? 0;
+  return Math.ceil(words / wpm);
+});
 
-const timeUnit = computed(() =>
-  readingTime.value === 1 ? 'Minute' : 'Minuten'
-)
+const timeUnit = computed(() => (readingTime.value === 1 ? "Minute" : "Minuten"));
 
-const cardClass = computed(() =>
-  isFirst.value ? 'card-detailed' : 'card-preview'
-)
+const cardClass = computed(() => (isFirst.value ? "card-detailed" : "card-preview"));
 </script>
 <style scoped lang="scss">
 a {

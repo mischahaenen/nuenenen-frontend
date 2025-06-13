@@ -28,11 +28,8 @@
         format="webp"
         loading="lazy"
         provider="strapi"
-        :src="props.image.attributes.hash + props.image.attributes.ext"
-        :alt="
-          props.image.attributes.alternativeText ||
-          props.image.attributes.name + ' Logo'
-        "
+        :src="props.image.hash + props.image.ext"
+        :alt="props.image.alternativeText || props.image.name + ' Logo'"
         sizes="100vw sm:50vw md:400px"
         :modifiers="{ breakpoint: 'medium' }"
       />
@@ -52,6 +49,8 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps } from 'vue'
+
 const scrollY = useScrollY()
 const rocketSpeed = computed(() => 20 + scrollY.value * -0.5)
 const rocketStyle = computed(() => ({

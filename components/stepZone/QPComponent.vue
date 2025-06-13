@@ -3,17 +3,13 @@
     :class="[
       'pt-medium pb-medium',
       {
-        'full-width content-grid bg-accent-50 dark:bg-primary-700':
-          props.index % 2 === 1,
+        'full-width content-grid bg-accent-50 dark:bg-primary-700': props.index % 2 === 1,
       },
     ]"
   >
-    <TitleComponent
-      :title="props.zone.Title"
-      :index="props.index"
-    ></TitleComponent>
+    <TitleComponent :title="props.zone.Title" :index="props.index"></TitleComponent>
     <ul>
-      <li v-if="props.zone.Document?.data">
+      <li v-if="props.zone.Document">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="24"
@@ -24,49 +20,37 @@
             d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
           />
         </svg>
-        <a :href="props.zone.Document.data.attributes.url" download=""
-          >Download {{ props.zone.Document.data.attributes.name }}</a
+        <a :href="props.zone.Document.url" download=""
+          >Download {{ props.zone.Document.name }}</a
         >
       </li>
     </ul>
-    <a
-      v-if="props.zone.Document?.data"
-      :href="props.zone.Document.data.attributes.url"
-      download=""
+    <a v-if="props.zone.Document" :href="props.zone.Document.url" download=""
       ><NuxtImg
-        v-if="props.zone.Image?.data"
+        v-if="props.zone.Image"
         class="qp-image"
         format="webp"
         provider="strapi"
-        :src="
-          props.zone.Image.data.attributes.hash +
-          props.zone.Image.data.attributes.ext
-        "
-        :alt="
-          props.zone.Image.data.attributes.alternativeText ||
-          props.zone.Image.data.attributes.name
-        "
+        :src="props.zone.Image.hash + props.zone.Image.ext"
+        :alt="props.zone.Image.alternativeText || props.zone.Image.name"
         sizes="100vw sm:50vw md:400px"
         :modifiers="{ breakpoint: 'large' }"
       />
     </a>
     <NuxtImg
-      v-else-if="props.zone.Image?.data"
+      v-else-if="props.zone.Image"
       class="qp-image"
-      :src="props.zone.Image.data.attributes.url"
-      :alt="
-        props.zone.Image.data.attributes.alternativeText ||
-        props.zone.Image.data.attributes.name
-      "
+      :src="props.zone.Image.url"
+      :alt="props.zone.Image.alternativeText || props.zone.Image.name"
     />
   </section>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: QPZone
-  index: number
-}>()
+  zone: QPZone;
+  index: number;
+}>();
 </script>
 <style scoped lang="scss">
 ul {

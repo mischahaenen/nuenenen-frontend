@@ -7,28 +7,22 @@
   >
     <TitleComponent :title="props.zone.Title" :index="index"></TitleComponent>
     <RichTextComponent :content="props.zone.Description" />
+    <p>{{ props.zone }}</p>
     <div class="mt-medium step-grid">
-      <article
-        v-for="step of props.zone.steps.data"
-        :key="step.attributes.Name"
-        class="step-item"
-      >
-        <nuxt-link :to="'abteilung/' + step.attributes.Slug">
+      <article v-for="step of props.zone.steps" :key="step.Name" class="step-item">
+        <nuxt-link :to="'abteilung/' + step.Slug">
           <NuxtImg
             class="step-image"
             format="webp"
             provider="strapi"
-            :src="
-              step.attributes.logo.data.attributes.hash +
-              step.attributes.logo.data.attributes.ext
-            "
-            :alt="step.attributes.logo.data.attributes.name"
+            :src="step.logo.hash + step.logo.ext"
+            :alt="step.logo.name"
             sizes="100vw sm:50vw md:400px"
             :modifiers="{ breakpoint: 'small' }"
           />
           <div class="step-content">
-            <h3>{{ step.attributes.Name }}</h3>
-            <p>{{ step.attributes.Description }}</p>
+            <h3>{{ step.Name }}</h3>
+            <p>{{ step.Description }}</p>
           </div>
         </nuxt-link>
       </article>
@@ -38,9 +32,9 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: StepZone
-  index: number
-}>()
+  zone: StepZone;
+  index: number;
+}>();
 </script>
 
 <style scoped lang="scss">
@@ -77,11 +71,7 @@ a:hover h3 {
   border-radius: 50%;
   font-size: 1rem;
   text-align: center;
-  background-color: color-mix(
-    in srgb,
-    var(--color-primary-50) 60%,
-    transparent
-  );
+  background-color: color-mix(in srgb, var(--color-primary-50) 60%, transparent);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -101,29 +91,17 @@ a:hover h3 {
 
 .step-item:hover {
   .step-content {
-    background-color: color-mix(
-      in srgb,
-      var(--color-primary-100) 80%,
-      transparent
-    );
+    background-color: color-mix(in srgb, var(--color-primary-100) 80%, transparent);
   }
 }
 
 .dark-mode {
   .step-content {
-    background-color: color-mix(
-      in srgb,
-      var(--color-accent-900) 60%,
-      transparent
-    );
+    background-color: color-mix(in srgb, var(--color-accent-900) 60%, transparent);
   }
   .step-item:hover {
     .step-content {
-      background-color: color-mix(
-        in srgb,
-        var(--color-accent-800) 60%,
-        transparent
-      );
+      background-color: color-mix(in srgb, var(--color-accent-800) 60%, transparent);
     }
   }
 }

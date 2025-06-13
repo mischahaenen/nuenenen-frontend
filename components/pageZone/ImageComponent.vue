@@ -1,13 +1,12 @@
 <template>
   <section class="full-width-image image-section">
-    <ImageSliderComponent :images="props.zone.images.data" />
+    <ImageSliderComponent :images="props.zone.images" />
   </section>
 </template>
 
 <script setup lang="ts">
 const props = defineProps<{
-  title?: string
-  zone: ImageZone
-  index: number
-}>()
+  zone: ImageZone;
+  index: number;
+}>();
 </script>

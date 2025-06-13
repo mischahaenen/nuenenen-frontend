@@ -1,14 +1,8 @@
 declare interface IFooter {
-  data: {
-    id: number
-    attributes: {
-      Title: string
-      Links: Link[]
-      Images: {
-        data: Image[]
-      }
-    }
-  }
+  id: number
+  Title: string
+  Links: Link[]
+  Images: Image[]
 }
 
 declare interface ILink {

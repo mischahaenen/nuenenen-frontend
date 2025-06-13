@@ -5,39 +5,22 @@
       props.index % 2 === 0 ? '' : ' bg-accent-50 dark:bg-primary-700',
     ]"
   >
-    <TitleComponent
-      :title="props.zone.Title"
-      :index="props.index"
-    ></TitleComponent>
+    <TitleComponent :title="props.zone.Title" :index="props.index"></TitleComponent>
     <RichTextComponent :content="props.zone.Description"></RichTextComponent>
     <div class="sponsor-grid breakout">
-      <article
-        v-for="sponsor of props.zone.sponsors.data"
-        :key="sponsor.attributes.Name"
-        class="sponsor"
-      >
+      <article v-for="sponsor of props.zone.sponsors" :key="sponsor.Name" class="sponsor">
         <NuxtImg
           class="sponsor-logo"
           format="webp"
           provider="strapi"
-          :src="
-            sponsor.attributes.Logo.data.attributes.hash +
-            sponsor.attributes.Logo.data.attributes.ext
-          "
-          :alt="
-            sponsor.attributes.Logo.data.attributes.alternativeText ||
-            sponsor.attributes.Name
-          "
+          :src="sponsor.Logo.hash + sponsor.Logo.ext"
+          :alt="sponsor.Logo.alternativeText || sponsor.Name"
         ></NuxtImg>
-        <a
-          v-if="sponsor.attributes.Url"
-          :href="sponsor.attributes.Url"
-          target="_blank"
+        <a v-if="sponsor.Url" :href="sponsor.Url" target="_blank">
+          <h3>{{ sponsor.Name }}</h3></a
         >
-          <h3>{{ sponsor.attributes.Name }}</h3></a
-        >
-        <h3 v-else>{{ sponsor.attributes.Name }}</h3>
-        <p>{{ sponsor.attributes.Description }}</p>
+        <h3 v-else>{{ sponsor.Name }}</h3>
+        <p>{{ sponsor.Description }}</p>
       </article>
     </div>
   </section>
@@ -45,32 +28,32 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: SponsorZone
-  index: number
-}>()
+  zone: SponsorZone;
+  index: number;
+}>();
 
 const initializeObserver = () => {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.remove('sponsor--hidden')
-          observer.unobserve(entry.target)
+          entry.target.classList.remove("sponsor--hidden");
+          observer.unobserve(entry.target);
         }
-      })
+      });
     },
     {
       threshold: 0.5,
     }
-  )
+  );
 
-  document.querySelectorAll('.sponsor').forEach((item) => {
-    item.classList.add('sponsor--hidden')
-    observer.observe(item)
-  })
-}
+  document.querySelectorAll(".sponsor").forEach((item) => {
+    item.classList.add("sponsor--hidden");
+    observer.observe(item);
+  });
+};
 
-onMounted(() => initializeObserver())
+onMounted(() => initializeObserver());
 </script>
 
 <style scoped lang="scss">

@@ -3,113 +3,104 @@
     <template v-if="error">
       <p>Something went wrong: {{ error }}</p>
     </template>
-    <template v-else-if="page?.data?.length > 0">
+    <template v-if="page && page.length > 0">
       <BaseBanner
         id="main"
-        :title="page.data[0].title"
-        :description="page.data[0].description"
-        :action-button-name="page.data[0].ActionButtonName"
-        :action-button-link="page.data[0].ActionButtonLink"
+        :title="page[0].title"
+        :description="page[0].description"
+        :action-button-name="page[0].ActionButtonName"
+        :action-button-link="page[0].ActionButtonLink"
       />
       <component
-        :is="resolveComponent(zone.__component)"
-        v-for="(zone, index) in page.data[0].pageZone"
-        :id="zone.Title"
+        :is="getZoneComponent(zone.__component)"
+        v-for="(zone, index) in page[0].pageZone"
         :key="`${zone.__component}-${index}}`"
-        :zone="zone"
-        :index="index"
-        :title="resolveZoneTitle(zone)"
-        :sub-title="resolveZoneSubTitle(zone)"
-        :testimonials="resolveZoneTestimonials(zone)"
+        v-bind="getProps(zone, index)"
       />
     </template>
   </main>
 </template>
 
 <script setup lang="ts">
-const route = useRoute()
+import { usePagesApi } from "~/composables/api/modules/pages";
+import {
+  PageZoneImageComponent,
+  PageZoneSectionComponent,
+  PageZoneBlogComponent,
+  PageZoneStepsComponent,
+  PageZonePfadiheimComponent,
+  PageZoneContactComponent,
+  PageZoneDocumentComponent,
+  PageZoneSponsorComponent,
+  PageZoneTeamComponent,
+} from "#components";
 
-const { data: page, error } = useAsyncData(
-  'page',
-  () => getPage(route.params.slug as string),
+const { getPage } = usePagesApi();
+const route = useRoute();
+
+const slug = computed(() => {
+  if (route.params.slug) {
+    return Array.isArray(route.params.slug)
+      ? route.params.slug.join("/")
+      : route.params.slug;
+  }
+  return "home";
+});
+
+const { data: page, error } = await useAsyncData(
+  `page-${slug.value}`,
+  () => getPage(slug.value),
   {
     server: true,
     lazy: false,
-    default: () => ({ data: [] }),
-    transform: (data) => data || { data: [] },
+    transform: (data) => {
+      if (!data) return [];
+      return data.data ?? [];
+    },
   }
-)
+);
 
-// Map component types to their Vue components
-const componentMap: Record<string, string> = {
-  'pages.image': 'PageZoneImageComponent',
-  'pages.section': 'PageZoneSectionComponent',
-  'pages.blog': 'PageZoneBlogComponent',
-  'pages.steps': 'PageZoneStepsComponent',
-  'pages.pfadiheim': 'PageZonePfadiheimComponent',
-  'pages.testimonials': 'PageZoneTestimonialComponent',
-  'pages.contact': 'PageZoneContactComponent',
-  'pages.document': 'PageZoneDocumentComponent',
-  'pages.sponsors': 'PageZoneSponsorComponent',
-  'pages.group': 'PageZoneTeamComponent',
-}
+const componentMap = {
+  "pages.image": PageZoneImageComponent,
+  "pages.section": PageZoneSectionComponent,
+  "pages.blog": PageZoneBlogComponent,
+  //"pages.steps": PageZoneStepsComponent,
+  "pages.pfadiheim": PageZonePfadiheimComponent,
+  "pages.contact": PageZoneContactComponent,
+  "pages.document": PageZoneDocumentComponent,
+  //"pages.sponsors": PageZoneSponsorComponent,
+  "pages.group": PageZoneTeamComponent,
+} as const;
 
-// Resolve component based on component name
-const resolveComponent = (componentName: string): string => {
-  return componentMap[componentName] || 'div' // fallback to div if component not found
-}
-
-// Type guards for zone types
-function isImageZone(zone: PageZoneItem): zone is ImageZone {
-  return zone.__component === 'pages.image'
-}
-
-function isTestimonialZone(zone: PageZoneItem): zone is Testimonial {
-  return zone.__component === 'pages.testimonials'
-}
-
-// Resolve title property for testimonial component
-function resolveZoneTitle(zone: PageZoneItem): string {
-  if (isImageZone(zone) || isTestimonialZone(zone)) {
-    return zone.Title
-  }
-  return ''
-}
-
-// Resolve subtitle property for testimonial component
-function resolveZoneSubTitle(zone: PageZoneItem): string {
-  if (isTestimonialZone(zone)) {
-    return zone.Subtitle
-  }
-  return ''
-}
-
-// Resolve testimonials property for testimonial component
-function resolveZoneTestimonials(zone: PageZoneItem): any {
-  if (isTestimonialZone(zone)) {
-    return zone.testimonials
-  }
-  return null
-}
+const getZoneComponent = (componentType: string) => {
+  return componentMap[componentType as keyof typeof componentMap];
+};
 
 const title = computed(() => {
-  if (!page.value || !page.value.data || page.value.data.length === 0)
-    return 'Pfadi Nünenen'
-  return `Pfadi Nünenen - ${
-    page.value.data[0].slug.charAt(0).toUpperCase() +
-    page.value.data[0].slug.slice(1)
-  }`
-})
+  if (!page.value || page.value.length === 0) return "Pfadi Nünenen";
+  const pageSlug = page.value[0]?.slug;
+  if (!pageSlug) return "Pfadi Nünenen";
+  return `Pfadi Nünenen - ${pageSlug.charAt(0) + pageSlug.slice(1)}`;
+});
+
+const getProps = (zone: PageZoneItem, index: number) => {
+  return {
+    zone: zone as any,
+    index,
+    id: index,
+  };
+};
 
 useHead(() => ({
   title: title.value,
-  'Content-Security-Policy': 'upgrade-insecure-requests',
-}))
+  "Content-Security-Policy": "upgrade-insecure-requests",
+}));
 
-const { gtag } = useGtag()
+const { gtag } = useGtag();
+
 // SSR-ready
-gtag('event', 'screen_view', {
-  app_name: 'Webapp',
-  screen_name: page.value?.data?.[0]?.slug ?? route.params.slug ?? 'slug',
-})
+gtag("event", "screen_view", {
+  app_name: "Webapp",
+  screen_name: slug.value ?? "home",
+});
 </script>

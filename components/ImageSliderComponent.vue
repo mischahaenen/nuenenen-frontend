@@ -4,14 +4,14 @@
     :autoplay="3000"
     :wrap-around="true"
   >
-    <slide v-for="image in props.images" :key="image.attributes.name">
+    <slide v-for="image in props.images" :key="image.name">
       <div class="carousel__item">
         <NuxtImg
           format="webp"
           provider="strapi"
           class="carousel__image"
-          :src="image.attributes.hash + image.attributes.ext"
-          :alt="image.attributes.alternativeText || image.attributes.name"
+          :src="image.hash + image.ext"
+          :alt="image.alternativeText || image.name"
           sizes="100vw sm:50vw md:400px"
         >
         </NuxtImg>
@@ -27,21 +27,17 @@
     class="carousel__image"
     format="webp"
     provider="strapi"
-    :src="props.images[0].attributes.hash + props.images[0].attributes.ext"
-    :alt="
-      props.images[0].attributes.alternativeText ||
-      props.images[0].attributes.name
-    "
+    :src="props.images[0].hash + props.images[0].ext"
+    :alt="props.images[0].alternativeText || props.images[0].name"
     sizes="100vw sm:50vw md:400px"
   ></NuxtImg>
 </template>
 
 <script setup lang="ts">
-import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+import "vue3-carousel/dist/carousel.css";
 const props = defineProps<{
-  images: Image[] | null
-}>()
+  images: Image[] | null;
+}>();
 </script>
 <style lang="scss">
 .carousel__item {
@@ -89,7 +85,7 @@ const props = defineProps<{
 
 .carousel__pagination-button::after {
   display: block;
-  content: '';
+  content: "";
   width: 2rem;
   height: 0.75rem;
   border-radius: 50px;
