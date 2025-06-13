@@ -8,9 +8,9 @@
     ]"
   >
     <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-    <div v-if="props.zone.leaders" class="member-section">
+    <div v-if="sortedLeaders" class="member-section">
       <button
-        v-for="leader of props.zone.leaders"
+        v-for="leader of sortedLeaders"
         :key="leader.Name"
         class="user-card"
         :aria-label="leader.Name + ', ' + leader.Position"
@@ -36,10 +36,33 @@
 </template>
 
 <script setup lang="ts">
+import { useLeaderApi } from "~/composables/api/modules/leader";
+import type { Leader } from "~/types/leader";
+
+const { getLeaders } = useLeaderApi();
 const props = defineProps<{
   zone: Group;
   index: number;
 }>();
+
+const { data: allLeaders } = await useAsyncData("all-leaders", () => getLeaders());
+
+const sortedLeaders = computed(() => {
+  if (!allLeaders.value?.data || !props.zone.leaders) {
+    return [];
+  }
+
+  const zoneLeaderIds = props.zone.leaders.map((leader: Leader) => leader.id);
+  const filteredLeaders = allLeaders.value.data.filter((leader: Leader) =>
+    zoneLeaderIds.includes(leader.id)
+  );
+
+  return filteredLeaders.sort((a, b) => {
+    const indexA = zoneLeaderIds.indexOf(a.id);
+    const indexB = zoneLeaderIds.indexOf(b.id);
+    return indexA - indexB;
+  });
+});
 </script>
 
 <style scoped lang="scss">

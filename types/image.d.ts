@@ -1,4 +1,4 @@
-declare interface Format {
+export type Format = {
   name: string
   hash: string
   ext: string
@@ -10,7 +10,7 @@ declare interface Format {
   url: string
 }
 
-declare interface Image {
+export type Image = {
   id: number
   name: string
   alternativeText: string | null
@@ -35,7 +35,7 @@ declare interface Image {
   updatedAt: string
 }
 
-declare interface ImageV2 {
+export type ImageV2 = {
   id: number
   name: string
   alternativeText: string | null

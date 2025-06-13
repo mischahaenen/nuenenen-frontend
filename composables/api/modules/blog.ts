@@ -1,9 +1,10 @@
 import { useMemoize } from '@vueuse/core'
+import type { PostsResponse, PostsResponse } from '~/types/post'
 import { createQuery, fetchFromApi } from '../core/client'
 
 export const useBlogApi = () => {
   const getBlogPosts = useMemoize(async () => {
-    return await fetchFromApi<Post[]>('blogs', {
+    return await fetchFromApi<PostsResponse>('blogs', {
       params: {
         populate: '*',
         sort: 'createdAt:desc',
@@ -19,7 +20,7 @@ export const useBlogApi = () => {
       },
     })
 
-    return await fetchFromApi<Post[]>(`blogs?${query}`)
+    return await fetchFromApi<PostsResponse>(`blogs?${query}`)
   })
 
   const getBlogPost = useMemoize(async (slug: string) => {
@@ -30,7 +31,7 @@ export const useBlogApi = () => {
       },
     })
 
-    return await fetchFromApi<Post[]>(`blogs?${query}`)
+    return await fetchFromApi<PostsResponse>(`blogs?${query}`)
   })
 
   return {

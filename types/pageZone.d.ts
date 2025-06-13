@@ -31,7 +31,7 @@ interface QPZone extends PageZoneComponent {
 
 interface Group extends PageZoneComponent {
   Title: string
-  leaders: User[]
+  leaders: Leader[]
 }
 
 interface ImageZone extends PageZoneComponent {

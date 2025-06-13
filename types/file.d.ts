@@ -1,4 +1,4 @@
-declare interface IFile {
+export type IFile = {
   id: number
   name: string
   alternativeText: string | null

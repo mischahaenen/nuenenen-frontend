@@ -1,4 +1,4 @@
-declare interface Post {
+export type Post = {
   id: number
   title: string
   description: string
@@ -7,4 +7,16 @@ declare interface Post {
   author: string
   slug: string
   images: Image[]
+}
+
+export type PostsResponse = {
+  data: Post[]
+  meta: {
+    pagination: {
+      page: number
+      pageSize: number
+      pageCount: number
+      total: number
+    }
+  }
 }

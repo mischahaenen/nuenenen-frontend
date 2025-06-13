@@ -1,9 +1,10 @@
 import { useMemoize } from '@vueuse/core'
+import type { StepResponse } from '~/types/step'
 import { createQuery, fetchFromApi } from '../core/client'
 
 export const useStepsApi = () => {
   const getSteps = useMemoize(async () => {
-    return await fetchFromApi<Step[]>('steps', {
+    return await fetchFromApi<StepResponse>('steps', {
       params: {
         sort: 'id:asc',
         fields: ['Name', 'Slug', 'Description'],
@@ -13,7 +14,7 @@ export const useStepsApi = () => {
   })
 
   const getStepNames = useMemoize(async () => {
-    return await fetchFromApi<Step[]>('steps', {
+    return await fetchFromApi<StepResponse>('steps', {
       params: {
         sort: 'id:asc',
         fields: ['Name', 'Slug'],
@@ -29,7 +30,7 @@ export const useStepsApi = () => {
       },
     })
 
-    return await fetchFromApi<Step[]>(`steps?${query}`)
+    return await fetchFromApi<StepResponse>(`steps?${query}`)
   })
 
   return {

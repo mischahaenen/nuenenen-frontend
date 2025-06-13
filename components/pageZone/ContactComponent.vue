@@ -164,7 +164,7 @@ const { getContactDistributionList, createContactEntry } = useContactApi();
 onMounted(async () => {
   try {
     const response = await getContactDistributionList();
-    contactDistributionList.value = response;
+    contactDistributionList.value = response.data;
     form.value.contactOption = getDefaultContactOption();
     form.value.Message = deregisterStore.step ? deregisterStore.message : "";
   } catch (error) {

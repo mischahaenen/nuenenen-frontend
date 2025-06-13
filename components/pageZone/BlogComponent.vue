@@ -74,7 +74,6 @@ import { useStepsApi } from "~/composables/api/modules/steps";
 const { getBlogPosts, getBlogPostsByStep } = useBlogApi();
 const { getStepNames } = useStepsApi();
 
-/* TODO: Rethink subgrid strategy */
 const posts = useState<Post[]>(() => []);
 const steps = useState<Step[]>(() => []);
 const activeButton = useState<string>(() => "all");
@@ -85,19 +84,19 @@ const props = defineProps<{
 
 const getPostsByStep = async (step: string) => {
   const res = await getBlogPostsByStep(step);
-  posts.value = res;
+  posts.value = res.data;
   activeButton.value = step;
 };
 
 const getPosts = async () => {
   const res = await getBlogPosts();
-  posts.value = res;
+  posts.value = res.data;
   activeButton.value = "all";
 };
 
 const fetchSteps = async () => {
   const res = await getStepNames();
-  steps.value = res;
+  steps.value = res.data;
 };
 
 const initializeObserver = () => {

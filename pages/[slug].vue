@@ -31,7 +31,6 @@ import {
   PageZonePfadiheimComponent,
   PageZoneContactComponent,
   PageZoneDocumentComponent,
-  PageZoneSponsorComponent,
   PageZoneTeamComponent,
 } from "#components";
 
@@ -47,18 +46,20 @@ const slug = computed(() => {
   return "home";
 });
 
-const { data: page, error } = await useAsyncData(
-  `page-${slug.value}`,
+const { data: page, error, refresh } = await useAsyncData(
+  `${slug.value}`,
   () => getPage(slug.value),
   {
-    server: true,
     transform: (data) => {
-      console.log(data);
       if (!data) return [];
       return data.data ?? [];
     },
   }
 );
+
+watch(slug, async () => {
+  await refresh();
+});
 
 const componentMap = {
   "pages.image": PageZoneImageComponent,
@@ -68,7 +69,6 @@ const componentMap = {
   "pages.pfadiheim": PageZonePfadiheimComponent,
   "pages.contact": PageZoneContactComponent,
   "pages.document": PageZoneDocumentComponent,
-  //"pages.sponsors": PageZoneSponsorComponent,
   "pages.group": PageZoneTeamComponent,
 } as const;
 

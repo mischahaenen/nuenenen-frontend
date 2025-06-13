@@ -1,4 +1,4 @@
-declare interface IEvent {
+export type Event = {
   id: number
   Title: string
   Description: string

@@ -21,6 +21,7 @@
           />
           <div class="step-content">
             <h3>{{ step.Name }}</h3>
+            <p>{{ step.Description }}</p>
           </div>
         </nuxt-link>
       </article>

@@ -35,14 +35,19 @@ import { useBlogApi } from "~/composables/api/modules/blog";
 const route = useRoute();
 const { getBlogPost } = useBlogApi();
 
-const { data: post, error } = await useAsyncData("post", () =>
-  getBlogPost(route.params.slug as string)
+const { data: post, error } = await useAsyncData(
+  "post",
+  () => getBlogPost(route.params.slug as string),
+  {
+    transform: (data) => {
+      if (!data) return [];
+      return data.data ?? [];
+    },
+  }
 );
 const title = computed(() => {
   if (!post.value || !post.value || post.value.length === 0) return "Pfadi Nünenen";
-  return `Pfadi Nünenen - ${
-    post.value[0].slug.charAt(0).toUpperCase() + post.value[0].slug.slice(1)
-  }`;
+  return `Pfadi Nünenen - ${post.value[0].slug}`;
 });
 
 useHead({
