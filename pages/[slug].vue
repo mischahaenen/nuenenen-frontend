@@ -80,7 +80,7 @@ const title = computed(() => {
 const getProps = (zone: PageZoneItem, index: number) => {
   return {
     zone: zone as any,
-    index,
+    index: index + 1,
     id: index,
   };
 };

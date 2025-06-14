@@ -71,6 +71,8 @@
 import { defineProps } from "vue";
 import { useBlogApi } from "~/composables/api/modules/blog";
 import { useStepsApi } from "~/composables/api/modules/steps";
+import type { Post } from "~/types/post";
+import type { Step } from "~/types/step";
 const { getBlogPosts, getBlogPostsByStep } = useBlogApi();
 const { getStepNames } = useStepsApi();
 
