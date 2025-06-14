@@ -214,8 +214,8 @@ gtag("event", "page_view", {
   app_name: "Webapp",
   screen_name: "Kontakt",
   page_title: "Kontakt",
-  page_location: window.location.href,
-  page_path: window.location.pathname,
+  page_location: window?.location.href,
+  page_path: window?.location.pathname,
 });
 
 onBeforeUnmount(() => {

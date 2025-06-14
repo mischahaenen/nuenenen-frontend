@@ -3,17 +3,17 @@
     <template v-if="error">
       <p>Something went wrong: {{ error }}</p>
     </template>
-    <template v-if="page && page.length > 0">
+    <template v-if="page.data && page.data.length > 0">
       <BaseBanner
         id="main"
-        :title="page[0].title"
-        :description="page[0].description"
-        :action-button-name="page[0].ActionButtonName"
-        :action-button-link="page[0].ActionButtonLink"
+        :title="page.data[0].title"
+        :description="page.data[0].description"
+        :action-button-name="page.data[0].ActionButtonName"
+        :action-button-link="page.data[0].ActionButtonLink"
       />
       <component
         :is="getZoneComponent(zone.__component)"
-        v-for="(zone, index) in page[0].pageZone"
+        v-for="(zone, index) in page.data[0].pageZone"
         :key="`${zone.__component}-${index}}`"
         v-bind="getProps(zone, index)"
       />
@@ -46,19 +46,13 @@ const slug = computed(() => {
   return "home";
 });
 
-const { data: page, error, refresh } = await useAsyncData(
-  `${slug.value}`,
-  () => getPage(slug.value),
-  {
-    transform: (data) => {
-      if (!data) return [];
-      return data.data ?? [];
-    },
-  }
+const { data: page, error, refresh } = await useAsyncData(`page-${slug.value}`, () =>
+  getPage(slug.value)
 );
 
-watch(slug, async () => {
-  await refresh();
+watch(slug, () => {
+  console.log(slug);
+  refresh();
 });
 
 const componentMap = {
