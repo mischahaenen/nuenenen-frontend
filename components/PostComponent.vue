@@ -23,14 +23,18 @@
           :fetchpriority="isFirst ? 'high' : 'auto'"
         />
         <div v-else class="card-image-placeholder">
-          <Icon name="mdi:image-outline" size="48" />
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M8.5,13.5L11,16.5L14.5,12L19,18H5M21,19V5C21,3.89 20.1,3 19,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19Z"
+            />
+          </svg>
         </div>
       </div>
 
       <div class="card-content">
         <header class="card-header">
           <div class="card-meta">
-            <time :datetime="post.createdAt" class="card-date">
+            <time :datetime="formattedDateISO" class="card-date">
               {{ formattedDate }}
             </time>
             <span class="meta-separator">|</span>
@@ -67,7 +71,6 @@ const props = defineProps<{
 
 const { post, isFirst } = toRefs(props);
 
-// Computed properties
 const formattedDate = computed(() => {
   if (!post.value?.createdAt) return "";
 
@@ -76,6 +79,17 @@ const formattedDate = computed(() => {
     month: "long",
     year: "numeric",
   }).format(new Date(post.value.createdAt));
+});
+
+const formattedDateISO = computed(() => {
+  if (!post.value?.createdAt) return "";
+
+  const date =
+    typeof post.value.createdAt === "string"
+      ? new Date(post.value.createdAt)
+      : post.value.createdAt;
+
+  return date.toISOString();
 });
 
 const readingTime = computed(() => {
