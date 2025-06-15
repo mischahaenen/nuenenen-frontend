@@ -173,6 +173,7 @@ onMounted(() => {
   align-items: center;
   margin: 0;
   overflow: hidden;
+  border-radius: var(--border-radius);
 }
 
 .image-container {
@@ -185,9 +186,10 @@ onMounted(() => {
 }
 
 .slide-image {
-  height: 100%;
+  width: 100%;
   object-fit: cover;
   object-position: center;
+  border-radius: var(--border-radius);
 }
 
 .nav-button {

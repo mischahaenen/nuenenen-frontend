@@ -7,7 +7,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/image',
-    'vue3-carousel-nuxt',
     '@nuxtjs/google-fonts',
     '@nuxtjs/robots',
     '@nuxt/content',

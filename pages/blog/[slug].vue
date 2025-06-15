@@ -3,7 +3,7 @@
     <template v-if="error"><p>Something went wrong</p></template>
     <template v-if="post">
       <div class="full-width-image">
-        <ImageSliderComponent :images="post[0].images"></ImageSliderComponent>
+        <SliderComponent :images="post[0].images"></SliderComponent>
       </div>
       <NuxtLink to="/" class="back-link">
         <svg

@@ -17,7 +17,7 @@
     ></iframe>
     <h3 v-if="zone.images">Impressionen</h3>
     <div class="full-width-image">
-      <ImageSliderComponent :images="zone.images"></ImageSliderComponent>
+      <SliderComponent :images="zone.images"></SliderComponent>
     </div>
   </section>
 </template>

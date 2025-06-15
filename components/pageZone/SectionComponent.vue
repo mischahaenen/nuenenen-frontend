@@ -9,7 +9,7 @@
       :class="[
         'section',
         { 'flex breakout': props.zone.Image },
-        { 'row-reverse': index % 2 !== 0 },
+        { 'row-reverse': index % 2 === 0 },
       ]"
     >
       <div>
@@ -17,7 +17,7 @@
         <RichTextComponent :content="props.zone.Description" />
       </div>
       <NuxtImg
-        v-if="props.zone.Image.url"
+        v-if="props.zone.Image?.url"
         class="image"
         :class="{
           portrait: isPortrait(props.zone.Image),

@@ -8,7 +8,7 @@
     ]"
   >
     <TitleComponent :title="props.zone.Title" :index="props.index"></TitleComponent>
-    <RichTextComponent :content="props.zone.Description" />
+    <RichTextComponent v-if="props.zone.Description" :content="props.zone.Description" />
     <div class="blog-filter">
       <button
         class="btn btn-primary"

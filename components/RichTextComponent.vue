@@ -1,41 +1,38 @@
-<!-- eslint-disable vue/no-v-html -->
 <template>
-  <div
-    :class="{ preview: props.isPreview }"
-    v-html="$mdRenderer.render(markdown)"
-  />
+  <div :class="{ preview: props.isPreview }">
+    <VNode />
+  </div>
 </template>
 
 <script lang="ts" setup>
+import { StrapiBlocks, type BlocksContent } from 'vue-strapi-blocks-renderer'
+
 const props = defineProps<{
-  content?: string
+  content: BlocksContent
   isPreview?: boolean
   previewLines?: number
 }>()
 
-const markdown = computed(() => {
-  if (!props.content) return ''
+const displayedContent = computed((): BlocksContent => {
+  if (!props.content) return []
 
-  if (props.isPreview) {
-    // Split the content into lines and take the specified number of lines for the preview
-    const lines = props.content.split('\n').slice(0, props.previewLines || 3)
-    // Join the lines back into a string and render
-    return lines.join('\n')
-  } else {
-    // Render the full content
-    return props.content
+  if (props.isPreview && props.previewLines) {
+    return props.content.slice(0, props.previewLines)
   }
+
+  return props.content
+})
+
+const VNode = computed(() => {
+  return StrapiBlocks({ content: displayedContent.value })
 })
 </script>
+
 <style scoped lang="scss">
-.preview :deep(p) {
+.preview {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: v-bind('props.previewLines || 3');
+  -webkit-line-clamp: v-bind("props.previewLines || 3");
   -webkit-box-orient: vertical;
-}
-
-.rich-text {
-  display: block;
 }
 </style>

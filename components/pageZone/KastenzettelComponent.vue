@@ -3,37 +3,31 @@
     :class="[
       'pt-medium pb-medium',
       {
-        'full-width content-grid bg-accent-50 dark:bg-primary-700':
-          props.index % 2 === 1,
+        'full-width content-grid bg-accent-50 dark:bg-primary-700': props.index % 2 === 1,
       },
     ]"
   >
-    <TitleComponent
-      title="Nächste Aktivität"
-      :index="props.index"
-    ></TitleComponent>
+    <TitleComponent title="Nächste Aktivität" :index="props.index"></TitleComponent>
     <div class="breakout event-details">
       <div class="calendar-item">
-        <template
-          v-if="props.kastenzeddel.StartDate === props.kastenzeddel.EndDate"
-        >
+        <template v-if="props.zone.StartDate === props.zone.EndDate">
           <p class="bold">
-            {{ moment(props.kastenzeddel.StartDate).format('DD') }}
+            {{ moment(props.zone.StartDate).format("DD") }}
           </p>
           <p>
-            {{ moment(props.kastenzeddel.StartDate).format('MMM') }}
+            {{ moment(props.zone.StartDate).format("MMM") }}
           </p>
         </template>
         <template v-else>
           <p class="bold">
-            {{ moment(props.kastenzeddel.StartDate).format('DD.MM') }}
+            {{ moment(props.zone.StartDate).format("DD.MM") }}
           </p>
-          <p>bis {{ moment(props.kastenzeddel.EndDate).format('DD.MM') }}</p>
+          <p>bis {{ moment(props.zone.EndDate).format("DD.MM") }}</p>
         </template>
       </div>
       <div class="description-location">
-        <h3>{{ props.kastenzeddel.Title }}</h3>
-        <RichTextComponent :content="props.kastenzeddel.Description" />
+        <h3>{{ props.zone.Title }}</h3>
+        <RichTextComponent :content="props.zone.Description" />
         <div class="flex">
           <div class="title">
             <svg
@@ -48,38 +42,20 @@
             </svg>
           </div>
           <p>
-            <template
-              v-if="props.kastenzeddel.StartDate === props.kastenzeddel.EndDate"
-            >
-              <b>{{
-                moment(props.kastenzeddel.StartTime, 'HH:mm:ss.SSS').format(
-                  'HH:mm'
-                )
-              }}</b>
+            <template v-if="props.zone.StartDate === props.zone.EndDate">
+              <b>{{ moment(props.zone.StartTime, "HH:mm:ss.SSS").format("HH:mm") }}</b>
               bis
-              <b>{{
-                moment(props.kastenzeddel.EndTime, 'HH:mm:ss.SSS').format(
-                  'HH:mm'
-                )
-              }}</b>
+              <b>{{ moment(props.zone.EndTime, "HH:mm:ss.SSS").format("HH:mm") }}</b>
               Uhr
             </template>
             <template v-else>
-              {{ moment(props.kastenzeddel.StartDate).format('DD. MMM. yyyy') }}
+              {{ moment(props.zone.StartDate).format("DD. MMM. yyyy") }}
               um
-              <b>{{
-                moment(props.kastenzeddel.StartTime, 'HH:mm:ss.SSS').format(
-                  'HH:mm'
-                )
-              }}</b>
+              <b>{{ moment(props.zone.StartTime, "HH:mm:ss.SSS").format("HH:mm") }}</b>
               Uhr bis
-              {{ moment(props.kastenzeddel.EndDate).format('DD. MMM. yyyy') }}
+              {{ moment(props.zone.EndDate).format("DD. MMM. yyyy") }}
               um
-              <b>{{
-                moment(props.kastenzeddel.EndTime, 'HH:mm:ss.SSS').format(
-                  'HH:mm'
-                )
-              }}</b>
+              <b>{{ moment(props.zone.EndTime, "HH:mm:ss.SSS").format("HH:mm") }}</b>
               Uhr
             </template>
           </p>
@@ -97,7 +73,7 @@
               />
             </svg>
           </div>
-          <p>{{ props.kastenzeddel.Location }}</p>
+          <p>{{ props.zone.Location }}</p>
         </div>
         <button class="btn btn-primary" @click="deregister()">Abmelden</button>
       </div>
@@ -106,19 +82,28 @@
 </template>
 
 <script setup lang="ts" defer>
-import moment from 'moment'
-import { useDeregisterStore } from '~/store/deregister'
+import moment from "moment";
+import { useDeregisterStore } from "~/store/deregister";
 
 const props = defineProps<{
-  kastenzeddel: Kastenzeddel
-  step: string
-  index: number
-}>()
+  zone: KastenzettelZone;
+  index: number;
+}>();
 const deregister = async () => {
-  const deregisterStore = useDeregisterStore()
-  deregisterStore.setStep(props.step)
-  await navigateTo('/kontakt')
-}
+  const route = useRoute();
+  const deregisterStore = useDeregisterStore();
+
+  // Extract step from URL params (gets the step name from /abteilung/stepname)
+  const stepSlug = Array.isArray(route.params.slug)
+    ? route.params.slug[1]
+    : route.params.slug;
+
+  // Set the step in the store
+  deregisterStore.setStep(stepSlug);
+
+  // Navigate to contact page
+  await navigateTo("/kontakt");
+};
 </script>
 
 <style scoped lang="scss">

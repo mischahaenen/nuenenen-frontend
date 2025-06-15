@@ -1,7 +1,9 @@
+import type { BlocksContent } from 'vue-strapi-blocks-renderer'
+
 export type Post = {
   id: number
   title: string
-  description: string
+  description: BlocksContent
   step: Step
   createdAt: Date
   author: string

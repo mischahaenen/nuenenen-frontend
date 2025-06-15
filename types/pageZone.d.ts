@@ -1,3 +1,5 @@
+import type { BlocksContent } from 'vue-strapi-blocks-renderer'
+
 interface PageZoneComponent {
   id: number
   __component: string
@@ -73,8 +75,18 @@ interface SponsorZone extends PageZoneComponent {
 
 interface BlogZone extends PageZoneComponent {
   Title: string
-  Description: string
+  Description: BlocksContent
   posts: Post[]
+}
+
+interface KastenzettelZone extends PageZoneComponent {
+  Title: string
+  Description: string
+  StartDate: string
+  EndDate: string
+  Location: string
+  StartTime: string
+  EndTime: string
 }
 
 type PageZoneItem =
@@ -88,6 +100,7 @@ type PageZoneItem =
   | StepZone
   | SponsorZone
   | BlogZone
+  | KastenzettelZone
   | QPZone
 
 type PageZone = PageZoneItem[]

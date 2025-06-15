@@ -92,16 +92,11 @@ const formattedDateISO = computed(() => {
   return date.toISOString();
 });
 
+const { calculateBlocksReadingTime } = useReadingTime();
+
 const readingTime = computed(() => {
   if (!post.value?.description) return 1;
-
-  const wordsPerMinute = 200; // Average German reading speed
-  const words = post.value.description
-    .replace(/<[^>]*>/g, "") // Remove HTML tags
-    .trim()
-    .split(/\s+/).length;
-
-  return Math.max(1, Math.ceil(words / wordsPerMinute));
+  return calculateBlocksReadingTime(post.value.description);
 });
 
 const timeUnit = computed(() => (readingTime.value === 1 ? "Minute" : "Minuten"));

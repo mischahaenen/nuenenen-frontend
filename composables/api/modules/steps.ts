@@ -24,7 +24,11 @@ export const useStepsApi = () => {
 
   const getStep = useMemoize(async (slug: string) => {
     const query = createQuery({
-      populate: '*',
+      populate: {
+        pageZone: {
+          populate: '*',
+        },
+      },
       filters: {
         Slug: { $eq: slug },
       },
