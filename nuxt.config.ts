@@ -20,17 +20,65 @@ export default defineNuxtConfig({
   imports: {
     autoImport: true,
   },
+  typescript: {
+    strict: true,
+    typeCheck: false,
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    analyze: process.env.ANALYZE === 'true',
+  },
+  experimental: {
+    payloadExtraction: false,
+  },
+  nitro: {
+    compressPublicAssets: true,
+    minify: true,
+    routeRules: {
+      '/**': {
+        headers: {
+          'X-Content-Type-Options': 'nosniff',
+          'X-Frame-Options': 'DENY',
+          'X-XSS-Protection': '1; mode=block',
+          'Referrer-Policy': 'strict-origin-when-cross-origin',
+          'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+        },
+      },
+    },
+  },
   vite: {
-    // @ts-ignore ssr:
-    noExternal: ['moment'],
+    build: {
+      chunkSizeWarningLimit: 500,
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // Separate Vue and framework code
+            vue: ['vue', '@nuxt/kit'],
+            // Separate Nuxt modules
+            nuxt: ['@nuxtjs/strapi', '@pinia/nuxt', '@nuxtjs/color-mode'],
+            // Separate UI libraries
+            ui: ['@vueuse/core'],
+            // Separate Strapi and API code
+            strapi: ['vue-strapi-blocks-renderer', 'qs'],
+            // Separate date utilities
+            utils: ['date-fns'],
+            // Separate analytics
+            analytics: ['@vercel/analytics', '@vercel/speed-insights'],
+          },
+        },
+      },
+    },
     css: {
       preprocessorOptions: {
         scss: {
           additionalData: '@use "@/assets/css/utils.scss" as *;',
         },
       },
+    },
+    optimizeDeps: {
+      include: ['vue', 'date-fns', '@vueuse/core'],
+      exclude: ['vue-demi'],
     },
   },
   image: {

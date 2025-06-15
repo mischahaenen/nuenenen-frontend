@@ -57,14 +57,18 @@
     />
   </section>
 
-  <SliderFullscreenModal
-    v-if="isFullscreen"
-    :images="props.images"
-    :current-index="currentIndex"
-    @close="closeFullscreen"
-    @navigate="handleNavigation"
-    @go-to-slide="goToSlide"
-  />
+  <Suspense v-if="isFullscreen">
+    <LazySliderFullscreenModal
+      :images="props.images"
+      :current-index="currentIndex"
+      @close="closeFullscreen"
+      @navigate="handleNavigation"
+      @go-to-slide="goToSlide"
+    />
+    <template #fallback>
+      <div class="fullscreen-loading">Loading fullscreen view...</div>
+    </template>
+  </Suspense>
 
   <SliderSingleImage
     v-else-if="hasSingleImage"
@@ -459,5 +463,21 @@ onMounted(() => {
       border-width: 2px;
     }
   }
+}
+
+// Loading states
+.fullscreen-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  z-index: 1000;
 }
 </style>

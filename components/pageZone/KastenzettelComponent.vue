@@ -12,17 +12,17 @@
       <div class="calendar-item">
         <template v-if="props.zone.StartDate === props.zone.EndDate">
           <p class="bold">
-            {{ moment(props.zone.StartDate).format("DD") }}
+            {{ format(new Date(props.zone.StartDate), "dd") }}
           </p>
           <p>
-            {{ moment(props.zone.StartDate).format("MMM") }}
+            {{ format(new Date(props.zone.StartDate), "MMMM", { locale: de }) }}
           </p>
         </template>
         <template v-else>
           <p class="bold">
-            {{ moment(props.zone.StartDate).format("DD.MM") }}
+            {{ format(new Date(props.zone.StartDate), "dd.MM", { locale: de }) }}
           </p>
-          <p>bis {{ moment(props.zone.EndDate).format("DD.MM") }}</p>
+          <p>bis {{ format(new Date(props.zone.EndDate), "dd.MM", { locale: de }) }}</p>
         </template>
       </div>
       <div class="description-location">
@@ -43,19 +43,27 @@
           </div>
           <p>
             <template v-if="props.zone.StartDate === props.zone.EndDate">
-              <b>{{ moment(props.zone.StartTime, "HH:mm:ss.SSS").format("HH:mm") }}</b>
+              <b>{{
+                format(parse(props.zone.StartTime, "HH:mm:ss.SSS", new Date()), "HH:mm")
+              }}</b>
               bis
-              <b>{{ moment(props.zone.EndTime, "HH:mm:ss.SSS").format("HH:mm") }}</b>
+              <b>{{
+                format(parse(props.zone.EndTime, "HH:mm:ss.SSS", new Date()), "HH:mm")
+              }}</b>
               Uhr
             </template>
             <template v-else>
-              {{ moment(props.zone.StartDate).format("DD. MMM. yyyy") }}
+              {{ format(new Date(props.zone.StartDate), "dd. MMM. yyyy", { locale: de }) }}
               um
-              <b>{{ moment(props.zone.StartTime, "HH:mm:ss.SSS").format("HH:mm") }}</b>
+              <b>{{
+                format(parse(props.zone.StartTime, "HH:mm:ss.SSS", new Date()), "HH:mm")
+              }}</b>
               Uhr bis
-              {{ moment(props.zone.EndDate).format("DD. MMM. yyyy") }}
+              {{ format(new Date(props.zone.EndDate), "dd. MMM. yyyy", { locale: de }) }}
               um
-              <b>{{ moment(props.zone.EndTime, "HH:mm:ss.SSS").format("HH:mm") }}</b>
+              <b>{{
+                format(parse(props.zone.EndTime, "HH:mm:ss.SSS", new Date()), "HH:mm")
+              }}</b>
               Uhr
             </template>
           </p>
@@ -82,7 +90,8 @@
 </template>
 
 <script setup lang="ts" defer>
-import moment from "moment";
+import { format, parse } from "date-fns";
+import { de } from "date-fns/locale";
 import { useDeregisterStore } from "~/store/deregister";
 
 const props = defineProps<{

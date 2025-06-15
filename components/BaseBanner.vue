@@ -49,20 +49,20 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue'
+import { defineProps } from "vue";
 
-const scrollY = useScrollY()
-const rocketSpeed = computed(() => 20 + scrollY.value * -0.5)
+const scrollY = useScrollY();
+const rocketSpeed = computed(() => 20 + scrollY.value * -0.5);
 const rocketStyle = computed(() => ({
   transform: `translateY(${rocketSpeed.value}%) translateX(40%) rotate(10deg)`,
-}))
+}));
 const props = defineProps<{
-  title: string | null
-  description: string | null
-  actionButtonName?: string
-  actionButtonLink?: string
-  image?: Image
-}>()
+  title: string | null;
+  description: string | null;
+  actionButtonName?: string;
+  actionButtonLink?: string;
+  image?: Image;
+}>();
 </script>
 
 <style scoped lang="scss">
@@ -120,7 +120,7 @@ const props = defineProps<{
 
 .woods {
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   z-index: -1;
 }
 
