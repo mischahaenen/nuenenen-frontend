@@ -95,6 +95,10 @@ export default defineNuxtConfig({
       xl: 1280,
       xxl: 1536,
     },
+    strapi: {
+      baseURL:
+        'https://nuenenen-strapi-aws-s3-images-bucket.s3.eu-central-1.amazonaws.com/',
+    },
     presets: {
       avatar: {
         modifiers: {
