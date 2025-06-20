@@ -196,27 +196,52 @@ const recaptcha = async () => {
 };
 
 const submitForm = async () => {
+  // Track form submission attempt
+  trackFormEvent('contact_form', 'submit', {
+    form_location: 'contact_page',
+    step_context: deregisterStore.step || 'none'
+  })
+
   try {
     const token = await recaptcha();
     await createContactEntry(token, form.value);
     mailState.value = "SUCCESS";
+    
+    // Track successful form submission
+    trackEvent({
+      action: 'form_submission_success',
+      category: 'contact',
+      label: 'contact_form',
+      custom_parameters: {
+        step_context: deregisterStore.step || 'none'
+      }
+    })
+    
   } catch (error) {
     errorMessage.value =
       "Deine Nachricht konnte nicht übermittelt werden. Bitte versuche es erneut.";
+    
+    // Track form submission error
+    trackFormEvent('contact_form', 'error', {
+      error_type: 'submission_failed',
+      error_message: error?.toString() || 'Unknown error',
+      step_context: deregisterStore.step || 'none'
+    })
   } finally {
     deregisterStore.setStep("");
   }
 };
 
-const { gtag } = useGtag();
+// Enhanced analytics for contact form
+const { trackFormEvent, trackEvent } = useEnhancedAnalytics()
 
-gtag("event", "page_view", {
-  app_name: "Webapp",
-  screen_name: "Kontakt",
-  page_title: "Kontakt",
-  page_location: window?.location.href,
-  page_path: window?.location.pathname,
-});
+// Track form start on component mount
+onMounted(() => {
+  trackFormEvent('contact_form', 'start', {
+    form_location: 'contact_page',
+    pre_filled_step: deregisterStore.step || 'none'
+  })
+})
 
 onBeforeUnmount(() => {
   mailState.value = "UNKNOWN";

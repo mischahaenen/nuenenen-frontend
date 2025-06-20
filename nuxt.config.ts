@@ -101,4 +101,23 @@ export default defineNuxtConfig({
       Orbitron: [100, 200, 300, 400, 500, 600, 700, 800, 900],
     },
   },
+  gtag: {
+    id: process.env.GTAG_ID || 'G-F1TXT7Y96H',
+    config: {
+      page_title: 'Pfadi Nünenen',
+      page_location: 'https://pfadi-nuenenen.ch',
+      send_page_view: false,
+      anonymize_ip: true,
+      allow_google_signals: true,
+      allow_ad_personalization_signals: false,
+      cookie_flags: 'SameSite=Strict;Secure',
+      custom_map: {
+        dimension1: 'page_type',
+        dimension2: 'user_type',
+        dimension3: 'device_type',
+        dimension4: 'content_category',
+        dimension5: 'user_journey_stage',
+      },
+    },
+  },
 })

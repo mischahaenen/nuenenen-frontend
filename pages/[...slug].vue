@@ -158,10 +158,30 @@ useHead(() => ({
   "Content-Security-Policy": "upgrade-insecure-requests",
 }));
 
-const { gtag } = useGtag();
-// SSR-ready
-gtag("event", "screen_view", {
-  app_name: "Webapp",
-  screen_name: fullSlug.value,
+// Enhanced analytics tracking
+const { trackPageView, setCustomDimension } = useEnhancedAnalytics();
+
+onMounted(() => {
+  const pageType = isStepRoute.value ? "step_page" : "content_page";
+  const contentCategory = isStepRoute.value ? "scouting_groups" : "general_content";
+
+  setCustomDimension(1, pageType);
+  setCustomDimension(4, contentCategory);
+
+  // Track enhanced page view
+  trackPageView({
+    content_group1: pageType,
+    content_group2: fullSlug.value,
+    custom_map: {
+      page_slug: fullSlug.value,
+      is_step_route: isStepRoute.value,
+      has_action_button: !!(isStepRoute.value
+        ? false
+        : page.value?.data?.[0]?.ActionButtonName),
+      content_sections: isStepRoute.value
+        ? step.value?.data?.[0]?.pageZone?.length || 0
+        : page.value?.data?.[0]?.pageZone?.length || 0,
+    },
+  });
 });
 </script>

@@ -20,7 +20,7 @@ interface Section extends PageZoneComponent {
   Image: Image
 }
 
-interface Document extends PageZoneComponent {
+interface DocumentZone extends PageZoneComponent {
   Title: string
   files: IFile[]
 }
@@ -92,7 +92,7 @@ interface KastenzettelZone extends PageZoneComponent {
 type PageZoneItem =
   | Kastenzeddel
   | Section
-  | Document
+  | DocumentZone
   | Group
   | ImageZone
   | Testimonial

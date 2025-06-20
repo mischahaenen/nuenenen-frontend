@@ -34,7 +34,15 @@
         :modifiers="{ breakpoint: 'medium' }"
       />
     </section>
-    <NuxtImg class="woods full-width" :src="rocketLaunchSvg"></NuxtImg>
+    <ClientOnly>
+      <NuxtImg class="woods full-width" :src="rocketLaunchSvg"></NuxtImg>
+      <template #fallback>
+        <NuxtImg
+          class="woods full-width"
+          src="../assets/svg/rocket_launch_white.svg"
+        ></NuxtImg>
+      </template>
+    </ClientOnly>
   </div>
 </template>
 
@@ -48,7 +56,14 @@ const rocketStyle = computed(() => ({
   transform: `translateY(${rocketSpeed.value}%) translateX(40%) rotate(10deg)`,
 }));
 const rocketLaunchSvg = computed(() => {
-  return colorMode.value === "dark"
+  const resolvedMode =
+    colorMode.value === "system"
+      ? window?.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
+      : colorMode.value;
+
+  return resolvedMode === "dark"
     ? "../assets/svg/rocket_launch_dark.svg"
     : "../assets/svg/rocket_launch_white.svg";
 });
@@ -71,11 +86,6 @@ const props = defineProps<{
 .dark-mode {
   .banner::after {
     background-color: var(--color-primary-700);
-  }
-
-  .woods {
-    path {
-    }
   }
 }
 
@@ -109,19 +119,19 @@ const props = defineProps<{
 }
 
 .rocket-image {
-  width: clamp(150px, 30vw, 300px);
+  width: clamp(150px, 30vw, 250px);
   aspect-ratio: 1;
   position: absolute;
   right: max(45%, 80px);
   bottom: min(50%, 350px);
-  z-index: 1;
+  z-index: -1;
 }
 
 .woods {
   position: absolute;
   bottom: -1px;
   left: 0;
-  z-index: -1;
+  z-index: -2;
   width: 100%;
   height: 100%;
   object-fit: cover;

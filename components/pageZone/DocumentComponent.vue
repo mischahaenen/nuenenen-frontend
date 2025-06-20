@@ -31,7 +31,7 @@
 import { defineProps } from "vue";
 
 const props = defineProps<{
-  zone: Document;
+  zone: DocumentZone;
   index: number;
 }>();
 </script>
