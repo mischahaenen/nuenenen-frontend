@@ -57,8 +57,8 @@
         >
           <option
             v-for="sender of contactDistributionList"
-            :key="sender.id"
-            :value="sender.id"
+            :key="sender.documentId"
+            :value="sender.documentId"
           >
             {{ sender.Name }}
           </option>
@@ -153,7 +153,7 @@ const form = ref({
   Lastname: "",
   Email: "",
   Message: "",
-  contactOption: 1,
+  contactOption: "",
   Score: 0,
 });
 const recaptchaInstance = useReCaptcha();
@@ -180,7 +180,7 @@ const getDefaultContactOption = () => {
       step
         ? sender.Name.toLocaleLowerCase() === step
         : sender.Name.toLocaleLowerCase() === "abteilung"
-    )?.id || 1
+    )?.documentId ?? ""
   );
 };
 
@@ -197,51 +197,50 @@ const recaptcha = async () => {
 
 const submitForm = async () => {
   // Track form submission attempt
-  trackFormEvent('contact_form', 'submit', {
-    form_location: 'contact_page',
-    step_context: deregisterStore.step || 'none'
-  })
+  trackFormEvent("contact_form", "submit", {
+    form_location: "contact_page",
+    step_context: deregisterStore.step || "none",
+  });
 
   try {
     const token = await recaptcha();
     await createContactEntry(token, form.value);
     mailState.value = "SUCCESS";
-    
+
     // Track successful form submission
     trackEvent({
-      action: 'form_submission_success',
-      category: 'contact',
-      label: 'contact_form',
+      action: "form_submission_success",
+      category: "contact",
+      label: "contact_form",
       custom_parameters: {
-        step_context: deregisterStore.step || 'none'
-      }
-    })
-    
+        step_context: deregisterStore.step || "none",
+      },
+    });
   } catch (error) {
     errorMessage.value =
       "Deine Nachricht konnte nicht übermittelt werden. Bitte versuche es erneut.";
-    
+
     // Track form submission error
-    trackFormEvent('contact_form', 'error', {
-      error_type: 'submission_failed',
-      error_message: error?.toString() || 'Unknown error',
-      step_context: deregisterStore.step || 'none'
-    })
+    trackFormEvent("contact_form", "error", {
+      error_type: "submission_failed",
+      error_message: error?.toString() || "Unknown error",
+      step_context: deregisterStore.step || "none",
+    });
   } finally {
     deregisterStore.setStep("");
   }
 };
 
 // Enhanced analytics for contact form
-const { trackFormEvent, trackEvent } = useEnhancedAnalytics()
+const { trackFormEvent, trackEvent } = useEnhancedAnalytics();
 
 // Track form start on component mount
 onMounted(() => {
-  trackFormEvent('contact_form', 'start', {
-    form_location: 'contact_page',
-    pre_filled_step: deregisterStore.step || 'none'
-  })
-})
+  trackFormEvent("contact_form", "start", {
+    form_location: "contact_page",
+    pre_filled_step: deregisterStore.step || "none",
+  });
+});
 
 onBeforeUnmount(() => {
   mailState.value = "UNKNOWN";

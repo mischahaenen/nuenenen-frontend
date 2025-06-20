@@ -1,4 +1,4 @@
-import type { ContactSender } from '~/types/contact-sender'
+import type { ContactSenderResponse } from '~/types/contact-sender'
 import { fetchFromApi, fetchOptions } from '../core/client'
 
 export const useContactApi = () => {
@@ -8,20 +8,27 @@ export const useContactApi = () => {
   ) => {
     return await fetchFromApi<any>('contacts', {
       method: 'POST',
-      body: formData,
+      body: {
+        data: {
+          formData,
+          token,
+        },
+      },
       headers: {
         ...fetchOptions.headers,
-        Authorization: `Bearer ${token}`,
       },
     })
   }
 
   const getContactDistributionList = async () => {
-    return await fetchFromApi<ContactSender>('contact-distribution-lists', {
-      params: {
-        populate: '*',
-      },
-    })
+    return await fetchFromApi<ContactSenderResponse>(
+      'contact-distribution-lists',
+      {
+        params: {
+          populate: '*',
+        },
+      }
+    )
   }
 
   return {

@@ -1,5 +1,6 @@
 export type ContactSender = {
   id: number
+  documentId: string
   Name: string
   Email: string
 }
