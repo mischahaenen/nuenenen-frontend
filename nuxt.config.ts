@@ -50,24 +50,7 @@ export default defineNuxtConfig({
     build: {
       chunkSizeWarningLimit: 500,
       cssCodeSplit: true,
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            // Separate Vue and framework code
-            vue: ['vue', '@nuxt/kit'],
-            // Separate Nuxt modules
-            nuxt: ['@nuxtjs/strapi', '@pinia/nuxt', '@nuxtjs/color-mode'],
-            // Separate UI libraries
-            ui: ['@vueuse/core'],
-            // Separate Strapi and API code
-            strapi: ['vue-strapi-blocks-renderer', 'qs'],
-            // Separate date utilities
-            utils: ['date-fns'],
-            // Separate analytics
-            analytics: ['@vercel/analytics', '@vercel/speed-insights'],
-          },
-        },
-      },
+      rollupOptions: {},
     },
     css: {
       preprocessorOptions: {
