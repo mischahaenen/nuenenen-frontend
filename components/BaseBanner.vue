@@ -37,10 +37,7 @@
     <ClientOnly>
       <NuxtImg class="woods full-width" :src="rocketLaunchSvg"></NuxtImg>
       <template #fallback>
-        <NuxtImg
-          class="woods full-width"
-          src="../assets/svg/rocket_launch_white.svg"
-        ></NuxtImg>
+        <NuxtImg class="woods full-width" src="svg/rocket_launch_white.svg"></NuxtImg>
       </template>
     </ClientOnly>
   </div>
@@ -64,8 +61,8 @@ const rocketLaunchSvg = computed(() => {
       : colorMode.value;
 
   return resolvedMode === "dark"
-    ? "../assets/svg/rocket_launch_dark.svg"
-    : "../assets/svg/rocket_launch_white.svg";
+    ? "svg/rocket_launch_dark.svg"
+    : "svg/rocket_launch_white.svg";
 });
 
 const props = defineProps<{
