@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxt/image',
     '@nuxtjs/google-fonts',
-    '@nuxtjs/robots',
     '@nuxt/content',
     'nuxt-gtag',
   ],
@@ -30,9 +29,13 @@ export default defineNuxtConfig({
   },
   experimental: {
     payloadExtraction: false,
+    treeshakeClientOnly: true,
   },
   nitro: {
-    compressPublicAssets: true,
+    compressPublicAssets: {
+      gzip: true,
+      brotli: true,
+    },
     minify: true,
     routeRules: {
       '/**': {
@@ -42,7 +45,15 @@ export default defineNuxtConfig({
           'X-XSS-Protection': '1; mode=block',
           'Referrer-Policy': 'strict-origin-when-cross-origin',
           'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+          'Cache-Control': 'public, max-age=31536000, immutable',
         },
+      },
+      '/': { prerender: true },
+      '/static/**': {
+        headers: { 'Cache-Control': 'public, max-age=31536000, immutable' },
+      },
+      '/assets/**': {
+        headers: { 'Cache-Control': 'public, max-age=31536000, immutable' },
       },
     },
   },
@@ -50,6 +61,13 @@ export default defineNuxtConfig({
     build: {
       chunkSizeWarningLimit: 500,
       cssCodeSplit: true,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
       rollupOptions: {},
     },
     css: {
@@ -66,10 +84,33 @@ export default defineNuxtConfig({
   },
   image: {
     dir: 'assets/',
-    formats: ['webp', 'svg', 'png', 'jpg'],
-    strapi: {
-      baseURL:
-        'https://nuenenen-strapi-aws-s3-images-bucket.s3.eu-central-1.amazonaws.com/',
+    formats: ['avif', 'webp', 'jpg', 'png'],
+    quality: 85,
+    densities: [1, 2],
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+    },
+    presets: {
+      avatar: {
+        modifiers: {
+          format: 'webp',
+          width: 50,
+          height: 50,
+        },
+      },
+      banner: {
+        modifiers: {
+          format: 'webp',
+          width: 1920,
+          height: 600,
+          quality: 90,
+        },
+      },
     },
   },
   devtools: {
@@ -80,8 +121,29 @@ export default defineNuxtConfig({
   },
   googleFonts: {
     families: {
-      Lato: [100, 200, 300, 400, 500, 600, 700, 800, 900],
-      Orbitron: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+      Lato: [300, 400, 500, 700],
+      Orbitron: [400, 500, 700],
+    },
+    display: 'swap',
+    preconnect: true,
+    prefetch: true,
+    download: true,
+    inject: true,
+  },
+  app: {
+    head: {
+      link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        {
+          rel: 'preconnect',
+          href: 'https://fonts.gstatic.com',
+          crossorigin: '',
+        },
+        {
+          rel: 'dns-prefetch',
+          href: '//nuenenen-strapi-aws-s3-images-bucket.s3.eu-central-1.amazonaws.com',
+        },
+      ],
     },
   },
   gtag: {

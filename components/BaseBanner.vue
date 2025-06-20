@@ -18,26 +18,45 @@
         class="rocket-image"
         :style="rocketStyle"
         format="webp"
-        loading="lazy"
+        loading="eager"
         src="img/nuenenen_logo.webp"
         alt="Nünenen Logo which shows a rocket"
+        width="250"
+        height="250"
+        sizes="(max-width: 768px) 150px, (max-width: 1200px) 200px, 250px"
       />
       <NuxtImg
         v-else
         class="custom-background-image"
         format="webp"
-        loading="lazy"
+        loading="eager"
         provider="strapi"
         :src="props.image.hash + props.image.ext"
         :alt="props.image.alternativeText || props.image.name + ' Logo'"
-        sizes="100vw sm:50vw md:400px"
+        width="400"
+        height="400"
+        sizes="(max-width: 768px) 300px, (max-width: 1200px) 350px, 400px"
         :modifiers="{ breakpoint: 'medium' }"
       />
     </section>
     <ClientOnly>
-      <NuxtImg class="woods full-width" :src="rocketLaunchSvg"></NuxtImg>
+      <NuxtImg 
+        class="woods full-width" 
+        :src="rocketLaunchSvg"
+        loading="lazy"
+        width="1920"
+        height="400"
+        alt="Scout camp illustration with tents and campfire"
+      ></NuxtImg>
       <template #fallback>
-        <NuxtImg class="woods full-width" src="svg/rocket_launch_white.svg"></NuxtImg>
+        <NuxtImg
+          class="woods full-width"
+          src="svg/rocket_launch_white.svg"
+          loading="lazy"
+          width="1920"
+          height="400"
+          alt="Illustration eines Pfadfinderlagers mit zwei Zelten, einer Feuerstelle mit brennendem Lagerfeuer, einem Holzpodest in der Mitte, Baumstämmen, einer Fahne und dem schweizerischen Pfadfinderlogo, das über dem Podest schwebt. Im Hintergrund sind Hügel, fliegende Vögel und eine rosa Farbpalette zu sehen.“"
+        ></NuxtImg>
       </template>
     </ClientOnly>
   </div>
@@ -122,6 +141,8 @@ const props = defineProps<{
   right: max(45%, 80px);
   bottom: min(50%, 350px);
   z-index: -1;
+  will-change: transform;
+  contain: layout;
 }
 
 .woods {

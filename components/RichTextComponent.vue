@@ -1,6 +1,9 @@
 <template>
   <div :class="{ preview: props.isPreview }">
-    <VNode />
+    <StrapiBlocks
+      v-if="displayedContent.length > 0"
+      :content="displayedContent"
+    ></StrapiBlocks>
   </div>
 </template>
 
@@ -21,10 +24,6 @@ const displayedContent = computed((): BlocksContent => {
   }
 
   return props.content
-})
-
-const VNode = computed(() => {
-  return StrapiBlocks({ content: displayedContent.value })
 })
 </script>
 

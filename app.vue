@@ -20,7 +20,7 @@ useSeoMeta({
     'Willkommen auf der Webseite der Pfadi Nünenen. Hier findest du alle Informationen über unsere Pfadfindergruppe, kommende Veranstaltungen, Mitgliedschaft und mehr.',
   ogImage: 'https://dev.pfadi-nuenenen.ch/img/nuenenen_logo.webp',
   author: 'Mischa Haenen',
-  contentSecurityPolicy: 'upgrade-insecure-requests',
+  robots: 'index, follow',
   ogUrl: 'https://dev.pfadi-nuenenen.ch',
   ogType: 'website',
   ogLocale: 'de_DE',
