@@ -7,9 +7,9 @@
     ></NuxtImg>
     <div class="footer-content">
       <div>
-        <h2>{{ footer.Title }}</h2>
+        <h2>{{ footer.data.Title }}</h2>
         <ul>
-          <li v-for="link of footer.Links" :key="link.Link">
+          <li v-for="link of footer.data.Links" :key="link.Link">
             <a :href="link.Link" target="_blank">{{ link.Name }}</a>
           </li>
           <li>
@@ -26,12 +26,12 @@
         <ul class="socialmedia-section">
           <li>
             <a href="https://www.instagram.com/pfadipink" target="_blank">
-              <NuxtImg src="svg/instagram.svg" alt="Github Logo" />Instagram</a
+              <NuxtImg src="svg/instagram.svg" alt="Instagram Logo" />Instagram</a
             >
           </li>
           <li>
             <a href="https://www.facebook.com/PfadiNuenenen/" target="_blank">
-              <NuxtImg src="svg/facebook.svg" alt="Github Logo" />Facebook</a
+              <NuxtImg src="svg/facebook.svg" alt="Facebook Logo" />Facebook</a
             >
           </li>
           <li>
@@ -44,7 +44,7 @@
       <div class="sponsorLogo">
         <h2>Sponsoren</h2>
         <NuxtImg
-          v-for="image of footer.Images"
+          v-for="image of footer.data.Images"
           :key="image.name"
           :src="image.url"
           :alt="image.name"

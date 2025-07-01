@@ -40,8 +40,8 @@
       />
     </section>
     <ClientOnly>
-      <NuxtImg 
-        class="woods full-width" 
+      <NuxtImg
+        class="woods full-width"
         :src="rocketLaunchSvg"
         loading="lazy"
         width="1920"
@@ -136,6 +136,7 @@ const props = defineProps<{
 
 .rocket-image {
   width: clamp(150px, 30vw, 250px);
+  height: auto;
   aspect-ratio: 1;
   position: absolute;
   right: max(45%, 80px);
