@@ -22,7 +22,10 @@
           <p class="bold">
             {{ format(new Date(props.zone.StartDate), "dd.MM", { locale: de }) }}
           </p>
-          <p>bis {{ format(new Date(props.zone.EndDate), "dd.MM", { locale: de }) }}</p>
+          <p>
+            bis
+            {{ format(new Date(props.zone.EndDate), "dd.MM", { locale: de }) }}
+          </p>
         </template>
       </div>
       <div class="description-location">
@@ -44,25 +47,33 @@
           <p>
             <template v-if="props.zone.StartDate === props.zone.EndDate">
               <b>{{
-                format(parse(props.zone.StartTime, "HH:mm:ss.SSS", new Date()), "HH:mm")
+                format(parse(props.zone.StartTime, "HH:mm:ss", new Date()), "HH:mm")
               }}</b>
               bis
               <b>{{
-                format(parse(props.zone.EndTime, "HH:mm:ss.SSS", new Date()), "HH:mm")
+                format(parse(props.zone.EndTime, "HH:mm:ss", new Date()), "HH:mm")
               }}</b>
               Uhr
             </template>
             <template v-else>
-              {{ format(new Date(props.zone.StartDate), "dd. MMM. yyyy", { locale: de }) }}
+              {{
+                format(new Date(props.zone.StartDate), "dd. MMM. yyyy", {
+                  locale: de,
+                })
+              }}
               um
               <b>{{
-                format(parse(props.zone.StartTime, "HH:mm:ss.SSS", new Date()), "HH:mm")
+                format(parse(props.zone.StartTime, "HH:mm:ss", new Date()), "HH:mm")
               }}</b>
               Uhr bis
-              {{ format(new Date(props.zone.EndDate), "dd. MMM. yyyy", { locale: de }) }}
+              {{
+                format(new Date(props.zone.EndDate), "dd. MMM. yyyy", {
+                  locale: de,
+                })
+              }}
               um
               <b>{{
-                format(parse(props.zone.EndTime, "HH:mm:ss.SSS", new Date()), "HH:mm")
+                format(parse(props.zone.EndTime, "HH:mm:ss", new Date()), "HH:mm")
               }}</b>
               Uhr
             </template>
