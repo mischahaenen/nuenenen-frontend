@@ -2,9 +2,7 @@
   <main v-if="post" class="content-grid container">
     <template v-if="error"><p>Something went wrong</p></template>
     <template v-if="post">
-      <div class="full-width-image">
-        <SliderComponent :images="post[0].images"></SliderComponent>
-      </div>
+      <SliderComponent :images="post[0].images"></SliderComponent>
       <NuxtLink to="/" class="back-link">
         <svg
           xmlns="http://www.w3.org/2000/svg"
