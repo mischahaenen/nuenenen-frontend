@@ -1,37 +1,37 @@
-@import 'variables';
+@use 'variables' as vars;
 
 @mixin breakpoint-xs {
-  @media (max-width: $breakpoint-extra-small) {
+  @media (max-width: vars.$breakpoint-extra-small) {
     @content;
   }
 }
 
 @mixin breakpoint-sm {
-  @media (max-width: $breakpoint-small) {
+  @media (max-width: vars.$breakpoint-small) {
     @content;
   }
 }
 
 @mixin breakpoint-md {
-  @media (max-width: $breakpoint-medium) {
+  @media (max-width: vars.$breakpoint-medium) {
     @content;
   }
 }
 
 @mixin breakpoint-lg {
-  @media (max-width: $breakpoint-large) {
+  @media (max-width: vars.$breakpoint-large) {
     @content;
   }
 }
 
 @mixin breakpoint-xl {
-  @media (max-width: $breakpoint-extra-large) {
+  @media (max-width: vars.$breakpoint-extra-large) {
     @content;
   }
 }
 
 .light-mode {
-  @each $name, $color in $colors {
+  @each $name, $color in vars.$colors {
     .text-#{$name} {
       color: $color;
     }
@@ -43,7 +43,7 @@
 }
 
 .dark-mode {
-  @each $name, $color in $colors {
+  @each $name, $color in vars.$colors {
     .dark\:text-#{$name} {
       color: $color;
     }
@@ -54,7 +54,7 @@
   }
 }
 
-@each $name, $size in $spaces {
+@each $name, $size in vars.$spaces {
   .m-#{$name} {
     margin: $size;
   }

@@ -1,13 +1,8 @@
 <template>
-  <main v-if="postData" class="content-grid container">
-    <template v-if="pending"></template>
+  <main v-if="post" class="content-grid container">
     <template v-if="error"><p>Something went wrong</p></template>
-    <template v-if="postData">
-      <div class="full-width-image">
-        <ImageSliderComponent
-          :images="postData.images.data"
-        ></ImageSliderComponent>
-      </div>
+    <template v-if="post">
+      <SliderComponent :images="post[0].images"></SliderComponent>
       <NuxtLink to="/" class="back-link">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,26 +20,37 @@
         Zurück
       </NuxtLink>
       <article>
-        <h1>{{ postData.title }}</h1>
-        <RichTextComponent :content="postData.description" />
+        <h1>{{ post[0].title }}</h1>
+        <RichTextComponent :content="post[0].description" />
       </article>
     </template>
   </main>
 </template>
 
 <script lang="ts" setup>
-const route = useRoute()
-const postData = computed(() => post.value?.data[0].attributes || null)
+import { useBlogApi } from "~/composables/api/modules/blog";
 
-const {
-  data: post,
-  pending,
-  error,
-} = await useAsyncData('post', () => getBlogPost(route.params.slug as string))
+const route = useRoute();
+const { getBlogPost } = useBlogApi();
+
+const { data: post, error } = await useAsyncData(
+  "post",
+  () => getBlogPost(route.params.slug as string),
+  {
+    transform: (data) => {
+      if (!data) return [];
+      return data.data ?? [];
+    },
+  }
+);
+const title = computed(() => {
+  if (!post.value || !post.value || post.value.length === 0) return "Pfadi Nünenen";
+  return `Pfadi Nünenen - ${post.value[0].slug}`;
+});
 
 useHead({
-  title: `Pfadi Nünenen - ${postData.value?.title || ''}`,
-})
+  title: title.value,
+});
 </script>
 
 <style scoped lang="scss">

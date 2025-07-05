@@ -1,15 +1,19 @@
-declare interface Leader {
+export type Leader = {
   id: number
-  attributes: {
-    Name: string
-    Position: string
-    Email: string
-    Image: {
-      data: Image
-    }
-  }
+  Name: string
+  Position: string
+  Email: string
+  Image: Image
 }
 
-declare interface LeaderResponse {
-  data: User[]
+export type LeaderResponse = {
+  data: Leader[]
+  meta: {
+    pagination: {
+      page: number
+      pageSize: number
+      pageCount: number
+      total: number
+    }
+  }
 }

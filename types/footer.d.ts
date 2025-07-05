@@ -1,17 +1,23 @@
-declare interface IFooter {
-  data: {
-    id: number
-    attributes: {
-      Title: string
-      Links: Link[]
-      Images: {
-        data: Image[]
-      }
+export type Footer = {
+  id: number
+  Title: string
+  Links: Link[]
+  Images: Image[]
+}
+
+export type FooterResonse = {
+  data: Footer[]
+  meta: {
+    pagination: {
+      page: number
+      pageSize: number
+      pageCount: number
+      total: number
     }
   }
 }
 
-declare interface ILink {
+export type Link = {
   Name: string
   Link: string
 }

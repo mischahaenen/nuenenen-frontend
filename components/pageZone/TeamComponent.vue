@@ -8,35 +8,27 @@
     ]"
   >
     <TitleComponent :title="zone.Title" :index="index"></TitleComponent>
-    <div v-if="props.zone.leaders?.data" class="member-section">
+    <div v-if="sortedLeaders" class="member-section">
       <button
-        v-for="leader of props.zone.leaders.data"
-        :key="leader.attributes.Name"
+        v-for="leader of sortedLeaders"
+        :key="leader.Name"
         class="user-card"
-        :aria-label="leader.attributes.Name + ', ' + leader.attributes.Position"
+        :aria-label="leader.Name + ', ' + leader.Position"
       >
         <NuxtImg
-          v-if="leader.attributes.Image?.data"
+          v-if="leader.Image"
           class="image"
           format="webp"
           provider="strapi"
-          :src="
-            leader.attributes.Image.data.attributes.hash +
-            leader.attributes.Image.data.attributes.ext
-          "
-          :alt="
-            leader.attributes.Image.data.attributes.alternativeText ||
-            leader.attributes.Image.data.attributes.name
-          "
+          :src="leader.Image.hash + leader.Image.ext"
+          :alt="leader.Image.alternativeText || leader.Image.name"
           sizes="100vw sm:50vw md:400px"
           :modifiers="{ breakpoint: 'small' }"
         />
         <article class="user-card__content">
-          <h3>{{ leader.attributes.Name }}</h3>
-          <p>{{ leader.attributes.Position }}</p>
-          <a :href="'mailto:' + leader.attributes.Email">{{
-            leader.attributes.Email
-          }}</a>
+          <h3>{{ leader.Name }}</h3>
+          <p>{{ leader.Position }}</p>
+          <a :href="'mailto:' + leader.Email">{{ leader.Email }}</a>
         </article>
       </button>
     </div>
@@ -44,10 +36,33 @@
 </template>
 
 <script setup lang="ts">
+import { useLeaderApi } from "~/composables/api/modules/leader";
+import type { Leader } from "~/types/leader";
+
+const { getLeaders } = useLeaderApi();
 const props = defineProps<{
-  zone: Group
-  index: number
-}>()
+  zone: Group;
+  index: number;
+}>();
+
+const { data: allLeaders } = await useAsyncData("all-leaders", () => getLeaders());
+
+const sortedLeaders = computed(() => {
+  if (!allLeaders.value?.data || !props.zone.leaders) {
+    return [];
+  }
+
+  const zoneLeaderIds = props.zone.leaders.map((leader: Leader) => leader.id);
+  const filteredLeaders = allLeaders.value.data.filter((leader: Leader) =>
+    zoneLeaderIds.includes(leader.id)
+  );
+
+  return filteredLeaders.sort((a, b) => {
+    const indexA = zoneLeaderIds.indexOf(a.id);
+    const indexB = zoneLeaderIds.indexOf(b.id);
+    return indexA - indexB;
+  });
+});
 </script>
 
 <style scoped lang="scss">
@@ -99,11 +114,7 @@ const props = defineProps<{
     flex-direction: column;
     justify-content: center;
     padding: var(--space-medium);
-    background-color: color-mix(
-      in srgb,
-      var(--color-accent-50) 80%,
-      transparent
-    );
+    background-color: color-mix(in srgb, var(--color-accent-50) 80%, transparent);
     color: var(--color-primary-900);
   }
 
@@ -121,11 +132,7 @@ const props = defineProps<{
     &:hover .user-card__content,
     &:active .user-card__content,
     &:focus .user-card__content {
-      background-color: color-mix(
-        in srgb,
-        var(--color-accent-900) 80%,
-        transparent
-      );
+      background-color: color-mix(in srgb, var(--color-accent-900) 80%, transparent);
     }
 
     &:focus {

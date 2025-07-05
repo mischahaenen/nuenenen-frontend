@@ -11,38 +11,32 @@
       />
     </svg>
     <p>
-      Um für unsere Besucher*innen die Bedienung unserer Website möglichst
-      angenehm zu gestalten, benutzen wir Cookies. Darüber hinaus setzen wir
-      Tracking-Tools ein, damit wir unsere Seite laufend verbessern können.
-      Durch die weitere Nutzung dieser Website erklären Sie sich mit der Nutzung
-      von Cookies, sowie dem Tracking-Tool Google Analytics einverstanden.
+      Um für unsere Besucher*innen die Bedienung unserer Website möglichst angenehm zu
+      gestalten, benutzen wir Cookies. Darüber hinaus setzen wir Tracking-Tools ein, damit
+      wir unsere Seite laufend verbessern können. Durch die weitere Nutzung dieser Website
+      erklären Sie sich mit der Nutzung von Cookies, sowie dem Tracking-Tool Google
+      Analytics einverstanden.
     </p>
     <div class="button-section">
-      <button class="btn btn-primary" @click="giveConsent">
-        Einverstanden
-      </button>
-      <NuxtLink class="btn btn-accent btn-link" to="/datenschutz"
-        >Mehr erfahren</NuxtLink
-      >
+      <button class="btn btn-primary" @click="giveConsent">Einverstanden</button>
+      <NuxtLink class="btn btn-accent btn-link" to="/datenschutz">Mehr erfahren</NuxtLink>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const consentGiven = useState(() => true)
-const { grantConsent } = useGtag()
+const consentGiven = useState("cookie-consent", () => false);
+const { grantConsent } = useGtag();
 
 onMounted(() => {
-  consentGiven.value =
-    document.cookie.includes('cookie_consent_given=true') &&
-    document.cookie.includes('F1TXT7Y96H')
-})
+  consentGiven.value = localStorage.getItem("pfadi_nunenen_cookie_consent") === "true";
+});
 
 const giveConsent = () => {
-  document.cookie = 'cookie_consent_given=true'
-  grantConsent('G-F1TXT7Y96H')
-  consentGiven.value = true
-}
+  localStorage.setItem("pfadi_nunenen_cookie_consent", "true");
+  grantConsent("G-F1TXT7Y96H");
+  consentGiven.value = true;
+};
 </script>
 
 <style scoped lang="scss">

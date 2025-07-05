@@ -1,3 +1,4 @@
 {
-  "svg.preview.background": "white"
+  "svg.preview.background": "white",
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
 }

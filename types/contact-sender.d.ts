@@ -1,11 +1,18 @@
-export interface ContactSender {
+export type ContactSender = {
   id: number
-  attributes: {
-    Name: string
-    Email: string
-  }
+  documentId: string
+  Name: string
+  Email: string
 }
 
-export interface ContactSenderReponse {
+export type ContactSenderResponse = {
   data: ContactSender[]
+  meta: {
+    pagination: {
+      page: number
+      pageSize: number
+      pageCount: number
+      total: number
+    }
+  }
 }

@@ -1,3 +1,5 @@
+import type { BlocksContent } from 'vue-strapi-blocks-renderer'
+
 interface PageZoneComponent {
   id: number
   __component: string
@@ -15,49 +17,43 @@ interface Kastenzeddel extends PageZoneComponent {
 interface Section extends PageZoneComponent {
   Title: string
   Description: string
-  Image: {
-    data: Image
-  }
+  Image: Image
 }
 
-interface Document extends PageZoneComponent {
+interface DocumentZone extends PageZoneComponent {
   Title: string
-  files: FilesResponse
+  files: IFile[]
 }
 
 interface QPZone extends PageZoneComponent {
   Title: string
-  Document: {
-    data: IFile
-  }
-  Image: {
-    data: Image
-  }
+  Document: IFile
+  Image: Image
 }
 
 interface Group extends PageZoneComponent {
   Title: string
-  leaders: UsersResponse
+  leaders: Leader[]
 }
 
 interface ImageZone extends PageZoneComponent {
   Title: string
   Description: string
-  images: ImagesResponse
+  images: Image[]
 }
 
 interface Testimonial extends PageZoneComponent {
   Title: string
   Subtitle: string
   Description: string
-  testimonials: TestimonialResponse
+  testimonials: Testimonial[]
 }
 
 interface IFrame extends PageZoneComponent {
   Title: string
   Description: string
   iFrame: string
-  images: ImagesResponse
+  images: Image[]
 }
 
 interface ContactZone extends PageZoneComponent {
@@ -74,19 +70,29 @@ interface StepZone extends PageZoneComponent {
 interface SponsorZone extends PageZoneComponent {
   Title: string
   Description: string
-  sponsors: SponsorResponse
+  sponsors: Sponsor[]
 }
 
 interface BlogZone extends PageZoneComponent {
   Title: string
+  Description: BlocksContent
+  posts: Post[]
+}
+
+interface KastenzettelZone extends PageZoneComponent {
+  Title: string
   Description: string
-  posts: PostResponse
+  StartDate: string
+  EndDate: string
+  Location: string
+  StartTime: string
+  EndTime: string
 }
 
 type PageZoneItem =
   | Kastenzeddel
   | Section
-  | Document
+  | DocumentZone
   | Group
   | ImageZone
   | Testimonial
@@ -94,6 +100,7 @@ type PageZoneItem =
   | StepZone
   | SponsorZone
   | BlogZone
+  | KastenzettelZone
   | QPZone
 
 type PageZone = PageZoneItem[]

@@ -1,22 +1,24 @@
-declare interface Step {
+export type Step = {
   id: number
-  attributes: {
-    Name: string
-    Slug: string
-    Description: string
-    createdAt: Date
-    updatedAt: Date
-    publishedAt: Date
-    logo: {
-      data: Image
-    }
-    event: {
-      data: IEvent
-    }
-    pageZone: PageZone
-  }
+  Name: string
+  Slug: string
+  Description: string
+  createdAt: Date
+  updatedAt: Date
+  publishedAt: Date
+  logo: Image
+  event: Event
+  pageZone: PageZone
 }
 
-declare interface Steps {
+export type StepResponse = {
   data: Step[]
+  meta: {
+    pagination: {
+      page: number
+      pageSize: number
+      pageCount: number
+      total: number
+    }
+  }
 }

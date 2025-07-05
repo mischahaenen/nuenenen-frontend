@@ -1,20 +1,24 @@
-declare interface Post {
+import type { BlocksContent } from 'vue-strapi-blocks-renderer'
+
+export type Post = {
   id: number
-  attributes: {
-    title: string
-    description: string
-    step: {
-      data: Step
-    }
-    createdAt: Date
-    author: string
-    slug: string
-    images: {
-      data: Image[]
-    }
-  }
+  title: string
+  description: BlocksContent
+  step: Step
+  createdAt: Date
+  author: string
+  slug: string
+  images: Image[]
 }
 
-declare interface PostResponse {
+export type PostsResponse = {
   data: Post[]
+  meta: {
+    pagination: {
+      page: number
+      pageSize: number
+      pageCount: number
+      total: number
+    }
+  }
 }

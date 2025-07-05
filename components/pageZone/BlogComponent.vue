@@ -3,16 +3,12 @@
     :class="[
       'pt-medium pb-medium',
       {
-        'full-width content-grid bg-accent-50 dark:bg-primary-700':
-          props.index % 2 === 1,
+        'full-width content-grid bg-accent-50 dark:bg-primary-700': props.index % 2 === 1,
       },
     ]"
   >
-    <TitleComponent
-      :title="props.zone.Title"
-      :index="props.index"
-    ></TitleComponent>
-    <RichTextComponent :content="props.zone.Description" />
+    <TitleComponent :title="props.zone.Title" :index="props.index"></TitleComponent>
+    <RichTextComponent v-if="props.zone.Description" :content="props.zone.Description" />
     <div class="blog-filter">
       <button
         class="btn btn-primary"
@@ -26,11 +22,11 @@
         v-for="(step, jndex) of steps"
         :key="jndex"
         class="btn btn-primary"
-        :class="{ active: activeButton === step.attributes.Name }"
-        :aria-label="`Posts für die ${step.attributes.Name} anzeigen`"
-        @click="getPostsByStep(step.attributes.Name)"
+        :class="{ active: activeButton === step.Name }"
+        :aria-label="`Posts für die ${step.Name} anzeigen`"
+        @click="getPostsByStep(step.Name)"
       >
-        {{ step.attributes.Name }}
+        {{ step.Name }}
       </button>
     </div>
     <div v-if="posts.length" class="post-grid wrapper">
@@ -72,59 +68,66 @@
 </template>
 
 <script lang="ts" setup>
-/* TODO: Rethink subgrid strategy */
-const posts = useState<Post[]>(() => [])
-const steps = useState<Step[]>(() => [])
-const activeButton = useState<string>(() => 'all')
+import { defineProps } from "vue";
+import { useBlogApi } from "~/composables/api/modules/blog";
+import { useStepsApi } from "~/composables/api/modules/steps";
+import type { Post } from "~/types/post";
+import type { Step } from "~/types/step";
+const { getBlogPosts, getBlogPostsByStep } = useBlogApi();
+const { getStepNames } = useStepsApi();
+
+const posts = useState<Post[]>(() => []);
+const steps = useState<Step[]>(() => []);
+const activeButton = useState<string>(() => "all");
 const props = defineProps<{
-  zone: BlogZone
-  index: number
-}>()
+  zone: BlogZone;
+  index: number;
+}>();
 
 const getPostsByStep = async (step: string) => {
-  const res = await getBlogPostsByStep(step)
-  posts.value = res.data
-  activeButton.value = step
-}
+  const res = await getBlogPostsByStep(step);
+  posts.value = res.data;
+  activeButton.value = step;
+};
 
 const getPosts = async () => {
-  const res = await getBlogPosts()
-  posts.value = res.data
-  activeButton.value = 'all'
-}
+  const res = await getBlogPosts();
+  posts.value = res.data;
+  activeButton.value = "all";
+};
 
 const fetchSteps = async () => {
-  const res = await getStepNames()
-  steps.value = res.data
-}
+  const res = await getStepNames();
+  steps.value = res.data;
+};
 
 const initializeObserver = () => {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.remove('post-grid-item--hidden')
-          observer.unobserve(entry.target)
+          entry.target.classList.remove("post-grid-item--hidden");
+          observer.unobserve(entry.target);
         }
-      })
+      });
     },
     {
       threshold: 0.5,
     }
-  )
+  );
 
-  document.querySelectorAll('.post-grid-item').forEach((item) => {
-    item.classList.add('post-grid-item--hidden')
-    observer.observe(item)
-  })
-}
+  document.querySelectorAll(".post-grid-item").forEach((item) => {
+    item.classList.add("post-grid-item--hidden");
+    observer.observe(item);
+  });
+};
 
 onMounted(async () => {
-  await getPosts()
-  await fetchSteps()
+  await getPosts();
+  await fetchSteps();
 
-  initializeObserver()
-})
+  initializeObserver();
+});
 </script>
 <style scoped lang="scss">
 .post-grid.wrapper {

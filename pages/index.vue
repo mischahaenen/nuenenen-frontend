@@ -1,3 +1,5 @@
 <script lang="ts" setup>
-await navigateTo('/home')
+definePageMeta({
+  redirect: '/home',
+})
 </script>

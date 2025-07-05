@@ -3,21 +3,13 @@
     :class="[
       'pt-medium pb-medium',
       {
-        'full-width content-grid bg-accent-50 dark:bg-primary-700':
-          props.index % 2 === 1,
+        'full-width content-grid bg-accent-50 dark:bg-primary-700': props.index % 2 === 1,
       },
     ]"
   >
-    <TitleComponent
-      :title="props.zone.Title"
-      :index="props.index"
-    ></TitleComponent>
+    <TitleComponent :title="props.zone.Title" :index="props.index"></TitleComponent>
     <RichTextComponent :content="props.zone.Description"></RichTextComponent>
-    <form
-      v-if="mailState === 'UNKNOWN'"
-      class="form"
-      @submit.prevent="submitForm"
-    >
+    <form v-if="mailState === 'UNKNOWN'" class="form" @submit.prevent="submitForm">
       <div class="formfield">
         <label for="Firstname">Vorname (& Pfadiname):</label>
         <input
@@ -65,10 +57,10 @@
         >
           <option
             v-for="sender of contactDistributionList"
-            :key="sender.id"
-            :value="sender.id"
+            :key="sender.documentId"
+            :value="sender.documentId"
           >
-            {{ sender.attributes.Name }}
+            {{ sender.Name }}
           </option>
         </select>
       </div>
@@ -91,9 +83,7 @@
       </div>
     </form>
     <div v-else class="successMessage">
-      <h3>
-        {{ form.Firstname }}, deine Nachricht wurde erfolgreich übermittelt!
-      </h3>
+      <h3>{{ form.Firstname }}, deine Nachricht wurde erfolgreich übermittelt!</h3>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         data-name="Layer 1"
@@ -145,89 +135,116 @@
 </template>
 
 <script setup lang="ts">
-import { useReCaptcha } from 'vue-recaptcha-v3'
-import { useDeregisterStore } from '~/store/deregister'
-import type { ContactSender } from '~/types/contact-sender'
+import { defineProps } from "vue";
+import { useReCaptcha } from "vue-recaptcha-v3";
+import { useContactApi } from "~/composables/api/modules/contact";
+import { useDeregisterStore } from "~/store/deregister";
+import type { ContactSender } from "~/types/contact-sender";
 
 const props = defineProps<{
-  zone: ContactZone
-  index: number
-}>()
-const deregisterStore = useDeregisterStore()
-const isOdd = computed(() => (props.index ? props.index % 2 === 0 : true))
-const contactDistributionList = useState<ContactSender[] | null>(() => null)
+  zone: ContactZone;
+  index: number;
+}>();
+const deregisterStore = useDeregisterStore();
+const isOdd = computed(() => (props.index ? props.index % 2 === 0 : true));
+const contactDistributionList = useState<ContactSender[] | null>(() => null);
 const form = ref({
-  Firstname: '',
-  Lastname: '',
-  Email: '',
-  Message: '',
-  contactOption: 1,
+  Firstname: "",
+  Lastname: "",
+  Email: "",
+  Message: "",
+  contactOption: "",
   Score: 0,
-})
-const recaptchaInstance = useReCaptcha()
-const errorMessage = useState(() => '')
-const mailState = useState<'UNKNOWN' | 'SUCCESS'>(() => 'UNKNOWN')
+});
+const recaptchaInstance = useReCaptcha();
+const errorMessage = useState(() => "");
+const mailState = useState<"UNKNOWN" | "SUCCESS">(() => "UNKNOWN");
+const { getContactDistributionList, createContactEntry } = useContactApi();
 
 onMounted(async () => {
   try {
-    const response = await getContactDistributionList()
-    contactDistributionList.value = response.data
-    form.value.contactOption = getDefaultContactOption()
-    form.value.Message = deregisterStore.step ? deregisterStore.message : ''
+    const response = await getContactDistributionList();
+    contactDistributionList.value = response.data;
+    form.value.contactOption = getDefaultContactOption();
+    form.value.Message = deregisterStore.step ? deregisterStore.message : "";
   } catch (error) {
     errorMessage.value =
-      'Ein Fehler trat beim Laden der Kontaktverteilung auf. Bitte versuche es später erneut.'
+      "Ein Fehler trat beim Laden der Kontaktverteilung auf. Bitte versuche es später erneut.";
   }
-})
+});
 
 const getDefaultContactOption = () => {
-  const step = deregisterStore.step
+  const step = deregisterStore.step;
   return (
-    contactDistributionList.value?.find((sender) =>
+    contactDistributionList.value?.find((sender: ContactSender) =>
       step
-        ? sender.attributes.Name.toLocaleLowerCase() === step
-        : sender.attributes.Name.toLocaleLowerCase() === 'abteilung'
-    )?.id || 1
-  )
-}
+        ? sender.Name.toLocaleLowerCase() === step
+        : sender.Name.toLocaleLowerCase() === "abteilung"
+    )?.documentId ?? ""
+  );
+};
 
 const recaptcha = async () => {
   try {
-    await recaptchaInstance?.recaptchaLoaded()
-    return await recaptchaInstance?.executeRecaptcha('submit')
+    await recaptchaInstance?.recaptchaLoaded();
+    return await recaptchaInstance?.executeRecaptcha("submit");
   } catch (error) {
     errorMessage.value =
-      'Deine Verifizierung ist fehlgeschlagen. Bitte versuche es später erneut.'
-    throw error
+      "Deine Verifizierung ist fehlgeschlagen. Bitte versuche es später erneut.";
+    throw error;
   }
-}
+};
 
 const submitForm = async () => {
+  // Track form submission attempt
+  trackFormEvent("contact_form", "submit", {
+    form_location: "contact_page",
+    step_context: deregisterStore.step || "none",
+  });
+
   try {
-    const token = await recaptcha()
-    await createContactEntry(token, form.value)
-    mailState.value = 'SUCCESS'
+    const token = await recaptcha();
+    await createContactEntry(token, form.value);
+    mailState.value = "SUCCESS";
+
+    // Track successful form submission
+    trackEvent({
+      action: "form_submission_success",
+      category: "contact",
+      label: "contact_form",
+      custom_parameters: {
+        step_context: deregisterStore.step || "none",
+      },
+    });
   } catch (error) {
     errorMessage.value =
-      'Deine Nachricht konnte nicht übermittelt werden. Bitte versuche es erneut.'
+      "Deine Nachricht konnte nicht übermittelt werden. Bitte versuche es erneut.";
+
+    // Track form submission error
+    trackFormEvent("contact_form", "error", {
+      error_type: "submission_failed",
+      error_message: error?.toString() || "Unknown error",
+      step_context: deregisterStore.step || "none",
+    });
   } finally {
-    deregisterStore.setStep('')
+    deregisterStore.setStep("");
   }
-}
+};
 
-const { gtag } = useGtag()
+// Enhanced analytics for contact form
+const { trackFormEvent, trackEvent } = useEnhancedAnalytics();
 
-gtag('event', 'page_view', {
-  app_name: 'Webapp',
-  screen_name: 'Kontakt',
-  page_title: 'Kontakt',
-  page_location: window.location.href,
-  page_path: window.location.pathname,
-})
+// Track form start on component mount
+onMounted(() => {
+  trackFormEvent("contact_form", "start", {
+    form_location: "contact_page",
+    pre_filled_step: deregisterStore.step || "none",
+  });
+});
 
 onBeforeUnmount(() => {
-  mailState.value = 'UNKNOWN'
-})
+  mailState.value = "UNKNOWN";
+});
 </script>
 
 <style scoped lang="scss">
@@ -286,7 +303,7 @@ onBeforeUnmount(() => {
   border-radius: 10px;
   border: none;
   color: var(--color-primary-700);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
   background-color: var(--color-accent-50);
 }
