@@ -111,7 +111,7 @@ const props = defineProps<{
   position: relative;
   align-items: flex-start;
   justify-content: center;
-  margin-top: 10vh;
+  margin-top: 8vh;
 }
 
 .home-text {
@@ -119,10 +119,14 @@ const props = defineProps<{
   flex-direction: column;
   align-items: flex-start;
   max-width: 75ch;
+
+  h1 {
+    margin-bottom: 0.5rem;
+  }
 }
 
 .subtitle {
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
   margin-top: 0;
 }
 
@@ -135,12 +139,12 @@ const props = defineProps<{
 }
 
 .rocket-image {
-  width: clamp(150px, 30vw, 250px);
+  width: clamp(130px, 25vw, 200px);
   height: auto;
   aspect-ratio: 1;
   position: absolute;
   right: max(45%, 80px);
-  bottom: min(50%, 350px);
+  bottom: min(52%, 350px);
   z-index: -1;
   will-change: transform;
   contain: layout;
@@ -162,12 +166,6 @@ const props = defineProps<{
   margin-block: var(--space-medium);
 }
 
-@media screen and (min-width: 1800px) {
-  .rocket-image[data-v-70670a90] {
-    bottom: min(50%, 400px);
-  }
-}
-
 @media screen and (max-width: 1150px) {
   .container {
     gap: 0;
@@ -180,19 +178,8 @@ const props = defineProps<{
     flex-direction: column;
   }
 
-  .rocket-image[data-v-70670a90] {
-    bottom: min(40%, 300px);
-  }
-}
-@media screen and (max-width: 768px) {
-  .banner::after {
-    width: 100%;
-    min-height: 100%;
-    border-radius: 0;
-  }
-
-  .rocket-image[data-v-70670a90] {
-    bottom: min(30%, 300px);
+  .rocket-image {
+    bottom: min(32%, 300px);
   }
 }
 </style>

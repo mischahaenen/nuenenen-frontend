@@ -50,12 +50,13 @@ const { data: allSteps, error } = await useAsyncData(`steps`, () => getSteps(), 
 // Filter steps to only show those that are in the zone
 const filteredSteps = computed(() => {
   if (!allSteps.value || !props.zone.steps) return [];
-
-  // Get the IDs of steps in the zone
-  const zoneStepIds = props.zone.steps.map((step) => step.id);
-
-  // Filter all steps to only include those in the zone
-  return allSteps.value.filter((step) => zoneStepIds.includes(step.id));
+  return props.zone.steps
+    .map((zoneStep: StepZone) =>
+      allSteps.value?.find((fullStep: Step) => fullStep.id === zoneStep.id)
+    )
+    .filter(
+      (fullStep: Step): fullStep is NonNullable<typeof Step> => fullStep !== undefined
+    );
 });
 </script>
 

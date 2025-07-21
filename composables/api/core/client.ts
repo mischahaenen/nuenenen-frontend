@@ -25,8 +25,12 @@ export const fetchFromApi = async <T>(
         console.error(`Request failed for ${endpoint}:`, error)
       },
       onResponseError({ response }) {
-        console.error(`Response error for ${endpoint}:`, response.status, response.statusText)
-      }
+        console.error(
+          `Response error for ${endpoint}:`,
+          response.status,
+          response.statusText
+        )
+      },
     })
   } catch (error: any) {
     // Enhanced error handling with user-friendly messages
@@ -36,26 +40,26 @@ export const fetchFromApi = async <T>(
       data: {
         originalError: error,
         endpoint,
-        timestamp: new Date().toISOString()
-      }
+        timestamp: new Date().toISOString(),
+      },
     })
-    
+
     // Log detailed error for debugging (only in development)
     if (process.dev) {
       console.error(`API Error for ${endpoint}:`, {
         status: apiError.statusCode,
         message: apiError.statusMessage,
-        originalError: error
+        originalError: error,
       })
     }
-    
+
     throw apiError
   }
 }
 
 function getErrorMessage(error: any, endpoint: string): string {
   const status = error?.response?.status || error?.statusCode
-  
+
   switch (status) {
     case 400:
       return `Invalid request to ${endpoint}`
