@@ -18,7 +18,6 @@ export const useLeaderApi = () => {
         pageSize: 100,
       },
     })
-    console.log('Fetching leaders with query:', query)
     return await fetchFromApi<LeaderResponse>(`teams?${query}`)
   })
 
