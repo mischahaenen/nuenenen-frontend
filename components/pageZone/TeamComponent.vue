@@ -51,7 +51,6 @@ const sortedLeaders = computed(() => {
   if (!allLeaders.value?.data || !props.zone.leaders) {
     return [];
   }
-
   const zoneLeaderIds = props.zone.leaders.map((leader: Leader) => leader.id);
   const filteredLeaders = allLeaders.value.data.filter((leader: Leader) =>
     zoneLeaderIds.includes(leader.id)
@@ -113,6 +112,7 @@ const sortedLeaders = computed(() => {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: var(--space-medium);
     background-color: color-mix(in srgb, var(--color-accent-50) 80%, transparent);
     color: var(--color-primary-900);

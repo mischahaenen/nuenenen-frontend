@@ -1,5 +1,6 @@
 <template>
   <section
+    id="Blog"
     :class="[
       'pt-medium pb-medium',
       {

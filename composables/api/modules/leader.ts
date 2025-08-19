@@ -1,6 +1,6 @@
 import { useMemoize } from '@vueuse/core'
 import type { LeaderResponse } from '~/types/leader'
-import { fetchFromApi } from '../core/client'
+import { createQuery, fetchFromApi } from '../core/client'
 
 export const useLeaderApi = () => {
   const getLeader = useMemoize(async (id) => {
@@ -12,11 +12,13 @@ export const useLeaderApi = () => {
   })
 
   const getLeaders = useMemoize(async () => {
-    return await fetchFromApi<LeaderResponse>(`teams`, {
-      params: {
-        populate: '*',
+    const query = createQuery({
+      populate: '*',
+      pagination: {
+        pageSize: 100,
       },
     })
+    return await fetchFromApi<LeaderResponse>(`teams?${query}`)
   })
 
   return {

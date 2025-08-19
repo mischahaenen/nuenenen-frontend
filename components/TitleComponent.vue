@@ -8,7 +8,7 @@
         v-for="letter in word"
         :key="letter"
         class="letter"
-        :class="{ highlight: word === words.at(-1) }"
+        :class="{ highlight: word === words[words.length - 1] }"
       >
         {{ letter }}
       </span>
