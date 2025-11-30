@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useNavigationStore = defineStore({
-  id: 'nav-store',
+export const useNavigationStore = defineStore('nav-store', {
   state: () => ({
     expanded: false,
     pages: [] as Page[],

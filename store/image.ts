@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useImageStore = defineStore({
-  id: 'image-store',
+export const useImageStore = defineStore('image-store', {
   state: () => ({
     currentSlide: 0,
     images: ([] as Image[]) || null,

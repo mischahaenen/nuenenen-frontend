@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useDeregisterStore = defineStore({
-  id: 'deregister-store',
+export const useDeregisterStore = defineStore('deregister-store', {
   state: () => ({
     step: '',
     message: 'Sorry, ich komme nicht 👋🏻',
