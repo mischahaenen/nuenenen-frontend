@@ -45,14 +45,23 @@ export default defineNuxtConfig({
           'X-XSS-Protection': '1; mode=block',
           'Referrer-Policy': 'strict-origin-when-cross-origin',
           'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-          'Cache-Control': 'public, max-age=31536000, immutable',
+          'Cache-Control': 'public, max-age=604800, must-revalidate',
         },
       },
-      '/': { prerender: true },
+      '/': {
+        prerender: true,
+        headers: { 'Cache-Control': 'public, max-age=604800, must-revalidate' },
+      },
+      '/api/**': {
+        headers: { 'Cache-Control': 'public, max-age=300, must-revalidate' },
+      },
       '/static/**': {
         headers: { 'Cache-Control': 'public, max-age=31536000, immutable' },
       },
       '/assets/**': {
+        headers: { 'Cache-Control': 'public, max-age=31536000, immutable' },
+      },
+      '/_nuxt/**': {
         headers: { 'Cache-Control': 'public, max-age=31536000, immutable' },
       },
     },
