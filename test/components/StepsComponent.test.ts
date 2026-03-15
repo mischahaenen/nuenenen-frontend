@@ -1,5 +1,5 @@
 import { beforeEach, expect, test, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import StepsComponent from '~/components/pageZone/StepsComponent.vue'
 
 // Mock the API composable
@@ -19,34 +19,30 @@ const createWrapper = async (props = {}) => {
     index: 0
   }
 
-  const wrapper = mount(StepsComponent, {
-    props: { ...defaultProps, ...props },
-    global: {
-      mocks: {
-        useAsyncData: vi.fn().mockResolvedValue({
-          data: { value: [] },
-          error: { value: null },
-          pending: { value: false },
-          refresh: vi.fn()
-        }),
-        useStepsApi: vi.fn(() => ({
-          getSteps: vi.fn().mockResolvedValue({ data: [] })
-        }))
-      },
-      stubs: {
-        TitleComponent: true,
-        RichTextComponent: true,
-        NuxtImg: true,
-        NuxtLink: true,
-        Suspense: {
-          template: '<div><slot /></div>'
+  const mergedProps = { ...defaultProps, ...props }
+
+  const wrapper = mount(
+    {
+      components: { StepsComponent },
+      template: `<Suspense><StepsComponent v-bind="componentProps" /></Suspense>`,
+      setup() {
+        return { componentProps: mergedProps }
+      }
+    },
+    {
+      global: {
+        stubs: {
+          TitleComponent: { name: 'TitleComponent', template: '<div class="title-component"></div>', props: ['title', 'index'] },
+          RichTextComponent: { name: 'RichTextComponent', template: '<div class="rich-text-component"></div>', props: ['content'] },
+          NuxtImg: { name: 'NuxtImg', template: '<img />', props: ['src', 'alt', 'format', 'provider', 'sizes', 'loading', 'modifiers'] },
+          NuxtLink: { name: 'NuxtLink', template: '<a :href="to"><slot /></a>', props: ['to'] }
         }
       }
     }
-  })
-  
-  // Wait for async setup to complete
-  await wrapper.vm.$nextTick()
+  )
+
+  // Wait for async setup and all promises to resolve
+  await flushPromises()
   return wrapper
 }
 

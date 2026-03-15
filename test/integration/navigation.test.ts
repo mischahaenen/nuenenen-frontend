@@ -108,7 +108,10 @@ describe('Navigation Integration Tests', () => {
 
   it('should handle page transitions correctly', async () => {
     const mockNavigateTo = vi.fn()
-    
+    // navigateTo is a free variable in methods, so must stub the global
+    const original = (globalThis as any).navigateTo
+    ;(globalThis as any).navigateTo = mockNavigateTo
+
     const wrapper = createTestWrapper({
       template: `
         <div>
@@ -120,16 +123,11 @@ describe('Navigation Integration Tests', () => {
           navigateTo('/new-page')
         }
       }
-    }, {
-      global: {
-        mocks: {
-          navigateTo: mockNavigateTo
-        }
-      }
     })
 
     const button = wrapper.find('button')
     await button.trigger('click')
+    ;(globalThis as any).navigateTo = original
 
     expect(mockNavigateTo).toHaveBeenCalledWith('/new-page')
   })
@@ -256,15 +254,19 @@ describe('Navigation Integration Tests', () => {
       }
     })
 
-    const links = wrapper.findAll('nuxt-link-stub')
-    
-    // Check that the about link has active class
-    const aboutLink = links.find(link => link.text() === 'About')
-    expect(aboutLink?.classes()).toContain('active')
-    
-    // Check that other links don't have active class
-    const homeLink = links.find(link => link.text() === 'Home')
-    expect(homeLink?.classes()).not.toContain('active')
+    // NuxtLink is stubbed as nuxt-link-stub (slot content not rendered)
+    const nav = wrapper.find('nav')
+    expect(nav.exists()).toBe(true)
+
+    // The About link (to="/about") should have active class
+    const aboutStub = wrapper.find('nuxt-link-stub[to="/about"]')
+    expect(aboutStub.exists()).toBe(true)
+    expect(aboutStub.classes()).toContain('active')
+
+    // The Home link should NOT have active class
+    const homeStub = wrapper.find('nuxt-link-stub[to="/"]')
+    expect(homeStub.exists()).toBe(true)
+    expect(homeStub.classes()).not.toContain('active')
   })
 
   it('should handle external links correctly', async () => {

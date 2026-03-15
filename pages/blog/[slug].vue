@@ -1,29 +1,27 @@
 <template>
-  <main v-if="post" class="content-grid container">
+  <main v-if="post && post.length > 0" class="content-grid container">
     <template v-if="error"><p>Something went wrong</p></template>
-    <template v-if="post">
-      <SliderComponent :images="post[0].images"></SliderComponent>
-      <NuxtLink to="/" class="back-link">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-        Zurück
-      </NuxtLink>
-      <article>
-        <h1>{{ post[0].title }}</h1>
-        <RichTextComponent :content="post[0].description" />
-      </article>
-    </template>
+    <SliderComponent :images="post[0].images"></SliderComponent>
+    <NuxtLink to="/" class="back-link">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M15 19l-7-7 7-7"
+        />
+      </svg>
+      Zurück
+    </NuxtLink>
+    <article>
+      <h1>{{ post[0].title }}</h1>
+      <RichTextComponent :content="post[0].description" />
+    </article>
   </main>
 </template>
 

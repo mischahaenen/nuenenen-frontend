@@ -1,26 +1,21 @@
 import { config } from '@vue/test-utils'
 import { vi } from 'vitest'
-import { computed, ref } from 'vue'
+import '@testing-library/jest-dom'
+import * as Vue from 'vue'
 
-// Mock Nuxt composables
+// Expose Vue core APIs globally so components that use them without importing work
+Object.assign(global, Vue)
+
+// Mock only Nuxt-specific composables (not Vue core — those run for real)
 const mockNuxtComposables = {
-  useAsyncData: vi.fn((key, fn, opts) => {
-    // Return immediate resolved promise for testing
+  useAsyncData: vi.fn((_key, _fn, opts) => {
     const mockData = null
     const result = {
-      data: { value: mockData },
+      data: { value: opts?.transform ? opts.transform(null) : mockData },
       error: { value: null },
       pending: { value: false },
       refresh: vi.fn()
     }
-    
-    // Apply transform if provided
-    if (opts?.transform && mockData) {
-      result.data.value = opts.transform({ data: mockData })
-    } else if (opts?.transform) {
-      result.data.value = opts.transform(null)
-    }
-    
     return Promise.resolve(result)
   }),
   useRuntimeConfig: vi.fn(() => ({
@@ -48,14 +43,6 @@ const mockNuxtComposables = {
   })),
   navigateTo: vi.fn(),
   useState: vi.fn(),
-  computed,
-  ref,
-  reactive: vi.fn(),
-  nextTick: vi.fn(),
-  onMounted: vi.fn(),
-  onUnmounted: vi.fn(),
-  watch: vi.fn(),
-  watchEffect: vi.fn(),
   createError: vi.fn(),
   showError: vi.fn(),
   clearError: vi.fn(),
@@ -75,20 +62,10 @@ const mockNuxtComposables = {
   callOnce: vi.fn(),
   useImage: vi.fn(),
   $img: vi.fn(),
-  resolveComponent: vi.fn((name) => {
-    // Return a simple component for any resolved component
-    return {
-      name,
-      template: `<div class="${name.toLowerCase().replace('icon', 'icon-')}"></div>`
-    }
-  }),
-  toRefs: vi.fn((props) => {
-    const refs = {}
-    for (const key in props) {
-      refs[key] = { value: props[key] }
-    }
-    return refs
-  }),
+  resolveComponent: vi.fn((name) => ({
+    name,
+    template: `<div class="${name.toLowerCase()}"></div>`
+  })),
   useStepsApi: vi.fn(),
   useBlogApi: vi.fn(),
   useReadingTime: vi.fn(() => ({

@@ -9,17 +9,6 @@ vi.mock('~/composables/useReadingTime', () => ({
   })
 }))
 
-// Mock Vue's reactivity functions
-global.toRefs = vi.fn((props) => {
-  const refs = {}
-  for (const key in props) {
-    refs[key] = { value: props[key] }
-  }
-  return refs
-})
-
-global.computed = vi.fn((fn) => ({ value: fn() }))
-
 const createWrapper = (props = {}) => {
   const defaultProps = {
     post: {
@@ -52,33 +41,24 @@ const createWrapper = (props = {}) => {
   return mount(PostComponent, {
     props: { ...defaultProps, ...props },
     global: {
-      mocks: {
-        toRefs: vi.fn((props) => {
-          const refs = {}
-          for (const key in props) {
-            refs[key] = { value: props[key] }
-          }
-          return refs
-        }),
-        computed: vi.fn((fn) => ({ value: fn() })),
-        useReadingTime: vi.fn(() => ({
-          calculateBlocksReadingTime: vi.fn(() => 5)
-        }))
-      },
       stubs: {
         NuxtLink: {
+          name: 'NuxtLink',
           template: '<a :href="to" class="nuxt-link"><slot /></a>',
           props: ['to']
         },
         NuxtImg: {
+          name: 'NuxtImg',
           template: '<img :src="src" :alt="alt" class="nuxt-img" />',
           props: ['src', 'alt', 'format', 'provider', 'sizes', 'loading', 'fetchpriority']
         },
         ReadingTime: {
+          name: 'ReadingTime',
           template: '<span class="reading-time">{{ time }} {{ unit }}</span>',
           props: ['time', 'unit']
         },
         RichTextComponent: {
+          name: 'RichTextComponent',
           template: '<div class="rich-text">{{ content }}</div>',
           props: ['content', 'isPreview', 'previewLines']
         }
