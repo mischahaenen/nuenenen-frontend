@@ -1,11 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
-  vue: {
-    compilerOptions: {
-      isCustomElement: (tag) => tag === 'snow-effect',
-    },
-  },
   css: ['@/assets/css/main.scss'],
   modules: [
     '@nuxtjs/strapi',

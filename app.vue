@@ -1,41 +1,31 @@
 <template>
   <NuxtLayout>
-    <ClientOnly>
-      <snow-effect></snow-effect>
-    </ClientOnly>
     <NuxtPage></NuxtPage>
   </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
 useHead({
-  title: "Pfadi Nünenen",
+  title: 'Pfadi Nünenen',
   htmlAttrs: {
-    lang: "de",
+    lang: 'de',
   },
-  script: [
-    {
-      type: "module",
-      src: "https://unpkg.com/@le-pepe/snow-effect",
-      defer: true,
-    },
-  ],
-});
+})
 useSeoMeta({
-  title: "Pfadi Nünenen - Entdecke Abenteuer und Gemeinschaft",
-  ogTitle: "Pfadi Nünenen - Entdecke Abenteuer und Gemeinschaft",
+  title: 'Pfadi Nünenen - Entdecke Abenteuer und Gemeinschaft',
+  ogTitle: 'Pfadi Nünenen - Entdecke Abenteuer und Gemeinschaft',
   description:
-    "Willkommen auf der Webseite der Pfadi Nünenen. Hier findest du alle Informationen über unsere Pfadfindergruppe, kommende Veranstaltungen, Mitgliedschaft und mehr.",
+    'Willkommen auf der Webseite der Pfadi Nünenen. Hier findest du alle Informationen über unsere Pfadfindergruppe, kommende Veranstaltungen, Mitgliedschaft und mehr.',
   ogDescription:
-    "Willkommen auf der Webseite der Pfadi Nünenen. Hier findest du alle Informationen über unsere Pfadfindergruppe, kommende Veranstaltungen, Mitgliedschaft und mehr.",
-  ogImage: "https://dev.pfadi-nuenenen.ch/img/nuenenen_logo.webp",
-  author: "Mischa Haenen",
-  robots: "index, follow",
-  ogUrl: "https://dev.pfadi-nuenenen.ch",
-  ogType: "website",
-  ogLocale: "de_DE",
-  ogSiteName: "Pfadi Nünenen",
+    'Willkommen auf der Webseite der Pfadi Nünenen. Hier findest du alle Informationen über unsere Pfadfindergruppe, kommende Veranstaltungen, Mitgliedschaft und mehr.',
+  ogImage: 'https://dev.pfadi-nuenenen.ch/img/nuenenen_logo.webp',
+  author: 'Mischa Haenen',
+  robots: 'index, follow',
+  ogUrl: 'https://dev.pfadi-nuenenen.ch',
+  ogType: 'website',
+  ogLocale: 'de_DE',
+  ogSiteName: 'Pfadi Nünenen',
   keywords:
-    "Pfadi, Nünenen, Nuenenen, Pink, Pfadfinder, Abenteuer, Gemeinschaft, Veranstaltungen",
-});
+    'Pfadi, Nünenen, Nuenenen, Pink, Pfadfinder, Abenteuer, Gemeinschaft, Veranstaltungen',
+})
 </script>
