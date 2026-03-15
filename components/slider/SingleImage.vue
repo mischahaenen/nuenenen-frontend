@@ -33,3 +33,18 @@ defineEmits<{
   "open-fullscreen": [];
 }>();
 </script>
+
+<style scoped lang="scss">
+.image-container {
+  max-height: 70vh;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.slide-image {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+</style>
