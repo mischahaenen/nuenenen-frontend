@@ -80,16 +80,16 @@
 <script setup lang="ts">
 // Props
 const props = defineProps<{
-  images: Image[] | null;
-  autoplay?: number;
-  wrapAround?: boolean;
-  respectMotionPreference?: boolean;
-}>();
+  images: Image[] | null
+  autoplay?: number
+  wrapAround?: boolean
+  respectMotionPreference?: boolean
+}>()
 
 // Composables
 const { currentIndex, goToNext, goToPrevious, goToSlide } = useSliderNavigation(
   () => props.images
-);
+)
 
 const {
   isAutoplayActive,
@@ -98,13 +98,13 @@ const {
   toggleAutoplay,
   pauseAutoplay,
   resumeAutoplay,
-} = useAutoplay(props, goToNext);
+} = useAutoplay(props, goToNext)
 
 const { isFullscreen, openFullscreen, closeFullscreen } = useFullscreen(
   isAutoplayActive,
   startAutoplay,
   stopAutoplay
-);
+)
 
 const { setupKeyboardNavigation } = useKeyboardNavigation({
   goToNext,
@@ -115,33 +115,34 @@ const { setupKeyboardNavigation } = useKeyboardNavigation({
   stopAutoplay,
   isFullscreen,
   imagesLength: computed(() => props.images?.length || 0),
-});
+})
 
 // Computed
-const hasMultipleImages = computed(() => props.images && props.images.length > 1);
-const hasSingleImage = computed(() => props.images && props.images.length === 1);
-const currentImage = computed(() => props.images?.[currentIndex.value]);
+const hasMultipleImages = computed(
+  () => props.images && props.images.length > 1
+)
+const hasSingleImage = computed(() => props.images && props.images.length === 1)
+const currentImage = computed(() => props.images?.[currentIndex.value])
 
 // Methods
-const getNavAriaLabel = (direction: "prev" | "next") => {
-  const action = direction === "prev" ? "Vorheriges" : "Nächstes";
+const getNavAriaLabel = (direction: 'prev' | 'next') => {
+  const action = direction === 'prev' ? 'Vorheriges' : 'Nächstes'
   return `${action} Bild. Aktuell wird Bild ${currentIndex.value + 1} von ${
     props.images?.length
-  } angezeigt`;
-};
+  } angezeigt`
+}
 
-const handleNavigation = (direction: "prev" | "next") => {
-  direction === "prev" ? goToPrevious() : goToNext();
-};
+const handleNavigation = (direction: 'prev' | 'next') => {
+  direction === 'prev' ? goToPrevious() : goToNext()
+}
 
 // Lifecycle
 onMounted(() => {
-  setupKeyboardNavigation();
-});
+  setupKeyboardNavigation()
+})
 </script>
 
 <style lang="scss">
-
 .image-slider {
   position: relative;
   width: 100%;

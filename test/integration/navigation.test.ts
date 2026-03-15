@@ -1,106 +1,80 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { createTestWrapper } from '../utils/test-utils'
 
-// Mock navigation data
-const mockNavigationData = {
-  id: 1,
-  Title: 'Test Navigation',
-  Logo: {
-    hash: 'logo-hash',
-    ext: '.webp',
-    name: 'logo.webp',
-    alternativeText: 'Logo'
-  },
-  links: [
-    {
-      id: 1,
-      Label: 'Home',
-      URL: '/',
-      external: false
-    },
-    {
-      id: 2,
-      Label: 'About',
-      URL: '/about',
-      external: false
-    },
-    {
-      id: 3,
-      Label: 'Contact',
-      URL: '/contact',
-      external: false
-    }
-  ]
-}
-
 describe('Navigation Integration Tests', () => {
   beforeEach(() => {
     // Reset all mocks
     vi.clearAllMocks()
   })
 
-  it('should handle navigation interactions correctly', async () => {
+  it('should handle navigation interactions correctly', () => {
     const mockPush = vi.fn()
     const mockRouter = {
       push: mockPush,
       replace: vi.fn(),
       go: vi.fn(),
       back: vi.fn(),
-      forward: vi.fn()
+      forward: vi.fn(),
     }
 
-    const wrapper = createTestWrapper({
-      template: `
+    const wrapper = createTestWrapper(
+      {
+        template: `
         <nav>
           <nuxt-link to="/">Home</nuxt-link>
           <nuxt-link to="/about">About</nuxt-link>
           <nuxt-link to="/contact">Contact</nuxt-link>
         </nav>
-      `
-    }, {
-      global: {
-        mocks: {
-          useRouter: vi.fn(() => mockRouter)
-        }
+      `,
+      },
+      {
+        global: {
+          mocks: {
+            useRouter: vi.fn(() => mockRouter),
+          },
+        },
       }
-    })
+    )
 
     expect(wrapper.exists()).toBe(true)
-    
+
     // Test navigation links
     const navLinks = wrapper.findAll('nuxt-link-stub')
     expect(navLinks).toHaveLength(3)
-    
+
     // Check link destinations
     expect(navLinks[0].attributes('to')).toBe('/')
     expect(navLinks[1].attributes('to')).toBe('/about')
     expect(navLinks[2].attributes('to')).toBe('/contact')
   })
 
-  it('should handle dynamic route parameters', async () => {
+  it('should handle dynamic route parameters', () => {
     const mockRoute = {
       params: { slug: 'test-page' },
       query: { tab: 'info' },
       path: '/test-page',
       fullPath: '/test-page?tab=info',
-      meta: {}
+      meta: {},
     }
 
-    const wrapper = createTestWrapper({
-      template: `
+    const wrapper = createTestWrapper(
+      {
+        template: `
         <div>
           <p>Current slug: {{ $route.params.slug }}</p>
           <p>Current tab: {{ $route.query.tab }}</p>
         </div>
-      `
-    }, {
-      global: {
-        mocks: {
-          useRoute: vi.fn(() => mockRoute),
-          $route: mockRoute
-        }
+      `,
+      },
+      {
+        global: {
+          mocks: {
+            useRoute: vi.fn(() => mockRoute),
+            $route: mockRoute,
+          },
+        },
       }
-    })
+    )
 
     expect(wrapper.text()).toContain('Current slug: test-page')
     expect(wrapper.text()).toContain('Current tab: info')
@@ -121,8 +95,8 @@ describe('Navigation Integration Tests', () => {
       methods: {
         handleNavigation() {
           navigateTo('/new-page')
-        }
-      }
+        },
+      },
     })
 
     const button = wrapper.find('button')
@@ -132,11 +106,11 @@ describe('Navigation Integration Tests', () => {
     expect(mockNavigateTo).toHaveBeenCalledWith('/new-page')
   })
 
-  it('should handle breadcrumb navigation', async () => {
+  it('should handle breadcrumb navigation', () => {
     const breadcrumbData = [
       { label: 'Home', url: '/' },
       { label: 'Blog', url: '/blog' },
-      { label: 'Current Post', url: '/blog/current-post' }
+      { label: 'Current Post', url: '/blog/current-post' },
     ]
 
     const wrapper = createTestWrapper({
@@ -154,9 +128,9 @@ describe('Navigation Integration Tests', () => {
       `,
       data() {
         return {
-          breadcrumbs: breadcrumbData
+          breadcrumbs: breadcrumbData,
         }
-      }
+      },
     })
 
     const breadcrumbItems = wrapper.findAll('li')
@@ -184,14 +158,14 @@ describe('Navigation Integration Tests', () => {
       `,
       data() {
         return {
-          mobileMenuOpen: false
+          mobileMenuOpen: false,
         }
       },
       methods: {
         toggleMobileMenu() {
           this.mobileMenuOpen = !this.mobileMenuOpen
-        }
-      }
+        },
+      },
     })
 
     const toggleButton = wrapper.find('button')
@@ -209,17 +183,18 @@ describe('Navigation Integration Tests', () => {
     expect(nav.classes()).not.toContain('mobile-menu-open')
   })
 
-  it('should handle active navigation states', async () => {
+  it('should handle active navigation states', () => {
     const mockRoute = {
       params: {},
       query: {},
       path: '/about',
       fullPath: '/about',
-      meta: {}
+      meta: {},
     }
 
-    const wrapper = createTestWrapper({
-      template: `
+    const wrapper = createTestWrapper(
+      {
+        template: `
         <nav>
           <nuxt-link 
             v-for="link in links" 
@@ -231,28 +206,30 @@ describe('Navigation Integration Tests', () => {
           </nuxt-link>
         </nav>
       `,
-      data() {
-        return {
-          links: [
-            { id: 1, label: 'Home', url: '/' },
-            { id: 2, label: 'About', url: '/about' },
-            { id: 3, label: 'Contact', url: '/contact' }
-          ]
-        }
+        data() {
+          return {
+            links: [
+              { id: 1, label: 'Home', url: '/' },
+              { id: 2, label: 'About', url: '/about' },
+              { id: 3, label: 'Contact', url: '/contact' },
+            ],
+          }
+        },
+        methods: {
+          isActive(url: string) {
+            return this.$route.path === url
+          },
+        },
       },
-      methods: {
-        isActive(url: string) {
-          return this.$route.path === url
-        }
+      {
+        global: {
+          mocks: {
+            useRoute: vi.fn(() => mockRoute),
+            $route: mockRoute,
+          },
+        },
       }
-    }, {
-      global: {
-        mocks: {
-          useRoute: vi.fn(() => mockRoute),
-          $route: mockRoute
-        }
-      }
-    })
+    )
 
     // NuxtLink is stubbed as nuxt-link-stub (slot content not rendered)
     const nav = wrapper.find('nav')
@@ -269,7 +246,7 @@ describe('Navigation Integration Tests', () => {
     expect(homeStub.classes()).not.toContain('active')
   })
 
-  it('should handle external links correctly', async () => {
+  it('should handle external links correctly', () => {
     const wrapper = createTestWrapper({
       template: `
         <nav>
@@ -278,7 +255,7 @@ describe('Navigation Integration Tests', () => {
             External Link
           </a>
         </nav>
-      `
+      `,
     })
 
     const internalLink = wrapper.find('nuxt-link-stub')
@@ -302,17 +279,17 @@ describe('Navigation Integration Tests', () => {
         handleKeyDown(event: KeyboardEvent) {
           // Simulate enter key handling
           if (event.key === 'Enter') {
-            (event.target as HTMLElement).click()
+            ;(event.target as HTMLElement).click()
           }
-        }
-      }
+        },
+      },
     })
 
     const homeLink = wrapper.find('nuxt-link-stub')
-    
+
     // Simulate keydown event
     await homeLink.trigger('keydown', { key: 'Enter' })
-    
+
     // Verify that the event was handled
     expect(homeLink.exists()).toBe(true)
   })
@@ -338,26 +315,26 @@ describe('Navigation Integration Tests', () => {
           sections: [
             { id: 'section1', name: 'Section 1' },
             { id: 'section2', name: 'Section 2' },
-            { id: 'section3', name: 'Section 3' }
-          ]
+            { id: 'section3', name: 'Section 3' },
+          ],
         }
       },
       methods: {
         scrollToSection(sectionId: string) {
           this.activeSection = sectionId
-        }
-      }
+        },
+      },
     })
 
     const sectionLinks = wrapper.findAll('a')
-    
+
     // Initially, section1 should be active
     expect(sectionLinks[0].classes()).toContain('active')
     expect(sectionLinks[1].classes()).not.toContain('active')
-    
+
     // Click on section 2
     await sectionLinks[1].trigger('click')
-    
+
     // Now section2 should be active
     expect(sectionLinks[0].classes()).not.toContain('active')
     expect(sectionLinks[1].classes()).toContain('active')

@@ -10,7 +10,9 @@
         sizes="100vw sm:50vw md:400px"
         :tabindex="isActive ? 0 : -1"
         role="button"
-        :aria-label="`${image.alternativeText || image.name} - Klicken für Vollbildmodus`"
+        :aria-label="`${
+          image.alternativeText || image.name
+        } - Klicken für Vollbildmodus`"
         style="cursor: pointer"
         @click="$emit('open-fullscreen')"
         @keydown.enter="$emit('open-fullscreen')"
@@ -22,14 +24,14 @@
 
 <script setup lang="ts">
 defineProps<{
-  image: Image;
-  index: number;
-  isActive: boolean;
-}>();
+  image: Image
+  index: number
+  isActive: boolean
+}>()
 
 defineEmits<{
-  "open-fullscreen": [];
-}>();
+  'open-fullscreen': []
+}>()
 </script>
 
 <style scoped lang="scss">

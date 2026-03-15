@@ -22,7 +22,9 @@ test.describe('Home page', () => {
   test('footer is visible', async ({ page }) => {
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
     await page.waitForTimeout(500)
-    const footer = page.locator('footer.footer, footer:not(.card-footer)').last()
+    const footer = page
+      .locator('footer.footer, footer:not(.card-footer)')
+      .last()
     await expect(footer).toBeVisible()
   })
 

@@ -13,7 +13,10 @@
       ]"
     >
       <div>
-        <TitleComponent :title="props.zone.Title" :index="props.index"></TitleComponent>
+        <TitleComponent
+          :title="props.zone.Title"
+          :index="props.index"
+        ></TitleComponent>
         <RichTextComponent :content="props.zone.Description" />
       </div>
       <NuxtImg
@@ -37,28 +40,28 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: Section;
-  index: number;
-}>();
+  zone: Section
+  index: number
+}>()
 
 const isPortrait = (image) => {
-  return image.height > image.width;
-};
+  return image.height > image.width
+}
 
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("fade-in");
-        observer.unobserve(entry.target);
+        entry.target.classList.add('fade-in')
+        observer.unobserve(entry.target)
       }
-    });
-  });
+    })
+  })
 
-  document.querySelectorAll(".section").forEach((ref) => {
-    observer.observe(ref);
-  });
-});
+  document.querySelectorAll('.section').forEach((ref) => {
+    observer.observe(ref)
+  })
+})
 </script>
 
 <style scoped lang="scss">

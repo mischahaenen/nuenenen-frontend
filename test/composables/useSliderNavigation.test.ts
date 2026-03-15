@@ -2,9 +2,27 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useSliderNavigation } from '~/composables/useSliderNavigation'
 
 const mockImages: Image[] = [
-  { id: 1, name: 'img1.jpg', hash: 'hash1', ext: '.jpg', alternativeText: 'Image 1' },
-  { id: 2, name: 'img2.jpg', hash: 'hash2', ext: '.jpg', alternativeText: 'Image 2' },
-  { id: 3, name: 'img3.jpg', hash: 'hash3', ext: '.jpg', alternativeText: 'Image 3' },
+  {
+    id: 1,
+    name: 'img1.jpg',
+    hash: 'hash1',
+    ext: '.jpg',
+    alternativeText: 'Image 1',
+  },
+  {
+    id: 2,
+    name: 'img2.jpg',
+    hash: 'hash2',
+    ext: '.jpg',
+    alternativeText: 'Image 2',
+  },
+  {
+    id: 3,
+    name: 'img3.jpg',
+    hash: 'hash3',
+    ext: '.jpg',
+    alternativeText: 'Image 3',
+  },
 ] as any
 
 describe('useSliderNavigation', () => {

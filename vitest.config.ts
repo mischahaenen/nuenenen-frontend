@@ -15,22 +15,22 @@ export default defineConfig({
       include: [
         'components/**/*.vue',
         'composables/**/*.{js,ts}',
-        'pages/**/*.vue'
+        'pages/**/*.vue',
       ],
       exclude: [
         'composables/examples/**',
         'node_modules/**',
         'test/**',
         '**/*.test.{js,ts}',
-        '**/*.spec.{js,ts}'
-      ]
-    }
+        '**/*.spec.{js,ts}',
+      ],
+    },
   },
   resolve: {
     alias: {
       '@': resolve(__dirname, '.'),
       '~': resolve(__dirname, '.'),
-      '#': resolve(__dirname, '.nuxt')
-    }
-  }
+      '#': resolve(__dirname, '.nuxt'),
+    },
+  },
 })

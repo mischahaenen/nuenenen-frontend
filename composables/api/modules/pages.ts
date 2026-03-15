@@ -1,6 +1,6 @@
 import { useMemoize } from '@vueuse/core'
-import type { PageResponse } from '~/types/page'
 import { createQuery, fetchFromApi } from '../core/client'
+import type { PageResponse } from '~/types/page'
 
 export const usePagesApi = () => {
   const getPage = useMemoize((url: string) => {

@@ -1,6 +1,6 @@
 import { useMemoize } from '@vueuse/core'
-import type { PageResponse } from '~/types/page'
 import { fetchFromApi } from '../core/client'
+import type { PageResponse } from '~/types/page'
 
 // Navigation
 export const useNavigationApi = () => {

@@ -203,7 +203,7 @@ export function useEnhancedAnalytics() {
         error_type: errorType,
         error_message: errorMessage,
         error_context: JSON.stringify(errorContext),
-        stack_trace: new Error().stack,
+        stack_trace: new Error(errorMessage).stack,
       },
     })
   }

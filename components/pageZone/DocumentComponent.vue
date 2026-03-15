@@ -4,11 +4,15 @@
     :class="[
       'pt-medium pb-medium',
       {
-        'full-width content-grid bg-accent-50 dark:bg-primary-700': props.index % 2 === 1,
+        'full-width content-grid bg-accent-50 dark:bg-primary-700':
+          props.index % 2 === 1,
       },
     ]"
   >
-    <TitleComponent :title="props.zone.Title" :index="props.index"></TitleComponent>
+    <TitleComponent
+      :title="props.zone.Title"
+      :index="props.index"
+    ></TitleComponent>
     <ul>
       <li v-for="file in props.zone.files" :key="file.id">
         <svg
@@ -28,12 +32,12 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps } from 'vue'
 
 const props = defineProps<{
-  zone: DocumentZone;
-  index: number;
-}>();
+  zone: DocumentZone
+  index: number
+}>()
 </script>
 <style scoped lang="scss">
 ul {

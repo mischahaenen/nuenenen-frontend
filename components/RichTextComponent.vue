@@ -31,7 +31,7 @@ const displayedContent = computed((): BlocksContent => {
 .preview {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: v-bind("props.previewLines || 3");
+  -webkit-line-clamp: v-bind('props.previewLines || 3');
   -webkit-box-orient: vertical;
 }
 </style>

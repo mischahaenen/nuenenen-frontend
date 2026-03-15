@@ -37,32 +37,34 @@
 </template>
 
 <script setup lang="ts">
-import { useLeaderApi } from "~/composables/api/modules/leader";
-import type { Leader } from "~/types/leader";
+import { useLeaderApi } from '~/composables/api/modules/leader'
+import type { Leader } from '~/types/leader'
 
-const { getLeaders } = useLeaderApi();
+const { getLeaders } = useLeaderApi()
 const props = defineProps<{
-  zone: Group;
-  index: number;
-}>();
+  zone: Group
+  index: number
+}>()
 
-const { data: allLeaders } = await useAsyncData("all-leaders", () => getLeaders());
+const { data: allLeaders } = await useAsyncData('all-leaders', () =>
+  getLeaders()
+)
 
 const sortedLeaders = computed(() => {
   if (!allLeaders.value?.data || !props.zone.leaders) {
-    return [];
+    return []
   }
-  const zoneLeaderIds = props.zone.leaders.map((leader: Leader) => leader.id);
+  const zoneLeaderIds = props.zone.leaders.map((leader: Leader) => leader.id)
   const filteredLeaders = allLeaders.value.data.filter((leader: Leader) =>
     zoneLeaderIds.includes(leader.id)
-  );
+  )
 
   return filteredLeaders.sort((a, b) => {
-    const indexA = zoneLeaderIds.indexOf(a.id);
-    const indexB = zoneLeaderIds.indexOf(b.id);
-    return indexA - indexB;
-  });
-});
+    const indexA = zoneLeaderIds.indexOf(a.id)
+    const indexB = zoneLeaderIds.indexOf(b.id)
+    return indexA - indexB
+  })
+})
 </script>
 
 <style scoped lang="scss">
@@ -116,7 +118,11 @@ const sortedLeaders = computed(() => {
     justify-content: center;
     align-items: center;
     padding: var(--space-medium);
-    background-color: color-mix(in srgb, var(--color-accent-50) 80%, transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--color-accent-50) 80%,
+      transparent
+    );
     color: var(--color-primary-900);
   }
 
@@ -134,7 +140,11 @@ const sortedLeaders = computed(() => {
     &:hover .user-card__content,
     &:active .user-card__content,
     &:focus .user-card__content {
-      background-color: color-mix(in srgb, var(--color-accent-900) 80%, transparent);
+      background-color: color-mix(
+        in srgb,
+        var(--color-accent-900) 80%,
+        transparent
+      );
     }
 
     &:focus {

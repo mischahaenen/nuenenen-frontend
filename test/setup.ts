@@ -14,16 +14,16 @@ const mockNuxtComposables = {
       data: { value: opts?.transform ? opts.transform(null) : mockData },
       error: { value: null },
       pending: { value: false },
-      refresh: vi.fn()
+      refresh: vi.fn(),
     }
     return Promise.resolve(result)
   }),
   useRuntimeConfig: vi.fn(() => ({
     public: {
       strapi: {
-        url: 'http://localhost:1337'
-      }
-    }
+        url: 'http://localhost:1337',
+      },
+    },
   })),
   useHead: vi.fn(),
   useSeoMeta: vi.fn(),
@@ -32,14 +32,14 @@ const mockNuxtComposables = {
     query: {},
     path: '/',
     fullPath: '/',
-    meta: {}
+    meta: {},
   })),
   useRouter: vi.fn(() => ({
     push: vi.fn(),
     replace: vi.fn(),
     go: vi.fn(),
     back: vi.fn(),
-    forward: vi.fn()
+    forward: vi.fn(),
   })),
   navigateTo: vi.fn(),
   useState: vi.fn(),
@@ -50,8 +50,8 @@ const mockNuxtComposables = {
   useNuxtApp: vi.fn(() => ({
     $router: {
       push: vi.fn(),
-      replace: vi.fn()
-    }
+      replace: vi.fn(),
+    },
   })),
   useRequestHeaders: vi.fn(() => ({})),
   useCookie: vi.fn(),
@@ -64,28 +64,28 @@ const mockNuxtComposables = {
   $img: vi.fn(),
   resolveComponent: vi.fn((name) => ({
     name,
-    template: `<div class="${name.toLowerCase()}"></div>`
+    template: `<div class="${name.toLowerCase()}"></div>`,
   })),
   useStepsApi: vi.fn(),
   useBlogApi: vi.fn(),
   useReadingTime: vi.fn(() => ({
-    calculateBlocksReadingTime: vi.fn(() => 5)
+    calculateBlocksReadingTime: vi.fn(() => 5),
   })),
   useContactForm: vi.fn(),
   useColorMode: vi.fn(() => ({ value: 'light' })),
-  useScrollY: vi.fn(() => ({ value: 0 }))
+  useScrollY: vi.fn(() => ({ value: 0 })),
 }
 
 // Mock Nuxt Image component
 const NuxtImg = {
   template: '<img :src="src" :alt="alt" />',
-  props: ['src', 'alt', 'format', 'provider', 'sizes', 'modifiers']
+  props: ['src', 'alt', 'format', 'provider', 'sizes', 'modifiers'],
 }
 
 // Mock Nuxt Link component
 const NuxtLink = {
   template: '<a :href="to"><slot /></a>',
-  props: ['to']
+  props: ['to'],
 }
 
 // Global mocks
@@ -93,7 +93,7 @@ Object.assign(global, mockNuxtComposables)
 
 // Configure Vue Test Utils
 config.global.mocks = {
-  ...mockNuxtComposables
+  ...mockNuxtComposables,
 }
 
 config.global.stubs = {
@@ -106,14 +106,14 @@ config.global.stubs = {
   TitleComponent: true,
   SliderComponent: true,
   ClientOnly: {
-    template: '<div class="client-only"><slot /></div>'
-  }
+    template: '<div class="client-only"><slot /></div>',
+  },
 }
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: vi.fn().mockImplementation(query => ({
+  value: vi.fn().mockImplementation((query) => ({
     matches: false,
     media: query,
     onchange: null,

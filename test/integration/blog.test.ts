@@ -1,6 +1,6 @@
 import { expect, test, vi, afterEach } from 'vitest'
-import BlogPost from '~/pages/blog/[slug].vue'
 import { createAsyncWrapper } from '../utils/async-wrapper'
+import BlogPost from '~/pages/blog/[slug].vue'
 
 afterEach(() => {
   vi.clearAllMocks()
@@ -8,8 +8,8 @@ afterEach(() => {
 
 vi.mock('~/composables/api/modules/blog', () => ({
   useBlogApi: () => ({
-    getBlogPost: vi.fn()
-  })
+    getBlogPost: vi.fn(),
+  }),
 }))
 
 const defaultRoute = {
@@ -17,7 +17,7 @@ const defaultRoute = {
   query: {},
   path: '/blog/test-blog-post',
   fullPath: '/blog/test-blog-post',
-  meta: {}
+  meta: {},
 }
 
 const defaultPost = {
@@ -27,8 +27,10 @@ const defaultPost = {
   description: [
     {
       type: 'paragraph',
-      children: [{ type: 'text', text: 'This is a test blog post description.' }]
-    }
+      children: [
+        { type: 'text', text: 'This is a test blog post description.' },
+      ],
+    },
   ],
   images: [
     {
@@ -36,16 +38,16 @@ const defaultPost = {
       hash: 'test-image-hash',
       ext: '.webp',
       name: 'test-image.webp',
-      alternativeText: 'Test image'
-    }
+      alternativeText: 'Test image',
+    },
   ],
-  createdAt: '2023-01-01T10:00:00.000Z'
+  createdAt: '2023-01-01T10:00:00.000Z',
 }
 
 const createWrapper = (asyncData = {}) =>
   createAsyncWrapper(BlogPost, {
     route: defaultRoute,
-    asyncData: { data: [defaultPost], error: null, ...asyncData }
+    asyncData: { data: [defaultPost], error: null, ...asyncData },
   })
 
 test('renders blog post page correctly', async () => {
@@ -68,7 +70,9 @@ test('renders SliderComponent with images', async () => {
 
 test('renders RichTextComponent with content', async () => {
   const wrapper = await createWrapper()
-  expect(wrapper.findComponent({ name: 'RichTextComponent' }).exists()).toBe(true)
+  expect(wrapper.findComponent({ name: 'RichTextComponent' }).exists()).toBe(
+    true
+  )
 })
 
 test('renders back link correctly', async () => {
@@ -87,7 +91,9 @@ test('renders article content', async () => {
   const wrapper = await createWrapper()
   expect(wrapper.find('article').exists()).toBe(true)
   expect(wrapper.find('h1').exists()).toBe(true)
-  expect(wrapper.findComponent({ name: 'RichTextComponent' }).exists()).toBe(true)
+  expect(wrapper.findComponent({ name: 'RichTextComponent' }).exists()).toBe(
+    true
+  )
 })
 
 test('handles different blog post data', async () => {
@@ -97,7 +103,7 @@ test('handles different blog post data', async () => {
     slug: 'custom-post',
     description: [],
     images: [],
-    createdAt: '2023-02-01T10:00:00.000Z'
+    createdAt: '2023-02-01T10:00:00.000Z',
   }
   const wrapper = await createWrapper({ data: [customPost] })
   expect(wrapper.find('h1').text()).toBe('Custom Blog Post Title')

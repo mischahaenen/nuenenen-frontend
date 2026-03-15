@@ -10,8 +10,8 @@ const createWrapper = (props = {}) => {
       hash: 'test-hash',
       ext: '.webp',
       name: 'test-banner.webp',
-      alternativeText: 'Test banner'
-    }
+      alternativeText: 'Test banner',
+    },
   }
 
   return mount(BaseBanner, {
@@ -19,24 +19,35 @@ const createWrapper = (props = {}) => {
     global: {
       mocks: {
         useColorMode: vi.fn(() => ({ value: 'light' })),
-        useScrollY: vi.fn(() => ({ value: 0 }))
+        useScrollY: vi.fn(() => ({ value: 0 })),
       },
       stubs: {
         NuxtImg: {
           name: 'NuxtImg',
           template: '<img :src="src" :alt="alt" class="nuxt-img" />',
-          props: ['src', 'alt', 'format', 'provider', 'sizes', 'quality', 'loading', 'width', 'height', 'modifiers']
+          props: [
+            'src',
+            'alt',
+            'format',
+            'provider',
+            'sizes',
+            'quality',
+            'loading',
+            'width',
+            'height',
+            'modifiers',
+          ],
         },
         NuxtLink: {
           name: 'NuxtLink',
           template: '<a :href="to" class="nuxt-link"><slot /></a>',
-          props: ['to']
+          props: ['to'],
         },
         ClientOnly: {
-          template: '<div class="client-only"><slot /></div>'
-        }
-      }
-    }
+          template: '<div class="client-only"><slot /></div>',
+        },
+      },
+    },
   })
 }
 
@@ -51,14 +62,14 @@ test('renders NuxtImg with correct props when image is provided', () => {
     hash: 'custom-hash',
     ext: '.jpg',
     name: 'custom-banner.jpg',
-    alternativeText: 'Custom banner alt text'
+    alternativeText: 'Custom banner alt text',
   }
 
   const wrapper = createWrapper({ image })
   const imgs = wrapper.findAllComponents({ name: 'NuxtImg' })
 
   expect(imgs.length).toBeGreaterThan(0)
-  const bannerImg = imgs.find(i => i.props('src') === 'custom-hash.jpg')
+  const bannerImg = imgs.find((i) => i.props('src') === 'custom-hash.jpg')
   expect(bannerImg).toBeTruthy()
   expect(bannerImg!.props('alt')).toContain('Custom banner alt text')
   expect(bannerImg!.props('format')).toBe('webp')
@@ -83,7 +94,9 @@ test('shows default logo when no image is provided', () => {
   expect(wrapper.exists()).toBe(true)
   const imgs = wrapper.findAllComponents({ name: 'NuxtImg' })
   expect(imgs.length).toBeGreaterThan(0)
-  const logoImg = imgs.find(i => (i.props('src') as string)?.includes('nuenenen_logo'))
+  const logoImg = imgs.find((i) =>
+    (i.props('src') as string)?.includes('nuenenen_logo')
+  )
   expect(logoImg).toBeTruthy()
 })
 
@@ -126,14 +139,16 @@ test('has proper semantic structure', () => {
 test('shows custom-background-image class when image is provided', () => {
   const wrapper = createWrapper()
   const imgs = wrapper.findAllComponents({ name: 'NuxtImg' })
-  const customImg = imgs.find(i => (i.props('src') as string)?.includes('test-hash'))
+  const customImg = imgs.find((i) =>
+    (i.props('src') as string)?.includes('test-hash')
+  )
   expect(customImg).toBeTruthy()
 })
 
 test('renders action button as anchor when link starts with #', () => {
   const wrapper = createWrapper({
     actionButtonLink: '#Blog',
-    actionButtonName: 'Zum Blog'
+    actionButtonName: 'Zum Blog',
   })
   const anchor = wrapper.find('a.btn')
   expect(anchor.exists()).toBe(true)
@@ -144,7 +159,7 @@ test('renders action button as anchor when link starts with #', () => {
 test('renders action button as NuxtLink for regular routes', () => {
   const wrapper = createWrapper({
     actionButtonLink: '/blog',
-    actionButtonName: 'Blog'
+    actionButtonName: 'Blog',
   })
   const nuxtLink = wrapper.findComponent({ name: 'NuxtLink' })
   expect(nuxtLink.exists()).toBe(true)
@@ -152,7 +167,10 @@ test('renders action button as NuxtLink for regular routes', () => {
 })
 
 test('does not render action button when props are missing', () => {
-  const wrapper = createWrapper({ actionButtonLink: null, actionButtonName: null })
+  const wrapper = createWrapper({
+    actionButtonLink: null,
+    actionButtonName: null,
+  })
   const btn = wrapper.find('.btn-link')
   expect(btn.exists()).toBe(false)
 })

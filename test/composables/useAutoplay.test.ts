@@ -99,10 +99,8 @@ describe('useAutoplay', () => {
 
   describe('pauseAutoplay / resumeAutoplay', () => {
     it('pauses and resumes autoplay', () => {
-      const { isAutoplayActive, startAutoplay, pauseAutoplay, resumeAutoplay } = useAutoplay(
-        { autoplay: 1000, images: mockImages },
-        goToNext
-      )
+      const { isAutoplayActive, startAutoplay, pauseAutoplay, resumeAutoplay } =
+        useAutoplay({ autoplay: 1000, images: mockImages }, goToNext)
       startAutoplay()
       pauseAutoplay()
       expect(isAutoplayActive.value).toBe(false)

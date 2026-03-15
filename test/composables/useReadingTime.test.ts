@@ -38,15 +38,15 @@ describe('useReadingTime', () => {
       const content = [
         {
           type: 'paragraph',
-          children: [{ type: 'text', text: Array(200).fill('word').join(' ') }]
-        }
+          children: [{ type: 'text', text: Array(200).fill('word').join(' ') }],
+        },
       ] as any
       expect(calculateBlocksReadingTime(content)).toBe(1)
     })
 
     it('returns minimum 1 for very short content', () => {
       const content = [
-        { type: 'paragraph', children: [{ type: 'text', text: 'Hi' }] }
+        { type: 'paragraph', children: [{ type: 'text', text: 'Hi' }] },
       ] as any
       expect(calculateBlocksReadingTime(content)).toBe(1)
     })
@@ -62,8 +62,11 @@ describe('useReadingTime', () => {
       const blocks = [
         {
           type: 'paragraph',
-          children: [{ type: 'text', text: 'Hello' }, { type: 'text', text: 'world' }]
-        }
+          children: [
+            { type: 'text', text: 'Hello' },
+            { type: 'text', text: 'world' },
+          ],
+        },
       ] as any
       expect(extractTextFromBlocks(blocks)).toContain('Hello')
       expect(extractTextFromBlocks(blocks)).toContain('world')
@@ -73,8 +76,8 @@ describe('useReadingTime', () => {
       const blocks = [
         {
           type: 'heading',
-          children: [{ type: 'text', text: 'My Heading' }]
-        }
+          children: [{ type: 'text', text: 'My Heading' }],
+        },
       ] as any
       expect(extractTextFromBlocks(blocks)).toContain('My Heading')
     })
@@ -85,9 +88,9 @@ describe('useReadingTime', () => {
           type: 'list',
           children: [
             { children: [{ type: 'text', text: 'Item one' }] },
-            { children: [{ type: 'text', text: 'Item two' }] }
-          ]
-        }
+            { children: [{ type: 'text', text: 'Item two' }] },
+          ],
+        },
       ] as any
       const result = extractTextFromBlocks(blocks)
       expect(result).toContain('Item one')
@@ -103,8 +106,8 @@ describe('useReadingTime', () => {
       const blocks = [
         {
           type: 'code',
-          children: [{ type: 'text', text: 'const x = 1' }]
-        }
+          children: [{ type: 'text', text: 'const x = 1' }],
+        },
       ] as any
       expect(extractTextFromBlocks(blocks)).toContain('const x = 1')
     })

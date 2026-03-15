@@ -7,24 +7,29 @@
       },
     ]"
   >
-    <TitleComponent title="Nächste Aktivität" :index="props.index"></TitleComponent>
+    <TitleComponent
+      title="Nächste Aktivität"
+      :index="props.index"
+    ></TitleComponent>
     <div class="event-details">
       <div class="calendar-item">
         <template v-if="props.zone.StartDate === props.zone.EndDate">
           <p class="bold">
-            {{ format(new Date(props.zone.StartDate), "dd") }}
+            {{ format(new Date(props.zone.StartDate), 'dd') }}
           </p>
           <p>
-            {{ format(new Date(props.zone.StartDate), "MMMM", { locale: de }) }}
+            {{ format(new Date(props.zone.StartDate), 'MMMM', { locale: de }) }}
           </p>
         </template>
         <template v-else>
           <p class="bold">
-            {{ format(new Date(props.zone.StartDate), "dd.MM", { locale: de }) }}
+            {{
+              format(new Date(props.zone.StartDate), 'dd.MM', { locale: de })
+            }}
           </p>
           <p>
             bis
-            {{ format(new Date(props.zone.EndDate), "dd.MM", { locale: de }) }}
+            {{ format(new Date(props.zone.EndDate), 'dd.MM', { locale: de }) }}
           </p>
         </template>
       </div>
@@ -46,33 +51,45 @@
             <span>
               <template v-if="props.zone.StartDate === props.zone.EndDate">
                 <b>{{
-                  format(parse(props.zone.StartTime, "HH:mm:ss", new Date()), "HH:mm")
+                  format(
+                    parse(props.zone.StartTime, 'HH:mm:ss', new Date()),
+                    'HH:mm'
+                  )
                 }}</b>
                 bis
                 <b>{{
-                  format(parse(props.zone.EndTime, "HH:mm:ss", new Date()), "HH:mm")
+                  format(
+                    parse(props.zone.EndTime, 'HH:mm:ss', new Date()),
+                    'HH:mm'
+                  )
                 }}</b>
                 Uhr
               </template>
               <template v-else>
                 {{
-                  format(new Date(props.zone.StartDate), "dd. MMM. yyyy", {
+                  format(new Date(props.zone.StartDate), 'dd. MMM. yyyy', {
                     locale: de,
                   })
                 }}
                 um
                 <b>{{
-                  format(parse(props.zone.StartTime, "HH:mm:ss", new Date()), "HH:mm")
+                  format(
+                    parse(props.zone.StartTime, 'HH:mm:ss', new Date()),
+                    'HH:mm'
+                  )
                 }}</b>
                 Uhr bis
                 {{
-                  format(new Date(props.zone.EndDate), "dd. MMM. yyyy", {
+                  format(new Date(props.zone.EndDate), 'dd. MMM. yyyy', {
                     locale: de,
                   })
                 }}
                 um
                 <b>{{
-                  format(parse(props.zone.EndTime, "HH:mm:ss", new Date()), "HH:mm")
+                  format(
+                    parse(props.zone.EndTime, 'HH:mm:ss', new Date()),
+                    'HH:mm'
+                  )
                 }}</b>
                 Uhr
               </template>
@@ -92,36 +109,38 @@
             {{ props.zone.Location }}
           </li>
         </ul>
-        <button class="btn btn-primary mt-medium" @click="deregister()">Abmelden</button>
+        <button class="btn btn-primary mt-medium" @click="deregister()">
+          Abmelden
+        </button>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts" defer>
-import { format, parse } from "date-fns";
-import { de } from "date-fns/locale";
-import { useDeregisterStore } from "~/store/deregister";
+import { format, parse } from 'date-fns'
+import { de } from 'date-fns/locale'
+import { useDeregisterStore } from '~/store/deregister'
 
 const props = defineProps<{
-  zone: KastenzettelZone;
-  index: number;
-}>();
+  zone: KastenzettelZone
+  index: number
+}>()
 const deregister = async () => {
-  const route = useRoute();
-  const deregisterStore = useDeregisterStore();
+  const route = useRoute()
+  const deregisterStore = useDeregisterStore()
 
   // Extract step from URL params (gets the step name from /abteilung/stepname)
   const stepSlug = Array.isArray(route.params.slug)
     ? route.params.slug[1]
-    : route.params.slug;
+    : route.params.slug
 
   // Set the step in the store
-  deregisterStore.setStep(stepSlug);
+  deregisterStore.setStep(stepSlug)
 
   // Navigate to contact page
-  await navigateTo("/kontakt");
-};
+  await navigateTo('/kontakt')
+}
 </script>
 
 <style scoped lang="scss">

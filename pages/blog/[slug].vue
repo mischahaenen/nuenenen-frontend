@@ -26,29 +26,30 @@
 </template>
 
 <script lang="ts" setup>
-import { useBlogApi } from "~/composables/api/modules/blog";
+import { useBlogApi } from '~/composables/api/modules/blog'
 
-const route = useRoute();
-const { getBlogPost } = useBlogApi();
+const route = useRoute()
+const { getBlogPost } = useBlogApi()
 
 const { data: post, error } = await useAsyncData(
-  "post",
+  'post',
   () => getBlogPost(route.params.slug as string),
   {
     transform: (data) => {
-      if (!data) return [];
-      return data.data ?? [];
+      if (!data) return []
+      return data.data ?? []
     },
   }
-);
+)
 const title = computed(() => {
-  if (!post.value || !post.value || post.value.length === 0) return "Pfadi Nünenen";
-  return `Pfadi Nünenen - ${post.value[0].slug}`;
-});
+  if (!post.value || !post.value || post.value.length === 0)
+    return 'Pfadi Nünenen'
+  return `Pfadi Nünenen - ${post.value[0].slug}`
+})
 
 useHead({
   title: title.value,
-});
+})
 </script>
 
 <style scoped lang="scss">

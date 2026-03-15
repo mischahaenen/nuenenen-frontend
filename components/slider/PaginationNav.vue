@@ -17,11 +17,11 @@
 
 <script setup lang="ts">
 defineProps<{
-  images: Image[];
-  currentIndex: number;
-}>();
+  images: Image[]
+  currentIndex: number
+}>()
 
 defineEmits<{
-  "go-to-slide": [index: number];
-}>();
+  'go-to-slide': [index: number]
+}>()
 </script>

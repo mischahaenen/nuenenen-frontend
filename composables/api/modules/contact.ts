@@ -1,5 +1,5 @@
-import type { ContactSenderResponse } from '~/types/contact-sender'
 import { fetchFromApi, fetchOptions } from '../core/client'
+import type { ContactSenderResponse } from '~/types/contact-sender'
 
 export const useContactApi = () => {
   const createContactEntry = async (

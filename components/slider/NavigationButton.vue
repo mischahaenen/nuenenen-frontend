@@ -37,11 +37,11 @@
 
 <script setup lang="ts">
 defineProps<{
-  direction: "prev" | "next";
-  ariaLabel: string;
-}>();
+  direction: 'prev' | 'next'
+  ariaLabel: string
+}>()
 
 defineEmits<{
-  click: [];
-}>();
+  click: []
+}>()
 </script>

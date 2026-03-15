@@ -6,7 +6,10 @@
   <template v-if="navigation">
     <header class="header" :class="{ 'header-scrolled': scroll > 50 }">
       <a class="skip-main" href="#main">Zum Hauptinhalt</a>
-      <nuxt-link to="/home" :class="['home-link', { 'home-link-scrolled': scroll > 50 }]">
+      <nuxt-link
+        to="/home"
+        :class="['home-link', { 'home-link-scrolled': scroll > 50 }]"
+      >
         <NuxtImg
           class="header-logo"
           src="img/nuenenen_logo.webp"
@@ -25,7 +28,11 @@
         :class="{ 'nav-expanded': navExpanded }"
         aria-label="Navigation"
       >
-        <button class="nav-toggle" aria-label="Toggle navigation" @click="toggleNav">
+        <button
+          class="nav-toggle"
+          aria-label="Toggle navigation"
+          @click="toggleNav"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24"
@@ -38,7 +45,11 @@
           </svg>
         </button>
         <ul class="nav-links">
-          <li v-for="page in navigation.data.pages" :key="page.slug" class="nav-item">
+          <li
+            v-for="page in navigation.data.pages"
+            :key="page.slug"
+            class="nav-item"
+          >
             <nuxt-link :to="`/${page.url}`" @click="toggleNav"
               >{{ page.slug }}
             </nuxt-link>
@@ -60,19 +71,19 @@
 </template>
 
 <script lang="ts" setup>
-import { useNavigationApi } from "~/composables/api/modules/navigation";
+import { useNavigationApi } from '~/composables/api/modules/navigation'
 
-const scroll = useScrollY();
-const navExpanded = useState(() => false);
-const { getNavigation } = useNavigationApi();
+const scroll = useScrollY()
+const navExpanded = useState(() => false)
+const { getNavigation } = useNavigationApi()
 
-const { data: navigation, error } = await useAsyncData("navigation", () =>
+const { data: navigation, error } = await useAsyncData('navigation', () =>
   getNavigation()
-);
+)
 
 const toggleNav = () => {
-  navExpanded.value = !navExpanded.value;
-};
+  navExpanded.value = !navExpanded.value
+}
 </script>
 
 <style scoped lang="scss">

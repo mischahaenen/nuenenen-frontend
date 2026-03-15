@@ -32,8 +32,8 @@
 
 <script setup lang="ts">
 import { useStepsApi } from '~/composables/api/modules/steps'
-import type { StepZone } from '~/types/pageZone';
-import type { Step } from '~/types/step';
+import type { StepZone } from '~/types/pageZone'
+import type { Step } from '~/types/step'
 
 const { getSteps } = useStepsApi()
 
@@ -42,17 +42,13 @@ const props = defineProps<{
   index: number
 }>()
 
-const { data: allSteps, error } = await useAsyncData(
-  `steps`,
-  () => getSteps(),
-  {
-    server: true,
-    transform: (data) => {
-      if (!data) return []
-      return data.data ?? []
-    },
-  }
-)
+const { data: allSteps } = await useAsyncData(`steps`, () => getSteps(), {
+  server: true,
+  transform: (data) => {
+    if (!data) return []
+    return data.data ?? []
+  },
+})
 
 const STEP_ORDER = [
   'biberstufe',

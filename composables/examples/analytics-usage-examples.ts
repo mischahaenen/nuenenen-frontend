@@ -6,16 +6,20 @@ import { useEnhancedAnalytics } from '../useEnhancedAnalytics'
 export const useBlogAnalytics = () => {
   const { trackContentEngagement, trackInteraction } = useEnhancedAnalytics()
 
-  const trackBlogView = (blogTitle: string, blogId: string) => {
+  const trackBlogView = (_blogTitle: string, blogId: string) => {
     trackContentEngagement('blog_post', blogId, 'view')
   }
 
-  const trackBlogShare = (blogTitle: string, blogId: string, shareMethod: string) => {
+  const trackBlogShare = (
+    blogTitle: string,
+    blogId: string,
+    shareMethod: string
+  ) => {
     trackInteraction('share_button', 'click', {
       content_type: 'blog_post',
       content_id: blogId,
       content_title: blogTitle,
-      share_method: shareMethod
+      share_method: shareMethod,
     })
   }
 
@@ -26,7 +30,7 @@ export const useBlogAnalytics = () => {
   return {
     trackBlogView,
     trackBlogShare,
-    trackBlogReadTime
+    trackBlogReadTime,
   }
 }
 
@@ -34,12 +38,16 @@ export const useBlogAnalytics = () => {
 export const useSliderAnalytics = () => {
   const { trackInteraction, trackContentEngagement } = useEnhancedAnalytics()
 
-  const trackSlideChange = (currentSlide: number, totalSlides: number, method: 'click' | 'auto' | 'keyboard') => {
+  const trackSlideChange = (
+    currentSlide: number,
+    totalSlides: number,
+    method: 'click' | 'auto' | 'keyboard'
+  ) => {
     trackInteraction('slider', 'navigate', {
       slide_number: currentSlide,
       total_slides: totalSlides,
       navigation_method: method,
-      slide_percentage: Math.round((currentSlide / totalSlides) * 100)
+      slide_percentage: Math.round((currentSlide / totalSlides) * 100),
     })
   }
 
@@ -54,39 +62,43 @@ export const useSliderAnalytics = () => {
   return {
     trackSlideChange,
     trackSliderFullscreen,
-    trackSliderAutoplay
+    trackSliderAutoplay,
   }
 }
 
 // Example 3: Track navigation and menu usage
 export const useNavigationAnalytics = () => {
-  const { trackInteraction, trackEvent } = useEnhancedAnalytics()
+  const { trackInteraction } = useEnhancedAnalytics()
 
   const trackMenuOpen = (menuType: 'main' | 'mobile' | 'dropdown') => {
     trackInteraction('menu', 'open', {
-      menu_type: menuType
+      menu_type: menuType,
     })
   }
 
-  const trackMenuItemClick = (itemLabel: string, itemLevel: number, destination: string) => {
+  const trackMenuItemClick = (
+    itemLabel: string,
+    itemLevel: number,
+    destination: string
+  ) => {
     trackInteraction('menu_item', 'click', {
       menu_item_label: itemLabel,
       menu_level: itemLevel,
-      destination_url: destination
+      destination_url: destination,
     })
   }
 
   const trackBreadcrumbClick = (breadcrumbLabel: string, position: number) => {
     trackInteraction('breadcrumb', 'click', {
       breadcrumb_label: breadcrumbLabel,
-      breadcrumb_position: position
+      breadcrumb_position: position,
     })
   }
 
   return {
     trackMenuOpen,
     trackMenuItemClick,
-    trackBreadcrumbClick
+    trackBreadcrumbClick,
   }
 }
 
@@ -94,42 +106,55 @@ export const useNavigationAnalytics = () => {
 export const useSearchAnalytics = () => {
   const { trackSearch, trackInteraction } = useEnhancedAnalytics()
 
-  const trackSearchQuery = (query: string, resultsCount: number, searchType: string = 'general') => {
+  const trackSearchQuery = (
+    query: string,
+    resultsCount: number,
+    searchType = 'general'
+  ) => {
     trackSearch(query, resultsCount, searchType)
   }
 
-  const trackSearchResultClick = (query: string, resultTitle: string, resultPosition: number, resultUrl: string) => {
+  const trackSearchResultClick = (
+    query: string,
+    resultTitle: string,
+    resultPosition: number,
+    resultUrl: string
+  ) => {
     trackInteraction('search_result', 'click', {
       search_query: query,
       result_title: resultTitle,
       result_position: resultPosition,
-      result_url: resultUrl
+      result_url: resultUrl,
     })
   }
 
   const trackSearchFilterUse = (filterType: string, filterValue: string) => {
     trackInteraction('search_filter', 'apply', {
       filter_type: filterType,
-      filter_value: filterValue
+      filter_value: filterValue,
     })
   }
 
   return {
     trackSearchQuery,
     trackSearchResultClick,
-    trackSearchFilterUse
+    trackSearchFilterUse,
   }
 }
 
 // Example 5: Track video/media interactions
 export const useMediaAnalytics = () => {
-  const { trackContentEngagement, trackEvent } = useEnhancedAnalytics()
+  const { trackContentEngagement } = useEnhancedAnalytics()
 
-  const trackVideoPlay = (videoId: string, videoTitle: string) => {
+  const trackVideoPlay = (videoId: string, _videoTitle: string) => {
     trackContentEngagement('video', videoId, 'play')
   }
 
-  const trackVideoPause = (videoId: string, currentTime: number, duration: number) => {
+  const trackVideoPause = (
+    videoId: string,
+    currentTime: number,
+    duration: number
+  ) => {
     const watchPercentage = Math.round((currentTime / duration) * 100)
     trackContentEngagement('video', videoId, 'pause', watchPercentage)
   }
@@ -141,7 +166,7 @@ export const useMediaAnalytics = () => {
   return {
     trackVideoPlay,
     trackVideoPause,
-    trackVideoComplete
+    trackVideoComplete,
   }
 }
 

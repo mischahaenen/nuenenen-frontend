@@ -38,7 +38,11 @@
               {{ formattedDate }}
             </time>
             <span class="meta-separator">|</span>
-            <ReadingTime :time="readingTime" :unit="timeUnit" class="reading-time" />
+            <ReadingTime
+              :time="readingTime"
+              :unit="timeUnit"
+              class="reading-time"
+            />
           </div>
 
           <h2 class="card-title">{{ post.title }}</h2>
@@ -61,57 +65,59 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from "vue";
-import type { Post } from "~/types/post";
+import { defineProps } from 'vue'
+import type { Post } from '~/types/post'
 
 const props = defineProps<{
-  post: Post | undefined;
-  isFirst: boolean;
-}>();
+  post: Post | undefined
+  isFirst: boolean
+}>()
 
-const { post, isFirst } = toRefs(props);
+const { post, isFirst } = toRefs(props)
 
 const formattedDate = computed(() => {
-  if (!post.value?.createdAt) return "";
+  if (!post.value?.createdAt) return ''
 
-  return new Intl.DateTimeFormat("de-DE", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(post.value.createdAt));
-});
+  return new Intl.DateTimeFormat('de-DE', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(post.value.createdAt))
+})
 
 const formattedDateISO = computed(() => {
-  if (!post.value?.createdAt) return "";
+  if (!post.value?.createdAt) return ''
 
   const date =
-    typeof post.value.createdAt === "string"
+    typeof post.value.createdAt === 'string'
       ? new Date(post.value.createdAt)
-      : post.value.createdAt;
+      : post.value.createdAt
 
-  return date.toISOString();
-});
+  return date.toISOString()
+})
 
-const { calculateBlocksReadingTime } = useReadingTime();
+const { calculateBlocksReadingTime } = useReadingTime()
 
 const readingTime = computed(() => {
-  if (!post.value?.description) return 1;
-  return calculateBlocksReadingTime(post.value.description);
-});
+  if (!post.value?.description) return 1
+  return calculateBlocksReadingTime(post.value.description)
+})
 
-const timeUnit = computed(() => (readingTime.value === 1 ? "Minute" : "Minuten"));
+const timeUnit = computed(() =>
+  readingTime.value === 1 ? 'Minute' : 'Minuten'
+)
 
 const cardClasses = computed(() => ({
   card: true,
-  "card--featured": isFirst.value,
-  "card--preview": !isFirst.value,
-}));
+  'card--featured': isFirst.value,
+  'card--preview': !isFirst.value,
+}))
 
 const imageSizes = computed(() =>
   isFirst.value
-    ? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
-    : "(max-width: 768px) 100vw, 350px"
-);
+    ? '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px'
+    : '(max-width: 768px) 100vw, 350px'
+)
 </script>
 
 <style scoped lang="scss">
@@ -136,12 +142,14 @@ const imageSizes = computed(() =>
   background: var(--color-white);
   border-radius: var(--border-radius);
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
     .card-image {
       transform: scale(1.03);
@@ -276,10 +284,12 @@ const imageSizes = computed(() =>
 // Dark mode styles
 .dark-mode .card {
   background: var(--color-primary-800);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    0 2px 4px -1px rgba(0, 0, 0, 0.3);
 
   &:hover {
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6),
+      0 10px 10px -5px rgba(0, 0, 0, 0.4);
   }
 
   .card-image-wrapper {
