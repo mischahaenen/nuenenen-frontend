@@ -25,6 +25,7 @@
         }"
         provider="strapi"
         format="webp"
+        loading="lazy"
         :src="props.zone.Image.hash + props.zone.Image.ext"
         :alt="props.zone.Image.alternativeText ?? props.zone.Image.name"
         sizes="100vw sm:50vw md:400px"

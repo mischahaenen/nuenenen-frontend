@@ -19,6 +19,7 @@
           v-if="leader.Image"
           class="image"
           format="webp"
+          loading="lazy"
           provider="strapi"
           :src="leader.Image.hash + leader.Image.ext"
           :alt="leader.Image.alternativeText || leader.Image.name"

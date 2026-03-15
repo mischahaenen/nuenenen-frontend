@@ -156,7 +156,6 @@ const handleBackdropClick = (event: MouseEvent) => {
 </script>
 
 <style lang="scss" scoped>
-@use '../../assets/css/utils';
 
 .fullscreen-modal {
   position: fixed;
@@ -374,7 +373,7 @@ const handleBackdropClick = (event: MouseEvent) => {
 }
 
 // Mobile fullscreen adjustments
-@include utils.breakpoint-md {
+@include breakpoint-md {
   .fullscreen-close {
     top: 0.75rem;
     right: 0.75rem;
@@ -417,7 +416,7 @@ const handleBackdropClick = (event: MouseEvent) => {
   }
 }
 
-@include utils.breakpoint-sm {
+@include breakpoint-sm {
   .fullscreen-close {
     top: 0.5rem;
     right: 0.5rem;

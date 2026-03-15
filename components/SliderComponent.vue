@@ -141,7 +141,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@use '../assets/css/utils';
 
 .image-slider {
   position: relative;
@@ -385,7 +384,7 @@ onMounted(() => {
 }
 
 // Responsive breakpoints
-@include utils.breakpoint-md {
+@include breakpoint-md {
   .nav-button {
     opacity: 1; // Always show on mobile/tablet
     width: 2.5rem;
@@ -412,7 +411,7 @@ onMounted(() => {
   }
 }
 
-@include utils.breakpoint-sm {
+@include breakpoint-sm {
   .image-slider,
   .single-image {
     height: 50vh;

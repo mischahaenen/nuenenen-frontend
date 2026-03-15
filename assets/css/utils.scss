@@ -1,35 +1,5 @@
 @use 'variables' as vars;
 
-@mixin breakpoint-xs {
-  @media (max-width: vars.$breakpoint-extra-small) {
-    @content;
-  }
-}
-
-@mixin breakpoint-sm {
-  @media (max-width: vars.$breakpoint-small) {
-    @content;
-  }
-}
-
-@mixin breakpoint-md {
-  @media (max-width: vars.$breakpoint-medium) {
-    @content;
-  }
-}
-
-@mixin breakpoint-lg {
-  @media (max-width: vars.$breakpoint-large) {
-    @content;
-  }
-}
-
-@mixin breakpoint-xl {
-  @media (max-width: vars.$breakpoint-extra-large) {
-    @content;
-  }
-}
-
 .light-mode {
   @each $name, $color in vars.$colors {
     .text-#{$name} {

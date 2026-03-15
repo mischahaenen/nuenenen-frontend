@@ -45,12 +45,12 @@ export default defineNuxtConfig({
           'X-XSS-Protection': '1; mode=block',
           'Referrer-Policy': 'strict-origin-when-cross-origin',
           'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-          'Cache-Control': 'public, max-age=604800, must-revalidate',
+          'Cache-Control': 'public, max-age=86400, must-revalidate',
         },
       },
       '/': {
         prerender: true,
-        headers: { 'Cache-Control': 'public, max-age=604800, must-revalidate' },
+        headers: { 'Cache-Control': 'public, max-age=86400, must-revalidate' },
       },
       '/api/**': {
         headers: { 'Cache-Control': 'public, max-age=300, must-revalidate' },
@@ -82,7 +82,7 @@ export default defineNuxtConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: '@use "@/assets/css/utils.scss" as *;',
+          additionalData: '@use "@/assets/css/mixins.scss" as *;',
         },
       },
     },
@@ -93,7 +93,7 @@ export default defineNuxtConfig({
   },
   image: {
     dir: 'assets/',
-    formats: ['avif', 'webp', 'jpg', 'png'],
+    formats: ['webp', 'png'],
     quality: 85,
     densities: [1, 2],
     screens: {

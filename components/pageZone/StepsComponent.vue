@@ -13,6 +13,7 @@
           <NuxtImg
             class="step-image"
             format="webp"
+            loading="lazy"
             provider="strapi"
             :src="step.logo.hash + step.logo.ext"
             :alt="step.logo.name"

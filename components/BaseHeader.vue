@@ -11,6 +11,10 @@
           class="header-logo"
           src="img/nuenenen_logo.webp"
           alt="Logo der Pfadi Nünenen"
+          format="webp"
+          loading="eager"
+          width="60"
+          height="60"
         />
         <p><b>PFADI</b> NÜNENEN</p>
       </nuxt-link>
