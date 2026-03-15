@@ -119,6 +119,7 @@ const props = defineProps<{
   flex-direction: column;
   align-items: flex-start;
   max-width: 75ch;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
 
   h1 {
     margin-bottom: 0.5rem;
@@ -180,6 +181,20 @@ const props = defineProps<{
 
   .rocket-image {
     bottom: min(32%, 300px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .banner {
+    min-height: 70dvh;
+  }
+
+  .container {
+    margin-top: 5rem;
+  }
+
+  .subtitle {
+    font-size: clamp(1rem, 4vw, 1.2rem);
   }
 }
 </style>

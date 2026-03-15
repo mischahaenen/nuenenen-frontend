@@ -251,7 +251,7 @@ onBeforeUnmount(() => {
 .form {
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: 2;
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--space-medium);
 }
 
@@ -321,8 +321,13 @@ select {
   font-weight: 700;
 }
 
+.forminput {
+  transition: outline 0.2s ease, box-shadow 0.2s ease;
+}
+
 .forminput:focus {
   outline: solid 2px var(--color-primary-500);
+  box-shadow: 0 0 0 4px rgba(32, 56, 91, 0.1);
 }
 
 .button {
@@ -346,6 +351,7 @@ select {
 
   .forminput:focus {
     outline: solid 2px var(--color-accent-50);
+    box-shadow: 0 0 0 4px rgba(235, 196, 226, 0.15);
   }
 }
 </style>

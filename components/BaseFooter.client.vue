@@ -132,4 +132,23 @@ footer {
     color: var(--color-white);
   }
 }
+
+@media screen and (max-width: 768px) {
+  .footer-content {
+    padding: var(--space-medium);
+    gap: var(--space-medium);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer-content {
+    padding: var(--space-small) var(--space-medium);
+    gap: var(--space-medium);
+    flex-direction: column;
+  }
+
+  .sponsorLogo img {
+    width: 200px;
+  }
+}
 </style>

@@ -78,7 +78,13 @@ a:hover h3 {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+  }
 }
 .step-content {
   position: absolute;
@@ -119,6 +125,18 @@ a:hover h3 {
     .step-content {
       background-color: color-mix(in srgb, var(--color-accent-800) 60%, transparent);
     }
+  }
+}
+
+@include breakpoint-md {
+  .step-image {
+    width: 11rem;
+  }
+}
+
+@include breakpoint-sm {
+  .step-image {
+    width: 8rem;
   }
 }
 </style>

@@ -114,12 +114,13 @@ a.skip-main:active {
 }
 
 .header-scrolled {
-  background-color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.88);
   height: 4rem;
   color: var(--color-black);
-  transition: background-color 0.3s ease;
-  transition: height 0.3s ease;
-  box-shadow: 0 2px 4px #0000001a;
+  transition: background-color 0.3s ease, height 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .home-link,
@@ -189,8 +190,9 @@ a.skip-main:active {
     color: var(--color-white);
   }
   .header-scrolled {
-    background-color: var(--color-primary-700);
+    background-color: rgba(22, 39, 64, 0.9);
     color: var(--color-white);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
   }
   .home-link {
     p {
@@ -224,7 +226,7 @@ a.skip-main:active {
   @include breakpoint-lg {
     .nav-links {
       background-color: var(--color-primary-800);
-      box-shadow: 0px 25px 30px rgb(255 255 255 / 20%);
+      box-shadow: 0px 16px 40px rgb(0 0 0 / 40%);
     }
   }
 }
@@ -263,18 +265,22 @@ a.skip-main:active {
 
   .nav-links {
     position: absolute;
-    top: 50px;
+    top: 60px;
     right: 0;
-    width: 200px;
-    display: none;
+    width: 220px;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 1rem;
     padding: 1rem;
     background-color: var(--color-white);
-    box-shadow: 0px 25px 30px rgb(0 0 0 / 20%);
-    border-radius: 10px;
-    transition: all 0.2s ease-in-out;
+    box-shadow: 0px 16px 40px rgb(0 0 0 / 15%);
+    border-radius: 16px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px) scale(0.97);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
   }
 
   .nav-item {
@@ -287,7 +293,10 @@ a.skip-main:active {
   }
 
   .nav-expanded .nav-links {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
   }
 
   .nav-item:last-child {
