@@ -11,7 +11,7 @@
 import { StrapiBlocks, type BlocksContent } from 'vue-strapi-blocks-renderer'
 
 const props = defineProps<{
-  content: BlocksContent
+  content: BlocksContent | null
   isPreview?: boolean
   previewLines?: number
 }>()

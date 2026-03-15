@@ -57,9 +57,13 @@ const STEP_ORDER = [
   'piostufe',
   'roverstufe',
   'elternrat',
+  'biberstufeinfos',
+  'wolfsstufeinfos',
+  'pfadistufeinfos',
+  'piostufeinfos',
+  'roverstufeinfos',
 ]
 
-// Filter steps to only show those that are in the zone, sorted by canonical order
 const filteredSteps = computed(() => {
   if (!allSteps.value || !props.zone.steps) return []
   return props.zone.steps
