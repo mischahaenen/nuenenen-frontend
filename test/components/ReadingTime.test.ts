@@ -5,11 +5,11 @@ import ReadingTime from '~/components/ReadingTime.vue'
 const createWrapper = (props = {}) => {
   const defaultProps = {
     time: 5,
-    unit: 'Minuten'
+    unit: 'Minuten',
   }
 
   return mount(ReadingTime, {
-    props: { ...defaultProps, ...props }
+    props: { ...defaultProps, ...props },
   })
 }
 
@@ -46,7 +46,7 @@ test('renders clock icon', () => {
 
 test('has correct CSS classes and structure', () => {
   const wrapper = createWrapper()
-  
+
   const container = wrapper.find('.reading-time')
   expect(container.exists()).toBe(true)
   expect(container.find('svg').exists()).toBe(true)
@@ -63,7 +63,7 @@ test('handles different time units', () => {
   const testCases = [
     { time: 1, unit: 'Sekunde', expected: '1 Sekunde zum Lesen' },
     { time: 30, unit: 'Sekunden', expected: '30 Sekunden zum Lesen' },
-    { time: 15, unit: 'Minuten', expected: '15 Minuten zum Lesen' }
+    { time: 15, unit: 'Minuten', expected: '15 Minuten zum Lesen' },
   ]
 
   testCases.forEach(({ time, unit, expected }) => {
@@ -74,12 +74,12 @@ test('handles different time units', () => {
 
 test('maintains component structure with different props', () => {
   const wrapper = createWrapper({ time: 100, unit: 'Stunden' })
-  
+
   // Structure should remain consistent
   expect(wrapper.find('.reading-time').exists()).toBe(true)
   expect(wrapper.find('svg').exists()).toBe(true)
   expect(wrapper.find('span').exists()).toBe(true)
-  
+
   // Content should update
   expect(wrapper.find('span').text()).toBe('100 Stunden zum Lesen')
 })

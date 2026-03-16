@@ -19,6 +19,7 @@
           v-if="leader.Image"
           class="image"
           format="webp"
+          loading="lazy"
           provider="strapi"
           :src="leader.Image.hash + leader.Image.ext"
           :alt="leader.Image.alternativeText || leader.Image.name"
@@ -36,32 +37,34 @@
 </template>
 
 <script setup lang="ts">
-import { useLeaderApi } from "~/composables/api/modules/leader";
-import type { Leader } from "~/types/leader";
+import { useLeaderApi } from '~/composables/api/modules/leader'
+import type { Leader } from '~/types/leader'
 
-const { getLeaders } = useLeaderApi();
+const { getLeaders } = useLeaderApi()
 const props = defineProps<{
-  zone: Group;
-  index: number;
-}>();
+  zone: Group
+  index: number
+}>()
 
-const { data: allLeaders } = await useAsyncData("all-leaders", () => getLeaders());
+const { data: allLeaders } = await useAsyncData('all-leaders', () =>
+  getLeaders()
+)
 
 const sortedLeaders = computed(() => {
   if (!allLeaders.value?.data || !props.zone.leaders) {
-    return [];
+    return []
   }
-  const zoneLeaderIds = props.zone.leaders.map((leader: Leader) => leader.id);
+  const zoneLeaderIds = props.zone.leaders.map((leader: Leader) => leader.id)
   const filteredLeaders = allLeaders.value.data.filter((leader: Leader) =>
     zoneLeaderIds.includes(leader.id)
-  );
+  )
 
   return filteredLeaders.sort((a, b) => {
-    const indexA = zoneLeaderIds.indexOf(a.id);
-    const indexB = zoneLeaderIds.indexOf(b.id);
-    return indexA - indexB;
-  });
-});
+    const indexA = zoneLeaderIds.indexOf(a.id)
+    const indexB = zoneLeaderIds.indexOf(b.id)
+    return indexA - indexB
+  })
+})
 </script>
 
 <style scoped lang="scss">
@@ -82,6 +85,7 @@ const sortedLeaders = computed(() => {
   border-radius: 50%;
   cursor: pointer;
   border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   .image,
   .user-card__content {
@@ -114,7 +118,11 @@ const sortedLeaders = computed(() => {
     justify-content: center;
     align-items: center;
     padding: var(--space-medium);
-    background-color: color-mix(in srgb, var(--color-accent-50) 80%, transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--color-accent-50) 80%,
+      transparent
+    );
     color: var(--color-primary-900);
   }
 
@@ -132,12 +140,34 @@ const sortedLeaders = computed(() => {
     &:hover .user-card__content,
     &:active .user-card__content,
     &:focus .user-card__content {
-      background-color: color-mix(in srgb, var(--color-accent-900) 80%, transparent);
+      background-color: color-mix(
+        in srgb,
+        var(--color-accent-900) 80%,
+        transparent
+      );
     }
 
     &:focus {
       outline: 0.2rem solid var(--color-primary-100);
     }
+  }
+}
+
+.user-card:hover,
+.user-card:focus-visible {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+@include breakpoint-md {
+  .user-card {
+    max-width: 12rem;
+  }
+}
+
+@include breakpoint-sm {
+  .user-card {
+    max-width: 9rem;
   }
 }
 </style>

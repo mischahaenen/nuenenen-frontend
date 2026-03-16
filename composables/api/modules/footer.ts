@@ -1,6 +1,6 @@
 import { useMemoize } from '@vueuse/core'
-import type { FooterResonse } from '~/types/footer'
 import { fetchFromApi } from '../core/client'
+import type { FooterResonse } from '~/types/footer'
 
 export const useFooterApi = () => {
   const getFooter = useMemoize(async () => {

@@ -14,7 +14,7 @@ export type MailState = 'UNKNOWN' | 'SENDING' | 'SUCCESS' | 'ERROR'
 export function useContactForm() {
   const mailState = ref<MailState>('UNKNOWN')
   const errorMessage = ref<string>('')
-  
+
   const form = ref<ContactFormData>({
     Firstname: '',
     Lastname: '',
@@ -24,10 +24,12 @@ export function useContactForm() {
   })
 
   const isFormValid = computed(() => {
-    return form.value.Firstname.trim() && 
-           form.value.Lastname.trim() && 
-           form.value.Email.trim() && 
-           isValidEmail(form.value.Email)
+    return (
+      form.value.Firstname.trim() &&
+      form.value.Lastname.trim() &&
+      form.value.Email.trim() &&
+      isValidEmail(form.value.Email)
+    )
   })
 
   const isValidEmail = (email: string): boolean => {
@@ -49,7 +51,8 @@ export function useContactForm() {
 
   const submitForm = async () => {
     if (!isFormValid.value) {
-      errorMessage.value = 'Please fill in all required fields with valid information.'
+      errorMessage.value =
+        'Please fill in all required fields with valid information.'
       return
     }
 
@@ -75,7 +78,8 @@ export function useContactForm() {
     } catch (error: any) {
       console.error('Contact form error:', error)
       mailState.value = 'ERROR'
-      errorMessage.value = error?.data?.message || 'Failed to send message. Please try again.'
+      errorMessage.value =
+        error?.data?.message || 'Failed to send message. Please try again.'
     }
   }
 
@@ -100,6 +104,6 @@ export function useContactForm() {
     isValidEmail,
     submitForm,
     resetForm,
-    getStateMessage
+    getStateMessage,
   }
 }

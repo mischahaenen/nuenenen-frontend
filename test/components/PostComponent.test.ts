@@ -5,20 +5,9 @@ import PostComponent from '~/components/PostComponent.vue'
 // Mock the useReadingTime composable
 vi.mock('~/composables/useReadingTime', () => ({
   useReadingTime: () => ({
-    calculateBlocksReadingTime: vi.fn(() => 5)
-  })
+    calculateBlocksReadingTime: vi.fn(() => 5),
+  }),
 }))
-
-// Mock Vue's reactivity functions
-global.toRefs = vi.fn((props) => {
-  const refs = {}
-  for (const key in props) {
-    refs[key] = { value: props[key] }
-  }
-  return refs
-})
-
-global.computed = vi.fn((fn) => ({ value: fn() }))
 
 const createWrapper = (props = {}) => {
   const defaultProps = {
@@ -29,8 +18,8 @@ const createWrapper = (props = {}) => {
       description: [
         {
           type: 'paragraph',
-          children: [{ type: 'text', text: 'Test post description content' }]
-        }
+          children: [{ type: 'text', text: 'Test post description content' }],
+        },
       ],
       createdAt: '2023-01-01T10:00:00.000Z',
       images: [
@@ -38,52 +27,51 @@ const createWrapper = (props = {}) => {
           hash: 'test-image-hash',
           ext: '.webp',
           name: 'test-image.webp',
-          alternativeText: 'Test image alt text'
-        }
+          alternativeText: 'Test image alt text',
+        },
       ],
       step: {
         id: 1,
-        Name: 'Test Step'
-      }
+        Name: 'Test Step',
+      },
     },
-    isFirst: false
+    isFirst: false,
   }
 
   return mount(PostComponent, {
     props: { ...defaultProps, ...props },
     global: {
-      mocks: {
-        toRefs: vi.fn((props) => {
-          const refs = {}
-          for (const key in props) {
-            refs[key] = { value: props[key] }
-          }
-          return refs
-        }),
-        computed: vi.fn((fn) => ({ value: fn() })),
-        useReadingTime: vi.fn(() => ({
-          calculateBlocksReadingTime: vi.fn(() => 5)
-        }))
-      },
       stubs: {
         NuxtLink: {
+          name: 'NuxtLink',
           template: '<a :href="to" class="nuxt-link"><slot /></a>',
-          props: ['to']
+          props: ['to'],
         },
         NuxtImg: {
+          name: 'NuxtImg',
           template: '<img :src="src" :alt="alt" class="nuxt-img" />',
-          props: ['src', 'alt', 'format', 'provider', 'sizes', 'loading', 'fetchpriority']
+          props: [
+            'src',
+            'alt',
+            'format',
+            'provider',
+            'sizes',
+            'loading',
+            'fetchpriority',
+          ],
         },
         ReadingTime: {
+          name: 'ReadingTime',
           template: '<span class="reading-time">{{ time }} {{ unit }}</span>',
-          props: ['time', 'unit']
+          props: ['time', 'unit'],
         },
         RichTextComponent: {
+          name: 'RichTextComponent',
           template: '<div class="rich-text">{{ content }}</div>',
-          props: ['content', 'isPreview', 'previewLines']
-        }
-      }
-    }
+          props: ['content', 'isPreview', 'previewLines'],
+        },
+      },
+    },
   })
 }
 
@@ -125,10 +113,10 @@ test('renders placeholder when no images are available', () => {
       description: [],
       createdAt: '2023-01-01T10:00:00.000Z',
       images: [],
-      step: null
-    }
+      step: null,
+    },
   }
-  
+
   const wrapper = createWrapper(postWithoutImages)
   const placeholder = wrapper.find('.card-image-placeholder')
   expect(placeholder.exists()).toBe(true)
@@ -169,10 +157,10 @@ test('does not render step tag when step is not available', () => {
       description: [],
       createdAt: '2023-01-01T10:00:00.000Z',
       images: [],
-      step: null
-    }
+      step: null,
+    },
   }
-  
+
   const wrapper = createWrapper(postWithoutStep)
   const stepTag = wrapper.find('.card-tag')
   expect(stepTag.exists()).toBe(false)
@@ -220,7 +208,7 @@ test('renders correct aria-label for accessibility', () => {
 
 test('has correct card structure', () => {
   const wrapper = createWrapper()
-  
+
   // Check main structure elements
   expect(wrapper.find('.card').exists()).toBe(true)
   expect(wrapper.find('.card-image-wrapper').exists()).toBe(true)
@@ -231,7 +219,7 @@ test('has correct card structure', () => {
 
 test('renders date and meta information', () => {
   const wrapper = createWrapper()
-  
+
   expect(wrapper.find('.card-meta').exists()).toBe(true)
   expect(wrapper.find('.card-date').exists()).toBe(true)
   expect(wrapper.find('.meta-separator').exists()).toBe(true)
@@ -246,8 +234,8 @@ test('handles missing post properties gracefully', () => {
       description: null,
       createdAt: null,
       images: null,
-      step: null
-    }
+      step: null,
+    },
   }
 
   const wrapper = createWrapper(incompletePost)

@@ -8,28 +8,29 @@ export default defineConfig({
     environment: 'happy-dom',
     globals: true,
     setupFiles: ['./test/setup.ts'],
+    exclude: ['node_modules', 'test/e2e/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
       include: [
         'components/**/*.vue',
         'composables/**/*.{js,ts}',
-        'pages/**/*.vue'
+        'pages/**/*.vue',
       ],
       exclude: [
         'composables/examples/**',
         'node_modules/**',
         'test/**',
         '**/*.test.{js,ts}',
-        '**/*.spec.{js,ts}'
-      ]
-    }
+        '**/*.spec.{js,ts}',
+      ],
+    },
   },
   resolve: {
     alias: {
       '@': resolve(__dirname, '.'),
       '~': resolve(__dirname, '.'),
-      '#': resolve(__dirname, '.nuxt')
-    }
-  }
+      '#': resolve(__dirname, '.nuxt'),
+    },
+  },
 })

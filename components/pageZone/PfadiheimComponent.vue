@@ -27,9 +27,9 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  index: number;
-  zone: IFrame;
-}>();
+  index: number
+  zone: IFrame
+}>()
 </script>
 
 <style scoped>

@@ -11,9 +11,9 @@
       <!-- Close button -->
       <button
         class="fullscreen-close"
-        @click="$emit('close')"
         aria-label="Vollbildmodus schließen"
         tabindex="0"
+        @click="$emit('close')"
       >
         <svg
           width="32"
@@ -37,7 +37,9 @@
           provider="strapi"
           class="fullscreen-image"
           :src="images[currentIndex].hash + images[currentIndex].ext"
-          :alt="images[currentIndex].alternativeText || images[currentIndex].name"
+          :alt="
+            images[currentIndex].alternativeText || images[currentIndex].name
+          "
           sizes="100vw"
         />
       </div>
@@ -46,9 +48,9 @@
       <div v-if="images && images.length > 1" class="fullscreen-nav">
         <button
           class="fullscreen-nav-button fullscreen-nav-button--prev"
-          @click.stop="$emit('navigate', 'prev')"
           :aria-label="getNavAriaLabel('prev')"
           tabindex="0"
+          @click.stop="$emit('navigate', 'prev')"
         >
           <svg
             width="32"
@@ -65,9 +67,9 @@
 
         <button
           class="fullscreen-nav-button fullscreen-nav-button--next"
-          @click.stop="$emit('navigate', 'next')"
           :aria-label="getNavAriaLabel('next')"
           tabindex="0"
+          @click.stop="$emit('navigate', 'next')"
         >
           <svg
             width="32"
@@ -96,12 +98,12 @@
           :key="`fullscreen-dot-${index}`"
           class="fullscreen-pagination-dot"
           :class="{ active: index === currentIndex }"
-          @click.stop="$emit('go-to-slide', index)"
           :aria-label="`Zu Bild ${index + 1} von ${images.length} wechseln`"
           :aria-selected="index === currentIndex"
           :aria-current="index === currentIndex ? 'true' : 'false'"
           role="tab"
           :tabindex="index === currentIndex ? 0 : -1"
+          @click.stop="$emit('go-to-slide', index)"
         />
       </nav>
 
@@ -131,33 +133,31 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  images: Image[];
-  currentIndex: number;
-}>();
+  images: Image[]
+  currentIndex: number
+}>()
 
 const emit = defineEmits<{
-  close: [];
-  navigate: [direction: "prev" | "next"];
-  "go-to-slide": [index: number];
-}>();
+  close: []
+  navigate: [direction: 'prev' | 'next']
+  'go-to-slide': [index: number]
+}>()
 
-const getNavAriaLabel = (direction: "prev" | "next") => {
-  const action = direction === "prev" ? "Vorheriges" : "Nächstes";
+const getNavAriaLabel = (direction: 'prev' | 'next') => {
+  const action = direction === 'prev' ? 'Vorheriges' : 'Nächstes'
   return `${action} Bild. Aktuell wird Bild ${props.currentIndex + 1} von ${
     props.images.length
-  } angezeigt`;
-};
+  } angezeigt`
+}
 
 const handleBackdropClick = (event: MouseEvent) => {
   if (event.target === event.currentTarget) {
-    emit("close");
+    emit('close')
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@use '../../assets/css/utils';
-
 .fullscreen-modal {
   position: fixed;
   top: 0;
@@ -374,7 +374,7 @@ const handleBackdropClick = (event: MouseEvent) => {
 }
 
 // Mobile fullscreen adjustments
-@include utils.breakpoint-md {
+@include breakpoint-md {
   .fullscreen-close {
     top: 0.75rem;
     right: 0.75rem;
@@ -417,7 +417,7 @@ const handleBackdropClick = (event: MouseEvent) => {
   }
 }
 
-@include utils.breakpoint-sm {
+@include breakpoint-sm {
   .fullscreen-close {
     top: 0.5rem;
     right: 0.5rem;

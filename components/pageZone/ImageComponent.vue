@@ -16,9 +16,9 @@
 
 <script setup lang="ts">
 const props = defineProps<{
-  zone: ImageZone;
-  index: number;
-}>();
+  zone: ImageZone
+  index: number
+}>()
 </script>
 
 <style scoped>
@@ -31,7 +31,11 @@ const props = defineProps<{
 }
 
 @keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 </style>

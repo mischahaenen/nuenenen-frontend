@@ -1,6 +1,6 @@
 import { useMemoize } from '@vueuse/core'
-import type { PostsResponse, PostsResponse } from '~/types/post'
 import { createQuery, fetchFromApi } from '../core/client'
+import type { PostsResponse, PostsResponse } from '~/types/post'
 
 export const useBlogApi = () => {
   const getBlogPosts = useMemoize(async () => {

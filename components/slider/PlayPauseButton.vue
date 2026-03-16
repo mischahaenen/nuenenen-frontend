@@ -38,10 +38,10 @@
 
 <script setup lang="ts">
 defineProps<{
-  isActive: boolean;
-}>();
+  isActive: boolean
+}>()
 
 defineEmits<{
-  toggle: [];
-}>();
+  toggle: []
+}>()
 </script>

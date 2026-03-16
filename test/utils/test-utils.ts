@@ -12,34 +12,37 @@ interface TestWrapperOptions {
   }
 }
 
-export function createTestWrapper(component: Component, options: TestWrapperOptions = {}) {
+export function createTestWrapper(
+  component: Component,
+  options: TestWrapperOptions = {}
+) {
   const defaultMocks = {
     useAsyncData: vi.fn().mockResolvedValue({
       data: { value: null },
       error: { value: null },
       pending: { value: false },
-      refresh: vi.fn()
+      refresh: vi.fn(),
     }),
     useRuntimeConfig: vi.fn(() => ({
       public: {
         strapi: {
-          url: 'http://localhost:1337'
-        }
-      }
+          url: 'http://localhost:1337',
+        },
+      },
     })),
     useRoute: vi.fn(() => ({
       params: {},
       query: {},
       path: '/',
       fullPath: '/',
-      meta: {}
+      meta: {},
     })),
     useRouter: vi.fn(() => ({
       push: vi.fn(),
       replace: vi.fn(),
       go: vi.fn(),
       back: vi.fn(),
-      forward: vi.fn()
+      forward: vi.fn(),
     })),
     computed: vi.fn((fn) => ({ value: fn() })),
     ref: vi.fn((val) => ({ value: val })),
@@ -53,7 +56,7 @@ export function createTestWrapper(component: Component, options: TestWrapperOpti
     useStepsApi: vi.fn(),
     useBlogApi: vi.fn(),
     useReadingTime: vi.fn(),
-    useContactForm: vi.fn()
+    useContactForm: vi.fn(),
   }
 
   const wrapper = mount(component, {
@@ -62,7 +65,7 @@ export function createTestWrapper(component: Component, options: TestWrapperOpti
     global: {
       mocks: {
         ...defaultMocks,
-        ...options.global?.mocks
+        ...options.global?.mocks,
       },
       stubs: {
         NuxtImg: true,
@@ -71,10 +74,10 @@ export function createTestWrapper(component: Component, options: TestWrapperOpti
         RichTextComponent: true,
         ReadingTime: true,
         SliderComponent: true,
-        ...options.global?.stubs
+        ...options.global?.stubs,
       },
-      provide: options.global?.provide
-    }
+      provide: options.global?.provide,
+    },
   })
 
   return wrapper
@@ -89,8 +92,8 @@ export function createMockStepData() {
     logo: {
       hash: 'test-hash',
       ext: '.webp',
-      name: 'Test Logo'
-    }
+      name: 'Test Logo',
+    },
   }
 }
 
@@ -98,10 +101,7 @@ export function createMockStepZone() {
   return {
     Title: 'Test Zone',
     Description: 'Test zone description',
-    steps: [
-      { id: 1 },
-      { id: 2 }
-    ]
+    steps: [{ id: 1 }, { id: 2 }],
   }
 }
 
@@ -110,11 +110,11 @@ export function createMockApiResponse<T>(data: T) {
     data,
     error: null,
     pending: false,
-    refresh: vi.fn()
+    refresh: vi.fn(),
   }
 }
 
 export async function waitForAsyncData(wrapper: VueWrapper<any>) {
   await wrapper.vm.$nextTick()
-  await new Promise(resolve => setTimeout(resolve, 0))
+  await new Promise((resolve) => setTimeout(resolve, 0))
 }

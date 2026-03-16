@@ -1,6 +1,6 @@
 import { useMemoize } from '@vueuse/core'
-import type { StepResponse } from '~/types/step'
 import { createQuery, fetchFromApi } from '../core/client'
+import type { StepResponse } from '~/types/step'
 
 export const useStepsApi = () => {
   const getSteps = useMemoize(async () => {

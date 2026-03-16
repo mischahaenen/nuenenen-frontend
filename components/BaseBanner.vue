@@ -6,8 +6,19 @@
         <p class="subtitle">
           {{ props.description }}
         </p>
+        <a
+          v-if="
+            props.actionButtonLink &&
+            props.actionButtonName &&
+            props.actionButtonLink.startsWith('#')
+          "
+          class="btn btn-primary btn-link"
+          :href="props.actionButtonLink"
+          @click="(e) => scrollToHash(e, props.actionButtonLink)"
+          >{{ props.actionButtonName }}</a
+        >
         <nuxt-link
-          v-if="props.actionButtonLink && props.actionButtonName"
+          v-else-if="props.actionButtonLink && props.actionButtonName"
           class="btn btn-primary btn-link"
           :to="props.actionButtonLink"
           >{{ props.actionButtonName }}</nuxt-link
@@ -63,34 +74,43 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from "vue";
-const colorMode = useColorMode();
+import { defineProps } from 'vue'
+const colorMode = useColorMode()
 
-const scrollY = useScrollY();
-const rocketSpeed = computed(() => 20 + scrollY.value * -0.5);
+const scrollY = useScrollY()
+const rocketSpeed = computed(() => 20 + scrollY.value * -0.5)
 const rocketStyle = computed(() => ({
   transform: `translateY(${rocketSpeed.value}%) translateX(40%) rotate(10deg)`,
-}));
+}))
 const rocketLaunchSvg = computed(() => {
   const resolvedMode =
-    colorMode.value === "system"
-      ? window?.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light"
-      : colorMode.value;
+    colorMode.value === 'system'
+      ? window?.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light'
+      : colorMode.value
 
-  return resolvedMode === "dark"
-    ? "svg/rocket_launch_dark.svg"
-    : "svg/rocket_launch_white.svg";
-});
+  return resolvedMode === 'dark'
+    ? 'svg/rocket_launch_dark.svg'
+    : 'svg/rocket_launch_white.svg'
+})
+
+const scrollToHash = (e: MouseEvent, hash: string | undefined) => {
+  if (!hash) return
+  e.preventDefault()
+  const el = document.querySelector(hash)
+  if (!el) return
+  const top = el.getBoundingClientRect().top + window.scrollY - 96
+  window.scrollTo({ top, behavior: 'smooth' })
+}
 
 const props = defineProps<{
-  title: string | null;
-  description: string | null;
-  actionButtonName?: string;
-  actionButtonLink?: string;
-  image?: Image;
-}>();
+  title: string | null
+  description: string | null
+  actionButtonName?: string
+  actionButtonLink?: string
+  image?: Image
+}>()
 </script>
 
 <style scoped lang="scss">
@@ -119,6 +139,7 @@ const props = defineProps<{
   flex-direction: column;
   align-items: flex-start;
   max-width: 75ch;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
 
   h1 {
     margin-bottom: 0.5rem;
@@ -180,6 +201,20 @@ const props = defineProps<{
 
   .rocket-image {
     bottom: min(32%, 300px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .banner {
+    min-height: 70dvh;
+  }
+
+  .container {
+    margin-top: 5rem;
+  }
+
+  .subtitle {
+    font-size: clamp(1rem, 4vw, 1.2rem);
   }
 }
 </style>

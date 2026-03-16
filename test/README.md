@@ -30,7 +30,7 @@ test/
 # Run all tests
 npm run test
 
-# Run tests in watch mode  
+# Run tests in watch mode
 npm run test:watch
 
 # Run tests with coverage
@@ -70,8 +70,8 @@ describe('MyComponent', () => {
   it('renders correctly', () => {
     const wrapper = createTestWrapper(MyComponent, {
       props: {
-        title: 'Test Title'
-      }
+        title: 'Test Title',
+      },
     })
 
     expect(wrapper.exists()).toBe(true)
@@ -89,14 +89,14 @@ import { describe, it, expect, vi } from 'vitest'
 
 // Mock the composable
 vi.mock('~/composables/useMyComposable', () => ({
-  useMyComposable: vi.fn()
+  useMyComposable: vi.fn(),
 }))
 
 describe('useMyComposable', () => {
   it('should return expected values', () => {
     const mockReturn = { data: ref(null), loading: ref(false) }
     vi.mocked(useMyComposable).mockReturnValue(mockReturn)
-    
+
     const result = useMyComposable()
     expect(result.data.value).toBe(null)
     expect(result.loading.value).toBe(false)
@@ -115,14 +115,14 @@ import { createTestWrapper } from '../utils/test-utils'
 describe('User Flow: Contact Form', () => {
   it('should submit form successfully', async () => {
     const wrapper = createTestWrapper(ContactPage)
-    
+
     // Fill form
     await wrapper.find('input[name="name"]').setValue('John Doe')
     await wrapper.find('input[name="email"]').setValue('john@example.com')
-    
+
     // Submit
     await wrapper.find('form').trigger('submit')
-    
+
     // Assert success state
     expect(wrapper.text()).toContain('Message sent successfully')
   })
@@ -139,11 +139,17 @@ Helper function for creating Vue component wrappers with common setup:
 import { createTestWrapper } from '../utils/test-utils'
 
 const wrapper = createTestWrapper(Component, {
-  props: { /* component props */ },
+  props: {
+    /* component props */
+  },
   global: {
-    mocks: { /* global mocks */ },
-    stubs: { /* component stubs */ }
-  }
+    mocks: {
+      /* global mocks */
+    },
+    stubs: {
+      /* component stubs */
+    },
+  },
 })
 ```
 
@@ -152,10 +158,10 @@ const wrapper = createTestWrapper(Component, {
 Use provided mock data helpers for consistent test data:
 
 ```typescript
-import { 
-  createMockStepData, 
-  createMockStepZone, 
-  createMockApiResponse 
+import {
+  createMockStepData,
+  createMockStepZone,
+  createMockApiResponse,
 } from '../utils/test-utils'
 
 const mockStep = createMockStepData()
@@ -174,10 +180,10 @@ const wrapper = createTestWrapper(Component, {
     mocks: {
       useAsyncData: vi.fn().mockResolvedValue({
         data: ref(mockData),
-        error: ref(null)
-      })
-    }
-  }
+        error: ref(null),
+      }),
+    },
+  },
 })
 ```
 
@@ -188,8 +194,8 @@ Mock API modules at the top of test files:
 ```typescript
 vi.mock('~/composables/api/modules/blog', () => ({
   useBlogApi: () => ({
-    getBlogPost: vi.fn().mockResolvedValue({ data: mockPost })
-  })
+    getBlogPost: vi.fn().mockResolvedValue({ data: mockPost }),
+  }),
 }))
 ```
 
@@ -199,7 +205,7 @@ Mock external libraries that aren't needed for testing:
 
 ```typescript
 vi.mock('vue-recaptcha-v3', () => ({
-  useRecaptcha: () => ({ executeRecaptcha: vi.fn() })
+  useRecaptcha: () => ({ executeRecaptcha: vi.fn() }),
 }))
 ```
 
@@ -214,6 +220,7 @@ vi.mock('vue-recaptcha-v3', () => ({
 ### 2. What to Test
 
 **✅ Do Test:**
+
 - Component rendering with different props
 - User interactions (clicks, form submissions)
 - Conditional rendering logic
@@ -222,6 +229,7 @@ vi.mock('vue-recaptcha-v3', () => ({
 - API error handling
 
 **❌ Don't Test:**
+
 - Implementation details
 - Third-party library functionality
 - CSS styling (unless critical to functionality)
@@ -254,13 +262,13 @@ it('handles async data loading', async () => {
   const mockAsyncData = vi.fn().mockResolvedValue({
     data: ref(mockData),
     pending: ref(false),
-    error: ref(null)
+    error: ref(null),
   })
-  
+
   const wrapper = createTestWrapper(Component, {
-    global: { mocks: { useAsyncData: mockAsyncData } }
+    global: { mocks: { useAsyncData: mockAsyncData } },
   })
-  
+
   await wrapper.vm.$nextTick()
   expect(wrapper.text()).toContain('Expected content')
 })
@@ -271,11 +279,11 @@ it('handles async data loading', async () => {
 ```typescript
 it('validates form inputs', async () => {
   const wrapper = createTestWrapper(ContactForm)
-  
+
   const emailInput = wrapper.find('input[type="email"]')
   await emailInput.setValue('invalid-email')
   await wrapper.find('form').trigger('submit')
-  
+
   expect(wrapper.text()).toContain('Please enter a valid email')
 })
 ```
@@ -287,9 +295,9 @@ it('displays error message on API failure', async () => {
   vi.mocked(useAsyncData).mockResolvedValue({
     data: ref(null),
     error: ref(new Error('API Error')),
-    pending: ref(false)
+    pending: ref(false),
   })
-  
+
   const wrapper = createTestWrapper(Component)
   expect(wrapper.text()).toContain('Something went wrong')
 })
@@ -316,10 +324,11 @@ it('displays error message on API failure', async () => {
 ## Coverage Goals
 
 - **Components**: 80%+ line coverage
-- **Composables**: 90%+ line coverage  
+- **Composables**: 90%+ line coverage
 - **Critical user flows**: 100% path coverage
 
 Run coverage reports with:
+
 ```bash
 npm run test:coverage
 ```
@@ -329,19 +338,22 @@ Coverage reports are generated in the `coverage/` directory.
 ## Current Test Status
 
 ### ✅ Working Test Files (34 tests passing):
+
 - **StepsComponent.test.ts** - Component structure and props
-- **BaseColorSwitch.test.ts** - Color mode switching functionality  
+- **BaseColorSwitch.test.ts** - Color mode switching functionality
 - **ReadingTime.test.ts** - Reading time display component
 - **TitleComponent.test.ts** - Title rendering with letter animations
 - **BaseBanner.test.ts** - Banner component (with prop warnings)
 - **useContactForm.test.ts** - Contact form validation and submission
 
 ### ⚠️ Tests Needing Fixes (70 tests failing):
+
 - **PostComponent.test.ts** - useReadingTime composable mocking
 - **blog.test.ts** - Async component setup with useAsyncData
 - **navigation.test.ts** - Navigation state and routing
 
 ### Common Issues to Fix:
+
 1. **Composable Mocking**: Some composables need better mock implementations
 2. **Async Components**: Components using `useAsyncData` need Suspense wrapper
 3. **Missing Props**: Some components have required props not defined in tests

@@ -4,12 +4,19 @@
     :class="[
       'pt-medium pb-medium',
       {
-        'full-width content-grid bg-accent-50 dark:bg-primary-700': props.index % 2 === 1,
+        'full-width content-grid bg-accent-50 dark:bg-primary-700':
+          props.index % 2 === 1,
       },
     ]"
   >
-    <TitleComponent :title="props.zone.Title" :index="props.index"></TitleComponent>
-    <RichTextComponent v-if="props.zone.Description" :content="props.zone.Description" />
+    <TitleComponent
+      :title="props.zone.Title"
+      :index="props.index"
+    ></TitleComponent>
+    <RichTextComponent
+      v-if="props.zone.Description"
+      :content="props.zone.Description"
+    />
     <div class="blog-filter">
       <button
         class="btn btn-primary"
@@ -32,7 +39,7 @@
     </div>
     <div v-if="posts.length" class="post-grid wrapper">
       <PostComponent
-        v-if="posts.at(0)"
+        v-if="posts.at(0)?.slug"
         :key="posts.at(0)?.id"
         :post="posts.at(0)"
         :is-first="true"
@@ -40,7 +47,9 @@
       />
       <div class="grid left">
         <PostComponent
-          v-for="post in posts.filter((_, i) => i % 2 !== 0 && i !== 0)"
+          v-for="post in posts.filter(
+            (p, i) => i % 2 !== 0 && i !== 0 && !!p.slug
+          )"
           :key="post.id"
           :post="post"
           :is-first="false"
@@ -49,7 +58,9 @@
       </div>
       <div class="grid right">
         <PostComponent
-          v-for="post in posts.filter((_, i) => i % 2 === 0 && i !== 0)"
+          v-for="post in posts.filter(
+            (p, i) => i % 2 === 0 && i !== 0 && !!p.slug
+          )"
           :key="post.id"
           :post="post"
           :is-first="false"
@@ -69,66 +80,84 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from "vue";
-import { useBlogApi } from "~/composables/api/modules/blog";
-import { useStepsApi } from "~/composables/api/modules/steps";
-import type { Post } from "~/types/post";
-import type { Step } from "~/types/step";
-const { getBlogPosts, getBlogPostsByStep } = useBlogApi();
-const { getStepNames } = useStepsApi();
+import { defineProps } from 'vue'
+import { useBlogApi } from '~/composables/api/modules/blog'
+import { useStepsApi } from '~/composables/api/modules/steps'
+import type { BlogZone } from '~/types/pageZone'
+import type { Post } from '~/types/post'
+import type { Step } from '~/types/step'
+const { getBlogPosts, getBlogPostsByStep } = useBlogApi()
+const { getStepNames } = useStepsApi()
 
-const posts = useState<Post[]>(() => []);
-const steps = useState<Step[]>(() => []);
-const activeButton = useState<string>(() => "all");
+const posts = ref<Post[]>([])
+const steps = ref<Step[]>([])
+const activeButton = ref<string>('all')
 const props = defineProps<{
-  zone: BlogZone;
-  index: number;
-}>();
+  zone: BlogZone
+  index: number
+}>()
 
 const getPostsByStep = async (step: string) => {
-  const res = await getBlogPostsByStep(step);
-  posts.value = res.data;
-  activeButton.value = step;
-};
+  const res = await getBlogPostsByStep(step)
+  posts.value = res.data.filter((post) => !!post.slug)
+  activeButton.value = step
+}
 
 const getPosts = async () => {
-  const res = await getBlogPosts();
-  posts.value = res.data;
-  activeButton.value = "all";
-};
+  const res = await getBlogPosts()
+  posts.value = res.data.filter((post) => !!post.slug)
+  activeButton.value = 'all'
+}
+
+const STEP_ORDER = [
+  'biberstufe',
+  'wolfsstufe',
+  'pfadistufe',
+  'piostufe',
+  'roverstufe',
+]
 
 const fetchSteps = async () => {
-  const res = await getStepNames();
-  steps.value = res.data;
-};
+  const res = await getStepNames()
+  steps.value = res.data
+    .filter((step) => STEP_ORDER.includes(step.Slug?.toLowerCase()))
+    .sort((a, b) => {
+      const aIndex = STEP_ORDER.indexOf(a.Slug?.toLowerCase())
+      const bIndex = STEP_ORDER.indexOf(b.Slug?.toLowerCase())
+      return (
+        (aIndex === -1 ? STEP_ORDER.length : aIndex) -
+        (bIndex === -1 ? STEP_ORDER.length : bIndex)
+      )
+    })
+}
 
 const initializeObserver = () => {
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.remove("post-grid-item--hidden");
-          observer.unobserve(entry.target);
+          entry.target.classList.remove('post-grid-item--hidden')
+          observer.unobserve(entry.target)
         }
-      });
+      })
     },
     {
       threshold: 0.5,
     }
-  );
+  )
 
-  document.querySelectorAll(".post-grid-item").forEach((item) => {
-    item.classList.add("post-grid-item--hidden");
-    observer.observe(item);
-  });
-};
+  document.querySelectorAll('.post-grid-item').forEach((item) => {
+    item.classList.add('post-grid-item--hidden')
+    observer.observe(item)
+  })
+}
 
 onMounted(async () => {
-  await getPosts();
-  await fetchSteps();
+  await getPosts()
+  await fetchSteps()
 
-  initializeObserver();
-});
+  initializeObserver()
+})
 </script>
 <style scoped lang="scss">
 .post-grid.wrapper {

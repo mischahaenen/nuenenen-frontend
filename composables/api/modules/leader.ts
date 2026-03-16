@@ -1,6 +1,6 @@
 import { useMemoize } from '@vueuse/core'
-import type { LeaderResponse } from '~/types/leader'
 import { createQuery, fetchFromApi } from '../core/client'
+import type { LeaderResponse } from '~/types/leader'
 
 export const useLeaderApi = () => {
   const getLeader = useMemoize(async (id) => {

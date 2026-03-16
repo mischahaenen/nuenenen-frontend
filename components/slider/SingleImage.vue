@@ -13,7 +13,9 @@
         :alt="image.alternativeText || image.name"
         sizes="100vw sm:50vw md:400px"
         role="button"
-        :aria-label="`${image.alternativeText || image.name} - Klicken für Vollbildmodus`"
+        :aria-label="`${
+          image.alternativeText || image.name
+        } - Klicken für Vollbildmodus`"
         style="cursor: pointer"
         tabindex="0"
         @click="$emit('open-fullscreen')"
@@ -26,10 +28,25 @@
 
 <script setup lang="ts">
 defineProps<{
-  image: Image;
-}>();
+  image: Image
+}>()
 
 defineEmits<{
-  "open-fullscreen": [];
-}>();
+  'open-fullscreen': []
+}>()
 </script>
+
+<style scoped lang="scss">
+.image-container {
+  max-height: 70vh;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.slide-image {
+  width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+</style>

@@ -13,6 +13,7 @@
           <NuxtImg
             class="step-image"
             format="webp"
+            loading="lazy"
             provider="strapi"
             :src="step.logo.hash + step.logo.ext"
             :alt="step.logo.name"
@@ -30,34 +31,59 @@
 </template>
 
 <script setup lang="ts">
-import { useStepsApi } from "~/composables/api/modules/steps";
+import { useStepsApi } from '~/composables/api/modules/steps'
+import type { StepZone } from '~/types/pageZone'
+import type { Step } from '~/types/step'
 
-const { getSteps } = useStepsApi();
+const { getSteps } = useStepsApi()
 
 const props = defineProps<{
-  zone: StepZone;
-  index: number;
-}>();
+  zone: StepZone
+  index: number
+}>()
 
-const { data: allSteps, error } = await useAsyncData(`steps`, () => getSteps(), {
+const { data: allSteps } = await useAsyncData(`steps`, () => getSteps(), {
   server: true,
   transform: (data) => {
-    if (!data) return [];
-    return data.data ?? [];
+    if (!data) return []
+    return data.data ?? []
   },
-});
+})
 
-// Filter steps to only show those that are in the zone
+const STEP_ORDER = [
+  'biberstufe',
+  'wolfsstufe',
+  'pfadistufe',
+  'piostufe',
+  'roverstufe',
+  'elternrat',
+  'biberstufeinfos',
+  'wolfsstufeinfos',
+  'pfadistufeinfos',
+  'piostufeinfos',
+  'roverstufeinfos',
+]
+
 const filteredSteps = computed(() => {
-  if (!allSteps.value || !props.zone.steps) return [];
+  if (!allSteps.value || !props.zone.steps) return []
   return props.zone.steps
     .map((zoneStep: StepZone) =>
       allSteps.value?.find((fullStep: Step) => fullStep.id === zoneStep.id)
     )
     .filter(
-      (fullStep: Step): fullStep is NonNullable<typeof Step> => fullStep !== undefined
-    );
-});
+      (fullStep: Step): fullStep is NonNullable<typeof Step> =>
+        fullStep !== undefined &&
+        STEP_ORDER.includes(fullStep.Slug?.toLowerCase())
+    )
+    .sort((a, b) => {
+      const aIndex = STEP_ORDER.indexOf(a.Slug?.toLowerCase())
+      const bIndex = STEP_ORDER.indexOf(b.Slug?.toLowerCase())
+      return (
+        (aIndex === -1 ? STEP_ORDER.length : aIndex) -
+        (bIndex === -1 ? STEP_ORDER.length : bIndex)
+      )
+    })
+})
 </script>
 
 <style scoped lang="scss">
@@ -78,7 +104,13 @@ a:hover h3 {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+  }
 }
 .step-content {
   position: absolute;
@@ -91,7 +123,11 @@ a:hover h3 {
   border-radius: 50%;
   font-size: 1rem;
   text-align: center;
-  background-color: color-mix(in srgb, var(--color-primary-50) 60%, transparent);
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary-50) 60%,
+    transparent
+  );
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,17 +144,41 @@ a:hover h3 {
 }
 .step-item:hover {
   .step-content {
-    background-color: color-mix(in srgb, var(--color-primary-100) 80%, transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--color-primary-100) 80%,
+      transparent
+    );
   }
 }
 .dark-mode {
   .step-content {
-    background-color: color-mix(in srgb, var(--color-accent-900) 60%, transparent);
+    background-color: color-mix(
+      in srgb,
+      var(--color-accent-900) 60%,
+      transparent
+    );
   }
   .step-item:hover {
     .step-content {
-      background-color: color-mix(in srgb, var(--color-accent-800) 60%, transparent);
+      background-color: color-mix(
+        in srgb,
+        var(--color-accent-800) 60%,
+        transparent
+      );
     }
+  }
+}
+
+@include breakpoint-md {
+  .step-image {
+    width: 11rem;
+  }
+}
+
+@include breakpoint-sm {
+  .step-image {
+    width: 8rem;
   }
 }
 </style>

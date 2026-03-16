@@ -2,8 +2,11 @@
   <footer v-if="footer">
     <NuxtImg
       class="full-width"
-      :src="`svg/gantrisch_${colorMode.value === 'dark' ? 'dark' : 'white'}.svg`"
+      :src="`svg/gantrisch_${
+        colorMode.value === 'dark' ? 'dark' : 'white'
+      }.svg`"
       :alt="`Berge in ${colorMode.value === 'dark' ? 'Dunkel' : 'Hell'}`"
+      loading="lazy"
     ></NuxtImg>
     <div class="footer-content">
       <div>
@@ -26,17 +29,38 @@
         <ul class="socialmedia-section">
           <li>
             <a href="https://www.instagram.com/pfadipink" target="_blank">
-              <NuxtImg src="svg/instagram.svg" alt="Instagram Logo" />Instagram</a
+              <NuxtImg
+                src="svg/instagram.svg"
+                alt="Instagram Logo"
+                loading="lazy"
+                width="30"
+                height="30"
+              />Instagram</a
             >
           </li>
           <li>
             <a href="https://www.facebook.com/PfadiNuenenen/" target="_blank">
-              <NuxtImg src="svg/facebook.svg" alt="Facebook Logo" />Facebook</a
+              <NuxtImg
+                src="svg/facebook.svg"
+                alt="Facebook Logo"
+                loading="lazy"
+                width="30"
+                height="30"
+              />Facebook</a
             >
           </li>
           <li>
-            <a href="https://github.com/mischahaenen/nuenenen-frontend" target="_blank">
-              <NuxtImg src="svg/github.svg" alt="Github Logo" />Github</a
+            <a
+              href="https://github.com/mischahaenen/nuenenen-frontend"
+              target="_blank"
+            >
+              <NuxtImg
+                src="svg/github.svg"
+                alt="Github Logo"
+                loading="lazy"
+                width="30"
+                height="30"
+              />Github</a
             >
           </li>
         </ul>
@@ -48,6 +72,7 @@
           :key="image.name"
           :src="image.url"
           :alt="image.name"
+          loading="lazy"
         />
       </div>
     </div>
@@ -55,15 +80,17 @@
 </template>
 
 <script setup>
-import { useFooterApi } from "~/composables/api/modules/footer";
+import { useFooterApi } from '~/composables/api/modules/footer'
 
-const { getFooter } = useFooterApi();
-const colorMode = useColorMode();
-const footerRes = await getFooter();
-const footer = footerRes || null;
+const { getFooter } = useFooterApi()
+const colorMode = useColorMode()
+const footerRes = await getFooter()
+const footer = footerRes || null
 const modeHeader = computed(() => {
-  return colorMode.value === "dark" ? "Hell-Modus gefällig?" : "Dunkel-Modus gefällig?";
-});
+  return colorMode.value === 'dark'
+    ? 'Hell-Modus gefällig?'
+    : 'Dunkel-Modus gefällig?'
+})
 </script>
 
 <style scoped lang="scss">
@@ -130,6 +157,25 @@ footer {
 
   .footer-content h2 {
     color: var(--color-white);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .footer-content {
+    padding: var(--space-medium);
+    gap: var(--space-medium);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .footer-content {
+    padding: var(--space-small) var(--space-medium);
+    gap: var(--space-medium);
+    flex-direction: column;
+  }
+
+  .sponsorLogo img {
+    width: 200px;
   }
 }
 </style>

@@ -1,110 +1,100 @@
-import { mount } from '@vue/test-utils'
-import { Suspense, defineComponent, h } from 'vue'
+import { mount, flushPromises } from '@vue/test-utils'
+import { defineComponent, ref } from 'vue'
 import { vi } from 'vitest'
 import type { Component } from 'vue'
 
-export function createAsyncWrapper(component: Component, options: any = {}) {
-  // Create a wrapper component that includes Suspense
-  const AsyncTestWrapper = defineComponent({
-    setup() {
-      return () => h(Suspense, {}, {
-        default: () => h(component, options.props || {}),
-        fallback: () => h('div', { class: 'loading' }, 'Loading...')
+export async function createAsyncWrapper(
+  component: Component,
+  options: any = {}
+) {
+  // Override useAsyncData globally so <script setup> code picks it up
+  ;(globalThis as any).useAsyncData = vi
+    .fn()
+    .mockImplementation((_key: string, _fn: any, opts: any) => {
+      const rawData = options.asyncData?.data ?? null
+      let data = rawData
+      if (opts?.transform && rawData !== null) {
+        data = opts.transform({ data: rawData })
+      }
+      return Promise.resolve({
+        data: ref(data),
+        error: ref(options.asyncData?.error ?? null),
+        pending: ref(false),
+        refresh: vi.fn(),
       })
-    }
+    })
+
+  // Override useRoute globally
+  if (options.route) {
+    ;(globalThis as any).useRoute = vi.fn(() => options.route)
+  }
+
+  const Wrapper = defineComponent({
+    components: { AsyncComponent: component },
+    setup() {
+      return { componentProps: options.props || {} }
+    },
+    template: '<Suspense><AsyncComponent v-bind="componentProps" /></Suspense>',
   })
 
-  return mount(AsyncTestWrapper, {
+  const wrapper = mount(Wrapper, {
     global: {
-      mocks: {
-        useAsyncData: vi.fn().mockImplementation((key, fn, opts) => {
-          // Return resolved async data immediately for testing
-          const result = {
-            data: { value: options.asyncData?.data || null },
-            error: { value: options.asyncData?.error || null },
-            pending: { value: false },
-            refresh: vi.fn()
-          }
-          
-          // Apply transform if provided
-          if (opts?.transform && result.data.value) {
-            result.data.value = opts.transform({ data: result.data.value })
-          }
-          
-          return Promise.resolve(result)
-        }),
-        useRoute: vi.fn(() => options.route || {
-          params: {},
-          query: {},
-          path: '/',
-          fullPath: '/',
-          meta: {}
-        }),
-        useBlogApi: vi.fn(() => ({
-          getBlogPost: vi.fn().mockResolvedValue({
-            data: options.asyncData?.data || []
-          })
-        })),
-        useStepsApi: vi.fn(() => ({
-          getSteps: vi.fn().mockResolvedValue({
-            data: options.asyncData?.data || []
-          })
-        })),
-        useHead: vi.fn(),
-        computed: vi.fn((fn) => ({ value: fn() })),
-        toRefs: vi.fn((props) => {
-          const refs = {}
-          for (const key in props) {
-            refs[key] = { value: props[key] }
-          }
-          return refs
-        }),
-        useReadingTime: vi.fn(() => ({
-          calculateBlocksReadingTime: vi.fn(() => 5)
-        })),
-        useColorMode: vi.fn(() => ({ value: 'light' })),
-        useScrollY: vi.fn(() => ({ value: 0 }))
-      },
       stubs: {
         SliderComponent: {
-          template: '<div class="slider-component" :images="images"></div>',
-          props: ['images']
+          name: 'SliderComponent',
+          template: '<div class="slider-component"></div>',
+          props: ['images'],
         },
         RichTextComponent: {
-          template: '<div class="rich-text-component" :content="content"></div>',
-          props: ['content']
+          name: 'RichTextComponent',
+          template: '<div class="rich-text-component"></div>',
+          props: ['content'],
         },
         TitleComponent: {
-          template: '<div class="title-component" :title="title" :index="index"></div>',
-          props: ['title', 'index']
+          name: 'TitleComponent',
+          template: '<div class="title-component"></div>',
+          props: ['title', 'index'],
         },
         NuxtLink: {
+          name: 'NuxtLink',
           template: '<a :href="to" class="nuxt-link"><slot /></a>',
-          props: ['to']
+          props: ['to'],
         },
         NuxtImg: {
+          name: 'NuxtImg',
           template: '<img :src="src" :alt="alt" class="nuxt-img" />',
-          props: ['src', 'alt', 'format', 'provider', 'sizes', 'loading', 'fetchpriority', 'quality', 'width', 'height', 'modifiers']
+          props: [
+            'src',
+            'alt',
+            'format',
+            'provider',
+            'sizes',
+            'loading',
+            'fetchpriority',
+            'quality',
+            'width',
+            'height',
+            'modifiers',
+          ],
         },
         ReadingTime: {
-          template: '<span class="reading-time">{{ time }} {{ unit }}</span>',
-          props: ['time', 'unit']
+          name: 'ReadingTime',
+          template: '<span class="reading-time"></span>',
+          props: ['time', 'unit'],
         },
         ClientOnly: {
-          template: '<div class="client-only"><slot /></div>'
+          template: '<div class="client-only"><slot /></div>',
         },
-        ...options.global?.stubs
+        ...options.global?.stubs,
       },
-      ...options.global
-    }
+      ...options.global,
+    },
   })
+
+  await flushPromises()
+  return wrapper
 }
 
-export async function waitForAsyncComponent(wrapper: any) {
-  // Wait for Suspense to resolve
-  await new Promise(resolve => setTimeout(resolve, 0))
-  await wrapper.vm.$nextTick()
-  
-  // Wait a bit more for async data to settle
-  await new Promise(resolve => setTimeout(resolve, 10))
+export async function waitForAsyncComponent() {
+  await flushPromises()
 }
