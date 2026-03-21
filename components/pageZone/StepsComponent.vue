@@ -50,6 +50,7 @@ const { data: allSteps } = await useAsyncData(`steps`, () => getSteps(), {
   },
 })
 
+// TODO: not ideal to hardcode this
 const STEP_ORDER = [
   'biberstufe',
   'wolfsstufe',

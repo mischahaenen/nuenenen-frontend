@@ -38,15 +38,18 @@ defineEmits<{
 
 <style scoped lang="scss">
 .image-container {
-  max-height: 70vh;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 
 .slide-image {
   width: 100%;
-  max-height: 70vh;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 </style>

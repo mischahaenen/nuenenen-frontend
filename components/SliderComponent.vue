@@ -273,6 +273,7 @@ onMounted(() => {
   border: none;
   border-radius: var(--border-radius);
   cursor: pointer;
+  padding: 0;
   transition: all 0.2s ease-in-out;
 
   &:hover {
