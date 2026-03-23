@@ -93,7 +93,9 @@ export default defineNuxtConfig({
     },
   },
   image: {
-    domains: ['nuenenen-strapi-aws-s3-images-bucket.s3.eu-central-1.amazonaws.com'],
+    domains: [
+      'nuenenen-strapi-aws-s3-images-bucket.s3.eu-central-1.amazonaws.com',
+    ],
     dir: 'assets/',
     formats: ['webp', 'png'],
     quality: 85,
