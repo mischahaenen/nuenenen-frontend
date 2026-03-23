@@ -177,10 +177,7 @@ const props = defineProps<{
   left: 0;
   z-index: -2;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: bottom;
-  max-height: auto;
+  height: auto;
 }
 
 .link-button {

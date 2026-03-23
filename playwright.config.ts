@@ -17,7 +17,6 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  // Start the dev server before running tests
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:3000',
