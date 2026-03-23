@@ -183,7 +183,7 @@ onMounted(async () => {
   grid-column: 1 / span 1;
   .post-grid-item--hidden {
     opacity: 0;
-    transform: translateX(-50px);
+    transform: translateY(50px);
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
   }
 }
@@ -192,7 +192,7 @@ onMounted(async () => {
   grid-column: span 1 / -1;
   .post-grid-item--hidden {
     opacity: 0;
-    transform: translateX(50px);
+    transform: translateY(50px);
     transition: opacity 0.3s ease-out, transform 0.3s ease-out;
   }
 }
